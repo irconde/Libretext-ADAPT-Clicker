@@ -1,0 +1,167 @@
+import '../contact_us/contact_us_widget.dart';
+import '../create_account/create_account_widget.dart';
+import '../flutter_flow/flutter_flow_theme.dart';
+import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/flutter_flow_widgets.dart';
+import '../login_page/login_page_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class WelcomePageWidget extends StatefulWidget {
+  const WelcomePageWidget({Key? key}) : super(key: key);
+
+  @override
+  _WelcomePageWidgetState createState() => _WelcomePageWidgetState();
+}
+
+class _WelcomePageWidgetState extends State<WelcomePageWidget> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      body: SafeArea(
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Container(
+            width: double.infinity,
+            child: Stack(
+              alignment: AlignmentDirectional(0, 0),
+              children: [
+                Align(
+                  alignment: AlignmentDirectional(0, -1.08),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
+                    child: Image.asset(
+                      'assets/images/libretexts_logo_stacked_blue.png',
+                      width: 244,
+                      height: 170,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: AlignmentDirectional(0, 0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginPageWidget(),
+                              ),
+                            );
+                          },
+                          text: 'LOGIN',
+                          options: FFButtonOptions(
+                            width: 290,
+                            height: 50,
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            textStyle:
+                                FlutterFlowTheme.of(context).subtitle2.override(
+                                      fontFamily: 'Open Sans',
+                                      color: Colors.white,
+                                    ),
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(0),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CreateAccountWidget(),
+                              ),
+                            );
+                          },
+                          text: 'CREATE ACCOUNT',
+                          options: FFButtonOptions(
+                            width: 290,
+                            height: 50,
+                            color:
+                                FlutterFlowTheme.of(context).primaryBackground,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .subtitle2
+                                .override(
+                                  fontFamily: 'Open Sans',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                ),
+                            borderSide: BorderSide(
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(0),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Align(
+                  alignment: AlignmentDirectional(0, 0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional(-0.06, 1),
+                        child: Text(
+                          'Having problems? ',
+                          style:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Open Sans',
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                        ),
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional(-0.06, 1),
+                        child: InkWell(
+                          onTap: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ContactUsWidget(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'Contact us',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyText1
+                                .override(
+                                  fontFamily: 'Open Sans',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
