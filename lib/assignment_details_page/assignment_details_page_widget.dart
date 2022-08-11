@@ -3,14 +3,16 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomePageWidget extends StatefulWidget {
-  const HomePageWidget({Key? key}) : super(key: key);
+class AssignmentDetailsPageWidget extends StatefulWidget {
+  const AssignmentDetailsPageWidget({Key? key}) : super(key: key);
 
   @override
-  _HomePageWidgetState createState() => _HomePageWidgetState();
+  _AssignmentDetailsPageWidgetState createState() =>
+      _AssignmentDetailsPageWidgetState();
 }
 
-class _HomePageWidgetState extends State<HomePageWidget> {
+class _AssignmentDetailsPageWidgetState
+    extends State<AssignmentDetailsPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -20,8 +22,22 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
+        leading: Icon(
+          Icons.arrow_back,
+          color: FlutterFlowTheme.of(context).primaryBackground,
+          size: 28,
+        ),
+        title: Text(
+          'Assignment Details',
+          textAlign: TextAlign.start,
+          style: FlutterFlowTheme.of(context).bodyText1.override(
+                fontFamily: 'Open Sans',
+                color: FlutterFlowTheme.of(context).primaryBackground,
+                fontSize: 28,
+              ),
+        ),
         actions: [],
-        centerTitle: false,
+        centerTitle: true,
         elevation: 2,
       ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,

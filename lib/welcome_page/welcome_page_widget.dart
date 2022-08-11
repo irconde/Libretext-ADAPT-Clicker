@@ -114,47 +114,50 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                 ),
                 Align(
                   alignment: AlignmentDirectional(0, 0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Align(
-                        alignment: AlignmentDirectional(-0.06, 1),
-                        child: Text(
-                          'Having problems? ',
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Open Sans',
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                        ),
-                      ),
-                      Align(
-                        alignment: AlignmentDirectional(-0.06, 1),
-                        child: InkWell(
-                          onTap: () async {
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ContactUsWidget(),
-                              ),
-                            );
-                          },
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 100, 0, 91),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional(-0.06, 1),
                           child: Text(
-                            'Contact us',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyText1
-                                .override(
-                                  fontFamily: 'Open Sans',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  fontWeight: FontWeight.normal,
-                                ),
+                            'Having problems? ',
+                            style:
+                                FlutterFlowTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Open Sans',
+                                      fontWeight: FontWeight.normal,
+                                    ),
                           ),
                         ),
-                      ),
-                    ],
+                        Align(
+                          alignment: AlignmentDirectional(-0.06, 1),
+                          child: InkWell(
+                            onTap: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ContactUsWidget(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Contact us',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Open Sans',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryColor,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
