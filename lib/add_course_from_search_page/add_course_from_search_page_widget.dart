@@ -3,16 +3,16 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AddCourseCodePageCopyWidget extends StatefulWidget {
-  const AddCourseCodePageCopyWidget({Key? key}) : super(key: key);
+class AddCourseFromSearchPageWidget extends StatefulWidget {
+  const AddCourseFromSearchPageWidget({Key? key}) : super(key: key);
 
   @override
-  _AddCourseCodePageCopyWidgetState createState() =>
-      _AddCourseCodePageCopyWidgetState();
+  _AddCourseFromSearchPageWidgetState createState() =>
+      _AddCourseFromSearchPageWidgetState();
 }
 
-class _AddCourseCodePageCopyWidgetState
-    extends State<AddCourseCodePageCopyWidget> {
+class _AddCourseFromSearchPageWidgetState
+    extends State<AddCourseFromSearchPageWidget> {
   TextEditingController? textController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 

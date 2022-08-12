@@ -1,3 +1,4 @@
+import '../backend/api_requests/api_calls.dart';
 import '../courses_page/courses_page_widget.dart';
 import '../create_account/create_account_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -5,6 +6,7 @@ import '../flutter_flow/flutter_flow_toggle_icon.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../forgot_password/forgot_password_widget.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,6 +18,7 @@ class LoginPageWidget extends StatefulWidget {
 }
 
 class _LoginPageWidgetState extends State<LoginPageWidget> {
+  ApiCallResponse? loginAttempt;
   TextEditingController? textController1;
   TextEditingController? textController2;
   late bool passwordVisibility;
@@ -296,13 +299,46 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     36, 0, 36, 15),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            CoursesPageWidget(),
-                                      ),
+                                    loginAttempt = await LoginCall.call(
+                                      email: textController1!.text,
+                                      password: textController2!.text,
                                     );
+                                    if ((loginAttempt?.succeeded ?? true)) {
+                                      setState(() => FFAppState().authToken =
+                                              functions
+                                                  .createToken(getJsonField(
+                                            (loginAttempt?.jsonBody ?? ''),
+                                            r'''$.token''',
+                                          ).toString()));
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              CoursesPageWidget(),
+                                        ),
+                                      );
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Unable to login',
+                                            style: GoogleFonts.getFont(
+                                              'Open Sans',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryBackground,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                          duration:
+                                              Duration(milliseconds: 4000),
+                                          backgroundColor: Color(0xFFFF0000),
+                                        ),
+                                      );
+                                    }
+
+                                    setState(() {});
                                   },
                                   text: 'Sign in with Adapt',
                                   options: FFButtonOptions(

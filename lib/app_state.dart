@@ -15,6 +15,7 @@ class FFAppState {
   Future initializePersistedState() async {
     prefs = await SharedPreferences.getInstance();
     _rememberMe = prefs.getBool('ff_rememberMe') ?? _rememberMe;
+    _authToken = prefs.getString('ff_authToken') ?? _authToken;
   }
 
   late SharedPreferences prefs;
@@ -24,6 +25,13 @@ class FFAppState {
   set rememberMe(bool _value) {
     _rememberMe = _value;
     prefs.setBool('ff_rememberMe', _value);
+  }
+
+  String _authToken = '';
+  String get authToken => _authToken;
+  set authToken(String _value) {
+    _authToken = _value;
+    prefs.setString('ff_authToken', _value);
   }
 }
 
