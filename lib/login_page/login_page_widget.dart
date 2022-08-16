@@ -1,6 +1,5 @@
 import '../backend/api_requests/api_calls.dart';
 import '../courses_page/courses_page_widget.dart';
-import '../create_account/create_account_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_toggle_icon.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -36,6 +35,48 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      appBar: PreferredSize(
+        preferredSize:
+            Size.fromHeight(MediaQuery.of(context).size.height * 0.2),
+        child: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+          automaticallyImplyLeading: false,
+          flexibleSpace: Stack(
+            children: [
+              Align(
+                alignment: AlignmentDirectional(-0.94, -0.48),
+                child: Icon(
+                  Icons.arrow_back,
+                  color: FlutterFlowTheme.of(context).primaryBackground,
+                  size: 28,
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(-0.73, 0.75),
+                child: Text(
+                  'Welcome\nBack',
+                  style: FlutterFlowTheme.of(context).bodyText1.override(
+                        fontFamily: 'Open Sans',
+                        color: FlutterFlowTheme.of(context).primaryBtnText,
+                        fontSize: 32,
+                      ),
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(-0.12, 0.7),
+                child: Image.network(
+                  '',
+                  width: 100,
+                  height: 100,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
+          ),
+          actions: [],
+          elevation: 4,
+        ),
+      ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
         child: GestureDetector(
@@ -47,19 +88,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
               child: Stack(
                 alignment: AlignmentDirectional(0, 0),
                 children: [
-                  Align(
-                    alignment: AlignmentDirectional(-0.83, -1.04),
-                    child: InkWell(
-                      onTap: () async {
-                        Navigator.pop(context);
-                      },
-                      child: Icon(
-                        Icons.arrow_back_sharp,
-                        color: Colors.black,
-                        size: 28,
-                      ),
-                    ),
-                  ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                     child: Column(
@@ -71,49 +99,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      20, 0, 20, 56),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Align(
-                                        alignment:
-                                            AlignmentDirectional(0, -1.08),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 8, 0),
-                                          child: Image.asset(
-                                            'assets/images/LibreTexts_icon.png',
-                                            width: 100,
-                                            height: 100,
-                                            fit: BoxFit.contain,
-                                          ),
-                                        ),
-                                      ),
-                                      Text(
-                                        'Welcome Back',
-                                        textAlign: TextAlign.start,
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                              fontFamily: 'Open Sans',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryColor,
-                                              fontSize: 32,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     36, 8, 36, 8),
@@ -411,56 +396,31 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Align(
-                    alignment: AlignmentDirectional(0, 0),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 91),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Align(
-                            alignment: AlignmentDirectional(-0.06, 1),
-                            child: Text(
-                              'Don\'t have an account? ',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Open Sans',
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                            ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(-0.06, 1),
-                            child: InkWell(
-                              onTap: () async {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => CreateAccountWidget(),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                'Sign Up',
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Don\'t have an account? ',
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                              ),
+                              Text(
+                                'Sign up',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
                                       fontFamily: 'Open Sans',
                                       color: FlutterFlowTheme.of(context)
                                           .primaryColor,
-                                      fontWeight: FontWeight.normal,
+                                      decoration: TextDecoration.underline,
                                     ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

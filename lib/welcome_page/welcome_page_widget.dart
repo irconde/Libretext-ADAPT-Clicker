@@ -1,5 +1,5 @@
 import '../contact_us/contact_us_widget.dart';
-import '../create_account/create_account_widget.dart';
+import '../create_account2/create_account2_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -31,23 +31,24 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
               alignment: AlignmentDirectional(0, 0),
               children: [
                 Align(
-                  alignment: AlignmentDirectional(0, -1.08),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
-                    child: Image.asset(
-                      'assets/images/libretexts_logo_stacked_blue.png',
-                      width: 244,
-                      height: 170,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: AlignmentDirectional(0, 0),
+                  alignment: AlignmentDirectional(0, -0.4),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      Align(
+                        alignment: AlignmentDirectional(0, -0.6),
+                        child: Padding(
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(42, 42, 42, 42),
+                          child: Image.asset(
+                            'assets/images/libretexts_logo_stacked_blue.png',
+                            width: 244,
+                            height: 170,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
                         child: FFButtonWidget(
@@ -84,7 +85,7 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => CreateAccountWidget(),
+                                builder: (context) => CreateAccount2Widget(),
                               ),
                             );
                           },

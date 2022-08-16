@@ -45,7 +45,7 @@ class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
           size: 28,
         ),
         title: Text(
-          'Change Password',
+          'My Password',
           style: FlutterFlowTheme.of(context).bodyText1.override(
                 fontFamily: 'Open Sans',
                 color: FlutterFlowTheme.of(context).primaryBackground,
@@ -53,10 +53,13 @@ class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
               ),
         ),
         actions: [
-          Icon(
-            Icons.notifications_none,
-            color: FlutterFlowTheme.of(context).primaryBackground,
-            size: 28,
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+            child: Icon(
+              Icons.notifications,
+              color: FlutterFlowTheme.of(context).primaryBackground,
+              size: 28,
+            ),
           ),
         ],
         centerTitle: true,
@@ -226,25 +229,28 @@ class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
                   style: FlutterFlowTheme.of(context).bodyText1,
                 ),
               ),
-              FFButtonWidget(
-                onPressed: () {
-                  print('ChangePasswordBtn pressed ...');
-                },
-                text: 'Change Password',
-                options: FFButtonOptions(
-                  width: 225,
-                  height: 40,
-                  color: FlutterFlowTheme.of(context).primaryColor,
-                  textStyle: FlutterFlowTheme.of(context).subtitle2.override(
-                        fontFamily: 'Open Sans',
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                  borderSide: BorderSide(
-                    color: Colors.transparent,
-                    width: 1,
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 300, 0, 0),
+                child: FFButtonWidget(
+                  onPressed: () {
+                    print('ChangePasswordBtn pressed ...');
+                  },
+                  text: 'Change Password',
+                  options: FFButtonOptions(
+                    width: 300,
+                    height: 40,
+                    color: FlutterFlowTheme.of(context).primaryColor,
+                    textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                          fontFamily: 'Open Sans',
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
             ],

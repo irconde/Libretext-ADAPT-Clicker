@@ -251,28 +251,28 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
               decoration: BoxDecoration(
                 color: FlutterFlowTheme.of(context).primaryColor,
               ),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-                    child: InkWell(
-                      onTap: () async {
-                        scaffoldKey.currentState!.openDrawer();
-                      },
-                      child: Icon(
-                        Icons.menu,
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                        size: 28,
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                      child: InkWell(
+                        onTap: () async {
+                          scaffoldKey.currentState!.openDrawer();
+                        },
+                        child: Icon(
+                          Icons.menu,
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          size: 28,
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
+                    Expanded(
                       child: Text(
-                        'Courses',
+                        'Contact Us',
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Open Sans',
@@ -282,22 +282,22 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                             ),
                       ),
                     ),
-                  ),
-                  FlutterFlowIconButton(
-                    borderColor: Colors.transparent,
-                    borderRadius: 30,
-                    borderWidth: 1,
-                    buttonSize: 75,
-                    icon: Icon(
-                      Icons.notifications_none,
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                      size: 36,
+                    FlutterFlowIconButton(
+                      borderColor: Colors.transparent,
+                      borderRadius: 30,
+                      borderWidth: 1,
+                      buttonSize: 75,
+                      icon: Icon(
+                        Icons.notifications_none,
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        size: 36,
+                      ),
+                      onPressed: () {
+                        print('IconButton pressed ...');
+                      },
                     ),
-                    onPressed: () {
-                      print('IconButton pressed ...');
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Padding(
@@ -305,48 +305,23 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Image.asset(
-                        'assets/images/LibreTexts_icon.png',
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                        child: Text(
-                          'Contact Us',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText1
-                              .override(
-                                fontFamily: 'Open Sans',
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                fontSize: 32,
-                              ),
-                        ),
-                      ),
-                    ],
-                  ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 5),
                     child: Text(
                       'Please use this form to contact us regarding general questions or issues. If you have a course specific, please contact your instructor using your own email client.',
                       style: FlutterFlowTheme.of(context).bodyText1.override(
                             fontFamily: 'Open Sans',
-                            fontSize: 16,
+                            fontSize: 14,
                           ),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 10),
                     child: Text(
                       'The fields marked with an asterisk are required.',
                       style: FlutterFlowTheme.of(context).bodyText1.override(
                             fontFamily: 'Open Sans',
-                            fontSize: 16,
+                            fontSize: 14,
                           ),
                     ),
                   ),
@@ -487,6 +462,26 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                     ),
                   ),
                 ],
+              ),
+            ),
+            FFButtonWidget(
+              onPressed: () {
+                print('Button pressed ...');
+              },
+              text: 'SUBMIT',
+              options: FFButtonOptions(
+                width: 310,
+                height: 40,
+                color: FlutterFlowTheme.of(context).primaryColor,
+                textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                      fontFamily: 'Open Sans',
+                      color: Colors.white,
+                    ),
+                borderSide: BorderSide(
+                  color: Colors.transparent,
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
           ],

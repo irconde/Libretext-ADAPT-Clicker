@@ -41,7 +41,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
           size: 28,
         ),
         title: Text(
-          'Account Profile',
+          'My Profile',
           style: FlutterFlowTheme.of(context).bodyText1.override(
                 fontFamily: 'Open Sans',
                 color: FlutterFlowTheme.of(context).primaryBackground,
@@ -49,10 +49,13 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
               ),
         ),
         actions: [
-          Icon(
-            Icons.notifications_none,
-            color: FlutterFlowTheme.of(context).primaryBackground,
-            size: 28,
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+            child: Icon(
+              Icons.notifications,
+              color: FlutterFlowTheme.of(context).primaryBackground,
+              size: 28,
+            ),
           ),
         ],
         centerTitle: true,
@@ -207,25 +210,28 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                   hidesUnderline: true,
                 ),
               ),
-              FFButtonWidget(
-                onPressed: () {
-                  print('UpdateProfileBtn pressed ...');
-                },
-                text: 'Update',
-                options: FFButtonOptions(
-                  width: 225,
-                  height: 40,
-                  color: FlutterFlowTheme.of(context).primaryColor,
-                  textStyle: FlutterFlowTheme.of(context).subtitle2.override(
-                        fontFamily: 'Open Sans',
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                  borderSide: BorderSide(
-                    color: Colors.transparent,
-                    width: 1,
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 250, 0, 0),
+                child: FFButtonWidget(
+                  onPressed: () {
+                    print('UpdateProfileBtn pressed ...');
+                  },
+                  text: 'Update Profile',
+                  options: FFButtonOptions(
+                    width: 300,
+                    height: 40,
+                    color: FlutterFlowTheme.of(context).primaryColor,
+                    textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                          fontFamily: 'Open Sans',
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
             ],

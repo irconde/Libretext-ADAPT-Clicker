@@ -36,7 +36,16 @@ class _CourseDescriptionPageWidgetState
                 fontSize: 28,
               ),
         ),
-        actions: [],
+        actions: [
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+            child: Icon(
+              Icons.notifications,
+              color: FlutterFlowTheme.of(context).primaryBackground,
+              size: 28,
+            ),
+          ),
+        ],
         centerTitle: true,
         elevation: 2,
       ),

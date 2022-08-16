@@ -27,7 +27,8 @@ class _MyAppState extends State<MyApp> {
   Locale? _locale;
   ThemeMode _themeMode = ThemeMode.system;
 
-  void setLocale(Locale value) => setState(() => _locale = value);
+  void setLocale(String language) =>
+      setState(() => _locale = createLocale(language));
   void setThemeMode(ThemeMode mode) => setState(() {
         _themeMode = mode;
       });
