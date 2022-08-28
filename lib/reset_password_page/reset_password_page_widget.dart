@@ -1,3 +1,4 @@
+import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -13,6 +14,7 @@ class ResetPasswordPageWidget extends StatefulWidget {
 }
 
 class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
+  ApiCallResponse? updatePassword;
   TextEditingController? confirmNewPWTFController;
   late bool confirmNewPWTFVisibility;
   TextEditingController? curPasswordTFController;
@@ -232,8 +234,14 @@ class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 300, 0, 0),
                 child: FFButtonWidget(
-                  onPressed: () {
-                    print('ChangePasswordBtn pressed ...');
+                  onPressed: () async {
+                    updatePassword = await UpdatePasswordCall.call(
+                      token: FFAppState().authToken,
+                      password: newPasswordTFController!.text,
+                      passwordConfirmation: confirmNewPWTFController!.text,
+                    );
+
+                    setState(() {});
                   },
                   text: 'Change Password',
                   options: FFButtonOptions(

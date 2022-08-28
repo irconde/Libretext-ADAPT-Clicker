@@ -10,3 +10,27 @@ import 'place.dart';
 String createToken(String token) {
   return "Bearer $token";
 }
+
+String getTopError(List<String> errorList) {
+  // get the first value out of the list
+  return errorList.isEmpty ? 'empty' : errorList.first;
+}
+
+String questionSolution(bool? solution) {
+  if (solution == null || !solution) {
+    return "N/A";
+  }
+  return "Solution";
+}
+
+int addOne(int value) {
+  return ++value;
+}
+
+bool isBasic(int nontech) {
+  return nontech < 1;
+}
+
+bool isTextSubmission(String textSubmission) {
+  return (textSubmission == "text");
+}

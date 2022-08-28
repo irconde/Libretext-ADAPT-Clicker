@@ -1,6 +1,8 @@
+import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../welcome_page/welcome_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,6 +14,7 @@ class ForgotPasswordWidget extends StatefulWidget {
 }
 
 class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
+  ApiCallResponse? forgotPassword;
   TextEditingController? forgotPasswordEmailFieldController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -28,10 +31,15 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryBtnText,
         automaticallyImplyLeading: false,
-        leading: Icon(
-          Icons.close_rounded,
-          color: Colors.black,
-          size: 28,
+        leading: InkWell(
+          onTap: () async {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.close_rounded,
+            color: Colors.black,
+            size: 28,
+          ),
         ),
         actions: [],
         centerTitle: false,
@@ -120,8 +128,41 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20),
                 child: FFButtonWidget(
-                  onPressed: () {
-                    print('ResetPasswordButton pressed ...');
+                  onPressed: () async {
+                    forgotPassword = await ForgotPasswordCall.call(
+                      email: forgotPasswordEmailFieldController!.text,
+                    );
+                    if ((forgotPassword?.succeeded ?? true)) {
+                      await Future.delayed(const Duration(milliseconds: 3000));
+                      await Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.fade,
+                          duration: Duration(milliseconds: 300),
+                          reverseDuration: Duration(milliseconds: 300),
+                          child: WelcomePageWidget(),
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            getJsonField(
+                              (forgotPassword?.jsonBody ?? ''),
+                              r'''$.message''',
+                            ).toString(),
+                            style: TextStyle(
+                              color:
+                                  FlutterFlowTheme.of(context).primaryBtnText,
+                            ),
+                          ),
+                          duration: Duration(milliseconds: 4000),
+                          backgroundColor: Color(0xFFFF0000),
+                        ),
+                      );
+                    }
+
+                    setState(() {});
                   },
                   text: 'Send Request',
                   options: FFButtonOptions(

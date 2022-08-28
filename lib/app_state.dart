@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/lat_lng.dart';
+import 'dart:convert';
 
 class FFAppState {
   static final FFAppState _instance = FFAppState._internal();
@@ -33,6 +34,18 @@ class FFAppState {
     _authToken = _value;
     prefs.setString('ff_authToken', _value);
   }
+
+  List<String> errorsList = [];
+
+  dynamic view;
+
+  bool assignmentUp = false;
+
+  dynamic question;
+
+  bool isBasic = false;
+
+  bool hasSubmission = false;
 }
 
 LatLng? _latLngFromString(String? val) {

@@ -1,8 +1,9 @@
+import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -14,6 +15,7 @@ class ContactUsWidget extends StatefulWidget {
 }
 
 class _ContactUsWidgetState extends State<ContactUsWidget> {
+  ApiCallResponse? contactUs;
   String? contactUsSubjectDropDownValue;
   TextEditingController? contactUsEmailTextFieldController;
   TextEditingController? contactUsNameTextFieldController;
@@ -32,6 +34,53 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      appBar: PreferredSize(
+        preferredSize:
+            Size.fromHeight(MediaQuery.of(context).size.height * 0.2),
+        child: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+          automaticallyImplyLeading: false,
+          flexibleSpace: Stack(
+            children: [
+              Align(
+                alignment: AlignmentDirectional(-0.94, -0.48),
+                child: InkWell(
+                  onTap: () async {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: FlutterFlowTheme.of(context).primaryBackground,
+                    size: 28,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(-0.73, 0.7),
+                child: Text(
+                  'Contact\nUs',
+                  style: FlutterFlowTheme.of(context).bodyText1.override(
+                        fontFamily: 'Open Sans',
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        fontSize: 32,
+                      ),
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(0.1, 1),
+                child: Image.asset(
+                  'assets/images/libreQuestion.png',
+                  width: 175,
+                  height: 150,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ],
+          ),
+          actions: [],
+          elevation: 2,
+        ),
+      ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       drawer: Drawer(
         elevation: 16,
@@ -245,61 +294,6 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Container(
-              width: double.infinity,
-              height: 75,
-              decoration: BoxDecoration(
-                color: FlutterFlowTheme.of(context).primaryColor,
-              ),
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-                      child: InkWell(
-                        onTap: () async {
-                          scaffoldKey.currentState!.openDrawer();
-                        },
-                        child: Icon(
-                          Icons.menu,
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          size: 28,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        'Contact Us',
-                        textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Open Sans',
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              fontSize: 24,
-                            ),
-                      ),
-                    ),
-                    FlutterFlowIconButton(
-                      borderColor: Colors.transparent,
-                      borderRadius: 30,
-                      borderWidth: 1,
-                      buttonSize: 75,
-                      icon: Icon(
-                        Icons.notifications_none,
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                        size: 36,
-                      ),
-                      onPressed: () {
-                        print('IconButton pressed ...');
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(36, 0, 36, 0),
               child: Column(
@@ -316,17 +310,7 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 10),
-                    child: Text(
-                      'The fields marked with an asterisk are required.',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Open Sans',
-                            fontSize: 14,
-                          ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
                     child: TextFormField(
                       controller: contactUsNameTextFieldController,
                       autofocus: true,
@@ -362,7 +346,7 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
                     child: TextFormField(
                       controller: contactUsEmailTextFieldController,
                       autofocus: true,
@@ -403,7 +387,7 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                       options: ['Option 1'],
                       onChanged: (val) =>
                           setState(() => contactUsSubjectDropDownValue = val),
-                      width: 365,
+                      width: double.infinity,
                       height: 50,
                       textStyle:
                           FlutterFlowTheme.of(context).bodyText1.override(
@@ -422,7 +406,7 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
                     child: TextFormField(
                       controller: contactUsMessageTextFieldController,
                       autofocus: true,
@@ -461,27 +445,76 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                       maxLines: 12,
                     ),
                   ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        '*Required Fields',
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                            ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
-            FFButtonWidget(
-              onPressed: () {
-                print('Button pressed ...');
-              },
-              text: 'SUBMIT',
-              options: FFButtonOptions(
-                width: 310,
-                height: 40,
-                color: FlutterFlowTheme.of(context).primaryColor,
-                textStyle: FlutterFlowTheme.of(context).subtitle2.override(
-                      fontFamily: 'Open Sans',
-                      color: Colors.white,
-                    ),
-                borderSide: BorderSide(
-                  color: Colors.transparent,
-                  width: 1,
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+              child: FFButtonWidget(
+                onPressed: () async {
+                  contactUs = await ContactUsCall.call(
+                    email: contactUsEmailTextFieldController!.text,
+                    name: contactUsNameTextFieldController!.text,
+                    subject: contactUsSubjectDropDownValue,
+                    text: contactUsMessageTextFieldController!.text,
+                    school: '\"\"',
+                    toUserId: '0',
+                    type: 'contact_us',
+                  );
+                  if ((contactUs?.succeeded ?? true)) {
+                    Navigator.pop(context);
+                  } else {
+                    setState(() => FFAppState().errorsList = (getJsonField(
+                          (contactUs?.jsonBody ?? ''),
+                          r'''$.errors..*.*''',
+                        ) as List)
+                            .map<String>((s) => s.toString())
+                            .toList());
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          functions
+                              .getTopError(FFAppState().errorsList.toList()),
+                          style: TextStyle(
+                            color: FlutterFlowTheme.of(context).primaryBtnText,
+                          ),
+                        ),
+                        duration: Duration(milliseconds: 4000),
+                        backgroundColor: Color(0xFFFF0000),
+                      ),
+                    );
+                  }
+
+                  setState(() {});
+                },
+                text: 'SUBMIT',
+                options: FFButtonOptions(
+                  width: 310,
+                  height: 40,
+                  color: FlutterFlowTheme.of(context).primaryColor,
+                  textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                        fontFamily: 'Open Sans',
+                        color: Colors.white,
+                      ),
+                  borderSide: BorderSide(
+                    color: Colors.transparent,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                borderRadius: BorderRadius.circular(8),
               ),
             ),
           ],

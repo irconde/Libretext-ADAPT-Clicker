@@ -1,10 +1,13 @@
+import '../backend/api_requests/api_calls.dart';
 import '../contact_us/contact_us_widget.dart';
-import '../create_account2/create_account2_widget.dart';
+import '../courses_page/courses_page_widget.dart';
+import '../create_account3/create_account3_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../login_page/login_page_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WelcomePageWidget extends StatefulWidget {
@@ -15,7 +18,32 @@ class WelcomePageWidget extends StatefulWidget {
 }
 
 class _WelcomePageWidgetState extends State<WelcomePageWidget> {
+  ApiCallResponse? getUser;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (FFAppState().authToken != null && FFAppState().authToken != '') {
+        getUser = await GetUserCall.call(
+          token: FFAppState().authToken,
+        );
+        if ((getUser?.succeeded ?? true)) {
+          await Navigator.push(
+            context,
+            PageTransition(
+              type: PageTransitionType.fade,
+              duration: Duration(milliseconds: 1000),
+              reverseDuration: Duration(milliseconds: 1000),
+              child: CoursesPageWidget(),
+            ),
+          );
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +113,7 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => CreateAccount2Widget(),
+                                builder: (context) => CreateAccount3Widget(),
                               ),
                             );
                           },

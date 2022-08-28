@@ -1,3 +1,4 @@
+import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -14,7 +15,9 @@ class UpdateProfilePageWidget extends StatefulWidget {
 }
 
 class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
+  ApiCallResponse? updateProfile;
   String? timeZoneUpdateDDValue;
+  TextEditingController? emailUpdateTFController;
   TextEditingController? firstNameUpdateTFController;
   TextEditingController? lastNameUpdateTFController;
   TextEditingController? studentIDUpdateTFController;
@@ -23,6 +26,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
   @override
   void initState() {
     super.initState();
+    emailUpdateTFController = TextEditingController();
     firstNameUpdateTFController = TextEditingController();
     lastNameUpdateTFController = TextEditingController();
     studentIDUpdateTFController = TextEditingController();
@@ -67,154 +71,207 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
           onTap: () => FocusScope.of(context).unfocus(),
           child: Column(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                child: Text(
-                  'The fields marked with an asterisk are required.',
-                  style: FlutterFlowTheme.of(context).bodyText1,
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
+                      child: Text(
+                        'The fields marked with an asterisk are required.',
+                        style: FlutterFlowTheme.of(context).bodyText1,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
+                      child: TextFormField(
+                        controller: firstNameUpdateTFController,
+                        autofocus: true,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          hintText: 'First Name*',
+                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4.0),
+                              topRight: Radius.circular(4.0),
+                            ),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4.0),
+                              topRight: Radius.circular(4.0),
+                            ),
+                          ),
+                          prefixIcon: Icon(
+                            Icons.person,
+                          ),
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyText1,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
+                      child: TextFormField(
+                        controller: lastNameUpdateTFController,
+                        autofocus: true,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          hintText: 'Last Name*',
+                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4.0),
+                              topRight: Radius.circular(4.0),
+                            ),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4.0),
+                              topRight: Radius.circular(4.0),
+                            ),
+                          ),
+                          prefixIcon: Icon(
+                            Icons.person,
+                          ),
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyText1,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
+                      child: TextFormField(
+                        controller: emailUpdateTFController,
+                        autofocus: true,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          hintText: 'Email*',
+                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4.0),
+                              topRight: Radius.circular(4.0),
+                            ),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4.0),
+                              topRight: Radius.circular(4.0),
+                            ),
+                          ),
+                          prefixIcon: Icon(
+                            Icons.person,
+                          ),
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyText1,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
+                      child: TextFormField(
+                        controller: studentIDUpdateTFController,
+                        autofocus: true,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          hintText: 'Student ID*',
+                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4.0),
+                              topRight: Radius.circular(4.0),
+                            ),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4.0),
+                              topRight: Radius.circular(4.0),
+                            ),
+                          ),
+                          prefixIcon: Icon(
+                            Icons.school_rounded,
+                          ),
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyText1,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
+                      child: FlutterFlowDropDown(
+                        options: ['Option 1'],
+                        onChanged: (val) =>
+                            setState(() => timeZoneUpdateDDValue = val),
+                        height: 50,
+                        textStyle:
+                            FlutterFlowTheme.of(context).bodyText1.override(
+                                  fontFamily: 'Open Sans',
+                                  color: Colors.black,
+                                ),
+                        hintText: 'Timezone*',
+                        icon: Icon(
+                          Icons.access_time,
+                          size: 15,
+                        ),
+                        fillColor: Colors.white,
+                        elevation: 2,
+                        borderColor: Colors.transparent,
+                        borderWidth: 0,
+                        borderRadius: 0,
+                        margin: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                        hidesUnderline: true,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                child: TextFormField(
-                  controller: firstNameUpdateTFController,
-                  autofocus: true,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    hintText: 'First Name*',
-                    hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1,
-                      ),
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(4.0),
-                        topRight: Radius.circular(4.0),
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1,
-                      ),
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(4.0),
-                        topRight: Radius.circular(4.0),
-                      ),
-                    ),
-                    prefixIcon: Icon(
-                      Icons.person,
-                    ),
-                  ),
-                  style: FlutterFlowTheme.of(context).bodyText1,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                child: TextFormField(
-                  controller: lastNameUpdateTFController,
-                  autofocus: true,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    hintText: 'Last Name*',
-                    hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1,
-                      ),
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(4.0),
-                        topRight: Radius.circular(4.0),
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1,
-                      ),
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(4.0),
-                        topRight: Radius.circular(4.0),
-                      ),
-                    ),
-                    prefixIcon: Icon(
-                      Icons.person,
-                    ),
-                  ),
-                  style: FlutterFlowTheme.of(context).bodyText1,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                child: TextFormField(
-                  controller: studentIDUpdateTFController,
-                  autofocus: true,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    hintText: 'Student ID*',
-                    hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1,
-                      ),
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(4.0),
-                        topRight: Radius.circular(4.0),
-                      ),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1,
-                      ),
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(4.0),
-                        topRight: Radius.circular(4.0),
-                      ),
-                    ),
-                    prefixIcon: Icon(
-                      Icons.school_rounded,
-                    ),
-                  ),
-                  style: FlutterFlowTheme.of(context).bodyText1,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                child: FlutterFlowDropDown(
-                  options: ['Option 1'],
-                  onChanged: (val) =>
-                      setState(() => timeZoneUpdateDDValue = val),
-                  height: 50,
-                  textStyle: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'Open Sans',
-                        color: Colors.black,
-                      ),
-                  hintText: 'Timezone*',
-                  icon: Icon(
-                    Icons.access_time,
-                    size: 15,
-                  ),
-                  fillColor: Colors.white,
-                  elevation: 2,
-                  borderColor: Colors.transparent,
-                  borderWidth: 0,
-                  borderRadius: 0,
-                  margin: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                  hidesUnderline: true,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 250, 0, 0),
+              Align(
+                alignment: AlignmentDirectional(0, -1),
                 child: FFButtonWidget(
-                  onPressed: () {
-                    print('UpdateProfileBtn pressed ...');
+                  onPressed: () async {
+                    updateProfile = await UpdateProfileCall.call(
+                      token: FFAppState().authToken,
+                      firstName: firstNameUpdateTFController!.text,
+                      lastName: lastNameUpdateTFController!.text,
+                      email: emailUpdateTFController!.text,
+                      timeZone: timeZoneUpdateDDValue,
+                      studentId: studentIDUpdateTFController!.text,
+                    );
+
+                    setState(() {});
                   },
                   text: 'Update Profile',
                   options: FFButtonOptions(

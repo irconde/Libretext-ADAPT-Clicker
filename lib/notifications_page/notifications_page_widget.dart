@@ -1,4 +1,5 @@
 import '../backend/api_requests/api_calls.dart';
+import '../components/no_courses_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
@@ -29,24 +30,31 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
           color: FlutterFlowTheme.of(context).primaryBackground,
           size: 28,
         ),
-        title: Text(
-          'Notifications',
-          style: FlutterFlowTheme.of(context).bodyText1.override(
-                fontFamily: 'Open Sans',
-                color: FlutterFlowTheme.of(context).primaryBackground,
-                fontSize: 28,
-              ),
+        title: Align(
+          alignment: AlignmentDirectional(0, 0),
+          child: Text(
+            'Notifications',
+            style: FlutterFlowTheme.of(context).bodyText1.override(
+                  fontFamily: 'Open Sans',
+                  color: FlutterFlowTheme.of(context).primaryBackground,
+                  fontSize: 28,
+                ),
+          ),
         ),
         actions: [
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 15, 15, 0),
-            child: Text(
-              'Clear All',
-              style: FlutterFlowTheme.of(context).bodyText1.override(
-                    fontFamily: 'Open Sans',
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                    fontSize: 16,
-                  ),
+          Align(
+            alignment: AlignmentDirectional(0, 0),
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+              child: Text(
+                'Clear All',
+                textAlign: TextAlign.center,
+                style: FlutterFlowTheme.of(context).bodyText1.override(
+                      fontFamily: 'Open Sans',
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      fontSize: 16,
+                    ),
+              ),
             ),
           ),
         ],
@@ -86,6 +94,9 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                           GetEnrollmentsCall.enrollmentsArray(
                         listViewGetEnrollmentsResponse.jsonBody,
                       ).toList();
+                      if (enrollmentsList.isEmpty) {
+                        return NoCoursesWidget();
+                      }
                       return RefreshIndicator(
                         onRefresh: () async {
                           setState(() => _apiRequestCompleter = null);

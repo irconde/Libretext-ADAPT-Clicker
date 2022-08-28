@@ -1,6 +1,10 @@
+import '../backend/api_requests/api_calls.dart';
+import '../courses_page/courses_page_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../login_page/login_page_widget.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,6 +16,7 @@ class CreateAccount3Widget extends StatefulWidget {
 }
 
 class _CreateAccount3WidgetState extends State<CreateAccount3Widget> {
+  ApiCallResponse? createUser;
   TextEditingController? confirmPasswordFieldCAController;
   late bool confirmPasswordFieldCAVisibility;
   TextEditingController? emailFieldCAController;
@@ -49,10 +54,15 @@ class _CreateAccount3WidgetState extends State<CreateAccount3Widget> {
             children: [
               Align(
                 alignment: AlignmentDirectional(-0.94, -0.48),
-                child: Icon(
-                  Icons.arrow_back,
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  size: 28,
+                child: InkWell(
+                  onTap: () async {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: FlutterFlowTheme.of(context).primaryBackground,
+                    size: 28,
+                  ),
                 ),
               ),
               Align(
@@ -64,6 +74,15 @@ class _CreateAccount3WidgetState extends State<CreateAccount3Widget> {
                         color: FlutterFlowTheme.of(context).primaryBackground,
                         fontSize: 32,
                       ),
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(0.1, 1),
+                child: Image.asset(
+                  'assets/images/libreAddPerson.png',
+                  width: 175,
+                  height: 150,
+                  fit: BoxFit.contain,
                 ),
               ),
             ],
@@ -373,8 +392,53 @@ class _CreateAccount3WidgetState extends State<CreateAccount3Widget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     FFButtonWidget(
-                      onPressed: () {
-                        print('RegisterButtonCA pressed ...');
+                      onPressed: () async {
+                        createUser = await CreateUserCall.call(
+                          email: emailFieldCAController!.text,
+                          password: passwordFieldCAController!.text,
+                          passwordConfirmation:
+                              confirmPasswordFieldCAController!.text,
+                          firstName: firstNameFieldCAController!.text,
+                          lastName: lastNameFieldCAController!.text,
+                          registrationType: '3',
+                          studentId: studentIDFieldController!.text,
+                          timeZone: 'America/Belize',
+                        );
+                        if ((createUser?.succeeded ?? true)) {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CoursesPageWidget(),
+                            ),
+                          );
+                        } else {
+                          setState(
+                              () => FFAppState().errorsList = (getJsonField(
+                                    (createUser?.jsonBody ?? ''),
+                                    r'''$.errors..*''',
+                                  ) as List)
+                                      .map<String>((s) => s.toString())
+                                      .toList());
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                valueOrDefault<String>(
+                                  functions.getTopError(
+                                      FFAppState().errorsList.toList()),
+                                  'Invalid Data',
+                                ),
+                                style: TextStyle(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                ),
+                              ),
+                              duration: Duration(milliseconds: 4000),
+                              backgroundColor: Color(0xFFFF0000),
+                            ),
+                          );
+                        }
+
+                        setState(() {});
                       },
                       text: 'Register',
                       options: FFButtonOptions(
@@ -450,13 +514,23 @@ class _CreateAccount3WidgetState extends State<CreateAccount3Widget> {
                     'Already have an account? ',
                     style: FlutterFlowTheme.of(context).bodyText1,
                   ),
-                  Text(
-                    'Login',
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
-                          fontFamily: 'Open Sans',
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                          decoration: TextDecoration.underline,
+                  InkWell(
+                    onTap: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginPageWidget(),
                         ),
+                      );
+                    },
+                    child: Text(
+                      'Login',
+                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                            fontFamily: 'Open Sans',
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            decoration: TextDecoration.underline,
+                          ),
+                    ),
                   ),
                 ],
               ),

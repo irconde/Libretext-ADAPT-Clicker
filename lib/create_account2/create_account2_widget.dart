@@ -1,6 +1,7 @@
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../login_page/login_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -50,10 +51,15 @@ class _CreateAccount2WidgetState extends State<CreateAccount2Widget> {
             children: [
               Align(
                 alignment: AlignmentDirectional(-0.94, -0.48),
-                child: Icon(
-                  Icons.arrow_back,
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  size: 28,
+                child: InkWell(
+                  onTap: () async {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: FlutterFlowTheme.of(context).primaryBackground,
+                    size: 28,
+                  ),
                 ),
               ),
               Align(
@@ -68,7 +74,7 @@ class _CreateAccount2WidgetState extends State<CreateAccount2Widget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.18, 0.89),
+                alignment: AlignmentDirectional(0.1, 1),
                 child: Image.asset(
                   'assets/images/libreAddPerson.png',
                   width: 175,
@@ -418,13 +424,23 @@ class _CreateAccount2WidgetState extends State<CreateAccount2Widget> {
                       'Already have an account? ',
                       style: FlutterFlowTheme.of(context).bodyText1,
                     ),
-                    Text(
-                      'Login',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Open Sans',
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            decoration: TextDecoration.underline,
+                    InkWell(
+                      onTap: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginPageWidget(),
                           ),
+                        );
+                      },
+                      child: Text(
+                        'Login',
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              decoration: TextDecoration.underline,
+                            ),
+                      ),
                     ),
                   ],
                 ),

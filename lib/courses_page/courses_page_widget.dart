@@ -1,4 +1,4 @@
-import '../assignment_details_page/assignment_details_page_widget.dart';
+import '../assignments_page/assignments_page_widget.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/add_course_widget.dart';
 import '../components/no_courses_widget.dart';
@@ -27,10 +27,15 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
-        leading: Icon(
-          Icons.menu,
-          color: FlutterFlowTheme.of(context).primaryBackground,
-          size: 28,
+        leading: InkWell(
+          onTap: () async {
+            scaffoldKey.currentState!.openDrawer();
+          },
+          child: Icon(
+            Icons.menu,
+            color: FlutterFlowTheme.of(context).primaryBackground,
+            size: 28,
+          ),
         ),
         title: Text(
           'Courses',
@@ -379,8 +384,12 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        AssignmentDetailsPageWidget(),
+                                    builder: (context) => AssignmentsPageWidget(
+                                      courseNumber: getJsonField(
+                                        enrollmentsListItem,
+                                        r'''$.id''',
+                                      ),
+                                    ),
                                   ),
                                 );
                               },

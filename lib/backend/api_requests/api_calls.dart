@@ -60,6 +60,11 @@ class CreateUserCall {
       returnBody: true,
     );
   }
+
+  static dynamic errorslist(dynamic response) => getJsonField(
+        response,
+        r'''$.errors.*..*''',
+      );
 }
 
 class ForgotPasswordCall {
@@ -144,5 +149,245 @@ class GetEnrollmentsCall {
   static dynamic enrollmentsArray(dynamic response) => getJsonField(
         response,
         r'''$.enrollments''',
+      );
+}
+
+class UpdateProfileCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? firstName = '',
+    String? lastName = '',
+    String? email = '',
+    String? timeZone = '',
+    String? studentId = '',
+  }) {
+    final body = '''
+{
+  "first_name": "${firstName}",
+  "last_name": "${lastName}",
+  "email": "${email}",
+  "student_id": "${studentId}",
+  "time_zone": "${timeZone}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'updateProfile',
+      apiUrl: 'https://adapt.libretexts.org/api/settings/profile',
+      callType: ApiCallType.PATCH,
+      headers: {
+        'accept': 'application/json',
+        'authorization': '${token}',
+      },
+      params: {
+        'first_name': firstName,
+        'last_name': lastName,
+        'email': email,
+        'time_zone': timeZone,
+        'student_id': studentId,
+      },
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+    );
+  }
+}
+
+class UpdatePasswordCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? password = '',
+    String? passwordConfirmation = '',
+  }) {
+    final body = '''
+{
+  "password": "${password}",
+  "password_confirmation": "${passwordConfirmation}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'updatePassword',
+      apiUrl: 'https://adapt.libretexts.org/api/settings/password',
+      callType: ApiCallType.PATCH,
+      headers: {
+        'accept': 'application/json',
+        'authorization': '${token}',
+      },
+      params: {
+        'password': password,
+        'passwordConfirmation': passwordConfirmation,
+      },
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+    );
+  }
+}
+
+class AddCourseCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? accessCode = '',
+    bool? isLms,
+    String? timeZone = '',
+  }) {
+    final body = '''
+{
+  "access_code": "${accessCode}",
+  "is_lms": "${isLms}",
+  "time_zone": "${timeZone}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'addCourse',
+      apiUrl: 'https://adapt.libretexts.org/api/enrollments',
+      callType: ApiCallType.POST,
+      headers: {
+        'Accept': 'application/json',
+        'authorization': '${token}',
+      },
+      params: {
+        'access_code': accessCode,
+        'is_lms': isLms,
+        'time_zone': timeZone,
+      },
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+    );
+  }
+}
+
+class ContactUsCall {
+  static Future<ApiCallResponse> call({
+    String? email = '',
+    String? name = '',
+    String? school = '',
+    String? subject = 'General Inquiry',
+    String? text = '',
+    String? toUserId = 'contact_us',
+    String? type = '',
+  }) {
+    final body = '''
+{
+  "email": "${email}",
+  "name": "${name}",
+  "school": "${school}",
+  "subject": "${subject}",
+  "text": "${text}",
+  "to_user_id": "${toUserId}",
+  "type": "${type}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'contactUs',
+      apiUrl: 'https://adapt.libretexts.org/api/email/send',
+      callType: ApiCallType.POST,
+      headers: {
+        'accept': 'application/json',
+      },
+      params: {
+        'email': email,
+        'name': name,
+        'school': school,
+        'subject': subject,
+        'text': text,
+        'to_user_id': toUserId,
+        'type': type,
+      },
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+    );
+  }
+}
+
+class GetScoresByUserCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    int? course,
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'getScoresByUser',
+      apiUrl:
+          'https://adapt.libretexts.org/api/scores/${course}/get-course-scores-by-user',
+      callType: ApiCallType.GET,
+      headers: {
+        'accept': 'application/json',
+        'authorization': '${token}',
+      },
+      params: {},
+      returnBody: true,
+    );
+  }
+
+  static dynamic assignments(dynamic response) => getJsonField(
+        response,
+        r'''$.assignments''',
+      );
+}
+
+class ViewCall {
+  static Future<ApiCallResponse> call({
+    int? assignmentID,
+    String? token = '',
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'view',
+      apiUrl:
+          'https://adapt.libretexts.org/api/assignments/${assignmentID}/questions/view',
+      callType: ApiCallType.GET,
+      headers: {
+        'accept': 'application/json',
+        'authorization': '${token}',
+      },
+      params: {},
+      returnBody: true,
+    );
+  }
+
+  static dynamic questions(dynamic response) => getJsonField(
+        response,
+        r'''$.questions''',
+      );
+}
+
+class GetAssignmentSummaryCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    int? assignmentNum,
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'getAssignmentSummary',
+      apiUrl:
+          'https://adapt.libretexts.org/api/assignments/${assignmentNum}/summary',
+      callType: ApiCallType.GET,
+      headers: {
+        'accept': 'application/json',
+        'authorization': '${token}',
+      },
+      params: {},
+      returnBody: true,
+    );
+  }
+
+  static dynamic id(dynamic response) => getJsonField(
+        response,
+        r'''$.assignment.id''',
+      );
+  static dynamic name(dynamic response) => getJsonField(
+        response,
+        r'''$.assignment.name''',
+      );
+  static dynamic latePolicy(dynamic response) => getJsonField(
+        response,
+        r'''$.assignment.formatted_late_policy''',
+      );
+  static dynamic points(dynamic response) => getJsonField(
+        response,
+        r'''$.assignment.total_points''',
+      );
+  static dynamic dueDate(dynamic response) => getJsonField(
+        response,
+        r'''$.assignment.formatted_due''',
+      );
+  static dynamic assignment(dynamic response) => getJsonField(
+        response,
+        r'''$.assignment''',
       );
 }

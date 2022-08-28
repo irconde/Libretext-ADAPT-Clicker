@@ -1,5 +1,6 @@
 import '../backend/api_requests/api_calls.dart';
 import '../courses_page/courses_page_widget.dart';
+import '../create_account2/create_account2_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_toggle_icon.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -45,10 +46,15 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
             children: [
               Align(
                 alignment: AlignmentDirectional(-0.94, -0.48),
-                child: Icon(
-                  Icons.arrow_back,
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  size: 28,
+                child: InkWell(
+                  onTap: () async {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: FlutterFlowTheme.of(context).primaryBackground,
+                    size: 28,
+                  ),
                 ),
               ),
               Align(
@@ -63,11 +69,11 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(-0.12, 0.7),
-                child: Image.network(
-                  '',
-                  width: 100,
-                  height: 100,
+                alignment: AlignmentDirectional(0, 0.5),
+                child: Image.asset(
+                  'assets/images/libreHand.png',
+                  width: 130,
+                  height: 130,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -406,16 +412,27 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                 'Don\'t have an account? ',
                                 style: FlutterFlowTheme.of(context).bodyText1,
                               ),
-                              Text(
-                                'Sign up',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Open Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                      decoration: TextDecoration.underline,
+                              InkWell(
+                                onTap: () async {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          CreateAccount2Widget(),
                                     ),
+                                  );
+                                },
+                                child: Text(
+                                  'Sign up',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Open Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                ),
                               ),
                             ],
                           ),
