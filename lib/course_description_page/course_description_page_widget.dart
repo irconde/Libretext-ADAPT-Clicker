@@ -158,7 +158,7 @@ class _CourseDescriptionPageWidgetState
                         onPressed: () {
                           print('ConfirmJoinAddCBtn pressed ...');
                         },
-                        text: 'Confirm',
+                        text: 'CONFIRM',
                         options: FFButtonOptions(
                           width: 130,
                           height: 40,
@@ -167,7 +167,7 @@ class _CourseDescriptionPageWidgetState
                               FlutterFlowTheme.of(context).subtitle2.override(
                                     fontFamily: 'Open Sans',
                                     color: Colors.white,
-                                    fontSize: 20,
+                                    fontSize: 18,
                                   ),
                           borderSide: BorderSide(
                             color: Colors.transparent,

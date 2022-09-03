@@ -1,5 +1,5 @@
 import '../backend/api_requests/api_calls.dart';
-import '../components/no_courses_widget.dart';
+import '../components/no_notifications_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
@@ -95,7 +95,9 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                         listViewGetEnrollmentsResponse.jsonBody,
                       ).toList();
                       if (enrollmentsList.isEmpty) {
-                        return NoCoursesWidget();
+                        return Center(
+                          child: NoNotificationsWidget(),
+                        );
                       }
                       return RefreshIndicator(
                         onRefresh: () async {

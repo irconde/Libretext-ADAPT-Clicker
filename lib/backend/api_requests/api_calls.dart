@@ -391,3 +391,23 @@ class GetAssignmentSummaryCall {
         r'''$.assignment''',
       );
 }
+
+class LogoutCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'logout',
+      apiUrl: 'https://adapt.libretexts.org/api/logout',
+      callType: ApiCallType.POST,
+      headers: {
+        'accept': 'application/json',
+        'authorization': '${token}',
+        'authority': 'adapt.libretexts.org',
+      },
+      params: {},
+      bodyType: BodyType.JSON,
+      returnBody: true,
+    );
+  }
+}

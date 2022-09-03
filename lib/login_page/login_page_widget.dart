@@ -1,11 +1,11 @@
 import '../backend/api_requests/api_calls.dart';
+import '../components/reset_password_widget.dart';
 import '../courses_page/courses_page_widget.dart';
-import '../create_account2/create_account2_widget.dart';
+import '../create_account/create_account_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_toggle_icon.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../forgot_password/forgot_password_widget.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -257,12 +257,21 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                           ),
                                           InkWell(
                                             onTap: () async {
-                                              await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ForgotPasswordWidget(),
-                                                ),
+                                              await showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryBackground,
+                                                context: context,
+                                                builder: (context) {
+                                                  return Padding(
+                                                    padding:
+                                                        MediaQuery.of(context)
+                                                            .viewInsets,
+                                                    child:
+                                                        ResetPasswordWidget(),
+                                                  );
+                                                },
                                               );
                                             },
                                             child: Text(
@@ -418,7 +427,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          CreateAccount2Widget(),
+                                          CreateAccountWidget(),
                                     ),
                                   );
                                 },

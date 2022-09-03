@@ -27,8 +27,8 @@ int addOne(int value) {
   return ++value;
 }
 
-bool isBasic(int nontech) {
-  return nontech < 1;
+bool isBasic(String techIframe) {
+  return techIframe != '';
 }
 
 bool isTextSubmission(String textSubmission) {

@@ -17,6 +17,7 @@ class FFAppState {
     prefs = await SharedPreferences.getInstance();
     _rememberMe = prefs.getBool('ff_rememberMe') ?? _rememberMe;
     _authToken = prefs.getString('ff_authToken') ?? _authToken;
+    _timezones = prefs.getStringList('ff_timezones') ?? _timezones;
   }
 
   late SharedPreferences prefs;
@@ -46,6 +47,25 @@ class FFAppState {
   bool isBasic = false;
 
   bool hasSubmission = false;
+
+  List<String> _timezones = [' Niue Time', ' Samoa Time'];
+  List<String> get timezones => _timezones;
+  set timezones(List<String> _value) {
+    _timezones = _value;
+    prefs.setStringList('ff_timezones', _value);
+  }
+
+  void addToTimezones(String _value) {
+    _timezones.add(_value);
+    prefs.setStringList('ff_timezones', _timezones);
+  }
+
+  void removeFromTimezones(String _value) {
+    _timezones.remove(_value);
+    prefs.setStringList('ff_timezones', _timezones);
+  }
+
+  bool errorText = false;
 }
 
 LatLng? _latLngFromString(String? val) {

@@ -287,8 +287,8 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                 setState(() => FFAppState().isBasic =
                                         functions.isBasic(getJsonField(
                                       questionsListItem,
-                                      r'''$.non_technology''',
-                                    )));
+                                      r'''$.technology_iframe''',
+                                    ).toString()));
                                 setState(() =>
                                     FFAppState().hasSubmission = getJsonField(
                                       questionsListItem,

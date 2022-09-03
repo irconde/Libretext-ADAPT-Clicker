@@ -310,8 +310,8 @@ class _AssignmentDetailsWidgetState extends State<AssignmentDetailsWidget>
                                                   functions
                                                       .isBasic(getJsonField(
                                                 questionsItem,
-                                                r'''$.non_technology''',
-                                              )));
+                                                r'''$.technology_iframe''',
+                                              ).toString()));
                                           setState(() => FFAppState()
                                                   .hasSubmission = getJsonField(
                                                 questionsItem,

@@ -1,3 +1,5 @@
+import '../backend/api_requests/api_calls.dart';
+import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -11,13 +13,39 @@ class AddCourseWidget extends StatefulWidget {
   _AddCourseWidgetState createState() => _AddCourseWidgetState();
 }
 
-class _AddCourseWidgetState extends State<AddCourseWidget> {
-  TextEditingController? textController;
+class _AddCourseWidgetState extends State<AddCourseWidget>
+    with TickerProviderStateMixin {
+  ApiCallResponse? addCourse;
+  TextEditingController? accessCodeACController;
+  final animationsMap = {
+    'textOnActionTriggerAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onActionTrigger,
+      duration: 2400,
+      hideBeforeAnimating: true,
+      fadeIn: true,
+      initialState: AnimationState(
+        offset: Offset(0, 0),
+        scale: 1,
+        opacity: 1,
+      ),
+      finalState: AnimationState(
+        offset: Offset(0, 0),
+        scale: 1,
+        opacity: 0,
+      ),
+    ),
+  };
 
   @override
   void initState() {
     super.initState();
-    textController = TextEditingController();
+    setupTriggerAnimations(
+      animationsMap.values
+          .where((anim) => anim.trigger == AnimationTrigger.onActionTrigger),
+      this,
+    );
+
+    accessCodeACController = TextEditingController();
   }
 
   @override
@@ -63,9 +91,9 @@ class _AddCourseWidgetState extends State<AddCourseWidget> {
                   color: FlutterFlowTheme.of(context).primaryText,
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(32, 24, 32, 24),
+                  padding: EdgeInsetsDirectional.fromSTEB(32, 24, 32, 0),
                   child: TextFormField(
-                    controller: textController,
+                    controller: accessCodeACController,
                     autofocus: true,
                     obscureText: false,
                     decoration: InputDecoration(
@@ -106,13 +134,43 @@ class _AddCourseWidgetState extends State<AddCourseWidget> {
                     textAlign: TextAlign.start,
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(40, 0, 0, 16),
+                  child: Text(
+                    'Code not found',
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily: 'Open Sans',
+                          color: Color(0xFFFF0000),
+                          fontSize: 13,
+                          fontWeight: FontWeight.normal,
+                        ),
+                  ).animated([animationsMap['textOnActionTriggerAnimation']!]),
+                ),
                 Align(
                   alignment: AlignmentDirectional(0, 0),
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(32, 0, 32, 24),
                     child: FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
+                      onPressed: () async {
+                        addCourse = await AddCourseCall.call(
+                          token: FFAppState().authToken,
+                          accessCode: accessCodeACController!.text,
+                          timeZone: 'America/Belize',
+                        );
+                        if ((addCourse?.succeeded ?? true)) {
+                          Navigator.pop(context);
+                        } else {
+                          if (animationsMap['textOnActionTriggerAnimation'] ==
+                              null) {
+                            return;
+                          }
+                          await (animationsMap['textOnActionTriggerAnimation']!
+                                  .curvedAnimation
+                                  .parent as AnimationController)
+                              .forward(from: 0.0);
+                        }
+
+                        setState(() {});
                       },
                       text: 'Join Course',
                       options: FFButtonOptions(
