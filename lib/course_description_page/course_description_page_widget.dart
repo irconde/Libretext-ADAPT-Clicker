@@ -36,7 +36,16 @@ class _CourseDescriptionPageWidgetState
                 fontSize: 28,
               ),
         ),
-        actions: [],
+        actions: [
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+            child: Icon(
+              Icons.notifications,
+              color: FlutterFlowTheme.of(context).primaryBackground,
+              size: 28,
+            ),
+          ),
+        ],
         centerTitle: true,
         elevation: 2,
       ),
@@ -149,7 +158,7 @@ class _CourseDescriptionPageWidgetState
                         onPressed: () {
                           print('ConfirmJoinAddCBtn pressed ...');
                         },
-                        text: 'Confirm',
+                        text: 'CONFIRM',
                         options: FFButtonOptions(
                           width: 130,
                           height: 40,
@@ -158,7 +167,7 @@ class _CourseDescriptionPageWidgetState
                               FlutterFlowTheme.of(context).subtitle2.override(
                                     fontFamily: 'Open Sans',
                                     color: Colors.white,
-                                    fontSize: 20,
+                                    fontSize: 18,
                                   ),
                           borderSide: BorderSide(
                             color: Colors.transparent,

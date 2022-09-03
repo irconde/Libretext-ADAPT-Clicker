@@ -1,9 +1,14 @@
+import '../assignments_page/assignments_page_widget.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/add_course_widget.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
+import '../components/no_courses_widget.dart';
+import '../contact_us/contact_us_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../reset_password_page/reset_password_page_widget.dart';
+import '../update_profile_page/update_profile_page_widget.dart';
+import '../welcome_page/welcome_page_widget.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,13 +21,48 @@ class CoursesPageWidget extends StatefulWidget {
 }
 
 class _CoursesPageWidgetState extends State<CoursesPageWidget> {
-  Completer<ApiCallResponse>? _apiRequestCompleter;
+  ApiCallResponse? logout;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  Completer<ApiCallResponse>? _apiRequestCompleter;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+        automaticallyImplyLeading: false,
+        leading: InkWell(
+          onTap: () async {
+            scaffoldKey.currentState!.openDrawer();
+          },
+          child: Icon(
+            Icons.menu,
+            color: FlutterFlowTheme.of(context).primaryBackground,
+            size: 28,
+          ),
+        ),
+        title: Text(
+          'Courses',
+          style: FlutterFlowTheme.of(context).bodyText1.override(
+                fontFamily: 'Open Sans',
+                color: FlutterFlowTheme.of(context).primaryBackground,
+                fontSize: 32,
+              ),
+        ),
+        actions: [
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+            child: Icon(
+              Icons.notifications,
+              color: FlutterFlowTheme.of(context).primaryBackground,
+              size: 28,
+            ),
+          ),
+        ],
+        centerTitle: true,
+        elevation: 4,
+      ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -79,175 +119,251 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                           ),
                           Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(36, 16, 0, 0),
+                                EdgeInsetsDirectional.fromSTEB(36, 16, 36, 0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 4, 0, 8),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 4, 0),
-                                        child: Icon(
-                                          Icons.library_books_outlined,
-                                          color: FlutterFlowTheme.of(context)
-                                              .drawerIconColor,
-                                          size: 26,
+                                      0, 32, 0, 16),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              CoursesPageWidget(),
                                         ),
-                                      ),
-                                      Text(
-                                        'Courses',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                              fontFamily: 'Open Sans',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 8, 0, 8),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 4, 0),
-                                        child: Icon(
-                                          Icons.person_outline,
-                                          color: FlutterFlowTheme.of(context)
-                                              .drawerIconColor,
-                                          size: 26,
-                                        ),
-                                      ),
-                                      Text(
-                                        'Profile',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                              fontFamily: 'Open Sans',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 8, 0, 24),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 4, 0),
-                                        child: Icon(
-                                          Icons.lock_outlined,
-                                          color: FlutterFlowTheme.of(context)
-                                              .drawerIconColor,
-                                          size: 26,
-                                        ),
-                                      ),
-                                      Text(
-                                        'Password',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                              fontFamily: 'Open Sans',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Divider(
-                                  height: 8,
-                                  thickness: 1,
-                                  endIndent: 40,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 8, 0, 8),
-                                    child: Text(
-                                      'Contact Us',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.normal,
+                                      );
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 0, 4, 0),
+                                          child: Icon(
+                                            Icons.menu_book,
+                                            color: Color(0xFF787878),
+                                            size: 26,
                                           ),
+                                        ),
+                                        Text(
+                                          'Courses',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Open Sans',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
                                 Divider(
-                                  height: 8,
+                                  height: 32,
                                   thickness: 1,
-                                  endIndent: 40,
                                   color:
                                       FlutterFlowTheme.of(context).primaryText,
                                 ),
-                              ],
-                            ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(36, 24, 0, 0),
-                              child: FFButtonWidget(
-                                onPressed: () {
-                                  print('Button pressed ...');
-                                },
-                                text: 'Log Out',
-                                options: FFButtonOptions(
-                                  width: 220,
-                                  height: 40,
-                                  color: Color(0xFF2685C9),
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: Colors.white,
-                                      ),
-                                  elevation: 4,
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 16, 0, 16),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              UpdateProfilePageWidget(),
+                                        ),
+                                      );
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 0, 4, 0),
+                                          child: Icon(
+                                            Icons.person_outline,
+                                            color: Color(0xFF787878),
+                                            size: 26,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Profile',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Open Sans',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 16, 0, 16),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ResetPasswordPageWidget(),
+                                        ),
+                                      );
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 0, 4, 0),
+                                          child: Icon(
+                                            Icons.lock_outlined,
+                                            color: Color(0xFF787878),
+                                            size: 26,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Password',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Open Sans',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Divider(
+                                  height: 32,
+                                  thickness: 1,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 16, 0, 0),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ContactUsWidget(),
+                                        ),
+                                      );
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 0, 4, 0),
+                                          child: Icon(
+                                            Icons.lock_outlined,
+                                            color: Color(0xFF787878),
+                                            size: 26,
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional(-1, 0),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 8, 0, 8),
+                                            child: Text(
+                                              'Contact Us',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Open Sans',
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
                     ),
                   ),
+                Align(
+                  alignment: AlignmentDirectional(0, 1),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                    child: FFButtonWidget(
+                      onPressed: () async {
+                        logout = await LogoutCall.call(
+                          token: FFAppState().authToken,
+                        );
+                        setState(() => FFAppState().authToken = '');
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => WelcomePageWidget(),
+                          ),
+                        );
+
+                        setState(() {});
+                      },
+                      text: 'LOGOUT',
+                      options: FFButtonOptions(
+                        width: 220,
+                        height: 40,
+                        color: Color(0x002685C9),
+                        textStyle:
+                            FlutterFlowTheme.of(context).subtitle2.override(
+                                  fontFamily: 'Open Sans',
+                                  color: Color(0xFF787878),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                        elevation: 4,
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(0),
+                      ),
+                    ),
+                  ),
+                ),
                 Align(
                   alignment: AlignmentDirectional(-0.35, -1.05),
                   child: Image.asset(
@@ -267,61 +383,6 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Container(
-              width: double.infinity,
-              height: 75,
-              decoration: BoxDecoration(
-                color: FlutterFlowTheme.of(context).primaryColor,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-                    child: InkWell(
-                      onTap: () async {
-                        scaffoldKey.currentState!.openDrawer();
-                      },
-                      child: Icon(
-                        Icons.menu,
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                        size: 28,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
-                      child: Text(
-                        'Courses',
-                        textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Open Sans',
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              fontSize: 24,
-                            ),
-                      ),
-                    ),
-                  ),
-                  FlutterFlowIconButton(
-                    borderColor: Colors.transparent,
-                    borderRadius: 30,
-                    borderWidth: 1,
-                    buttonSize: 75,
-                    icon: Icon(
-                      Icons.notifications,
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                      size: 36,
-                    ),
-                    onPressed: () {
-                      print('IconButton pressed ...');
-                    },
-                  ),
-                ],
-              ),
-            ),
             Container(
               width: double.infinity,
               height: 26,
@@ -378,6 +439,11 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                     final enrollmentsList = GetEnrollmentsCall.enrollmentsArray(
                       listViewGetEnrollmentsResponse.jsonBody,
                     ).toList();
+                    if (enrollmentsList.isEmpty) {
+                      return Center(
+                        child: NoCoursesWidget(),
+                      );
+                    }
                     return RefreshIndicator(
                       onRefresh: () async {
                         setState(() => _apiRequestCompleter = null);
@@ -393,58 +459,81 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                               enrollmentsList[enrollmentsListIndex];
                           return Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(24, 24, 0, 0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  getJsonField(
-                                    enrollmentsListItem,
-                                    r'''$.course_section_name''',
-                                  ).toString(),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                        fontSize: 18,
+                                EdgeInsetsDirectional.fromSTEB(24, 24, 24, 0),
+                            child: InkWell(
+                              onTap: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AssignmentsPageWidget(
+                                      courseNumber: getJsonField(
+                                        enrollmentsListItem,
+                                        r'''$.id''',
                                       ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 8, 0, 8),
-                                  child: Text(
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
                                     getJsonField(
                                       enrollmentsListItem,
-                                      r'''$.instructor''',
+                                      r'''$.course_section_name''',
                                     ).toString(),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
                                           fontFamily: 'Open Sans',
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          fontWeight: FontWeight.normal,
+                                              .primaryColor,
+                                          fontSize: 18,
                                         ),
                                   ),
-                                ),
-                                Text(
-                                  getJsonField(
-                                    enrollmentsListItem,
-                                    r'''$.id''',
-                                  ).toString(),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                ),
-                              ],
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 8, 0, 8),
+                                    child: Text(
+                                      getJsonField(
+                                        enrollmentsListItem,
+                                        r'''$.instructor''',
+                                      ).toString(),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 16),
+                                    child: Text(
+                                      getJsonField(
+                                        enrollmentsListItem,
+                                        r'''$.id''',
+                                      ).toString(),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 1,
+                                    thickness: 1,
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         },

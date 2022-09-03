@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/lat_lng.dart';
+import 'dart:convert';
 
 class FFAppState {
   static final FFAppState _instance = FFAppState._internal();
@@ -16,6 +17,7 @@ class FFAppState {
     prefs = await SharedPreferences.getInstance();
     _rememberMe = prefs.getBool('ff_rememberMe') ?? _rememberMe;
     _authToken = prefs.getString('ff_authToken') ?? _authToken;
+    _timezones = prefs.getStringList('ff_timezones') ?? _timezones;
   }
 
   late SharedPreferences prefs;
@@ -33,6 +35,37 @@ class FFAppState {
     _authToken = _value;
     prefs.setString('ff_authToken', _value);
   }
+
+  List<String> errorsList = [];
+
+  dynamic view;
+
+  bool assignmentUp = false;
+
+  dynamic question;
+
+  bool isBasic = false;
+
+  bool hasSubmission = false;
+
+  List<String> _timezones = [' Niue Time', ' Samoa Time'];
+  List<String> get timezones => _timezones;
+  set timezones(List<String> _value) {
+    _timezones = _value;
+    prefs.setStringList('ff_timezones', _value);
+  }
+
+  void addToTimezones(String _value) {
+    _timezones.add(_value);
+    prefs.setStringList('ff_timezones', _timezones);
+  }
+
+  void removeFromTimezones(String _value) {
+    _timezones.remove(_value);
+    prefs.setStringList('ff_timezones', _timezones);
+  }
+
+  bool errorText = false;
 }
 
 LatLng? _latLngFromString(String? val) {

@@ -1,10 +1,13 @@
+import '../backend/api_requests/api_calls.dart';
 import '../contact_us/contact_us_widget.dart';
+import '../courses_page/courses_page_widget.dart';
 import '../create_account/create_account_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../login_page/login_page_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WelcomePageWidget extends StatefulWidget {
@@ -15,7 +18,32 @@ class WelcomePageWidget extends StatefulWidget {
 }
 
 class _WelcomePageWidgetState extends State<WelcomePageWidget> {
+  ApiCallResponse? getUser;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (FFAppState().authToken != null && FFAppState().authToken != '') {
+        getUser = await GetUserCall.call(
+          token: FFAppState().authToken,
+        );
+        if ((getUser?.succeeded ?? true)) {
+          await Navigator.push(
+            context,
+            PageTransition(
+              type: PageTransitionType.fade,
+              duration: Duration(milliseconds: 1000),
+              reverseDuration: Duration(milliseconds: 1000),
+              child: CoursesPageWidget(),
+            ),
+          );
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,23 +59,24 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
               alignment: AlignmentDirectional(0, 0),
               children: [
                 Align(
-                  alignment: AlignmentDirectional(0, -1.08),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
-                    child: Image.asset(
-                      'assets/images/libretexts_logo_stacked_blue.png',
-                      width: 244,
-                      height: 170,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: AlignmentDirectional(0, 0),
+                  alignment: AlignmentDirectional(0, -0.4),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      Align(
+                        alignment: AlignmentDirectional(0, -0.6),
+                        child: Padding(
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(42, 42, 42, 42),
+                          child: Image.asset(
+                            'assets/images/libretexts_logo_stacked_blue.png',
+                            width: 244,
+                            height: 170,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
                         child: FFButtonWidget(
