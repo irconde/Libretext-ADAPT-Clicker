@@ -57,36 +57,43 @@ class _AssignmentDetailsWidgetState extends State<AssignmentDetailsWidget>
       mainAxisSize: MainAxisSize.max,
       children: [
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-          child: Stack(
+          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 0),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
             children: [
-              Align(
-                alignment: AlignmentDirectional(-0.93, 0),
-                child: InkWell(
-                  onTap: () async {
-                    Navigator.pop(context);
-                  },
-                  child: Icon(
-                    Icons.close_outlined,
-                    color: Colors.black,
-                    size: 36,
+              Expanded(
+                flex: 1,
+                child: Align(
+                  alignment: AlignmentDirectional(-0.93, 0),
+                  child: InkWell(
+                    onTap: () async {
+                      Navigator.pop(context);
+                    },
+                    child: Icon(
+                      Icons.close_outlined,
+                      color: Colors.black,
+                      size: 36,
+                    ),
                   ),
                 ),
               ),
-              Align(
-                alignment: AlignmentDirectional(0, 0),
-                child: Text(
-                  getJsonField(
-                    widget.assignmentSum,
-                    r'''$.name''',
-                  ).toString(),
-                  textAlign: TextAlign.center,
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'Open Sans',
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                        fontSize: 24,
-                      ),
-                ).animated([animationsMap['textOnActionTriggerAnimation']!]),
+              Expanded(
+                flex: 4,
+                child: Align(
+                  alignment: AlignmentDirectional(0, 0),
+                  child: Text(
+                    getJsonField(
+                      widget.assignmentSum,
+                      r'''$.name''',
+                    ).toString(),
+                    textAlign: TextAlign.center,
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily: 'Open Sans',
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          fontSize: 24,
+                        ),
+                  ).animated([animationsMap['textOnActionTriggerAnimation']!]),
+                ),
               ),
             ],
           ),

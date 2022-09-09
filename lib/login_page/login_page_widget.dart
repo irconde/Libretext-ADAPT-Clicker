@@ -18,10 +18,13 @@ class LoginPageWidget extends StatefulWidget {
 }
 
 class _LoginPageWidgetState extends State<LoginPageWidget> {
-  ApiCallResponse? loginAttempt;
   TextEditingController? textController1;
+
   TextEditingController? textController2;
+
   late bool passwordVisibility;
+
+  ApiCallResponse? loginAttempt;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -137,6 +140,26 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                           topRight: Radius.circular(4.0),
                                         ),
                                       ),
+                                      errorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(4.0),
+                                          topRight: Radius.circular(4.0),
+                                        ),
+                                      ),
+                                      focusedErrorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(4.0),
+                                          topRight: Radius.circular(4.0),
+                                        ),
+                                      ),
                                       filled: true,
                                       fillColor: FlutterFlowTheme.of(context)
                                           .textFieldBackground,
@@ -176,6 +199,26 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                         ),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(4.0),
+                                          topRight: Radius.circular(4.0),
+                                        ),
+                                      ),
+                                      errorBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(4.0),
+                                          topRight: Radius.circular(4.0),
+                                        ),
+                                      ),
+                                      focusedErrorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
@@ -324,22 +367,34 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                           ),
                                         );
                                       } else {
+                                        setState(() => FFAppState().errorsList =
+                                                (getJsonField(
+                                              (loginAttempt?.jsonBody ?? ''),
+                                              r'''$.errors..*''',
+                                            ) as List)
+                                                    .map<String>(
+                                                        (s) => s.toString())
+                                                    .toList());
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
                                             content: Text(
-                                              'Unable to login',
+                                              functions.getTopError(FFAppState()
+                                                  .errorsList
+                                                  .toList()),
                                               style: GoogleFonts.getFont(
                                                 'Open Sans',
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryBackground,
+                                                        .primaryBtnText,
                                                 fontSize: 18,
                                               ),
                                             ),
                                             duration:
                                                 Duration(milliseconds: 4000),
-                                            backgroundColor: Color(0xFFFF0000),
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .failure,
                                           ),
                                         );
                                       }
@@ -388,8 +443,9 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       36, 12, 36, 0),
                                   child: FFButtonWidget(
-                                    onPressed: () {
-                                      print('Button pressed ...');
+                                    onPressed: () async {
+                                      await launchURL(
+                                          'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
                                     },
                                     text: 'Campus Login',
                                     options: FFButtonOptions(

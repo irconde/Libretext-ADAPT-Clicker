@@ -1,8 +1,10 @@
 import '../backend/api_requests/api_calls.dart';
+import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../welcome_page/welcome_page_widget.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,13 +15,39 @@ class ResetPasswordWidget extends StatefulWidget {
   _ResetPasswordWidgetState createState() => _ResetPasswordWidgetState();
 }
 
-class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
-  ApiCallResponse? forgotPassword;
+class _ResetPasswordWidgetState extends State<ResetPasswordWidget>
+    with TickerProviderStateMixin {
   TextEditingController? forgotPasswordEmailFieldController;
+
+  ApiCallResponse? forgotPassword;
+  final animationsMap = {
+    'textOnActionTriggerAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onActionTrigger,
+      duration: 2400,
+      hideBeforeAnimating: true,
+      fadeIn: true,
+      initialState: AnimationState(
+        offset: Offset(0, 0),
+        scale: 1,
+        opacity: 1,
+      ),
+      finalState: AnimationState(
+        offset: Offset(0, 0),
+        scale: 1,
+        opacity: 0,
+      ),
+    ),
+  };
 
   @override
   void initState() {
     super.initState();
+    setupTriggerAnimations(
+      animationsMap.values
+          .where((anim) => anim.trigger == AnimationTrigger.onActionTrigger),
+      this,
+    );
+
     forgotPasswordEmailFieldController = TextEditingController();
   }
 
@@ -69,7 +97,7 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
                   ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+              padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
               child: Container(
                 width: 300,
                 child: TextFormField(
@@ -99,6 +127,26 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
                         topRight: Radius.circular(4.0),
                       ),
                     ),
+                    errorBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(0x00000000),
+                        width: 1,
+                      ),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(4.0),
+                        topRight: Radius.circular(4.0),
+                      ),
+                    ),
+                    focusedErrorBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(0x00000000),
+                        width: 1,
+                      ),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(4.0),
+                        topRight: Radius.circular(4.0),
+                      ),
+                    ),
                     filled: true,
                     fillColor: FlutterFlowTheme.of(context).textFieldBackground,
                     prefixIcon: Icon(
@@ -107,6 +155,22 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
                   ),
                   style: FlutterFlowTheme.of(context).bodyText1,
                 ),
+              ),
+            ),
+            Align(
+              alignment: AlignmentDirectional(-0.9, 0),
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                child: Text(
+                  functions.getTopError(FFAppState().errorsList.toList()),
+                  textAlign: TextAlign.start,
+                  style: FlutterFlowTheme.of(context).bodyText1.override(
+                        fontFamily: 'Open Sans',
+                        color: FlutterFlowTheme.of(context).failure,
+                        fontSize: 13,
+                        fontWeight: FontWeight.normal,
+                      ),
+                ).animated([animationsMap['textOnActionTriggerAnimation']!]),
               ),
             ),
             FFButtonWidget(
@@ -125,22 +189,32 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
                       child: WelcomePageWidget(),
                     ),
                   );
-                } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        getJsonField(
-                          (forgotPassword?.jsonBody ?? ''),
-                          r'''$.message''',
-                        ).toString(),
+                        'Email Sent',
                         style: TextStyle(
                           color: FlutterFlowTheme.of(context).primaryBtnText,
                         ),
                       ),
                       duration: Duration(milliseconds: 4000),
-                      backgroundColor: Color(0xFFFF0000),
+                      backgroundColor: FlutterFlowTheme.of(context).success,
                     ),
                   );
+                } else {
+                  setState(() => FFAppState().errorsList = (getJsonField(
+                        (forgotPassword?.jsonBody ?? ''),
+                        r'''$.errors..*''',
+                      ) as List)
+                          .map<String>((s) => s.toString())
+                          .toList());
+                  if (animationsMap['textOnActionTriggerAnimation'] == null) {
+                    return;
+                  }
+                  await (animationsMap['textOnActionTriggerAnimation']!
+                          .curvedAnimation
+                          .parent as AnimationController)
+                      .forward(from: 0.0);
                 }
 
                 setState(() {});

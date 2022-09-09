@@ -26,21 +26,25 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (FFAppState().authToken != null && FFAppState().authToken != '') {
-        getUser = await GetUserCall.call(
-          token: FFAppState().authToken,
-        );
-        if ((getUser?.succeeded ?? true)) {
-          await Navigator.push(
-            context,
-            PageTransition(
-              type: PageTransitionType.fade,
-              duration: Duration(milliseconds: 1000),
-              reverseDuration: Duration(milliseconds: 1000),
-              child: CoursesPageWidget(),
-            ),
+      if (FFAppState().rememberMe) {
+        if (FFAppState().authToken != null && FFAppState().authToken != '') {
+          getUser = await GetUserCall.call(
+            token: FFAppState().authToken,
           );
+          if ((getUser?.succeeded ?? true)) {
+            await Navigator.push(
+              context,
+              PageTransition(
+                type: PageTransitionType.fade,
+                duration: Duration(milliseconds: 1000),
+                reverseDuration: Duration(milliseconds: 1000),
+                child: CoursesPageWidget(),
+              ),
+            );
+          }
         }
+      } else {
+        setState(() => FFAppState().authToken = '');
       }
     });
   }

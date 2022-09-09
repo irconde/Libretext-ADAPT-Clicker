@@ -4,11 +4,18 @@ import 'api_manager.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
 
+const _kPrivateApiFunctionName = 'ffPrivateApiCall';
+
 class LoginCall {
   static Future<ApiCallResponse> call({
     String? email = '',
     String? password = '',
   }) {
+    final body = '''
+{
+  "email": "${email}",
+  "password": "${password}"
+}''';
     return ApiManager.instance.makeApiCall(
       callName: 'login',
       apiUrl: 'https://adapt.libretexts.org/api/login',
@@ -17,10 +24,8 @@ class LoginCall {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
-      params: {
-        'email': email,
-        'password': password,
-      },
+      params: {},
+      body: body,
       bodyType: BodyType.JSON,
       returnBody: true,
     );
@@ -38,6 +43,17 @@ class CreateUserCall {
     String? studentId = '',
     String? timeZone = '',
   }) {
+    final body = '''
+{
+  "email": "${email}",
+  "password": "${password}",
+  "password_confirmation": "${passwordConfirmation}",
+  "first_name": "${firstName}",
+  "last_name": "${lastName}",
+  "registration_type": "${registrationType}",
+  "student_id": "${studentId}",
+  "time_zone": "${timeZone}"
+}''';
     return ApiManager.instance.makeApiCall(
       callName: 'createUser',
       apiUrl: 'https://adapt.libretexts.org/api/register',
@@ -46,16 +62,8 @@ class CreateUserCall {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
-      params: {
-        'email': email,
-        'password': password,
-        'password_confirmation': passwordConfirmation,
-        'first_name': firstName,
-        'last_name': lastName,
-        'registration_type': registrationType,
-        'student_id': studentId,
-        'time_zone': timeZone,
-      },
+      params: {},
+      body: body,
       bodyType: BodyType.JSON,
       returnBody: true,
     );
@@ -64,6 +72,7 @@ class CreateUserCall {
   static dynamic errorslist(dynamic response) => getJsonField(
         response,
         r'''$.errors.*..*''',
+        true,
       );
 }
 
@@ -82,9 +91,7 @@ class ForgotPasswordCall {
       headers: {
         'accept': 'application/json',
       },
-      params: {
-        'email': email,
-      },
+      params: {},
       body: body,
       bodyType: BodyType.JSON,
       returnBody: true,
@@ -177,13 +184,7 @@ class UpdateProfileCall {
         'accept': 'application/json',
         'authorization': '${token}',
       },
-      params: {
-        'first_name': firstName,
-        'last_name': lastName,
-        'email': email,
-        'time_zone': timeZone,
-        'student_id': studentId,
-      },
+      params: {},
       body: body,
       bodyType: BodyType.JSON,
       returnBody: true,
@@ -210,10 +211,7 @@ class UpdatePasswordCall {
         'accept': 'application/json',
         'authorization': '${token}',
       },
-      params: {
-        'password': password,
-        'passwordConfirmation': passwordConfirmation,
-      },
+      params: {},
       body: body,
       bodyType: BodyType.JSON,
       returnBody: true,
@@ -242,11 +240,7 @@ class AddCourseCall {
         'Accept': 'application/json',
         'authorization': '${token}',
       },
-      params: {
-        'access_code': accessCode,
-        'is_lms': isLms,
-        'time_zone': timeZone,
-      },
+      params: {},
       body: body,
       bodyType: BodyType.JSON,
       returnBody: true,
@@ -266,8 +260,8 @@ class ContactUsCall {
   }) {
     final body = '''
 {
-  "email": "${email}",
   "name": "${name}",
+  "email": "${email}",
   "school": "${school}",
   "subject": "${subject}",
   "text": "${text}",
@@ -281,15 +275,7 @@ class ContactUsCall {
       headers: {
         'accept': 'application/json',
       },
-      params: {
-        'email': email,
-        'name': name,
-        'school': school,
-        'subject': subject,
-        'text': text,
-        'to_user_id': toUserId,
-        'type': type,
-      },
+      params: {},
       body: body,
       bodyType: BodyType.JSON,
       returnBody: true,
@@ -407,6 +393,26 @@ class LogoutCall {
       },
       params: {},
       bodyType: BodyType.JSON,
+      returnBody: true,
+    );
+  }
+}
+
+class GetNonTechnologyIframeCall {
+  static Future<ApiCallResponse> call({
+    int? pageId,
+    String? token = '',
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'getNonTechnologyIframe',
+      apiUrl:
+          'https://adapt.libretexts.org/api/get-locally-saved-page-contents/phys/${pageId}',
+      callType: ApiCallType.GET,
+      headers: {
+        'accept': 'text/html',
+        'authorization': '${token}',
+      },
+      params: {},
       returnBody: true,
     );
   }
