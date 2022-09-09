@@ -3,6 +3,7 @@ import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,8 +16,9 @@ class AddCourseWidget extends StatefulWidget {
 
 class _AddCourseWidgetState extends State<AddCourseWidget>
     with TickerProviderStateMixin {
-  ApiCallResponse? addCourse;
   TextEditingController? accessCodeACController;
+
+  ApiCallResponse? addCourse;
   final animationsMap = {
     'textOnActionTriggerAnimation': AnimationInfo(
       trigger: AnimationTrigger.onActionTrigger,
@@ -119,6 +121,26 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                           topRight: Radius.circular(4.0),
                         ),
                       ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 1,
+                        ),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(4.0),
+                          topRight: Radius.circular(4.0),
+                        ),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 1,
+                        ),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(4.0),
+                          topRight: Radius.circular(4.0),
+                        ),
+                      ),
                       filled: true,
                       fillColor:
                           FlutterFlowTheme.of(context).textFieldBackground,
@@ -135,12 +157,12 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(40, 0, 0, 16),
+                  padding: EdgeInsetsDirectional.fromSTEB(36, 0, 0, 16),
                   child: Text(
-                    'Code not found',
+                    functions.getTopError(FFAppState().errorsList.toList()),
                     style: FlutterFlowTheme.of(context).bodyText1.override(
                           fontFamily: 'Open Sans',
-                          color: Color(0xFFFF0000),
+                          color: FlutterFlowTheme.of(context).failure,
                           fontSize: 13,
                           fontWeight: FontWeight.normal,
                         ),
@@ -159,7 +181,28 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                         );
                         if ((addCourse?.succeeded ?? true)) {
                           Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Password Updated Successfully',
+                                style: TextStyle(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBtnText,
+                                ),
+                              ),
+                              duration: Duration(milliseconds: 4000),
+                              backgroundColor:
+                                  FlutterFlowTheme.of(context).success,
+                            ),
+                          );
                         } else {
+                          setState(
+                              () => FFAppState().errorsList = (getJsonField(
+                                    (addCourse?.jsonBody ?? ''),
+                                    r'''$.errors..*''',
+                                  ) as List)
+                                      .map<String>((s) => s.toString())
+                                      .toList());
                           if (animationsMap['textOnActionTriggerAnimation'] ==
                               null) {
                             return;

@@ -15,11 +15,15 @@ class ContactUsWidget extends StatefulWidget {
 }
 
 class _ContactUsWidgetState extends State<ContactUsWidget> {
-  ApiCallResponse? contactUs;
-  String? contactUsSubjectDropDownValue;
   TextEditingController? contactUsEmailTextFieldController;
+
   TextEditingController? contactUsNameTextFieldController;
+
+  String? contactUsSubjectDropDownValue;
+
   TextEditingController? contactUsMessageTextFieldController;
+
+  ApiCallResponse? contactUs;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -339,6 +343,26 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                               topRight: Radius.circular(4.0),
                             ),
                           ),
+                          errorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4.0),
+                              topRight: Radius.circular(4.0),
+                            ),
+                          ),
+                          focusedErrorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4.0),
+                              topRight: Radius.circular(4.0),
+                            ),
+                          ),
                           filled: true,
                           fillColor:
                               FlutterFlowTheme.of(context).textFieldBackground,
@@ -366,6 +390,26 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                             ),
                           ),
                           focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4.0),
+                              topRight: Radius.circular(4.0),
+                            ),
+                          ),
+                          errorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4.0),
+                              topRight: Radius.circular(4.0),
+                            ),
+                          ),
+                          focusedErrorBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
                               width: 1,
@@ -435,6 +479,26 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                               topRight: Radius.circular(4.0),
                             ),
                           ),
+                          errorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4.0),
+                              topRight: Radius.circular(4.0),
+                            ),
+                          ),
+                          focusedErrorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4.0),
+                              topRight: Radius.circular(4.0),
+                            ),
+                          ),
                           filled: true,
                           fillColor:
                               FlutterFlowTheme.of(context).textFieldBackground,
@@ -480,10 +544,23 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                     );
                     if ((contactUs?.succeeded ?? true)) {
                       Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Inquiry Sent',
+                            style: TextStyle(
+                              color:
+                                  FlutterFlowTheme.of(context).primaryBtnText,
+                            ),
+                          ),
+                          duration: Duration(milliseconds: 4000),
+                          backgroundColor: FlutterFlowTheme.of(context).success,
+                        ),
+                      );
                     } else {
                       setState(() => FFAppState().errorsList = (getJsonField(
                             (contactUs?.jsonBody ?? ''),
-                            r'''$.errors..*.*''',
+                            r'''$.errors..*''',
                           ) as List)
                               .map<String>((s) => s.toString())
                               .toList());

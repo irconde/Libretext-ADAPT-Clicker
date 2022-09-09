@@ -25,10 +25,15 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
-        leading: Icon(
-          Icons.arrow_back,
-          color: FlutterFlowTheme.of(context).primaryBackground,
-          size: 28,
+        leading: InkWell(
+          onTap: () async {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back,
+            color: FlutterFlowTheme.of(context).primaryBackground,
+            size: 28,
+          ),
         ),
         title: Align(
           alignment: AlignmentDirectional(0, 0),
