@@ -91,7 +91,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
             child: Container(
               width: double.infinity,
               child: Stack(
