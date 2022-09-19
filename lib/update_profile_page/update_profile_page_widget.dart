@@ -452,7 +452,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                               ),
                             ),
                             prefixIcon: Icon(
-                              Icons.person,
+                              Icons.person_outline,
                             ),
                           ),
                           style: FlutterFlowTheme.of(context).bodyText1,
@@ -508,7 +508,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                               ),
                             ),
                             prefixIcon: Icon(
-                              Icons.person,
+                              Icons.person_outline,
                             ),
                           ),
                           style: FlutterFlowTheme.of(context).bodyText1,
@@ -564,7 +564,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                               ),
                             ),
                             prefixIcon: Icon(
-                              Icons.person,
+                              Icons.person_outline,
                             ),
                           ),
                           style: FlutterFlowTheme.of(context).bodyText1,
@@ -620,7 +620,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                               ),
                             ),
                             prefixIcon: Icon(
-                              Icons.school_rounded,
+                              Icons.school_outlined,
                             ),
                           ),
                           style: FlutterFlowTheme.of(context).bodyText1,

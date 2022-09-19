@@ -433,7 +433,7 @@ class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
                               ),
                             ),
                             prefixIcon: Icon(
-                              Icons.lock_sharp,
+                              Icons.lock_outline,
                             ),
                             suffixIcon: InkWell(
                               onTap: () => setState(
@@ -503,7 +503,7 @@ class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
                               ),
                             ),
                             prefixIcon: Icon(
-                              Icons.lock_sharp,
+                              Icons.lock_outline,
                             ),
                             suffixIcon: InkWell(
                               onTap: () => setState(
@@ -573,7 +573,7 @@ class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
                               ),
                             ),
                             prefixIcon: Icon(
-                              Icons.lock_sharp,
+                              Icons.lock_outline,
                             ),
                             suffixIcon: InkWell(
                               onTap: () => setState(
