@@ -544,7 +544,7 @@ class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
                             ),
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0xFF1862B3),
+                                color: Color(0x0xFF1862B3),
                                 width: 1,
                               ),
                               borderRadius: const BorderRadius.only(
