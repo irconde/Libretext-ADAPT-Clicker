@@ -79,7 +79,7 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
         onPressed: () async {
           showModalBottomSheet(
             isScrollControlled: true,
-            backgroundColor: Colors.transparent,
+            backgroundColor:  Color(0x0E1862B3),
             context: context,
             builder: (context) {
               return Padding(
