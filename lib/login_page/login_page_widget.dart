@@ -98,7 +98,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                 alignment: AlignmentDirectional(0, 0),
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
