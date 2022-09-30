@@ -250,8 +250,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               onTap: () async {
                                 await showModalBottomSheet(
                                   isScrollControlled: true,
-                                  backgroundColor: FlutterFlowTheme.of(context)
-                                      .primaryBackground,
+                                  backgroundColor: Color(0x0E1862B3),
                                   context: context,
                                   builder: (context) {
                                     return Padding(

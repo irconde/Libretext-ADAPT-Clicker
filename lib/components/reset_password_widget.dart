@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -53,14 +55,22 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return
+      InkWell(
+        onTap: () async {
+      Navigator.pop(context); //pop back on blur
+    },
+      child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+    child: Container(
       width: double.infinity,
       height: double.infinity,
       decoration: BoxDecoration(
         color: Color(0x0E1862B3),
       ),
       alignment: AlignmentDirectional(0, 1),
-      child: Container(
+      child: InkWell(
+        onTap: () async {}, //no pop back on white background
+        child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).primaryBackground,
@@ -254,6 +264,9 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget>
             ),
           ),
         ),
+      ),
+    ),
+      ),
       ),
     );
   }
