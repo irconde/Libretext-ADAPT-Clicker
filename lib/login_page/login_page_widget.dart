@@ -10,11 +10,21 @@ import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
+
 class LoginPageWidget extends StatefulWidget {
   const LoginPageWidget({Key? key}) : super(key: key);
 
   @override
   _LoginPageWidgetState createState() => _LoginPageWidgetState();
+}
+
+showErrorWidget(){
+  if(functions.getTopError(FFAppState().errorsList.toList()).isEmpty) {
+    return "Enter Valid Information";
+  }else if (functions.getTopError(FFAppState().errorsList.toList()).isNotEmpty){
+    return functions.getTopError(FFAppState().errorsList.toList());
+  }
 }
 
 class _LoginPageWidgetState extends State<LoginPageWidget> {
@@ -116,7 +126,9 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     controller: textController1,
                                     autofocus: true,
                                     obscureText: false,
-                                    decoration: InputDecoration(
+                                    decoration: InputDecoration(  //TODO - Show Error After Button Press
+                                      errorText: showErrorWidget(),
+                                      errorStyle: TextStyle(fontSize: 14),
                                       hintText: 'Email',
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .bodyText2,
@@ -184,7 +196,9 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     controller: textController2,
                                     autofocus: true,
                                     obscureText: !passwordVisibility,
-                                    decoration: InputDecoration(
+                                    decoration: InputDecoration(  //TODO - Show Error After Button Press
+                                      errorText: showErrorWidget(),
+                                      errorStyle: TextStyle(fontSize: 14),
                                       hintText: 'Password',
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .bodyText2,
@@ -366,7 +380,9 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                 CoursesPageWidget(),
                                           ),
                                         );
-                                      } else {
+                                      }
+                                      //TODO - Potentially Remove Snackbar Errors
+                                      else {
                                         setState(() => FFAppState().errorsList =
                                                 (getJsonField(
                                               (loginAttempt?.jsonBody ?? ''),
@@ -375,28 +391,28 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                     .map<String>(
                                                         (s) => s.toString())
                                                     .toList());
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                              functions.getTopError(FFAppState()
-                                                  .errorsList
-                                                  .toList()),
-                                              style: GoogleFonts.getFont(
-                                                'Open Sans',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryBtnText,
-                                                fontSize: 18,
-                                              ),
-                                            ),
-                                            duration:
-                                                Duration(milliseconds: 4000),
-                                            backgroundColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .failure,
-                                          ),
-                                        );
+                                        // ScaffoldMessenger.of(context)
+                                        //     .showSnackBar(
+                                        //   SnackBar(
+                                        //     content: Text(
+                                        //       functions.getTopError(FFAppState()
+                                        //           .errorsList
+                                        //           .toList()),
+                                        //       style: GoogleFonts.getFont(
+                                        //         'Open Sans',
+                                        //         color:
+                                        //             FlutterFlowTheme.of(context)
+                                        //                 .primaryBtnText,
+                                        //         fontSize: 18,
+                                        //       ),
+                                        //     ),
+                                        //     duration:
+                                        //         Duration(milliseconds: 4000),
+                                        //     backgroundColor:
+                                        //         FlutterFlowTheme.of(context)
+                                        //             .failure,
+                                        //   ),
+                                        // );
                                       }
 
                                       setState(() {});
