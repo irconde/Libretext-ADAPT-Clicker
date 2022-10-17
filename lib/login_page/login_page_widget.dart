@@ -46,42 +46,9 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
             snap: false,
             floating: false,
             expandedHeight: 160.0,
-            flexibleSpace: Stack(
-              children: [
-                Align(
-                  alignment: AlignmentDirectional(-0.94, -0.48),
-                  child: InkWell(
-                    onTap: () async {
-                      Navigator.pop(context);
-                    },
-                    // child: Icon(
-                    //   Icons.arrow_back,
-                    //   color: FlutterFlowTheme.of(context).primaryBackground,
-                    //   size: 28,
-                    // ),
-                  ),
-                ),
-                Align(
-                  alignment: AlignmentDirectional(-0.73, 0.75),
-                  child: Text(
-                    'Welcome\nBack',
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
-                      fontFamily: 'Open Sans',
-                      color: FlutterFlowTheme.of(context).primaryBtnText,
-                      fontSize: 32,
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: AlignmentDirectional(0, 0.5),
-                  child: Image.asset(
-                    'assets/images/libreHand.png',
-                    width: 130,
-                    height: 130,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ],
+            flexibleSpace: FlexibleSpaceBar(
+                title: Text('Welcome\nBack'),
+                background: Image.asset('assets/images/libreHand.png')
             ),
           ),
           SliverToBoxAdapter(
@@ -91,7 +58,9 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                 child: Container(
                   width: double.infinity,
-                  child: Stack(
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 300),
+                    child: Stack(
                     alignment: AlignmentDirectional(0, 0),
                     children: [
                       Padding(
@@ -511,6 +480,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         ),
                       ),
                     ],
+                  ),
                   ),
                 ),
               ),

@@ -47,10 +47,10 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
     if (!isWeb) {
       _keyboardVisibilitySubscription =
           KeyboardVisibilityController().onChange.listen((bool visible) {
-            setState(() {
-              _isKeyboardVisible = visible;
-            });
-          });
+        setState(() {
+          _isKeyboardVisible = visible;
+        });
+      });
     }
 
     confrimPasswordFieldCAController = TextEditingController();
@@ -78,55 +78,14 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
         body: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
-              pinned: true,
-              snap: false,
-              floating: false,
-              expandedHeight: 160.0,
-              flexibleSpace: Stack(
-                children: [
-                  Align(
-                    alignment: AlignmentDirectional(-0.94, -0.48),
-                    child: InkWell(
-                      onTap: () async {
-                        Navigator.pop(context);
-                      },
-                      // child: Icon(
-                      //   Icons.arrow_back,
-                      //   color: FlutterFlowTheme
-                      //       .of(context)
-                      //       .primaryBackground,
-                      //   size: 28,
-                      // ),
-                    ),
-                  ),
-                  Align(
-                    alignment: AlignmentDirectional(-0.73, 0.7),
-                    child: Text(
-                      'Create\nAccount',
-                      style: FlutterFlowTheme
-                          .of(context)
-                          .bodyText1
-                          .override(
-                        fontFamily: 'Open Sans',
-                        color: FlutterFlowTheme
-                            .of(context)
-                            .primaryBackground,
-                        fontSize: 32,
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: AlignmentDirectional(0.1, 1),
-                    child: Image.asset(
-                      'assets/images/libreAddPerson.png',
-                      width: 175,
-                      height: 150,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                pinned: true,
+                snap: false,
+                floating: false,
+                expandedHeight: 160.0,
+                flexibleSpace: FlexibleSpaceBar(
+                  title: Text('Create\nAccount'),
+                  background: Image.asset('assets/images/libreAddPerson.png'),
+                )),
             SliverToBoxAdapter(
               child: GestureDetector(
                 onTap: () => FocusScope.of(context).unfocus(),
@@ -141,17 +100,16 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 0, 16),
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                               child: TextFormField(
                                 controller: firstNameFieldCAController,
                                 autofocus: true,
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   hintText: 'First Name',
-                                  hintStyle: FlutterFlowTheme
-                                      .of(context)
-                                      .bodyText2,
+                                  hintStyle:
+                                      FlutterFlowTheme.of(context).bodyText2,
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
@@ -193,30 +151,26 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     ),
                                   ),
                                   filled: true,
-                                  fillColor: FlutterFlowTheme
-                                      .of(context)
+                                  fillColor: FlutterFlowTheme.of(context)
                                       .textFieldBackground,
                                   prefixIcon: Icon(
                                     Icons.person,
                                   ),
                                 ),
-                                style: FlutterFlowTheme
-                                    .of(context)
-                                    .bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 0, 16),
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                               child: TextFormField(
                                 controller: lastNameFieldCAController,
                                 autofocus: true,
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   hintText: 'Last Name',
-                                  hintStyle: FlutterFlowTheme
-                                      .of(context)
-                                      .bodyText2,
+                                  hintStyle:
+                                      FlutterFlowTheme.of(context).bodyText2,
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
@@ -258,30 +212,26 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     ),
                                   ),
                                   filled: true,
-                                  fillColor: FlutterFlowTheme
-                                      .of(context)
+                                  fillColor: FlutterFlowTheme.of(context)
                                       .textFieldBackground,
                                   prefixIcon: Icon(
                                     Icons.person,
                                   ),
                                 ),
-                                style: FlutterFlowTheme
-                                    .of(context)
-                                    .bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 0, 16),
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                               child: TextFormField(
                                 controller: studentIDFieldController,
                                 autofocus: true,
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   hintText: 'Student ID',
-                                  hintStyle: FlutterFlowTheme
-                                      .of(context)
-                                      .bodyText2,
+                                  hintStyle:
+                                      FlutterFlowTheme.of(context).bodyText2,
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
@@ -323,30 +273,26 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     ),
                                   ),
                                   filled: true,
-                                  fillColor: FlutterFlowTheme
-                                      .of(context)
+                                  fillColor: FlutterFlowTheme.of(context)
                                       .textFieldBackground,
                                   prefixIcon: Icon(
                                     Icons.school_rounded,
                                   ),
                                 ),
-                                style: FlutterFlowTheme
-                                    .of(context)
-                                    .bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 0, 16),
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                               child: TextFormField(
                                 controller: emailFieldCAController,
                                 autofocus: true,
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   hintText: 'Email',
-                                  hintStyle: FlutterFlowTheme
-                                      .of(context)
-                                      .bodyText2,
+                                  hintStyle:
+                                      FlutterFlowTheme.of(context).bodyText2,
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
@@ -388,30 +334,26 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     ),
                                   ),
                                   filled: true,
-                                  fillColor: FlutterFlowTheme
-                                      .of(context)
+                                  fillColor: FlutterFlowTheme.of(context)
                                       .textFieldBackground,
                                   prefixIcon: Icon(
                                     Icons.email_rounded,
                                   ),
                                 ),
-                                style: FlutterFlowTheme
-                                    .of(context)
-                                    .bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 0, 16),
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                               child: TextFormField(
                                 controller: passwordFieldCAController,
                                 autofocus: true,
                                 obscureText: !passwordFieldCAVisibility,
                                 decoration: InputDecoration(
                                   hintText: 'Password',
-                                  hintStyle: FlutterFlowTheme
-                                      .of(context)
-                                      .bodyText2,
+                                  hintStyle:
+                                      FlutterFlowTheme.of(context).bodyText2,
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
@@ -453,19 +395,16 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     ),
                                   ),
                                   filled: true,
-                                  fillColor: FlutterFlowTheme
-                                      .of(context)
+                                  fillColor: FlutterFlowTheme.of(context)
                                       .textFieldBackground,
                                   prefixIcon: Icon(
                                     Icons.lock_sharp,
                                   ),
                                   suffixIcon: InkWell(
-                                    onTap: () =>
-                                        setState(
-                                              () =>
-                                          passwordFieldCAVisibility =
+                                    onTap: () => setState(
+                                      () => passwordFieldCAVisibility =
                                           !passwordFieldCAVisibility,
-                                        ),
+                                    ),
                                     focusNode: FocusNode(skipTraversal: true),
                                     child: Icon(
                                       passwordFieldCAVisibility
@@ -476,23 +415,20 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     ),
                                   ),
                                 ),
-                                style: FlutterFlowTheme
-                                    .of(context)
-                                    .bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 0, 16),
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                               child: TextFormField(
                                 controller: confrimPasswordFieldCAController,
                                 autofocus: true,
                                 obscureText: !confrimPasswordFieldCAVisibility,
                                 decoration: InputDecoration(
                                   hintText: 'Confirm Password',
-                                  hintStyle: FlutterFlowTheme
-                                      .of(context)
-                                      .bodyText2,
+                                  hintStyle:
+                                      FlutterFlowTheme.of(context).bodyText2,
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
@@ -534,19 +470,16 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     ),
                                   ),
                                   filled: true,
-                                  fillColor: FlutterFlowTheme
-                                      .of(context)
+                                  fillColor: FlutterFlowTheme.of(context)
                                       .textFieldBackground,
                                   prefixIcon: Icon(
                                     Icons.lock_sharp,
                                   ),
                                   suffixIcon: InkWell(
-                                    onTap: () =>
-                                        setState(
-                                              () =>
-                                          confrimPasswordFieldCAVisibility =
+                                    onTap: () => setState(
+                                      () => confrimPasswordFieldCAVisibility =
                                           !confrimPasswordFieldCAVisibility,
-                                        ),
+                                    ),
                                     focusNode: FocusNode(skipTraversal: true),
                                     child: Icon(
                                       confrimPasswordFieldCAVisibility
@@ -557,45 +490,37 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     ),
                                   ),
                                 ),
-                                style: FlutterFlowTheme
-                                    .of(context)
-                                    .bodyText1,
+                                style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 0, 16),
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                               child: FlutterFlowDropDown(
-                                initialOption:
-                                tZDropDownCAValue ??= ' Samoa Time',
+                                initialOption: tZDropDownCAValue ??=
+                                    ' Samoa Time',
                                 options: FFAppState().timezones.toList(),
                                 onChanged: (val) =>
                                     setState(() => tZDropDownCAValue = val),
                                 width: 365,
                                 height: 50,
-                                textStyle: FlutterFlowTheme
-                                    .of(context)
+                                textStyle: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
-                                  fontFamily: 'Open Sans',
-                                  color: FlutterFlowTheme
-                                      .of(context)
-                                      .primaryText,
-                                ),
+                                      fontFamily: 'Open Sans',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                    ),
                                 hintText: 'Pick a timezone',
                                 icon: Icon(
                                   Icons.access_time,
                                   size: 15,
                                 ),
-                                fillColor:
-                                FlutterFlowTheme
-                                    .of(context)
+                                fillColor: FlutterFlowTheme.of(context)
                                     .primaryBackground,
                                 elevation: 2,
                                 borderColor:
-                                FlutterFlowTheme
-                                    .of(context)
-                                    .primaryColor,
+                                    FlutterFlowTheme.of(context).primaryColor,
                                 borderWidth: 1,
                                 borderRadius: 0,
                                 margin: EdgeInsetsDirectional.fromSTEB(
@@ -608,193 +533,180 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                       ),
                     ),
                     if (!(isWeb
-                        ? MediaQuery
-                        .of(context)
-                        .viewInsets
-                        .bottom > 0
+                        ? MediaQuery.of(context).viewInsets.bottom > 0
                         : _isKeyboardVisible))
-                      Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0, 0, 0, 16),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                createUser = await CreateUserCall.call(
-                                  email: emailFieldCAController!.text,
-                                  password: passwordFieldCAController!.text,
-                                  passwordConfirmation:
-                                  confrimPasswordFieldCAController!.text,
-                                  firstName: firstNameFieldCAController!.text,
-                                  lastName: lastNameFieldCAController!.text,
-                                  registrationType: '3',
-                                  studentId: studentIDFieldController!.text,
-                                  timeZone: 'America/Belize',
-                                );
-                                if ((createUser?.succeeded ?? true)) {
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => CoursesPageWidget(),
-                                    ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 100),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  createUser = await CreateUserCall.call(
+                                    email: emailFieldCAController!.text,
+                                    password: passwordFieldCAController!.text,
+                                    passwordConfirmation:
+                                        confrimPasswordFieldCAController!.text,
+                                    firstName: firstNameFieldCAController!.text,
+                                    lastName: lastNameFieldCAController!.text,
+                                    registrationType: '3',
+                                    studentId: studentIDFieldController!.text,
+                                    timeZone: 'America/Belize',
                                   );
-                                } else {
-                                  setState(
-                                          () =>
-                                      FFAppState().errorsList = (getJsonField(
-                                        (createUser?.jsonBody ?? ''),
-                                        r'''$.errors..*''',
-                                      ) as List)
-                                          .map<String>((s) => s.toString())
-                                          .toList());
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        valueOrDefault<String>(
-                                          functions.getTopError(
-                                              FFAppState().errorsList.toList()),
-                                          'Invalid Data',
-                                        ),
-                                        style: TextStyle(
-                                          color: FlutterFlowTheme
-                                              .of(context)
-                                              .primaryBtnText,
-                                        ),
-                                      ),
-                                      duration: Duration(milliseconds: 4000),
-                                      backgroundColor:
-                                      FlutterFlowTheme
-                                          .of(context)
-                                          .failure,
-                                    ),
-                                  );
-                                }
-
-                                setState(() {});
-                              },
-                              text: 'Register',
-                              options: FFButtonOptions(
-                                width: 300,
-                                height: 40,
-                                color: FlutterFlowTheme
-                                    .of(context)
-                                    .primaryColor,
-                                textStyle:
-                                FlutterFlowTheme
-                                    .of(context)
-                                    .subtitle2
-                                    .override(
-                                  fontFamily: 'Open Sans',
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0, 0, 0, 16),
-                            child: Text(
-                              'OR',
-                              style: FlutterFlowTheme
-                                  .of(context)
-                                  .bodyText1
-                                  .override(
-                                fontFamily: 'Open Sans',
-                                color: FlutterFlowTheme
-                                    .of(context)
-                                    .primaryText,
-                                fontSize: 20,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0, 0, 0, 16),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                await launchURL(
-                                    'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
-                              },
-                              text: 'Campus Registration',
-                              options: FFButtonOptions(
-                                width: 300,
-                                height: 40,
-                                color: FlutterFlowTheme
-                                    .of(context)
-                                    .secondaryColor,
-                                textStyle:
-                                FlutterFlowTheme
-                                    .of(context)
-                                    .subtitle2
-                                    .override(
-                                  fontFamily: 'Open Sans',
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                ),
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0, 16, 0, 0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Already have an account? ',
-                                  style: FlutterFlowTheme
-                                      .of(context)
-                                      .bodyText1,
-                                ),
-                                InkWell(
-                                  onTap: () async {
+                                  if ((createUser?.succeeded ?? true)) {
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => LoginPageWidget(),
+                                        builder: (context) =>
+                                            CoursesPageWidget(),
                                       ),
                                     );
-                                  },
-                                  child: Text(
-                                    'Login',
-                                    style: FlutterFlowTheme
-                                        .of(context)
-                                        .bodyText1
-                                        .override(
+                                  } else {
+                                    setState(() =>
+                                        FFAppState().errorsList = (getJsonField(
+                                          (createUser?.jsonBody ?? ''),
+                                          r'''$.errors..*''',
+                                        ) as List)
+                                            .map<String>((s) => s.toString())
+                                            .toList());
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          valueOrDefault<String>(
+                                            functions.getTopError(FFAppState()
+                                                .errorsList
+                                                .toList()),
+                                            'Invalid Data',
+                                          ),
+                                          style: TextStyle(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryBtnText,
+                                          ),
+                                        ),
+                                        duration: Duration(milliseconds: 4000),
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .failure,
+                                      ),
+                                    );
+                                  }
+
+                                  setState(() {});
+                                },
+                                text: 'Register',
+                                options: FFButtonOptions(
+                                  width: 300,
+                                  height: 40,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Open Sans',
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                              child: Text(
+                                'OR',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
                                       fontFamily: 'Open Sans',
-                                      color: FlutterFlowTheme
-                                          .of(context)
-                                          .primaryColor,
-                                      decoration: TextDecoration.underline,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      fontSize: 20,
+                                    ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  await launchURL(
+                                      'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
+                                },
+                                text: 'Campus Registration',
+                                options: FFButtonOptions(
+                                  width: 300,
+                                  height: 40,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryColor,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Open Sans',
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Already have an account? ',
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyText1,
+                                  ),
+                                  InkWell(
+                                    onTap: () async {
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              LoginPageWidget(),
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      'Login',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                            decoration:
+                                                TextDecoration.underline,
+                                          ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                   ],
                 ),
               ),
             )
           ],
-        )
-    );
+        ));
   }
 }
-
-
