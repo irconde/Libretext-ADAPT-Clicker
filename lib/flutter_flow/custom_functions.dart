@@ -1,5 +1,8 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:math' as math;
 
+import 'package:adapt_clicker/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -33,4 +36,16 @@ bool isBasic(String techIframe) {
 
 bool isTextSubmission(String textSubmission) {
   return (textSubmission == "text");
+}
+
+void rearrangeTimezones(dynamic timezoneAPI) {
+
+  //TODO fix this function
+  //jsonDecode(timezoneAPI);
+  log("Changed Timezones" );
+  for (String s in timezoneAPI)
+  {
+   // FFAppState().timezones.add(s);
+  }
+
 }
