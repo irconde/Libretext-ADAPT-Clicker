@@ -11,6 +11,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+String invalidPasswordChar =
+    "The password must be at least 8 characters and contain at least one uppercase character, one number, and one special character.";
+String passwordRequired = "The password field is required.";
+String emailRequired = "The email field is required.";
+String emailTaken = "The email has already been taken.";
+String invalidEmail = "The email must be a valid email address.";
+String firstNameRequired = "The first name field is required.";
+String lastNameRequired = "The last name field is required.";
+
 class CreateAccountWidget extends StatefulWidget {
   const CreateAccountWidget({Key? key}) : super(key: key);
 
@@ -18,12 +27,59 @@ class CreateAccountWidget extends StatefulWidget {
   _CreateAccountWidgetState createState() => _CreateAccountWidgetState();
 }
 
-showErrorWidget(){
-  if(functions.getTopError(FFAppState().errorsList.toList()).isEmpty) {
+String showErrorWidget() {
+  if (FFAppState().errorsList.toList().isEmpty) {
     return "Enter Valid Information";
-  }else if (functions.getTopError(FFAppState().errorsList.toList()).isNotEmpty){
-    return functions.getTopError(FFAppState().errorsList.toList());
+  } else {
+    if ((FFAppState().errorsList.toList()).contains("password")) {
+      invalidPasswordError();
+      return "See Other Errors";
+    } else if ((FFAppState().errorsList.toList()).contains("email")) {
+      emailError();
+      return "See Other Errors";
+    } else if ((FFAppState().errorsList.toList()).contains(firstNameRequired)){
+      firstNameError();
+      return "See Other Errors";
+    }else if ((FFAppState().errorsList.toList()).contains(lastNameRequired)){
+      lastNameError();
+      return "See Other Errors";
+    }
+    return "";
   }
+}
+
+String firstNameError(){
+  if ((FFAppState().errorsList.toList()).contains(firstNameRequired)){
+    return firstNameRequired;
+  }
+  return "";
+}
+
+String lastNameError(){
+  if ((FFAppState().errorsList.toList()).contains(lastNameRequired)){
+    return lastNameRequired;
+  }
+  return "";
+}
+
+String invalidPasswordError() {
+  if ((FFAppState().errorsList.toList()).contains(passwordRequired)) {
+    return passwordRequired;
+  } else if ((FFAppState().errorsList.toList()).contains(invalidPasswordChar)) {
+    return invalidPasswordChar;
+  }
+  return "";
+}
+
+String emailError() {
+  if ((FFAppState().errorsList.toList()).contains(emailRequired)) {
+    return emailRequired;
+  } else if ((FFAppState().errorsList.toList()).contains(emailTaken)) {
+    return emailTaken;
+  } else if ((FFAppState().errorsList.toList()).contains(invalidEmail)) {
+    return invalidEmail;
+  }
+  return "";
 }
 
 class _CreateAccountWidgetState extends State<CreateAccountWidget> {
@@ -151,6 +207,9 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
+                            //TODO - Show Error After Button Press
+                            errorText: firstNameError(),
+                            errorStyle: FlutterFlowTheme.of(context).bodyText2,
                             hintText: 'First Name',
                             hintStyle: FlutterFlowTheme.of(context).bodyText2,
                             enabledBorder: UnderlineInputBorder(
@@ -210,6 +269,9 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
+                            //TODO - Show Error After Button Press
+                            errorText: lastNameError(),
+                            errorStyle: FlutterFlowTheme.of(context).bodyText2,
                             hintText: 'Last Name',
                             hintStyle: FlutterFlowTheme.of(context).bodyText2,
                             enabledBorder: UnderlineInputBorder(
@@ -268,9 +330,10 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                           controller: studentIDFieldController,
                           autofocus: true,
                           obscureText: false,
-                          decoration: InputDecoration(  //TODO - Show Error After Button Press
+                          decoration: InputDecoration(
+                            //TODO - Show Error After Button Press
                             errorText: showErrorWidget(),
-                            errorStyle: TextStyle(fontSize: 14),
+                            errorStyle: FlutterFlowTheme.of(context).bodyText2,
                             hintText: 'Student ID',
                             hintStyle: FlutterFlowTheme.of(context).bodyText2,
                             enabledBorder: UnderlineInputBorder(
@@ -329,9 +392,10 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                           controller: emailFieldCAController,
                           autofocus: true,
                           obscureText: false,
-                          decoration: InputDecoration(  //TODO - Show Error After Button Press
-                            errorText: showErrorWidget(),
-                            errorStyle: TextStyle(fontSize: 14),
+                          decoration: InputDecoration(
+                            //TODO - Show Error After Button Press
+                            errorText: emailError(),
+                            errorStyle: FlutterFlowTheme.of(context).bodyText2,
                             hintText: 'Email',
                             hintStyle: FlutterFlowTheme.of(context).bodyText2,
                             enabledBorder: UnderlineInputBorder(
@@ -390,9 +454,10 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                           controller: passwordFieldCAController,
                           autofocus: true,
                           obscureText: !passwordFieldCAVisibility,
-                          decoration: InputDecoration(  //TODO - Show Error After Button Press
-                            errorText: showErrorWidget(),
-                            errorStyle: TextStyle(fontSize: 14),
+                          decoration: InputDecoration(
+                            //TODO - Show Error After Button Press
+                            errorText: invalidPasswordError(),
+                            errorStyle: FlutterFlowTheme.of(context).bodyText2,
                             hintText: 'Password',
                             hintStyle: FlutterFlowTheme.of(context).bodyText2,
                             enabledBorder: UnderlineInputBorder(
@@ -465,9 +530,10 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                           controller: confrimPasswordFieldCAController,
                           autofocus: true,
                           obscureText: !confrimPasswordFieldCAVisibility,
-                          decoration: InputDecoration(  //TODO - Show Error After Button Press
-                            errorText: showErrorWidget(),
-                            errorStyle: TextStyle(fontSize: 14),
+                          decoration: InputDecoration(
+                            //TODO - Show Error After Button Press
+                            errorText: invalidPasswordError(),
+                            errorStyle: FlutterFlowTheme.of(context).bodyText2,
                             hintText: 'Confirm Password',
                             hintStyle: FlutterFlowTheme.of(context).bodyText2,
                             enabledBorder: UnderlineInputBorder(
@@ -597,9 +663,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                 builder: (context) => CoursesPageWidget(),
                               ),
                             );
-                          }
-                          //TODO - Potentially Remove Snackbar Errors
-                          else {
+                          } else {
                             setState(
                                 () => FFAppState().errorsList = (getJsonField(
                                       (createUser?.jsonBody ?? ''),
@@ -607,24 +671,6 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     ) as List)
                                         .map<String>((s) => s.toString())
                                         .toList());
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //   SnackBar(
-                            //     content: Text(
-                            //       valueOrDefault<String>(
-                            //         functions.getTopError(
-                            //             FFAppState().errorsList.toList()),
-                            //         'Invalid Data',
-                            //       ),
-                            //       style: TextStyle(
-                            //         color: FlutterFlowTheme.of(context)
-                            //             .primaryBtnText,
-                            //       ),
-                            //     ),
-                            //     duration: Duration(milliseconds: 4000),
-                            //     backgroundColor:
-                            //         FlutterFlowTheme.of(context).failure,
-                            //   ),
-                            // );
                           }
 
                           setState(() {});
