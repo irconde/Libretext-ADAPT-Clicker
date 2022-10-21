@@ -11,20 +11,35 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
+String passwordRequired = "The password field is required.";
+String emailRequired = "The email field is required.";
+String invalidRecords = "These credentials do not match our records.";
+
+String invalidPasswordError() {
+  print(FFAppState().errorsList.toList());
+  if ((FFAppState().errorsList.toList()).contains(passwordRequired)) {
+    return passwordRequired;
+  }else if ((FFAppState().errorsList.toList()).contains(invalidRecords)){
+    return invalidRecords;
+  }
+  return "";
+}
+
+String emailError() {
+  print(FFAppState().errorsList.toList());
+  if ((FFAppState().errorsList.toList()).contains(emailRequired)) {
+    return emailRequired;
+  }else if ((FFAppState().errorsList.toList()).contains(invalidRecords)){
+    return invalidRecords;
+  }
+  return "";
+}
 
 class LoginPageWidget extends StatefulWidget {
   const LoginPageWidget({Key? key}) : super(key: key);
 
   @override
   _LoginPageWidgetState createState() => _LoginPageWidgetState();
-}
-
-showErrorWidget(){
-  if(functions.getTopError(FFAppState().errorsList.toList()).isEmpty) {
-    return "Enter Valid Information";
-  }else if (functions.getTopError(FFAppState().errorsList.toList()).isNotEmpty){
-    return functions.getTopError(FFAppState().errorsList.toList());
-  }
 }
 
 class _LoginPageWidgetState extends State<LoginPageWidget> {
@@ -127,8 +142,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(  //TODO - Show Error After Button Press
-                                      errorText: showErrorWidget(),
-                                      errorStyle: TextStyle(fontSize: 14),
+                                      errorText: emailError(),
+                                      errorStyle: FlutterFlowTheme.of(context).bodyText2,
                                       hintText: 'Email',
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .bodyText2,
@@ -197,8 +212,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     autofocus: true,
                                     obscureText: !passwordVisibility,
                                     decoration: InputDecoration(  //TODO - Show Error After Button Press
-                                      errorText: showErrorWidget(),
-                                      errorStyle: TextStyle(fontSize: 14),
+                                      errorText: invalidPasswordError(),
+                                      errorStyle: FlutterFlowTheme.of(context).bodyText2,
                                       hintText: 'Password',
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .bodyText2,
@@ -381,7 +396,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                           ),
                                         );
                                       }
-                                      //TODO - Potentially Remove Snackbar Errors
                                       else {
                                         setState(() => FFAppState().errorsList =
                                                 (getJsonField(
@@ -391,28 +405,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                     .map<String>(
                                                         (s) => s.toString())
                                                     .toList());
-                                        // ScaffoldMessenger.of(context)
-                                        //     .showSnackBar(
-                                        //   SnackBar(
-                                        //     content: Text(
-                                        //       functions.getTopError(FFAppState()
-                                        //           .errorsList
-                                        //           .toList()),
-                                        //       style: GoogleFonts.getFont(
-                                        //         'Open Sans',
-                                        //         color:
-                                        //             FlutterFlowTheme.of(context)
-                                        //                 .primaryBtnText,
-                                        //         fontSize: 18,
-                                        //       ),
-                                        //     ),
-                                        //     duration:
-                                        //         Duration(milliseconds: 4000),
-                                        //     backgroundColor:
-                                        //         FlutterFlowTheme.of(context)
-                                        //             .failure,
-                                        //   ),
-                                        // );
                                       }
 
                                       setState(() {});
