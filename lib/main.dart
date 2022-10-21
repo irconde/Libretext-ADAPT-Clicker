@@ -43,20 +43,16 @@ class _MyAppState extends State<MyApp> {
       });
 
   Future<void> fetchTimezone() async {
-    final response = await GetTimezonesCall.call();
-    String debug = response.succeeded.toString();
-    log("Init $debug =========");
+    final response = await GetTimezonesCall.call(); //contact server
 
     if (response.succeeded) {
-      log("Intted Timzone 1");
-      // If the call to the server was successful, parse the JSON
-
-      rearrangeTimezones(response.jsonBody);
-      log("Intted Timzone 2");
-      } else {
-      log("Couldn't InttedTimzone");
+      // If the call to the server was successful, init timezones
+      initTimezones(response.jsonBody);
+    } else {
       // If that call was not successful, throw an error.
-      throw Exception('Failed to get timezone');
+      throw Exception(getJsonField(response.jsonBody,
+          r'''$.message''')); //message should give error message.
+      //note all errors will be logged in backend for server-side fix
     }
   }
 

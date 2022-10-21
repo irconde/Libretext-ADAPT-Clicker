@@ -629,9 +629,9 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
                         child: FlutterFlowDropDown(
-                          options: FFAppState().timezones,
+                          options: FFAppState.timezoneContainer?.textzones ?? [''],
                           onChanged: (val) =>
-                              setState(() => timeZoneUpdateDDValue = val),
+                              setState(() => timeZoneUpdateDDValue = FFAppState.timezoneContainer!.getValue(val)),
                           height: 50,
                           textStyle:
                               FlutterFlowTheme.of(context).bodyText1.override(

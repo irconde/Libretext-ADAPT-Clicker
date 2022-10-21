@@ -435,7 +435,7 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                   builder: (context) {
                     final enrollmentsList = GetEnrollmentsCall.enrollmentsArray(
                       listViewGetEnrollmentsResponse.jsonBody,
-                    ).toList();
+                    )?.toList() ?? '';
                     if (enrollmentsList.isEmpty) {
                       return Center(
                         child: NoCoursesWidget(),

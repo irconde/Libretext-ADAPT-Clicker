@@ -497,11 +497,9 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                               child: FlutterFlowDropDown(
-                                initialOption: tZDropDownCAValue ??=
-                                    ' Samoa Time',
-                                options: FFAppState().timezones.toList(),
+                                options: FFAppState.timezoneContainer?.textzones ?? [''],
                                 onChanged: (val) =>
-                                    setState(() => tZDropDownCAValue = val),
+                                    setState(() => tZDropDownCAValue = FFAppState.timezoneContainer!.getValue(val)),
                                 width: 365,
                                 height: 50,
                                 textStyle: FlutterFlowTheme.of(context)
@@ -554,7 +552,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     lastName: lastNameFieldCAController!.text,
                                     registrationType: '3',
                                     studentId: studentIDFieldController!.text,
-                                    timeZone: 'America/Belize',
+                                    timeZone: tZDropDownCAValue,
                                   );
                                   if ((createUser?.succeeded ?? true)) {
                                     await Navigator.push(
