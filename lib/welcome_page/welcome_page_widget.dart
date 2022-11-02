@@ -74,7 +74,7 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                           padding:
                               EdgeInsetsDirectional.fromSTEB(42, 42, 42, 42),
                           child: Image.asset(
-                            'assets/images/libretexts_logo_stacked_blue.png',
+                            'assets/images/libretexts-adapt-logo-vector.png',
                             width: 244,
                             height: 170,
                             fit: BoxFit.contain,
@@ -94,8 +94,8 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                           },
                           text: 'LOGIN',
                           options: FFButtonOptions(
-                            width: 290,
-                            height: 50,
+                            width: 320,
+                            height: 30,
                             color: FlutterFlowTheme.of(context).primaryColor,
                             textStyle:
                                 FlutterFlowTheme.of(context).subtitle2.override(
@@ -123,8 +123,8 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                           },
                           text: 'CREATE ACCOUNT',
                           options: FFButtonOptions(
-                            width: 290,
-                            height: 50,
+                            width: 320,
+                            height: 30,
                             color:
                                 FlutterFlowTheme.of(context).primaryBackground,
                             textStyle: FlutterFlowTheme.of(context)
