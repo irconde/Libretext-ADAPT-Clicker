@@ -93,7 +93,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(24, 16, 24, 24),
+                      padding: EdgeInsetsDirectional.fromSTEB(32, 32, 32, 32),
                       child: SingleChildScrollView(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -101,7 +101,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                           children: [
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                               child: TextFormField(
                                 controller: firstNameFieldCAController,
                                 autofocus: true,
@@ -162,7 +162,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             ),
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                               child: TextFormField(
                                 controller: lastNameFieldCAController,
                                 autofocus: true,
@@ -223,7 +223,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             ),
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                               child: TextFormField(
                                 controller: studentIDFieldController,
                                 autofocus: true,
@@ -284,7 +284,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             ),
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                               child: TextFormField(
                                 controller: emailFieldCAController,
                                 autofocus: true,
@@ -345,7 +345,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             ),
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                               child: TextFormField(
                                 controller: passwordFieldCAController,
                                 autofocus: true,
@@ -420,7 +420,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             ),
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                               child: TextFormField(
                                 controller: confrimPasswordFieldCAController,
                                 autofocus: true,
@@ -495,7 +495,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             ),
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                               child: FlutterFlowDropDown(
                                 options: FFAppState.timezoneContainer?.textzones ?? [''],
                                 onChanged: (val) =>
@@ -534,13 +534,13 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                         ? MediaQuery.of(context).viewInsets.bottom > 0
                         : _isKeyboardVisible))
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 100),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   createUser = await CreateUserCall.call(
@@ -617,7 +617,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             ),
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                               child: Text(
                                 'OR',
                                 style: FlutterFlowTheme.of(context)
@@ -632,7 +632,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             ),
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   await launchURL(
@@ -661,7 +661,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             ),
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                                  EdgeInsetsDirectional.fromSTEB(0, 24, 0, 8),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
