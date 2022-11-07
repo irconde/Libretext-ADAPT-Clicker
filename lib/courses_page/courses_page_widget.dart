@@ -29,7 +29,7 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
         leading: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(28, 0, 0, 0),
+          padding: EdgeInsetsDirectional.fromSTEB(30, 0, 0, 0),
           child: InkWell(
             onTap: () async {
               scaffoldKey.currentState!.openDrawer();
@@ -44,14 +44,15 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
         title: Text(
           'Courses',
           style: FlutterFlowTheme.of(context).bodyText1.override(
-                fontFamily: 'Open Sans',
-                color: FlutterFlowTheme.of(context).primaryBackground,
-                fontSize: 20,
-              ),
+            fontFamily: 'Open Sans',
+            color: FlutterFlowTheme.of(context).primaryBackground,
+            fontSize: 24,
+            fontWeight: FontWeight.w400,
+          ),
         ),
         actions: [
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 28, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 30, 0),
             child: InkWell(
               onTap: () async {
                 await Navigator.push(
