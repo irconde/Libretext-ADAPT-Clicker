@@ -25,14 +25,17 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
-        leading: InkWell(
-          onTap: () async {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            Icons.arrow_back,
-            color: FlutterFlowTheme.of(context).primaryBackground,
-            size: 28,
+        leading: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(30, 0, 0, 0),
+          child: InkWell(
+            onTap: () async {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.arrow_back,
+              color: FlutterFlowTheme.of(context).primaryBackground,
+              size: 32,
+            ),
           ),
         ),
         title: Align(
@@ -42,7 +45,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
             style: FlutterFlowTheme.of(context).bodyText1.override(
                   fontFamily: 'Open Sans',
                   color: FlutterFlowTheme.of(context).primaryBackground,
-                  fontSize: 28,
+                  fontSize: 24,
                   fontWeight: FontWeight.w400,
                 ),
           ),
@@ -51,7 +54,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
           Align(
             alignment: AlignmentDirectional(0, 0),
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
               child: Text(
                 'Clear All',
                 textAlign: TextAlign.center,
