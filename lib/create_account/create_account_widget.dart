@@ -522,7 +522,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                 borderWidth: 1,
                                 borderRadius: 0,
                                 margin: EdgeInsetsDirectional.fromSTEB(
-                                    12, 4, 12, 4),
+                                    16, 4, 16, 4),
                                 hidesUnderline: true,
                               ),
                             ),
@@ -540,7 +540,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                           children: [
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   createUser = await CreateUserCall.call(
@@ -594,7 +594,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
 
                                   setState(() {});
                                 },
-                                text: 'Register',
+                                text: 'REGISTER',
                                 options: FFButtonOptions(
                                   width: 300,
                                   height: 40,
@@ -616,18 +616,55 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                              child: Text(
-                                'OR',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Open Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      fontSize: 20,
-                                    ),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  32, 32, 32, 32),
+                              child: Stack(
+                                alignment: AlignmentDirectional(0, 0),
+                                children: [
+                                  Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                    children: [
+                                      Divider(
+                                        thickness: 1,
+                                        color: FlutterFlowTheme.of(
+                                            context)
+                                            .secondaryColor,
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Align(
+                                        child: Container(
+                                          color: FlutterFlowTheme.of(
+                                              context)
+                                              .primaryBackground,
+                                          child: Padding(
+                                            padding:
+                                            const EdgeInsetsDirectional
+                                                .fromSTEB(
+                                                4, 0, 4, 0),
+                                            child: Text(
+                                              'OR',
+                                              style:
+                                              FlutterFlowTheme.of(
+                                                  context)
+                                                  .bodyText1
+                                                  .override(
+                                                fontFamily:
+                                                'Open Sans',
+                                                fontSize: 22,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
                             Padding(
@@ -638,7 +675,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                   await launchURL(
                                       'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
                                 },
-                                text: 'Campus Registration',
+                                text: 'CAMPUS REGISTRATION',
                                 options: FFButtonOptions(
                                   width: 300,
                                   height: 40,
@@ -661,7 +698,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             ),
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 24, 0, 8),
+                                  EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
