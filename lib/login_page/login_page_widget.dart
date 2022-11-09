@@ -9,6 +9,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../gen/assets.gen.dart';
 
 class LoginPageWidget extends StatefulWidget {
   const LoginPageWidget({Key? key}) : super(key: key);
@@ -54,7 +55,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
             child: GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(0, Constants.hMainMargin, 0, 0),
                 child: Container(
                   width: double.infinity,
                   child: Padding(
@@ -63,7 +64,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                       alignment: AlignmentDirectional(0, 0),
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, Constants.smallMargin, 0, 0),
                           child: SingleChildScrollView(
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
@@ -76,7 +77,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     children: [
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            32, 0, 32, 0),
+                                            Constants.wideMargin, 0, Constants.wideMargin, 0),
                                         child: TextFormField(
                                           controller: textController1,
                                           autofocus: true,
@@ -93,8 +94,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
+                                                topLeft: Radius.circular(Constants.qSmallMargin),
+                                                topRight: Radius.circular(Constants.qSmallMargin),
                                               ),
                                             ),
                                             focusedBorder: UnderlineInputBorder(
@@ -104,8 +105,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
+                                                topLeft: Radius.circular(Constants.qSmallMargin),
+                                                topRight: Radius.circular(Constants.qSmallMargin),
                                               ),
                                             ),
                                             errorBorder: UnderlineInputBorder(
@@ -115,8 +116,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
+                                                topLeft: Radius.circular(Constants.qSmallMargin),
+                                                topRight: Radius.circular(Constants.qSmallMargin),
                                               ),
                                             ),
                                             focusedErrorBorder:
@@ -127,8 +128,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
+                                                topLeft: Radius.circular(Constants.qSmallMargin),
+                                                topRight: Radius.circular(Constants.qSmallMargin),
                                               ),
                                             ),
                                             filled: true,
@@ -146,13 +147,13 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
-                                                fontSize: 16,
+                                                fontSize: Constants.smallMargin,
                                               ),
                                         ),
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            32, 4, 32, 4),
+                                            Constants.wideMargin, Constants.qSmallMargin, Constants.wideMargin, Constants.qSmallMargin),
                                         child: TextFormField(
                                           controller: textController2,
                                           autofocus: true,
@@ -169,8 +170,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
+                                                topLeft: Radius.circular(Constants.qSmallMargin),
+                                                topRight: Radius.circular(Constants.qSmallMargin),
                                               ),
                                             ),
                                             focusedBorder: UnderlineInputBorder(
@@ -180,8 +181,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
+                                                topLeft: Radius.circular(Constants.qSmallMargin),
+                                                topRight: Radius.circular(Constants.qSmallMargin),
                                               ),
                                             ),
                                             errorBorder: UnderlineInputBorder(
@@ -191,8 +192,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
+                                                topLeft: Radius.circular(Constants.qSmallMargin),
+                                                topRight: Radius.circular(Constants.qSmallMargin),
                                               ),
                                             ),
                                             focusedErrorBorder:
@@ -203,8 +204,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                               ),
                                               borderRadius:
                                                   const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
+                                                topLeft: Radius.circular(Constants.qSmallMargin),
+                                                topRight: Radius.circular(Constants.qSmallMargin),
                                               ),
                                             ),
                                             filled: true,
@@ -235,7 +236,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                               .bodyText1
                                               .override(
                                                 fontFamily: 'Open Sans',
-                                                fontSize: 16,
+                                                fontSize: Constants.smallMargin,
                                               ),
                                         ),
                                       ),
@@ -244,7 +245,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    24, 4, 32, 12),
+                                                    Constants.mainMargin, Constants.qSmallMargin, Constants.wideMargin, Constants.hMainMargin),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
@@ -354,7 +355,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            32, 0, 32, 24),
+                                            Constants.wideMargin, 0, Constants.wideMargin, Constants.mainMargin),
                                         child: FFButtonWidget(
                                           onPressed: () async {
                                             loginAttempt = await LoginCall.call(
@@ -443,7 +444,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            32, 0, 32, 0),
+                                            Constants.wideMargin, 0, Constants.wideMargin, 0),
                                         child: Stack(
                                           alignment: AlignmentDirectional(0, 0),
                                           children: [
@@ -472,7 +473,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                       padding:
                                                           const EdgeInsetsDirectional
                                                                   .fromSTEB(
-                                                              4, 0, 4, 0),
+                                                              Constants.qSmallMargin, 0, Constants.qSmallMargin, 0),
                                                       child: Text(
                                                         'OR',
                                                         style:
@@ -495,11 +496,11 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            32, 24, 32, 0),
+                                            Constants.wideMargin, Constants.mainMargin, Constants.wideMargin, 0),
                                         child: FFButtonWidget(
                                           onPressed: () async {
                                             await launchURL(
-                                                'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
+                                                'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3nConstants.qSmallMarginA&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
                                           },
                                           text: 'CAMPUS LOGIN',
                                           options: FFButtonOptions(
