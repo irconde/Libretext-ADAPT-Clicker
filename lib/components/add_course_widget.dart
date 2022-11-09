@@ -86,11 +86,12 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                     child: Text(
-                      'Add Course',
+                      'Course Registration',
                       style: FlutterFlowTheme.of(context).bodyText1.override(
                             fontFamily: 'Open Sans',
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
+                            fontSize: 28,
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            fontWeight: FontWeight.w700,
                           ),
                     ),
                   ),
@@ -98,7 +99,19 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                     color: FlutterFlowTheme.of(context).primaryText,
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(32, 24, 32, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                    child: Text(
+                      'Please enter the course code used given by your instructor.',
+                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                        fontFamily: 'Open Sans',
+                        fontSize: 14,
+                        color: FlutterFlowTheme.of(context).secondaryColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                     child: TextFormField(
                       controller: accessCodeACController,
                       autofocus: true,
@@ -156,7 +169,7 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1.override(
                             fontFamily: 'Open Sans',
-                            fontSize: 13,
+                            fontSize: 14,
                           ),
                       textAlign: TextAlign.start,
                     ),
@@ -168,7 +181,7 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                       style: FlutterFlowTheme.of(context).bodyText1.override(
                             fontFamily: 'Open Sans',
                             color: FlutterFlowTheme.of(context).failure,
-                            fontSize: 13,
+                            fontSize: 14,
                             fontWeight: FontWeight.normal,
                           ),
                     ).animated([animationsMap['textOnActionTriggerAnimation']!]),
@@ -176,7 +189,7 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                   Align(
                     alignment: AlignmentDirectional(0, 0),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(32, 0, 32, 24),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                       child: FFButtonWidget(
                         onPressed: () async {
                           addCourse = await AddCourseCall.call(
@@ -220,7 +233,7 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
 
                           setState(() {});
                         },
-                        text: 'Join Course',
+                        text: 'JOIN COURSE',
                         options: FFButtonOptions(
                           width: double.infinity,
                           height: 40,
@@ -231,6 +244,7 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                                     color: FlutterFlowTheme.of(context)
                                         .primaryBackground,
                                     fontSize: 20,
+                                    fontWeight: FontWeight.w700,
                                     letterSpacing: 1,
                                   ),
                           elevation: 4,
