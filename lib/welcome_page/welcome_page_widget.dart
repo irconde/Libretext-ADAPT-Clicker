@@ -101,6 +101,7 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                                 FlutterFlowTheme.of(context).subtitle2.override(
                                       fontFamily: 'Open Sans',
                                       color: Colors.white,
+                                      fontWeight: FontWeight.w700,
                                     ),
                             borderSide: BorderSide(
                               color: Colors.transparent,
@@ -131,6 +132,7 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                                 .subtitle2
                                 .override(
                                   fontFamily: 'Open Sans',
+                                  fontWeight: FontWeight.w600,
                                   color:
                                       FlutterFlowTheme.of(context).primaryColor,
                                 ),
