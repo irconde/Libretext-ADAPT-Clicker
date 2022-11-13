@@ -6,7 +6,6 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../login_page/login_page_widget.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../gen/assets.gen.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
