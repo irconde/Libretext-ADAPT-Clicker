@@ -669,7 +669,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             ),
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   await launchURL(
