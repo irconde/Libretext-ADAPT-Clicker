@@ -8,7 +8,6 @@ import '../login_page/login_page_widget.dart';
 import 'dart:async';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
-import '../gen/assets.gen.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -496,11 +495,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             ),
                             Padding(
                               padding:
-<<<<<<< Updated upstream
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-=======
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
->>>>>>> Stashed changes
                               child: FlutterFlowDropDown(
                                 options: FFAppState.timezoneContainer?.textzones ?? [''],
                                 onChanged: (val) =>
@@ -527,7 +522,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                 borderWidth: 1,
                                 borderRadius: 0,
                                 margin: EdgeInsetsDirectional.fromSTEB(
-                                    16, 4, 16, 4),
+                                    12, 4, 12, 4),
                                 hidesUnderline: true,
                               ),
                             ),
@@ -539,21 +534,13 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                         ? MediaQuery.of(context).viewInsets.bottom > 0
                         : _isKeyboardVisible))
                       Padding(
-<<<<<<< Updated upstream
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-=======
                         padding: EdgeInsetsDirectional.fromSTEB(32, 0, 32, 100),
->>>>>>> Stashed changes
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Padding(
                               padding:
-<<<<<<< Updated upstream
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-=======
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
->>>>>>> Stashed changes
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   createUser = await CreateUserCall.call(
@@ -630,11 +617,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-<<<<<<< Updated upstream
-                                  32, 32, 32, 32),
-=======
                                   0, 0, 0, 24),
->>>>>>> Stashed changes
                               child: Stack(
                                 alignment: AlignmentDirectional(0, 0),
                                 children: [
@@ -663,11 +646,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                             padding:
                                             const EdgeInsetsDirectional
                                                 .fromSTEB(
-<<<<<<< Updated upstream
-                                                4, 0, 4, 0),
-=======
-                                                Constants.qSmallMargin, 0, Constants.qSmallMargin, 0),
->>>>>>> Stashed changes
+                                               4, 0,4, 0),
                                             child: Text(
                                               'OR',
                                               style:
@@ -690,11 +669,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             ),
                             Padding(
                               padding:
-<<<<<<< Updated upstream
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-=======
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
->>>>>>> Stashed changes
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   await launchURL(
