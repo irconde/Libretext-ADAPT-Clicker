@@ -11,45 +11,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-String invalidPasswordChar =
-    "The password must be at least 8 characters and contain at least one uppercase character, one number, and one special character.";
-String passwordRequired = "The password field is required.";
-String emailRequired = "The email field is required.";
-String emailTaken = "The email has already been taken.";
-String invalidEmail = "The email must be a valid email address.";
-String firstNameRequired = "The first name field is required.";
-String lastNameRequired = "The last name field is required.";
-
 class CreateAccountWidget extends StatefulWidget {
-  const CreateAccountWidget({Key? key, required this.onSubmit})
-      : super(key: key);
-  final ValueChanged<String> onSubmit;
+  const CreateAccountWidget({Key? key}) : super(key: key);
 
   @override
   _CreateAccountWidgetState createState() => _CreateAccountWidgetState();
 }
 
-String checkTop(var topSize) {
-  if (topSize <= 120) {
-    return "Create Account";
-  } else {
-    return "Create\nAccount";
-  }
-}
-
 class _CreateAccountWidgetState extends State<CreateAccountWidget> {
-  late bool confirmPasswordFieldCAVisibility = false;
+  TextEditingController? confrimPasswordFieldCAController;
 
-  final emailFieldCAController = TextEditingController();
-  final firstNameFieldCAController = TextEditingController();
-  final lastNameFieldCAController = TextEditingController();
-  final studentIDFieldController = TextEditingController();
-  final passwordFieldCAController = TextEditingController();
-  final confirmPasswordFieldCAController = TextEditingController();
+  late bool confrimPasswordFieldCAVisibility;
 
-  bool _submitted = false;
+  TextEditingController? emailFieldCAController;
 
-  late bool passwordFieldCAVisibility = false;
+  TextEditingController? firstNameFieldCAController;
+
+  TextEditingController? lastNameFieldCAController;
+
+  TextEditingController? studentIDFieldController;
+
+  TextEditingController? passwordFieldCAController;
+
+  late bool passwordFieldCAVisibility;
 
   String? tZDropDownCAValue;
   ApiCallResponse? createUser;
@@ -68,315 +52,545 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
         });
       });
     }
+
+    confrimPasswordFieldCAController = TextEditingController();
+    confrimPasswordFieldCAVisibility = false;
+    emailFieldCAController = TextEditingController();
+    firstNameFieldCAController = TextEditingController();
+    lastNameFieldCAController = TextEditingController();
+    studentIDFieldController = TextEditingController();
+    passwordFieldCAController = TextEditingController();
+    passwordFieldCAVisibility = false;
   }
 
-  String? get _FNErrorText {
-    final text = firstNameFieldCAController.value.text;
-    if (text.isEmpty) {
-      return firstNameRequired;
+  @override
+  void dispose() {
+    if (!isWeb) {
+      _keyboardVisibilitySubscription.cancel();
     }
-    return null;
-  }
-
-  String? get _LNErrorText {
-    final text = lastNameFieldCAController.value.text;
-    if (text.isEmpty) {
-      return lastNameRequired;
-    }
-    return null;
-  }
-
-  String? get _emailErrorText {
-    final text = emailFieldCAController.value.text;
-    if (text.isEmpty) {
-      return emailRequired;
-    }else if (!text.contains('@')){
-      return invalidEmail;
-    }else{
-      return emailTaken;
-    }
-  }
-
-  String? get _passwordErrorText {
-    final text = passwordFieldCAController.value.text;
-    if (text.isEmpty) {
-      return passwordRequired;
-    }else if (text.length < 8){
-      return invalidPasswordChar;
-    }
-    return null;
-  }
-
-  void _submit() {
-    setState(() => _submitted = true);
-    if (_FNErrorText == null) {
-      widget.onSubmit(firstNameFieldCAController.value.text);
-    }
-    if (_LNErrorText == null) {
-      widget.onSubmit(lastNameFieldCAController.value.text);
-    }
-    if (_emailErrorText == null) {
-      widget.onSubmit(emailFieldCAController.value.text);
-    }
-    if (_passwordErrorText == null) {
-      widget.onSubmit(passwordFieldCAController.value.text);
-    }
-
-    @override
-    void dispose() {
-      if (!isWeb) {
-        _keyboardVisibilitySubscription.cancel();
-      }
-      super.dispose();
-    }
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    var top = 0.0;
     return Scaffold(
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
+        key: scaffoldKey,
+        body: CustomScrollView(
+          slivers: <Widget>[
             SliverAppBar(
-                expandedHeight: 160.0,
                 pinned: true,
                 snap: false,
                 floating: false,
-                flexibleSpace: LayoutBuilder(builder:
-                    (BuildContext context, BoxConstraints constraints) {
-                  top = constraints.biggest.height;
-                  return FlexibleSpaceBar(
-                      title: AnimatedOpacity(
-                          duration: Duration(milliseconds: 300),
-                          opacity: 1.0,
-                          child: Text(checkTop(top))),
-                      background:
-                          Image.asset('assets/images/libreAddPerson.png'));
-                })),
-          ];
-        },
-        body: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(32, 16, 32, 24),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 12),
-                          child: TextField(
-                            controller: firstNameFieldCAController,
-                            autofocus: true,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'First Name',
-                              errorText: _submitted ? _FNErrorText : null,
-                              prefixIcon: Icon(
-                                Icons.person_outline,
-                              ),
-                            ),
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
-                          child: TextField(
-                            controller: lastNameFieldCAController,
-                            autofocus: true,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'Last Name',
-                              errorText: _submitted ? _LNErrorText : null,
-                              prefixIcon: Icon(
-                                Icons.person_outline,
-                              ),
-                            ),
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
-                          child: TextField(
-                            controller: studentIDFieldController,
-                            autofocus: true,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'Student ID',
-                              prefixIcon: Icon(
-                                Icons.school_outlined,
-                              ),
-                            ),
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
-                          child: TextField(
-                            controller: emailFieldCAController,
-                            autofocus: true,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'Email',
-                              errorText: _submitted ? _emailErrorText : null,
-                              prefixIcon: Icon(
-                                Icons.email_outlined,
-                              ),
-                            ),
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
-                          child: TextField(
-                            controller: passwordFieldCAController,
-                            autofocus: true,
-                            obscureText: !passwordFieldCAVisibility,
-                            decoration: InputDecoration(
-                              labelText: 'Password',
-                              errorText: _submitted ? _passwordErrorText : null,
-                              prefixIcon: Icon(
-                                Icons.lock_outline,
-                              ),
-                              suffixIcon: InkWell(
-                                onTap: () => setState(
-                                  () => passwordFieldCAVisibility =
-                                      !passwordFieldCAVisibility,
+                expandedHeight: 160.0,
+                flexibleSpace: FlexibleSpaceBar(
+                  title: Text('Create\nAccount'),
+                  background: Image.asset('assets/images/libreAddPerson.png'),
+                )),
+            SliverToBoxAdapter(
+              child: GestureDetector(
+                onTap: () => FocusScope.of(context).unfocus(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(32, 32, 32, 32),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                              child: TextFormField(
+                                controller: firstNameFieldCAController,
+                                autofocus: true,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  hintText: 'First Name',
+                                  hintStyle:
+                                      FlutterFlowTheme.of(context).bodyText2,
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  errorBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedErrorBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  filled: true,
+                                  fillColor: FlutterFlowTheme.of(context)
+                                      .textFieldBackground,
+                                  prefixIcon: Icon(
+                                    Icons.person,
+                                  ),
                                 ),
-                                focusNode: FocusNode(skipTraversal: true),
-                                child: Icon(
-                                  passwordFieldCAVisibility
-                                      ? Icons.visibility_outlined
-                                      : Icons.visibility_off_outlined,
-                                  color: Color(0xFF757575),
-                                  size: 22,
-                                ),
+                                style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                             ),
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
-                          child: TextField(
-                            controller: confirmPasswordFieldCAController,
-                            autofocus: true,
-                            obscureText: !confirmPasswordFieldCAVisibility,
-                            decoration: InputDecoration(
-                              labelText: 'Confirm Password',
-                              errorText: _submitted ? _passwordErrorText : null,
-                              prefixIcon: Icon(
-                                Icons.lock_outline,
-                              ),
-                              suffixIcon: InkWell(
-                                onTap: () => setState(
-                                  () => confirmPasswordFieldCAVisibility =
-                                      !confirmPasswordFieldCAVisibility,
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                              child: TextFormField(
+                                controller: lastNameFieldCAController,
+                                autofocus: true,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  hintText: 'Last Name',
+                                  hintStyle:
+                                      FlutterFlowTheme.of(context).bodyText2,
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  errorBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedErrorBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  filled: true,
+                                  fillColor: FlutterFlowTheme.of(context)
+                                      .textFieldBackground,
+                                  prefixIcon: Icon(
+                                    Icons.person,
+                                  ),
                                 ),
-                                focusNode: FocusNode(skipTraversal: true),
-                                child: Icon(
-                                  confirmPasswordFieldCAVisibility
-                                      ? Icons.visibility_outlined
-                                      : Icons.visibility_off_outlined,
-                                  color: Color(0xFF757575),
-                                  size: 22,
-                                ),
+                                style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                             ),
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                          EdgeInsetsDirectional.fromSTEB(0, 14, 0, 0),
-                          child: FlutterFlowDropDown(
-                            options: FFAppState.timezoneContainer?.textzones ?? [''],
-                            onChanged: (val) =>
-                                setState(() => tZDropDownCAValue = FFAppState.timezoneContainer!.getValue(val)),
-                            width: 365,
-                            height: 50,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .bodyText1
-                                .override(
-                              fontFamily: 'Open Sans',
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryText,
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                              child: TextFormField(
+                                controller: studentIDFieldController,
+                                autofocus: true,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  hintText: 'Student ID',
+                                  hintStyle:
+                                      FlutterFlowTheme.of(context).bodyText2,
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  errorBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedErrorBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  filled: true,
+                                  fillColor: FlutterFlowTheme.of(context)
+                                      .textFieldBackground,
+                                  prefixIcon: Icon(
+                                    Icons.school_rounded,
+                                  ),
+                                ),
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                              ),
                             ),
-                            hintText: 'Pick a timezone',
-                            icon: Icon(
-                              Icons.access_time,
-                              size: 15,
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                              child: TextFormField(
+                                controller: emailFieldCAController,
+                                autofocus: true,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  hintText: 'Email',
+                                  hintStyle:
+                                      FlutterFlowTheme.of(context).bodyText2,
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  errorBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedErrorBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  filled: true,
+                                  fillColor: FlutterFlowTheme.of(context)
+                                      .textFieldBackground,
+                                  prefixIcon: Icon(
+                                    Icons.email_rounded,
+                                  ),
+                                ),
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                              ),
                             ),
-                            fillColor: FlutterFlowTheme.of(context)
-                                .primaryBackground,
-                            elevation: 2,
-                            borderColor:
-                            FlutterFlowTheme.of(context).primaryColor,
-                            borderWidth: 1,
-                            borderRadius: 0,
-                            margin: EdgeInsetsDirectional.fromSTEB(
-                                12, 4, 12, 4),
-                            hidesUnderline: true,
-                          ),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                              child: TextFormField(
+                                controller: passwordFieldCAController,
+                                autofocus: true,
+                                obscureText: !passwordFieldCAVisibility,
+                                decoration: InputDecoration(
+                                  hintText: 'Password',
+                                  hintStyle:
+                                      FlutterFlowTheme.of(context).bodyText2,
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  errorBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedErrorBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  filled: true,
+                                  fillColor: FlutterFlowTheme.of(context)
+                                      .textFieldBackground,
+                                  prefixIcon: Icon(
+                                    Icons.lock_sharp,
+                                  ),
+                                  suffixIcon: InkWell(
+                                    onTap: () => setState(
+                                      () => passwordFieldCAVisibility =
+                                          !passwordFieldCAVisibility,
+                                    ),
+                                    focusNode: FocusNode(skipTraversal: true),
+                                    child: Icon(
+                                      passwordFieldCAVisibility
+                                          ? Icons.visibility_outlined
+                                          : Icons.visibility_off_outlined,
+                                      color: Color(0xFF757575),
+                                      size: 22,
+                                    ),
+                                  ),
+                                ),
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                              child: TextFormField(
+                                controller: confrimPasswordFieldCAController,
+                                autofocus: true,
+                                obscureText: !confrimPasswordFieldCAVisibility,
+                                decoration: InputDecoration(
+                                  hintText: 'Confirm Password',
+                                  hintStyle:
+                                      FlutterFlowTheme.of(context).bodyText2,
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  errorBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedErrorBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  filled: true,
+                                  fillColor: FlutterFlowTheme.of(context)
+                                      .textFieldBackground,
+                                  prefixIcon: Icon(
+                                    Icons.lock_sharp,
+                                  ),
+                                  suffixIcon: InkWell(
+                                    onTap: () => setState(
+                                      () => confrimPasswordFieldCAVisibility =
+                                          !confrimPasswordFieldCAVisibility,
+                                    ),
+                                    focusNode: FocusNode(skipTraversal: true),
+                                    child: Icon(
+                                      confrimPasswordFieldCAVisibility
+                                          ? Icons.visibility_outlined
+                                          : Icons.visibility_off_outlined,
+                                      color: Color(0xFF757575),
+                                      size: 22,
+                                    ),
+                                  ),
+                                ),
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                              child: FlutterFlowDropDown(
+                                options: FFAppState.timezoneContainer?.textzones ?? [''],
+                                onChanged: (val) =>
+                                    setState(() => tZDropDownCAValue = FFAppState.timezoneContainer!.getValue(val)),
+                                width: 365,
+                                height: 50,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Open Sans',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                    ),
+                                hintText: 'Pick a timezone',
+                                icon: Icon(
+                                  Icons.access_time,
+                                  size: 15,
+                                ),
+                                fillColor: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                elevation: 2,
+                                borderColor:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                                borderWidth: 1,
+                                borderRadius: 0,
+                                margin: EdgeInsetsDirectional.fromSTEB(
+                                    12, 4, 12, 4),
+                                hidesUnderline: true,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-                if (!(isWeb
-                    ? MediaQuery.of(context).viewInsets.bottom > 0
-                    : _isKeyboardVisible))
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
+                    if (!(isWeb
+                        ? MediaQuery.of(context).viewInsets.bottom > 0
+                        : _isKeyboardVisible))
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            textStyle: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w600),
-                            onPrimary: FlutterFlowTheme.of(context).primaryBtnText,
-                            fixedSize: const Size(330, 36),
-                            primary: FlutterFlowTheme.of(context).primaryColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                          ),
-                          onPressed: () async {
-                            createUser = await CreateUserCall.call(
-                              email: emailFieldCAController!.text,
-                              password: passwordFieldCAController!.text,
-                              passwordConfirmation:
-                                  confirmPasswordFieldCAController!.text,
-                              firstName: firstNameFieldCAController!.text,
-                              lastName: lastNameFieldCAController!.text,
-                              registrationType: '3',
-                              studentId: studentIDFieldController!.text,
-                              timeZone: 'America/Belize',
-                            );
-                            if ((createUser?.succeeded ?? true)) {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => CoursesPageWidget(),
-                                ),
-                              );
-                            } else {
-                              _submit();
-                              setState(
-                                  () => FFAppState().errorsList = (getJsonField(
-                                        (createUser?.jsonBody ?? ''),
-                                        r'''$.errors..*''',
-                                      ) as List)
-                                          .map<String>((s) => s.toString())
-                                          .toList());
-                            }
+                        padding: EdgeInsetsDirectional.fromSTEB(32, 0, 32, 100),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  createUser = await CreateUserCall.call(
+                                    email: emailFieldCAController!.text,
+                                    password: passwordFieldCAController!.text,
+                                    passwordConfirmation:
+                                        confrimPasswordFieldCAController!.text,
+                                    firstName: firstNameFieldCAController!.text,
+                                    lastName: lastNameFieldCAController!.text,
+                                    registrationType: '3',
+                                    studentId: studentIDFieldController!.text,
+                                    timeZone: tZDropDownCAValue,
+                                  );
+                                  if ((createUser?.succeeded ?? true)) {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            CoursesPageWidget(),
+                                      ),
+                                    );
+                                  } else {
+                                    setState(() =>
+                                        FFAppState().errorsList = (getJsonField(
+                                          (createUser?.jsonBody ?? ''),
+                                          r'''$.errors..*''',
+                                        ) as List)
+                                            .map<String>((s) => s.toString())
+                                            .toList());
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          valueOrDefault<String>(
+                                            functions.getTopError(FFAppState()
+                                                .errorsList
+                                                .toList()),
+                                            'Invalid Data',
+                                          ),
+                                          style: TextStyle(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryBtnText,
+                                          ),
+                                        ),
+                                        duration: Duration(milliseconds: 4000),
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .failure,
+                                      ),
+                                    );
+                                  }
 
                             setState(() {});
                           },
