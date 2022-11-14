@@ -10,26 +10,23 @@ import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 String passwordRequired = "The password field is required.";
 String emailRequired = "The email field is required.";
 String invalidRecords = "These credentials do not match our records.";
 
 String invalidPasswordError() {
-  print(FFAppState().errorsList.toList());
   if ((FFAppState().errorsList.toList()).contains(passwordRequired)) {
     return passwordRequired;
-  }else if ((FFAppState().errorsList.toList()).contains(invalidRecords)){
+  } else if ((FFAppState().errorsList.toList()).contains(invalidRecords)) {
     return invalidRecords;
   }
   return "";
 }
 
 String emailError() {
-  print(FFAppState().errorsList.toList());
   if ((FFAppState().errorsList.toList()).contains(emailRequired)) {
     return emailRequired;
-  }else if ((FFAppState().errorsList.toList()).contains(invalidRecords)){
+  } else if ((FFAppState().errorsList.toList()).contains(invalidRecords)) {
     return invalidRecords;
   }
   return "";
@@ -141,11 +138,13 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     controller: textController1,
                                     autofocus: true,
                                     obscureText: false,
-                                    decoration: InputDecoration(  //TODO - Show Error After Button Press
-                                      errorText: emailError(),
-                                      errorStyle: FlutterFlowTheme.of(context).bodyText2,
+                                    decoration: InputDecoration(
+                                      //TODO - Show Error After Button Press
                                       hintText: 'Email',
                                       hintStyle: FlutterFlowTheme.of(context)
+                                          .bodyText2,
+                                      errorText: emailError(),
+                                      errorStyle: FlutterFlowTheme.of(context)
                                           .bodyText2,
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
@@ -211,11 +210,13 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     controller: textController2,
                                     autofocus: true,
                                     obscureText: !passwordVisibility,
-                                    decoration: InputDecoration(  //TODO - Show Error After Button Press
-                                      errorText: invalidPasswordError(),
-                                      errorStyle: FlutterFlowTheme.of(context).bodyText2,
+                                    decoration: InputDecoration(
+                                      //TODO - Show Error After Button Press
                                       hintText: 'Password',
                                       hintStyle: FlutterFlowTheme.of(context)
+                                          .bodyText2,
+                                      errorText: invalidPasswordError(),
+                                      errorStyle: FlutterFlowTheme.of(context)
                                           .bodyText2,
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
@@ -395,8 +396,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                 CoursesPageWidget(),
                                           ),
                                         );
-                                      }
-                                      else {
+                                      } else {
                                         setState(() => FFAppState().errorsList =
                                                 (getJsonField(
                                               (loginAttempt?.jsonBody ?? ''),
