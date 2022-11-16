@@ -40,22 +40,22 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
       key: scaffoldKey,
       appBar: PreferredSize(
         preferredSize:
-            Size.fromHeight(MediaQuery.of(context).size.height * 0.2),
+            Size.fromHeight(MediaQuery.of(context).size.height * 0.28),
         child: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryColor,
           automaticallyImplyLeading: false,
           flexibleSpace: Stack(
             children: [
               Align(
-                alignment: AlignmentDirectional(-0.94, -0.48),
+                alignment: AlignmentDirectional(-.90, -0.64),
                 child: InkWell(
                   onTap: () async {
                     Navigator.pop(context);
                   },
                   child: Icon(
-                    Icons.arrow_back,
+                    Icons.close,
                     color: FlutterFlowTheme.of(context).primaryBackground,
-                    size: 28,
+                    size: 32,
                   ),
                 ),
               ),
@@ -66,23 +66,24 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                   style: FlutterFlowTheme.of(context).bodyText1.override(
                         fontFamily: 'Open Sans',
                         color: FlutterFlowTheme.of(context).primaryBackground,
-                        fontSize: 32,
+                        fontSize: 38,
+                        fontWeight: FontWeight.bold
                       ),
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.1, 1),
+                alignment: AlignmentDirectional(-.2, .9),
                 child: Image.asset(
                   'assets/images/libreQuestion.png',
                   width: 175,
-                  height: 150,
+                  height: 174,
                   fit: BoxFit.contain,
                 ),
               ),
             ],
           ),
           actions: [],
-          elevation: 2,
+          elevation: 0,
         ),
       ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -300,22 +301,24 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(36, 0, 36, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 5),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
                       child: Text(
-                        'Please use this form to contact us regarding general questions or issues. If you have a course specific, please contact your instructor using your own email client.',
+                        'Please use this form to contact us regarding general  questions or issues.',
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Open Sans',
-                              fontSize: 14,
+                              fontSize: 13,
+                              fontWeight: FontWeight.normal,
+                              color: Color(0xFF6A6A6A),
                             ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                       child: TextFormField(
                         controller: contactUsNameTextFieldController,
                         autofocus: true,
@@ -371,7 +374,7 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                       child: TextFormField(
                         controller: contactUsEmailTextFieldController,
                         autofocus: true,
@@ -427,7 +430,7 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(1, 1, 1, 1),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                       child: FlutterFlowDropDown(
                         options: ['Option 1'],
                         onChanged: (val) =>
@@ -451,17 +454,17 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                       child: TextFormField(
                         controller: contactUsMessageTextFieldController,
                         autofocus: true,
                         obscureText: false,
                         decoration: InputDecoration(
-                          hintText: 'Enter Message',
+                          hintText: 'Message',
                           hintStyle: FlutterFlowTheme.of(context).bodyText2,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color(0x00000000),
+                              color: FlutterFlowTheme.of(context).primaryBackground,
                               width: 1,
                             ),
                             borderRadius: const BorderRadius.only(
@@ -471,7 +474,7 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                           ),
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Color(0x00000000),
+                              color:  FlutterFlowTheme.of(context).primaryBackground,
                               width: 1,
                             ),
                             borderRadius: const BorderRadius.only(
@@ -507,7 +510,7 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                               fontFamily: 'Open Sans',
                               fontSize: 12,
                             ),
-                        maxLines: 12,
+                        maxLines: 10,
                       ),
                     ),
                     Row(
@@ -530,7 +533,7 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(32, 16, 32, 32),
                 child: FFButtonWidget(
                   onPressed: () async {
                     contactUs = await ContactUsCall.call(
@@ -584,18 +587,20 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                   },
                   text: 'SUBMIT',
                   options: FFButtonOptions(
-                    width: 310,
-                    height: 40,
+                    width: double.infinity,
+                    height: 50,
                     color: FlutterFlowTheme.of(context).primaryColor,
                     textStyle: FlutterFlowTheme.of(context).subtitle2.override(
                           fontFamily: 'Open Sans',
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
                           color: Colors.white,
                         ),
                     borderSide: BorderSide(
                       color: Colors.transparent,
                       width: 1,
                     ),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(0),
                   ),
                 ),
               ),
