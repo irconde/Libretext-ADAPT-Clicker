@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import '../app_state.dart';
+=======
+>>>>>>> 788185b (Drawer)
 import '../backend/api_requests/api_calls.dart';
 import '../contact_us/contact_us_widget.dart';
 import '../courses_page/courses_page_widget.dart';

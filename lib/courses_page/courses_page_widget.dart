@@ -2,12 +2,17 @@ import '../assignments_page/assignments_page_widget.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/add_course_widget.dart';
 import '../components/no_courses_widget.dart';
+import '../contact_us/contact_us_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/flutter_flow_widgets.dart';
 import '../notifications_page/notifications_page_widget.dart';
-import 'package:adapt_clicker/components/drawer_ctn.dart';
+import '../reset_password_page/reset_password_page_widget.dart';
+import '../update_profile_page/update_profile_page_widget.dart';
+import '../welcome_page/welcome_page_widget.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CoursesPageWidget extends StatefulWidget {
   const CoursesPageWidget({Key? key}) : super(key: key);
