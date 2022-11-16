@@ -82,7 +82,6 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
         onPressed: () async {
           showModalBottomSheet(
             isScrollControlled: true,
-
             context: context,
             builder: (context) {
               return Padding(
@@ -444,8 +443,9 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                 return Builder(
                   builder: (context) {
                     final enrollmentsList = GetEnrollmentsCall.enrollmentsArray(
-                      listViewGetEnrollmentsResponse.jsonBody,
-                    )?.toList() ?? '';
+                          listViewGetEnrollmentsResponse.jsonBody,
+                        )?.toList() ??
+                        '';
                     if (enrollmentsList.isEmpty) {
                       return Center(
                         child: NoCoursesWidget(),
@@ -465,83 +465,102 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                           final enrollmentsListItem =
                               enrollmentsList[enrollmentsListIndex];
                           return Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
-                            child: InkWell(
-                              onTap: () async {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AssignmentsPageWidget(
-                                      courseNumber: getJsonField(
-                                        enrollmentsListItem,
-                                        r'''$.id''',
-                                      ),
-                                      course: enrollmentsListItem,
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    getJsonField(
-                                      enrollmentsListItem,
-                                      r'''$.course_section_name''',
-                                    ).toString(),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          fontSize: 18,
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                24, 24, 24, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      8, 0, 8, 0),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              AssignmentsPageWidget(
+                                            courseNumber: getJsonField(
+                                              enrollmentsListItem,
+                                              r'''$.id''',
+                                            ),
+                                            course: enrollmentsListItem,
+                                          ),
                                         ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 8, 0, 8),
-                                    child: Text(
-                                      getJsonField(
-                                        enrollmentsListItem,
-                                        r'''$.instructor''',
-                                      ).toString(),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontWeight: FontWeight.normal,
+                                      );
+                                    },
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          getJsonField(
+                                            enrollmentsListItem,
+                                            r'''$.course_section_name''',
+                                          ).toString(),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                  fontFamily: 'Open Sans',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 16, 0, 16),
+                                          child: Text(
+                                            getJsonField(
+                                              enrollmentsListItem,
+                                              r'''$.instructor''',
+                                            ).toString(),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'Open Sans',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
                                           ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 0, 0, 8),
+                                          child: Text(
+                                            getJsonField(
+                                              enrollmentsListItem,
+                                              r'''$.id''',
+                                            ).toString(),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'Open Sans',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 16),
-                                    child: Text(
-                                      getJsonField(
-                                        enrollmentsListItem,
-                                        r'''$.id''',
-                                      ).toString(),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1,
-                                    thickness: 1,
-                                  ),
-                                ],
-                              ),
+                                ),
+                                Divider(
+                                  height: 1,
+                                  thickness: 1,
+                                ),
+                              ],
                             ),
                           );
                         },
