@@ -293,33 +293,35 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                        padding:
+                        EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                         child: FlutterFlowDropDown(
-                          initialOption: tZDropDownCAValue ??= ' Samoa Time',
-                          options: FFAppState().timezones.toList(),
+                          options: FFAppState.timezoneContainer?.textzones ?? [''],
                           onChanged: (val) =>
-                              setState(() => tZDropDownCAValue = val),
+                              setState(() => tZDropDownCAValue = FFAppState.timezoneContainer!.getValue(val)),
                           width: 365,
                           height: 50,
                           textStyle: FlutterFlowTheme.of(context)
                               .bodyText1
                               .override(
-                                fontFamily: 'Open Sans',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                              ),
+                            fontFamily: 'Open Sans',
+                            color: FlutterFlowTheme.of(context)
+                                .primaryText,
+                          ),
                           hintText: 'Pick a timezone',
                           icon: Icon(
                             Icons.access_time,
                             size: 15,
                           ),
-                          fillColor:
-                              FlutterFlowTheme.of(context).primaryBackground,
+                          fillColor: FlutterFlowTheme.of(context)
+                              .primaryBackground,
                           elevation: 2,
                           borderColor:
-                              FlutterFlowTheme.of(context).primaryColor,
+                          FlutterFlowTheme.of(context).primaryColor,
                           borderWidth: 1,
                           borderRadius: 0,
-                          margin: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
+                          margin: EdgeInsetsDirectional.fromSTEB(
+                              12, 4, 12, 4),
                           hidesUnderline: true,
                         ),
                       ),
