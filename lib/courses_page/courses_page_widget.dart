@@ -100,7 +100,7 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
         ),
       ),
       drawer: Container(
-        width: 300,
+        width: 268,
         child: Drawer(
           elevation: 32,
           child: Container(
@@ -121,21 +121,21 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                       children: [
                         Container(
                           width: double.infinity,
-                          height: 90,
+                          height: 120,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context).primaryColor,
                           ),
                         ),
                         Padding(
                           padding:
-                              EdgeInsetsDirectional.fromSTEB(36, 16, 36, 0),
+                              EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0, 32, 0, 16),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                                 child: InkWell(
                                   onTap: () async {
                                     await Navigator.push(
@@ -148,41 +148,43 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                                   },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
+                                      Icon(
+                                        Icons.menu_book,
+                                        color: FlutterFlowTheme.of(context)
+                                            .mainGrey,
+                                        size: 28,
+                                      ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 4, 0),
-                                        child: Icon(
-                                          Icons.menu_book,
-                                          color: Color(0xFF787878),
-                                          size: 26,
+                                            8, 0, 0, 4),
+                                        child: Text(
+                                          'Courses',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Open Sans',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .mainGrey,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.normal,
+                                              ),
                                         ),
-                                      ),
-                                      Text(
-                                        'Courses',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                              fontFamily: 'Open Sans',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w500,
-                                            ),
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
                               Divider(
-                                height: 32,
+                                height: 1,
                                 thickness: 1,
-                                color: FlutterFlowTheme.of(context).primaryText,
+                                color: FlutterFlowTheme.of(context).mainGrey,
                               ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0, 16, 0, 16),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                                 child: InkWell(
                                   onTap: () async {
                                     await Navigator.push(
@@ -195,28 +197,30 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                                   },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
+                                      Icon(
+                                        Icons.person_sharp,
+                                        color: FlutterFlowTheme.of(context)
+                                            .mainGrey,
+                                        size: 28,
+                                      ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 4, 0),
-                                        child: Icon(
-                                          Icons.person_outline,
-                                          color: Color(0xFF787878),
-                                          size: 26,
+                                            8, 0, 0, 4),
+                                        child: Text(
+                                          'My Profile',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Open Sans',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .mainGrey,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.normal,
+                                              ),
                                         ),
-                                      ),
-                                      Text(
-                                        'Profile',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                              fontFamily: 'Open Sans',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.normal,
-                                            ),
                                       ),
                                     ],
                                   ),
@@ -224,7 +228,7 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    0, 16, 0, 16),
+                                    0, 24, 0, 24),
                                 child: InkWell(
                                   onTap: () async {
                                     await Navigator.push(
@@ -237,41 +241,43 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                                   },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
+                                      Icon(
+                                        Icons.lock_rounded,
+                                        color: FlutterFlowTheme.of(context)
+                                            .mainGrey,
+                                        size: 28,
+                                      ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 4, 0),
-                                        child: Icon(
-                                          Icons.lock_outlined,
-                                          color: Color(0xFF787878),
-                                          size: 26,
+                                            8, 0, 0, 4),
+                                        child: Text(
+                                          'My Password',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Open Sans',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .mainGrey,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.normal,
+                                              ),
                                         ),
-                                      ),
-                                      Text(
-                                        'Password',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                              fontFamily: 'Open Sans',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.normal,
-                                            ),
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
                               Divider(
-                                height: 32,
+                                height: 1,
                                 thickness: 1,
-                                color: FlutterFlowTheme.of(context).primaryText,
+                                color: FlutterFlowTheme.of(context).mainGrey,
                               ),
                               Padding(
                                 padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                                    EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                                 child: InkWell(
                                   onTap: () async {
                                     await Navigator.push(
@@ -283,32 +289,30 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                                   },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
+                                      Icon(
+                                        Icons.send_sharp,
+                                        color: FlutterFlowTheme.of(context)
+                                            .mainGrey,
+                                        size: 28,
+                                      ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 4, 0),
-                                        child: Icon(
-                                          Icons.lock_outlined,
-                                          color: Color(0xFF787878),
-                                          size: 26,
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: AlignmentDirectional(-1, 0),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 8, 0, 8),
-                                          child: Text(
-                                            'Contact Us',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Open Sans',
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
-                                          ),
+                                            8, 0, 0, 4),
+                                        child: Text(
+                                          'Contact Us',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Open Sans',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .mainGrey,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.normal,
+                                              ),
                                         ),
                                       ),
                                     ],
@@ -325,7 +329,7 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                 Align(
                   alignment: AlignmentDirectional(0, 1),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                    padding: EdgeInsetsDirectional.fromSTEB(32, 0, 32, 32),
                     child: FFButtonWidget(
                       onPressed: () async {
                         logout = await LogoutCall.call(
@@ -343,19 +347,19 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                       },
                       text: 'LOGOUT',
                       options: FFButtonOptions(
-                        width: 220,
-                        height: 40,
-                        color: Color(0x002685C9),
+                        width: double.infinity,
+                        height: 36,
+                        color: FlutterFlowTheme.of(context).primaryBackground,
                         textStyle:
                             FlutterFlowTheme.of(context).subtitle2.override(
                                   fontFamily: 'Open Sans',
-                                  color: Color(0xFF787878),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                                  color: FlutterFlowTheme.of(context).mainGrey,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                        elevation: 4,
+                        elevation: 0,
                         borderSide: BorderSide(
-                          color: Colors.transparent,
+                          color: FlutterFlowTheme.of(context).borderGrey,
                           width: 1,
                         ),
                         borderRadius: BorderRadius.circular(0),
@@ -527,7 +531,7 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                                                           context)
                                                       .primaryText,
                                                   fontSize: 14,
-                                                  fontWeight: FontWeight.w500,
+                                                  fontWeight: FontWeight.w600,
                                                 ),
                                           ),
                                         ),

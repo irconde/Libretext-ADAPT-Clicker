@@ -11,6 +11,8 @@ abstract class FlutterFlowTheme {
   late Color primaryColor;
   late Color secondaryColor;
   late Color tertiaryColor;
+  late Color mainGrey;
+  late Color borderGrey;
   late Color alternate;
   late Color primaryBackground;
   late Color secondaryBackground;
@@ -46,6 +48,8 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color primaryColor = const Color(0xFF1862B3);
   late Color secondaryColor = const Color(0xFF6C757D);
   late Color tertiaryColor = const Color(0xFFEE8B60);
+  late Color mainGrey = const Color(0xFF787878);
+  late Color borderGrey = const Color(0xFFE3E3E3);
   late Color alternate = const Color(0xFFFF5963);
   late Color primaryBackground = const Color(0xFFFFFFFF);
   late Color secondaryBackground = const Color(0xFFFFFFFF);
