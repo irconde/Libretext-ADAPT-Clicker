@@ -33,14 +33,17 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
-        leading: InkWell(
-          onTap: () async {
-            scaffoldKey.currentState!.openDrawer();
-          },
-          child: Icon(
-            Icons.menu,
-            color: FlutterFlowTheme.of(context).primaryBackground,
-            size: 28,
+        leading: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(28, 0, 0, 0),
+          child: InkWell(
+            onTap: () async {
+              scaffoldKey.currentState!.openDrawer();
+            },
+            child: Icon(
+              Icons.menu,
+              color: FlutterFlowTheme.of(context).primaryBackground,
+              size: 32,
+            ),
           ),
         ),
         title: Text(
@@ -48,12 +51,12 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
           style: FlutterFlowTheme.of(context).bodyText1.override(
                 fontFamily: 'Open Sans',
                 color: FlutterFlowTheme.of(context).primaryBackground,
-                fontSize: 32,
+                fontSize: 20,
               ),
         ),
         actions: [
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 28, 0),
             child: InkWell(
               onTap: () async {
                 await Navigator.push(
@@ -66,7 +69,7 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
               child: Icon(
                 Icons.notifications,
                 color: FlutterFlowTheme.of(context).primaryBackground,
-                size: 28,
+                size: 32,
               ),
             ),
           ),
@@ -79,7 +82,7 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
         onPressed: () async {
           showModalBottomSheet(
             isScrollControlled: true,
-            backgroundColor:  Color(0x0E1862B3),
+
             context: context,
             builder: (context) {
               return Padding(
@@ -94,7 +97,7 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
         child: Icon(
           Icons.add,
           color: FlutterFlowTheme.of(context).primaryBackground,
-          size: 28,
+          size: 56,
         ),
       ),
       drawer: Container(
@@ -165,8 +168,8 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.normal,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500,
                                             ),
                                       ),
                                     ],
@@ -385,12 +388,19 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
               height: 26,
               decoration: BoxDecoration(
                 color: Color(0xFFD4D4D4),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 4,
+                    color: Color(0x5B000000),
+                    offset: Offset(0, 4),
+                  )
+                ],
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(50, 0, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(32, 0, 0, 0),
                     child: Text(
                       'active ',
                       style: FlutterFlowTheme.of(context).bodyText1.override(
@@ -456,7 +466,7 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                               enrollmentsList[enrollmentsListIndex];
                           return Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(24, 24, 24, 0),
+                                EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
                             child: InkWell(
                               onTap: () async {
                                 await Navigator.push(
