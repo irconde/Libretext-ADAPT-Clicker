@@ -16,13 +16,10 @@ abstract class FlutterFlowTheme {
   late Color secondaryBackground;
   late Color primaryText;
   late Color secondaryText;
-  late Color tertiaryText;
 
   late Color primaryBtnText;
   late Color lineColor;
   late Color textFieldBackground;
-  late Color textFieldBorder;
-  late Color svgIconColor;
   late Color drawerIconColor;
   late Color success;
   late Color failure;
@@ -43,62 +40,24 @@ abstract class FlutterFlowTheme {
   TextStyle get bodyText2 => typography.bodyText2;
 
   Typography get typography => ThemeTypography(this);
-
-
-  OutlineInputBorder _buildBorder(Color color)
-  {
-    return OutlineInputBorder(
-      borderSide: BorderSide(
-          width: 1,
-          color: color
-      ),
-    );
-  }
-
-  InputDecorationTheme inputTheme() => InputDecorationTheme(
-
-    contentPadding: EdgeInsets.all(16),
-    floatingLabelStyle: TextStyle(color: primaryColor),
-    alignLabelWithHint: true,
-    labelStyle: bodyText2,
-    filled: true,
-
-
-    //default, all otehr null
-    border: _buildBorder(textFieldBorder),
-    //Enabled and not showing error
-    enabledBorder:  _buildBorder(textFieldBorder),
-    //No Focus but error
-    errorBorder:  _buildBorder(failure),
-    //Focussed with error
-    focusedErrorBorder:_buildBorder(failure),
-    //Focused but no Error
-    focusedBorder:_buildBorder(primaryColor),
-
-    fillColor: textFieldBackground,
-    prefixIconColor: tertiaryColor,
-    suffixIconColor: tertiaryColor,
-
-  );
 }
 
 class LightModeTheme extends FlutterFlowTheme {
   late Color primaryColor = const Color(0xFF056ABD);
   late Color secondaryColor = const Color(0xFF707070);
   late Color tertiaryColor = const Color(0xFF898C8E);
+  late Color mainGrey = const Color(0xFF787878);
+  late Color borderGrey = const Color(0xFFE3E3E3);
   late Color alternate = const Color(0xFFFF5963);
   late Color primaryBackground = const Color(0xFFFFFFFF);
   late Color secondaryBackground = const Color(0xFFFFFFFF);
   late Color primaryText = const Color(0xFF101213);
   late Color secondaryText = const Color(0xFF57636C);
-  late Color tertiaryText = const Color(0xFF6A6A6A);
 
   late Color primaryBtnText = Color(0xFFFFFFFF);
   late Color lineColor = Color(0xFFE0E3E7);
-  late Color textFieldBackground = Color(0xFFF5FCFF);
-  late Color textFieldBorder = Color(0xFFD3D8DB);
+  late Color textFieldBackground = Color(0xFFEBF7FF);
   late Color drawerIconColor = Color(0xFF66AADB);
-  late Color svgIconColor = Color(0xFF4F9FCF);
   late Color success = Color(0xFF008C3D);
   late Color failure = Color(0xFFD82828);
 }
@@ -127,53 +86,53 @@ class ThemeTypography extends Typography {
 
   String get title1Family => 'Open Sans';
   TextStyle get title1 => GoogleFonts.getFont(
-    'Open Sans',
-    color: theme.primaryText,
-    fontWeight: FontWeight.w600,
-    fontSize: 24,
-  );
+        'Open Sans',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 24,
+      );
   String get title2Family => 'Open Sans';
   TextStyle get title2 => GoogleFonts.getFont(
-    'Open Sans',
-    color: theme.primaryBackground,
-    fontSize: 24,
-    fontWeight: FontWeight.bold,
-  );
+        'Open Sans',
+        color: theme.secondaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 22,
+      );
   String get title3Family => 'Open Sans';
   TextStyle get title3 => GoogleFonts.getFont(
-    'Open Sans',
-    color: theme.primaryText,
-    fontWeight: FontWeight.w600,
-    fontSize: 20,
-  );
+        'Open Sans',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 20,
+      );
   String get subtitle1Family => 'Open Sans';
   TextStyle get subtitle1 => GoogleFonts.getFont(
-    'Open Sans',
-    color: theme.primaryText,
-    fontWeight: FontWeight.w600,
-    fontSize: 18,
-  );
+        'Open Sans',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 18,
+      );
   String get subtitle2Family => 'Open Sans';
   TextStyle get subtitle2 => GoogleFonts.getFont(
-    'Open Sans',
-    color: theme.secondaryText,
-    fontWeight: FontWeight.w600,
-    fontSize: 16,
-  );
+        'Open Sans',
+        color: theme.secondaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 16,
+      );
   String get bodyText1Family => 'Open Sans';
   TextStyle get bodyText1 => GoogleFonts.getFont(
-    'Open Sans',
-    color: theme.primaryText,
-    fontWeight: FontWeight.normal,
-    fontSize: 14,
-  );
+        'Open Sans',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 14,
+      );
   String get bodyText2Family => 'Open Sans';
   TextStyle get bodyText2 => GoogleFonts.getFont(
-    'Open Sans',
-    color: theme.secondaryText,
-    fontWeight: FontWeight.normal,
-    fontSize: 14,
-  );
+        'Open Sans',
+        color: theme.secondaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 14,
+      );
 }
 
 extension TextStyleHelper on TextStyle {
@@ -193,26 +152,26 @@ extension TextStyleHelper on TextStyle {
   }) =>
       useGoogleFonts
           ? GoogleFonts.getFont(
-        fontFamily!,
-        color: color ?? this.color,
-        fontSize: fontSize ?? this.fontSize,
-        letterSpacing: letterSpacing ?? this.letterSpacing,
-        fontWeight: fontWeight ?? this.fontWeight,
-        fontStyle: fontStyle ?? this.fontStyle,
-        decoration: decoration,
-        decorationColor: decorationColor ?? this.color,
-        height: lineHeight,
-        shadows: shadows,
-        decorationThickness: decorationThickness,
-      )
+              fontFamily!,
+              color: color ?? this.color,
+              fontSize: fontSize ?? this.fontSize,
+              letterSpacing: letterSpacing ?? this.letterSpacing,
+              fontWeight: fontWeight ?? this.fontWeight,
+              fontStyle: fontStyle ?? this.fontStyle,
+              decoration: decoration,
+              decorationColor: decorationColor ?? this.color,
+              height: lineHeight,
+              shadows: shadows,
+              decorationThickness: decorationThickness,
+            )
           : copyWith(
-        fontFamily: fontFamily,
-        color: color,
-        fontSize: fontSize,
-        letterSpacing: letterSpacing,
-        fontWeight: fontWeight,
-        fontStyle: fontStyle,
-        decoration: decoration,
-        height: lineHeight,
-      );
+              fontFamily: fontFamily,
+              color: color,
+              fontSize: fontSize,
+              letterSpacing: letterSpacing,
+              fontWeight: fontWeight,
+              fontStyle: fontStyle,
+              decoration: decoration,
+              height: lineHeight,
+            );
 }
