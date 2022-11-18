@@ -423,7 +423,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                             ),
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0x00000000),
+                                color: Color(0xFF1862B3),
                                 width: 1,
                               ),
                               borderRadius: const BorderRadius.only(
@@ -433,7 +433,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                             ),
                             errorBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0x00000000),
+                                color: Color(0xFFFF0000),
                                 width: 1,
                               ),
                               borderRadius: const BorderRadius.only(
@@ -443,7 +443,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                             ),
                             focusedErrorBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0x00000000),
+                                color: Color(0xFFFF0000),
                                 width: 1,
                               ),
                               borderRadius: const BorderRadius.only(
@@ -452,7 +452,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                               ),
                             ),
                             prefixIcon: Icon(
-                              Icons.person,
+                              Icons.person_outline,
                             ),
                           ),
                           style: FlutterFlowTheme.of(context).bodyText1,
@@ -479,7 +479,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                             ),
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0x00000000),
+                                color: Color(0xFF1862B3),
                                 width: 1,
                               ),
                               borderRadius: const BorderRadius.only(
@@ -489,7 +489,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                             ),
                             errorBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0x00000000),
+                                color: Color(0xFFFF0000),
                                 width: 1,
                               ),
                               borderRadius: const BorderRadius.only(
@@ -499,7 +499,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                             ),
                             focusedErrorBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0x00000000),
+                                color: Color(0xFFFF0000),
                                 width: 1,
                               ),
                               borderRadius: const BorderRadius.only(
@@ -508,7 +508,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                               ),
                             ),
                             prefixIcon: Icon(
-                              Icons.person,
+                              Icons.person_outline,
                             ),
                           ),
                           style: FlutterFlowTheme.of(context).bodyText1,
@@ -535,7 +535,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                             ),
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0x00000000),
+                                color: Color(0xFF1862B3),
                                 width: 1,
                               ),
                               borderRadius: const BorderRadius.only(
@@ -545,7 +545,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                             ),
                             errorBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0x00000000),
+                                color: Color(0xFFFF0000),
                                 width: 1,
                               ),
                               borderRadius: const BorderRadius.only(
@@ -555,7 +555,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                             ),
                             focusedErrorBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0x00000000),
+                                color: Color(0xFFFF0000),
                                 width: 1,
                               ),
                               borderRadius: const BorderRadius.only(
@@ -564,7 +564,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                               ),
                             ),
                             prefixIcon: Icon(
-                              Icons.person,
+                              Icons.person_outline,
                             ),
                           ),
                           style: FlutterFlowTheme.of(context).bodyText1,
@@ -591,7 +591,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                             ),
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0x00000000),
+                                color: Color(0xFF1862B3),
                                 width: 1,
                               ),
                               borderRadius: const BorderRadius.only(
@@ -601,7 +601,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                             ),
                             errorBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0x00000000),
+                                color: Color(0xFFFF0000),
                                 width: 1,
                               ),
                               borderRadius: const BorderRadius.only(
@@ -611,7 +611,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                             ),
                             focusedErrorBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color(0x00000000),
+                                color: Color(0xFFFF0000),
                                 width: 1,
                               ),
                               borderRadius: const BorderRadius.only(
@@ -620,7 +620,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                               ),
                             ),
                             prefixIcon: Icon(
-                              Icons.school_rounded,
+                              Icons.school_outlined,
                             ),
                           ),
                           style: FlutterFlowTheme.of(context).bodyText1,
@@ -629,9 +629,9 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
                         child: FlutterFlowDropDown(
-                          options: ['Option 1'],
+                          options: FFAppState.timezoneContainer?.textzones ?? [''],
                           onChanged: (val) =>
-                              setState(() => timeZoneUpdateDDValue = val),
+                              setState(() => timeZoneUpdateDDValue = FFAppState.timezoneContainer!.getValue(val)),
                           height: 50,
                           textStyle:
                               FlutterFlowTheme.of(context).bodyText1.override(

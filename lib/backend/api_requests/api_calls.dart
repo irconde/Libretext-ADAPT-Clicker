@@ -417,3 +417,24 @@ class GetNonTechnologyIframeCall {
     );
   }
 }
+
+class GetTimezonesCall {
+  static Future<ApiCallResponse> call() {
+    return ApiManager.instance.makeApiCall(
+      callName: 'getTimezones',
+      apiUrl: 'https://adapt.libretexts.org/api/time-zones',
+      callType: ApiCallType.GET,
+      headers: {
+        'Accept': 'application/json',
+      },
+      params: {},
+      returnBody: true,
+    );
+  }
+
+  static dynamic timezones(dynamic response) => getJsonField(
+    response,
+    r'''$.time_zones''',
+    true,
+  );
+}

@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:developer';
+import '../backend/api_requests/api_calls.dart';
+import 'package:adapt_clicker/flutter_flow/custom_functions.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,6 +41,29 @@ class _MyAppState extends State<MyApp> {
   void setThemeMode(ThemeMode mode) => setState(() {
         _themeMode = mode;
       });
+
+  Future<void> fetchTimezone() async {
+    final response = await GetTimezonesCall.call(); //contact server
+
+    if (response.succeeded) {
+      // If the call to the server was successful, init timezones
+      initTimezones(response.jsonBody);
+    } else {
+      // If that call was not successful, throw an error.
+      throw Exception(getJsonField(response.jsonBody,
+          r'''$.message''')); //message should give error message.
+      //note all errors will be logged in backend for server-side fix
+    }
+  }
+
+  ApiCallResponse? timezoneAttempt;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchTimezone();
+  }
+
 
   @override
   Widget build(BuildContext context) {

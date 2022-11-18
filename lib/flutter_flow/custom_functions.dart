@@ -1,5 +1,7 @@
 import 'dart:math' as math;
 
+import 'package:adapt_clicker/flutter_flow/flutter_flow_util.dart';
+import 'package:adapt_clicker/timezone.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -33,4 +35,37 @@ bool isBasic(String techIframe) {
 
 bool isTextSubmission(String textSubmission) {
   return (textSubmission == "text");
+}
+
+
+//Timezones come in form of value: example/example, text: example
+void initTimezones(dynamic timezoneAPI) {
+
+  //gets official values
+  List<String> timezoneValues = (getJsonField(
+    timezoneAPI,
+    r'''$.time_zones..value''',
+  ) as List)
+      .map<String>((s) => s.toString())
+      .toList()
+      .toList();
+
+  //Gets texts
+  List<String> timezoneTexts = (getJsonField(
+    timezoneAPI,
+    r'''$.time_zones..text''',
+  ) as List)
+      .map<String>((s) => s.toString())
+      .toList()
+      .toList();
+
+  List<Timezone> timezones = <Timezone>[];
+
+  for(int i = 0; i < timezoneTexts.length; i++)
+  {
+    Timezone timezone = new Timezone(timezoneValues.elementAt(i),timezoneTexts.elementAt(i));
+    timezones.add(timezone);
+  }
+
+  FFAppState.timezoneContainer = new TimezonesContainer(timezones);
 }

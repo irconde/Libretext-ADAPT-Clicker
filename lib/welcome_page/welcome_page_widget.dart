@@ -88,7 +88,7 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => LoginPageWidget(),
+                                builder: (context) => LoginPageWidget(onSubmit: (String value) {  },),
                               ),
                             );
                           },
@@ -118,7 +118,7 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => CreateAccountWidget(),
+                                builder: (context) => CreateAccountWidget(onSubmit: (String value) {  },),
                               ),
                             );
                           },
