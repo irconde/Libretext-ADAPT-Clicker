@@ -66,71 +66,49 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
       widget.onSubmit(_controller2.value.text);
     }
   }
+  String checkTop(var topSize) {
+    if (topSize <= 120) {
+      return "Welcome Back";
+    } else {
+      return "Welcome\nBack";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    var top = 0.0;
     return Scaffold(
-      key: scaffoldKey,
-      appBar: PreferredSize(
-        preferredSize:
-            Size.fromHeight(MediaQuery.of(context).size.height * 0.2),
-        child: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-          automaticallyImplyLeading: false,
-          flexibleSpace: Stack(
-            children: [
-              Align(
-                alignment: AlignmentDirectional(-0.94, -0.48),
-                child: InkWell(
-                  onTap: () async {
-                    Navigator.pop(context);
-                  },
-                  child: Icon(
-                    Icons.arrow_back,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                    size: 28,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(-0.73, 0.75),
-                child: Text(
-                  'Welcome\nBack',
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'Open Sans',
-                        color: FlutterFlowTheme.of(context).primaryBtnText,
-                        fontSize: 38,
-                      ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(0, 0.5),
-                child: Image.asset(
-                  'assets/images/libreHand.png',
-                  width: 130,
-                  height: 130,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ],
-          ),
-          actions: [],
-          elevation: 4,
-        ),
-      ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      body: SafeArea(
-        child: GestureDetector(
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+                expandedHeight: 160.0,
+                pinned: true,
+                snap: false,
+                floating: false,
+                flexibleSpace: LayoutBuilder(builder:
+                    (BuildContext context, BoxConstraints constraints) {
+                  top = constraints.biggest.height;
+                  return FlexibleSpaceBar(
+                      title: AnimatedOpacity(
+                          duration: Duration(milliseconds: 300),
+                          opacity: 1.0,
+                          child: Text(checkTop(top))),
+                      background: Image.asset('assets/images/libreHand.png'));
+                })),
+          ];
+        },
+        body: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
             child: Container(
               width: double.infinity,
               child: Stack(
                 alignment: AlignmentDirectional(0, 0),
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -143,7 +121,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               children: [
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      35, 0, 35, 0),
+                                      35, 0, 35, 12),
                                   child: TextField(
                                     controller: _controller1,
                                     autofocus: true,
@@ -167,7 +145,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      35, 0, 35, 0),
+                                      35, 12, 35, 12),
                                   child: TextField(
                                     controller: _controller2,
                                     autofocus: true,
@@ -204,7 +182,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      24, 0, 35, 20),
+                                      24, 12, 35, 20),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
@@ -290,9 +268,18 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      35, 0, 35, 24),
-                                  child: FFButtonWidget(
+                                  padding: EdgeInsetsDirectional.fromSTEB(35, 12, 35, 12),
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      textStyle: TextStyle(
+                                          fontSize: 20, fontWeight: FontWeight.w600),
+                                      foregroundColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                      fixedSize: const Size(330, 36),
+                                      backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                    ),
                                     onPressed: () async {
                                       loginAttempt = await LoginCall.call(
                                         email: _controller1!.text,
@@ -326,25 +313,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
 
                                       setState(() {});
                                     },
-                                    text: 'SIGN IN WITH ADAPT',
-                                    options: FFButtonOptions(
-                                      width: double.infinity,
-                                      height: 36,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle2
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                          ),
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(0),
-                                    ),
+                                    child: const Text('SIGN IN WITH ADAPT'),
                                   ),
                                 ),
                                 Row(
@@ -359,40 +328,30 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                             .override(
                                               fontFamily: 'Open Sans',
                                               fontSize: 22,
+                                              color: FlutterFlowTheme.of(context).secondaryText,
                                             ),
                                       ),
                                     ),
                                   ],
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      35, 24, 35, 0),
-                                  child: FFButtonWidget(
+                                  padding: EdgeInsetsDirectional.fromSTEB(35, 12, 35, 0),
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      textStyle: TextStyle(
+                                          fontSize: 20, fontWeight: FontWeight.w600),
+                                      foregroundColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                      fixedSize: const Size(330, 36),
+                                      backgroundColor: FlutterFlowTheme.of(context).secondaryText,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                    ),
                                     onPressed: () async {
                                       await launchURL(
                                           'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
                                     },
-                                    text: 'CAMPUS LOGIN',
-                                    options: FFButtonOptions(
-                                      width: double.infinity,
-                                      height: 36,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryColor,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle2
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            fontSize: 20,
-                                          ),
-                                      borderSide: BorderSide(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(0),
-                                    ),
+                                    child: const Text('CAMPUS LOGIN'),
                                   ),
                                 ),
                               ],
@@ -400,7 +359,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           ),
                           Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 100, 0, 0),
+                                EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,

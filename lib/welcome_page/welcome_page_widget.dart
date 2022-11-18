@@ -72,76 +72,64 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                         alignment: AlignmentDirectional(0, -0.6),
                         child: Padding(
                           padding:
-                              EdgeInsetsDirectional.fromSTEB(42, 42, 42, 42),
+                          EdgeInsetsDirectional.fromSTEB(42, 42, 42, 24),
                           child: Image.asset(
                             'assets/images/libretexts-adapt-logo-vector.png',
-                            width: 244,
+                            width: 270,
                             height: 170,
-                            fit: BoxFit.contain,
                           ),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                        child: FFButtonWidget(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            textStyle: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w600),
+                            foregroundColor: FlutterFlowTheme.of(context).primaryBtnText,
+                            fixedSize: const Size(330, 36),
+                            backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ),
                           onPressed: () async {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => LoginPageWidget(onSubmit: (String value) {  },),
+                                builder: (context) => LoginPageWidget(onSubmit: (String value) {},),
                               ),
                             );
                           },
-                          text: 'LOGIN',
-                          options: FFButtonOptions(
-                            width: 320,
-                            height: 30,
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            textStyle:
-                                FlutterFlowTheme.of(context).subtitle2.override(
-                                      fontFamily: 'Open Sans',
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                            borderSide: BorderSide(
-                              color: Colors.transparent,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(0),
-                          ),
+                          child: const Text('LOGIN'),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                        child: FFButtonWidget(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            textStyle: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w600),
+                            foregroundColor: FlutterFlowTheme.of(context).primaryColor,
+                            fixedSize: const Size(330, 36),
+                            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                width: 1,
+                                color: FlutterFlowTheme.of(context).primaryColor,
+                              ),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ),
                           onPressed: () async {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => CreateAccountWidget(onSubmit: (String value) {  },),
+                                builder: (context) => CreateAccountWidget(onSubmit: (String value) {},),
                               ),
                             );
                           },
-                          text: 'CREATE ACCOUNT',
-                          options: FFButtonOptions(
-                            width: 320,
-                            height: 30,
-                            color:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .subtitle2
-                                .override(
-                                  fontFamily: 'Open Sans',
-                                  fontWeight: FontWeight.w600,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                ),
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(0),
-                          ),
+                          child: const Text('CREATE ACCOUNT'),
                         ),
                       ),
                     ],
