@@ -58,211 +58,188 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
       onTap: () async {
         Navigator.pop(context);
       },
-      child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-      child: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          color: Color(0x0E1862B3),
-        ),
-        alignment: AlignmentDirectional(0, 0),
-        child: InkWell(
-        onTap: () async {}, //keeps actual background not clicking
-          child: Container(
-            width: double.infinity,
-            constraints: BoxConstraints(
-              maxWidth: double.infinity,
-            ),
-            decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).secondaryBackground,
-            ),
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(40, 0, 40, 0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
-                    child: Text(
-                      'Course Registration',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Open Sans',
-                            fontSize: 28,
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            fontWeight: FontWeight.w700,
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            color: Color(0x0E1862B3),
+          ),
+          alignment: AlignmentDirectional(0, 0),
+          child: InkWell(
+            onTap: () async {}, //keeps actual background not clicking
+            child: Container(
+              width: double.infinity,
+              constraints: BoxConstraints(
+                maxWidth: double.infinity,
+              ),
+              decoration: BoxDecoration(
+                color: FlutterFlowTheme.of(context).secondaryBackground,
+              ),
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(40, 0, 40, 0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                    //TODO - Update Image to Book Icon after LBTXT-55 is completed
+                                    image: AssetImage(
+                                        'assets/images/lock.png'))),
                           ),
+                          Text('Course Registration',
+                              style: FlutterFlowTheme.of(context).bodyText1.override(
+                                fontFamily: 'Open Sans',
+                                fontSize: 20,
+                                color: FlutterFlowTheme.of(context).primaryColor,
+                                fontWeight: FontWeight.w700,),)
+                        ],
+                      ),
+                      // child: Text(
+                      //   'Course Registration',
+                      //   style: FlutterFlowTheme.of(context).bodyText1.override(
+                      //     fontFamily: 'Open Sans',
+                      //     fontSize: 20,
+                      //     color: FlutterFlowTheme.of(context).primaryColor,
+                      //     fontWeight: FontWeight.w700,
+                      //   ),
+                      // ),
                     ),
-                  ),
-                  Divider(
-                    color: FlutterFlowTheme.of(context).primaryText,
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                    child: Text(
-                      'Please enter the course code used given by your instructor.',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'Open Sans',
-                        fontSize: 14,
-                        color: FlutterFlowTheme.of(context).secondaryColor,
-                        fontWeight: FontWeight.w500,
+                    Divider(
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                      child: Text(
+                        'Please enter the course code used given by your instructor.',
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              fontSize: 14,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              fontWeight: FontWeight.w400,
+                            ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                    child: TextFormField(
-                      controller: accessCodeACController,
-                      autofocus: true,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        hintText: 'Course Code',
-                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                      child: TextField(
+                        controller: accessCodeACController,
+                        autofocus: true,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          hintText: "Course Code",
+                          prefixIcon: Icon(
+                            Icons.mode_edit,
+                            color: FlutterFlowTheme.of(context).secondaryText,
                           ),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0x00000000),
-                            width: 1,
-                          ),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                        filled: true,
-                        fillColor:
-                            FlutterFlowTheme.of(context).textFieldBackground,
-                        prefixIcon: Icon(
-                          Icons.mode_edit,
-                          color: FlutterFlowTheme.of(context).primaryText,
-                        ),
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              fontSize: 14,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              fontWeight: FontWeight.w400,
+                            ),
+                        textAlign: TextAlign.start,
                       ),
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Open Sans',
-                            fontSize: 14,
-                          ),
-                      textAlign: TextAlign.start,
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(36, 0, 0, 16),
-                    child: Text(
-                      functions.getTopError(FFAppState().errorsList.toList()),
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Open Sans',
-                            color: FlutterFlowTheme.of(context).failure,
-                            fontSize: 14,
-                            fontWeight: FontWeight.normal,
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(36, 0, 0, 16),
+                      child: Text(
+                        functions.getTopError(FFAppState().errorsList.toList()),
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              color: FlutterFlowTheme.of(context).failure,
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal,
+                            ),
+                      ).animated(
+                          [animationsMap['textOnActionTriggerAnimation']!]),
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional(0, 0),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 32),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            textStyle: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Open Sans',
+                            ),
+                            foregroundColor:
+                                FlutterFlowTheme.of(context).primaryBtnText,
+                            fixedSize: const Size(330, 36),
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).primaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4),
+                            ),
                           ),
-                    ).animated([animationsMap['textOnActionTriggerAnimation']!]),
-                  ),
-                  Align(
-                    alignment: AlignmentDirectional(0, 0),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                      child: FFButtonWidget(
-                        onPressed: () async {
-                          addCourse = await AddCourseCall.call(
-                            token: FFAppState().authToken,
-                            accessCode: accessCodeACController!.text,
-                            timeZone: 'America/Belize',
-                          );
-                          if ((addCourse?.succeeded ?? true)) {
-                            Navigator.pop(context);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Password Updated Successfully',
-                                  style: TextStyle(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBtnText,
-                                  ),
-                                ),
-                                duration: Duration(milliseconds: 4000),
-                                backgroundColor:
-                                    FlutterFlowTheme.of(context).success,
-                              ),
+                          onPressed: () async {
+                            addCourse = await AddCourseCall.call(
+                              token: FFAppState().authToken,
+                              accessCode: accessCodeACController!.text,
+                              timeZone: 'America/Belize',
                             );
-                          } else {
-                            setState(
-                                () => FFAppState().errorsList = (getJsonField(
-                                      (addCourse?.jsonBody ?? ''),
-                                      r'''$.errors..*''',
-                                    ) as List)
-                                        .map<String>((s) => s.toString())
-                                        .toList());
-                            if (animationsMap['textOnActionTriggerAnimation'] ==
-                                null) {
-                              return;
-                            }
-                            await (animationsMap['textOnActionTriggerAnimation']!
-                                    .curvedAnimation
-                                    .parent as AnimationController)
-                                .forward(from: 0.0);
-                          }
-
-                          setState(() {});
-                        },
-                        text: 'JOIN COURSE',
-                        options: FFButtonOptions(
-                          width: double.infinity,
-                          height: 40,
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                          textStyle:
-                              FlutterFlowTheme.of(context).subtitle2.override(
-                                    fontFamily: 'Open Sans',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                    letterSpacing: 1,
+                            if ((addCourse?.succeeded ?? true)) {
+                              Navigator.pop(context);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Password Updated Successfully',
+                                    style: TextStyle(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryBtnText,
+                                    ),
                                   ),
-                          elevation: 4,
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
+                                  duration: Duration(milliseconds: 4000),
+                                  backgroundColor:
+                                      FlutterFlowTheme.of(context).success,
+                                ),
+                              );
+                            } else {
+                              setState(
+                                  () => FFAppState().errorsList = (getJsonField(
+                                        (addCourse?.jsonBody ?? ''),
+                                        r'''$.errors..*''',
+                                      ) as List)
+                                          .map<String>((s) => s.toString())
+                                          .toList());
+                              if (animationsMap[
+                                      'textOnActionTriggerAnimation'] ==
+                                  null) {
+                                return;
+                              }
+                              await (animationsMap[
+                                          'textOnActionTriggerAnimation']!
+                                      .curvedAnimation
+                                      .parent as AnimationController)
+                                  .forward(from: 0.0);
+                            }
+
+                            setState(() {});
+                          },
+                          child: const Text("JOIN COURSE"),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
         ),
-      ),
       ),
     );
   }
