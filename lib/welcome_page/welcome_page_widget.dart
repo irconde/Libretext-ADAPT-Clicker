@@ -81,7 +81,7 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             textStyle: TextStyle(
@@ -105,7 +105,7 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             textStyle: TextStyle(
