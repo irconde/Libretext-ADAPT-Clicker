@@ -164,7 +164,7 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                       child: Container(
                         decoration: BoxDecoration(
-                          border: Border.all(color: FlutterFlowTheme.of(context).textFieldBorder, width:1),
+                          border: Border.all(width:1,color: FlutterFlowTheme.of(context).textFieldBorder, ),
                           color: FlutterFlowTheme.of(context).textFieldBackground,
                         ),
                         child: DropdownButton<String>(
@@ -199,13 +199,11 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                             });
                           },
                           style: FlutterFlowTheme.of(context).bodyText1,
+                          underline: Container(),
                           hint: Text(
                             'General Inquiry',
                             style: FlutterFlowTheme.of(context).bodyText1,
                           ),
-                          elevation: 2,
-                          focusColor:
-                              FlutterFlowTheme.of(context).textFieldBackground,
                         ),
                       ),
                     ),
