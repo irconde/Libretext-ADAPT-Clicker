@@ -65,17 +65,16 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                 child: Text(
                   'Contact\nUs',
                   style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'Open Sans',
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                        fontSize: 38,
-                        lineHeight: 1.1,
-                        fontWeight: FontWeight.bold
-                      ),
+                      fontFamily: 'Open Sans',
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      fontSize: 38,
+                      lineHeight: 1.1,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               Align(
                 alignment: AlignmentDirectional(-.11, .85),
-                child:  SvgPicture.asset(
+                child: SvgPicture.asset(
                   'assets/images/contact_support.svg',
                 ),
               ),
@@ -102,68 +101,32 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                       child: Text(
                         'Please use this form to contact us regarding general  questions or issues.',
                         style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Open Sans',
-                              fontSize: 14,
-                              lineHeight: 1.5,
-                              fontWeight: FontWeight.normal,
-                              color:  FlutterFlowTheme.of(context).secondaryText
-                            ),
+                            fontFamily: 'Open Sans',
+                            lineHeight: 1.5,
+                            fontWeight: FontWeight.normal),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                      child: TextFormField(
+                      child: TextField(
                         controller: contactUsNameTextFieldController,
-                        autofocus: true,
-                        obscureText: false,
                         decoration: InputDecoration(
-                          hintText: 'Name*',
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2.override(
-                            fontFamily: 'Open Sans',
-                            fontSize: 14,
-                            fontWeight: FontWeight.normal
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
-                          errorBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
-                          focusedErrorBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
+                          labelText: 'Name*',
+                          hintText: 'FirstName LastName',
+                          labelStyle: FlutterFlowTheme.of(context).bodyText2,
                           filled: true,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 1,
+                                color: FlutterFlowTheme.of(context)
+                                    .textFieldBorder),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 1,
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor),
+                          ),
                           fillColor:
                               FlutterFlowTheme.of(context).textFieldBackground,
                         ),
@@ -172,58 +135,25 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                      child: TextFormField(
+                      child: TextField(
                         controller: contactUsEmailTextFieldController,
-                        autofocus: true,
-                        obscureText: false,
                         decoration: InputDecoration(
-                          hintText: 'Email*',
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2.override(
-                              fontFamily: 'Open Sans',
-                              fontSize: 14,
-                              fontWeight: FontWeight.normal
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
-                          errorBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
-                          focusedErrorBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
+                          labelText: 'Email*',
+                          hintText: 'example@email.com',
+                          labelStyle: FlutterFlowTheme.of(context).bodyText2,
                           filled: true,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 1,
+                                color: FlutterFlowTheme.of(context)
+                                    .textFieldBorder),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 1,
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor),
+                          ),
                           fillColor:
                               FlutterFlowTheme.of(context).textFieldBackground,
                         ),
@@ -232,83 +162,78 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                      child: FlutterFlowDropDown(
-                        options: ['General Inquiry', 'Technical Issue', 'Email Change', 'Request Instructor Access Code', 'Request Tester Access Code', 'Integrating ADAPT with LMS', 'Other'],
-                        onChanged: (val) =>
-                            setState(() => contactUsSubjectDropDownValue = val),
-                        width: double.infinity,
-                        height: 48,
-                        textStyle: FlutterFlowTheme.of(context).bodyText2.override(
-                            fontFamily: 'Open Sans',
-                            fontSize: 14,
-                            fontWeight: FontWeight.normal
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: FlutterFlowTheme.of(context).textFieldBorder, width:1),
+                          color: FlutterFlowTheme.of(context).textFieldBackground,
                         ),
-                        hintText: 'General Inquiry',
-
-                        fillColor:
-                            FlutterFlowTheme.of(context).primaryBackground,
-                        elevation: 2,
-                        borderColor:   FlutterFlowTheme.of(context).textFieldBackground,
-                        borderWidth: 0,
-                        borderRadius: 0,
-                        margin: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                        hidesUnderline: true,
+                        child: DropdownButton<String>(
+                          value: contactUsSubjectDropDownValue,
+                          isExpanded: true,
+                          items: <String>[
+                            'General Inquiry',
+                            'Technical Issue',
+                            'Email Change',
+                            'Request Instructor Access Code',
+                            'Request Tester Access Code',
+                            'Integrating ADAPT with LMS',
+                            'Other'
+                          ].map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                                child: Text(
+                                  value,
+                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                          dropdownColor:
+                              FlutterFlowTheme.of(context).textFieldBackground,
+                          onChanged: (String? value) {
+                            // This is called when the user selects an item.
+                            setState(() {
+                              contactUsSubjectDropDownValue = value!;
+                            });
+                          },
+                          style: FlutterFlowTheme.of(context).bodyText1,
+                          hint: Text(
+                            'General Inquiry',
+                            style: FlutterFlowTheme.of(context).bodyText1,
+                          ),
+                          elevation: 2,
+                          focusColor:
+                              FlutterFlowTheme.of(context).textFieldBackground,
+                        ),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                      child: TextFormField(
+                      child: TextField(
+                        textAlignVertical: TextAlignVertical.top,
                         controller: contactUsMessageTextFieldController,
                         autofocus: true,
                         obscureText: false,
                         decoration: InputDecoration(
-                          hintText: 'Message',
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2.override(
-                              fontFamily: 'Open Sans',
-                              fontSize: 14,
-                              fontWeight: FontWeight.normal
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).primaryBackground,
-                              width: 1,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color:  FlutterFlowTheme.of(context).primaryBackground,
-                              width: 1,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
-                          errorBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
-                          focusedErrorBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0x00000000),
-                              width: 1,
-                            ),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(4.0),
-                              topRight: Radius.circular(4.0),
-                            ),
-                          ),
+                          labelText: 'Message',
+                          hintText: 'Enter Message',
+                          alignLabelWithHint: true,
+                          labelStyle: FlutterFlowTheme.of(context).bodyText2,
                           filled: true,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 1,
+                                color: FlutterFlowTheme.of(context)
+                                    .textFieldBorder),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 1,
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor),
+                          ),
                           fillColor:
                               FlutterFlowTheme.of(context).textFieldBackground,
                         ),
@@ -336,79 +261,74 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(32, 16, 32, 32),
-                child: FFButtonWidget(
-                  onPressed: () async {
-                    contactUs = await ContactUsCall.call(
-                      email: contactUsEmailTextFieldController!.text,
-                      name: contactUsNameTextFieldController!.text,
-                      subject: contactUsSubjectDropDownValue,
-                      text: contactUsMessageTextFieldController!.text,
-                      school: '\"\"',
-                      toUserId: '0',
-                      type: 'contact_us',
-                    );
-                    if ((contactUs?.succeeded ?? true)) {
-                      Navigator.pop(context);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Inquiry Sent',
-                            style: TextStyle(
-                              color:
-                                  FlutterFlowTheme.of(context).primaryBtnText,
-                            ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(32, 12, 32, 32),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          textStyle: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w600),
+                          primary: FlutterFlowTheme.of(context).primaryColor,
+                          fixedSize: const Size(330, 36),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4),
                           ),
-                          duration: Duration(milliseconds: 4000),
-                          backgroundColor: FlutterFlowTheme.of(context).success,
                         ),
-                      );
-                    } else {
-                      setState(() => FFAppState().errorsList = (getJsonField(
-                            (contactUs?.jsonBody ?? ''),
-                            r'''$.errors..*''',
-                          ) as List)
-                              .map<String>((s) => s.toString())
-                              .toList());
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            functions
-                                .getTopError(FFAppState().errorsList.toList()),
-                            style: TextStyle(
-                              color:
-                                  FlutterFlowTheme.of(context).primaryBtnText,
-                            ),
-                          ),
-                          duration: Duration(milliseconds: 4000),
-                          backgroundColor: Color(0xFFFF0000),
-                        ),
-                      );
-                    }
+                        onPressed: () async {
+                          contactUs = await ContactUsCall.call(
+                            email: contactUsEmailTextFieldController!.text,
+                            name: contactUsNameTextFieldController!.text,
+                            subject: contactUsSubjectDropDownValue,
+                            text: contactUsMessageTextFieldController!.text,
+                            school: '\"\"',
+                            toUserId: '0',
+                            type: 'contact_us',
+                          );
+                          if ((contactUs?.succeeded ?? true)) {
+                            Navigator.pop(context);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Inquiry Sent',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBtnText,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).success,
+                              ),
+                            );
+                          } else {
+                            setState(
+                                () => FFAppState().errorsList = (getJsonField(
+                                      (contactUs?.jsonBody ?? ''),
+                                      r'''$.errors..*''',
+                                    ) as List)
+                                        .map<String>((s) => s.toString())
+                                        .toList());
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  functions.getTopError(
+                                      FFAppState().errorsList.toList()),
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBtnText,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor: Color(0xFFFF0000),
+                              ),
+                            );
+                          }
 
-                    setState(() {});
-                  },
-                  text: 'SUBMIT',
-                  options: FFButtonOptions(
-                    width: double.infinity,
-                    height: 36,
-                    color: FlutterFlowTheme.of(context).primaryColor,
-                    textStyle: FlutterFlowTheme.of(context).subtitle2.override(
-                          fontFamily: 'Open Sans',
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1,
+                          setState(() {});
+                        },
+                        child: const Text('SUBMIT'),
+                      ),
                     ),
-                    borderRadius: BorderRadius.circular(0),
-                  ),
+                  ],
                 ),
               ),
             ],

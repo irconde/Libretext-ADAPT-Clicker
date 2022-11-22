@@ -20,6 +20,7 @@ abstract class FlutterFlowTheme {
   late Color primaryBtnText;
   late Color lineColor;
   late Color textFieldBackground;
+  late Color textFieldBorder;
   late Color drawerIconColor;
   late Color success;
   late Color failure;
@@ -54,7 +55,8 @@ class LightModeTheme extends FlutterFlowTheme {
 
   late Color primaryBtnText = Color(0xFFFFFFFF);
   late Color lineColor = Color(0xFFE0E3E7);
-  late Color textFieldBackground = Color(0x61EBF7FF);
+  late Color textFieldBackground = Color(0xFFF5FCFF);
+  late Color textFieldBorder = Color(0xFFD3D8DB);
   late Color drawerIconColor = Color(0xFF66AADB);
   late Color success = Color(0xFF008C3D);
   late Color failure = Color(0xFFD82828);
@@ -121,14 +123,14 @@ class ThemeTypography extends Typography {
   TextStyle get bodyText1 => GoogleFonts.getFont(
         'Open Sans',
         color: theme.primaryText,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.normal,
         fontSize: 14,
       );
   String get bodyText2Family => 'Open Sans';
   TextStyle get bodyText2 => GoogleFonts.getFont(
         'Open Sans',
         color: theme.secondaryText,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.normal,
         fontSize: 14,
       );
 }
