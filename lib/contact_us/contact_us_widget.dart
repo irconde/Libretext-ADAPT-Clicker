@@ -5,6 +5,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ContactUsWidget extends StatefulWidget {
@@ -40,14 +41,14 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
       key: scaffoldKey,
       appBar: PreferredSize(
         preferredSize:
-            Size.fromHeight(MediaQuery.of(context).size.height * 0.28),
+            Size.fromHeight(MediaQuery.of(context).size.height * 0.27),
         child: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryColor,
           automaticallyImplyLeading: false,
           flexibleSpace: Stack(
             children: [
               Align(
-                alignment: AlignmentDirectional(-.90, -0.64),
+                alignment: AlignmentDirectional(-.96, -0.74),
                 child: InkWell(
                   onTap: () async {
                     Navigator.pop(context);
@@ -55,29 +56,27 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                   child: Icon(
                     Icons.close,
                     color: FlutterFlowTheme.of(context).primaryBackground,
-                    size: 32,
+                    size: 38,
                   ),
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(-0.73, 0.7),
+                alignment: AlignmentDirectional(-0.75, 0.6),
                 child: Text(
                   'Contact\nUs',
                   style: FlutterFlowTheme.of(context).bodyText1.override(
                         fontFamily: 'Open Sans',
                         color: FlutterFlowTheme.of(context).primaryBackground,
                         fontSize: 38,
+                        lineHeight: 1.1,
                         fontWeight: FontWeight.bold
                       ),
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(-.2, .9),
-                child: Image.asset(
-                  'assets/images/libreQuestion.png',
-                  width: 175,
-                  height: 174,
-                  fit: BoxFit.contain,
+                alignment: AlignmentDirectional(-.11, .85),
+                child:  SvgPicture.asset(
+                  'assets/images/contact_support.svg',
                 ),
               ),
             ],
@@ -87,213 +86,6 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
         ),
       ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      drawer: Drawer(
-        elevation: 16,
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          child: Stack(
-            children: [
-              if (responsiveVisibility(
-                context: context,
-                desktop: false,
-              ))
-                Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          height: 90,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(36, 16, 0, 0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 8),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 4, 0),
-                                      child: Icon(
-                                        Icons.library_books_outlined,
-                                        color: FlutterFlowTheme.of(context)
-                                            .drawerIconColor,
-                                        size: 26,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Courses',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 4, 0),
-                                      child: Icon(
-                                        Icons.person_outline,
-                                        color: FlutterFlowTheme.of(context)
-                                            .drawerIconColor,
-                                        size: 26,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Profile',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 8, 0, 24),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 4, 0),
-                                      child: Icon(
-                                        Icons.lock_outlined,
-                                        color: FlutterFlowTheme.of(context)
-                                            .drawerIconColor,
-                                        size: 26,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Password',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Divider(
-                                height: 8,
-                                thickness: 1,
-                                endIndent: 40,
-                                color: FlutterFlowTheme.of(context).primaryText,
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(-1, 0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 8, 0, 8),
-                                  child: Text(
-                                    'Contact Us',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                  ),
-                                ),
-                              ),
-                              Divider(
-                                height: 8,
-                                thickness: 1,
-                                endIndent: 40,
-                                color: FlutterFlowTheme.of(context).primaryText,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Align(
-                          alignment: AlignmentDirectional(-1, 0),
-                          child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(36, 24, 0, 0),
-                            child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
-                              },
-                              text: 'Log Out',
-                              options: FFButtonOptions(
-                                width: 220,
-                                height: 40,
-                                color: Color(0xFF2685C9),
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'Open Sans',
-                                      color: Colors.white,
-                                    ),
-                                elevation: 4,
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              Align(
-                alignment: AlignmentDirectional(-0.35, -1.05),
-                child: Image.asset(
-                  'assets/images/libretexts_logo_main_white.png',
-                  width: 250,
-                  height: 125,
-                  fit: BoxFit.none,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(
@@ -311,9 +103,10 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                         'Please use this form to contact us regarding general  questions or issues.',
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Open Sans',
-                              fontSize: 13,
+                              fontSize: 14,
+                              lineHeight: 1.5,
                               fontWeight: FontWeight.normal,
-                              color: Color(0xFF6A6A6A),
+                              color:  FlutterFlowTheme.of(context).secondaryText
                             ),
                       ),
                     ),
@@ -325,7 +118,11 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                         obscureText: false,
                         decoration: InputDecoration(
                           hintText: 'Name*',
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          hintStyle: FlutterFlowTheme.of(context).bodyText2.override(
+                            fontFamily: 'Open Sans',
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal
+                          ),
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
@@ -381,7 +178,11 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                         obscureText: false,
                         decoration: InputDecoration(
                           hintText: 'Email*',
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          hintStyle: FlutterFlowTheme.of(context).bodyText2.override(
+                              fontFamily: 'Open Sans',
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal
+                          ),
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
@@ -432,21 +233,22 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                       child: FlutterFlowDropDown(
-                        options: ['Option 1'],
+                        options: ['General Inquiry', 'Technical Issue', 'Email Change', 'Request Instructor Access Code', 'Request Tester Access Code', 'Integrating ADAPT with LMS', 'Other'],
                         onChanged: (val) =>
                             setState(() => contactUsSubjectDropDownValue = val),
                         width: double.infinity,
-                        height: 50,
-                        textStyle:
-                            FlutterFlowTheme.of(context).bodyText1.override(
-                                  fontFamily: 'Open Sans',
-                                  color: Colors.black,
-                                ),
+                        height: 48,
+                        textStyle: FlutterFlowTheme.of(context).bodyText2.override(
+                            fontFamily: 'Open Sans',
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal
+                        ),
                         hintText: 'General Inquiry',
+
                         fillColor:
-                            FlutterFlowTheme.of(context).textFieldBackground,
+                            FlutterFlowTheme.of(context).primaryBackground,
                         elevation: 2,
-                        borderColor: Colors.transparent,
+                        borderColor:   FlutterFlowTheme.of(context).textFieldBackground,
                         borderWidth: 0,
                         borderRadius: 0,
                         margin: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
@@ -461,7 +263,11 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                         obscureText: false,
                         decoration: InputDecoration(
                           hintText: 'Message',
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          hintStyle: FlutterFlowTheme.of(context).bodyText2.override(
+                              fontFamily: 'Open Sans',
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal
+                          ),
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: FlutterFlowTheme.of(context).primaryBackground,
@@ -508,9 +314,9 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                         ),
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Open Sans',
-                              fontSize: 12,
+                              fontSize: 14,
                             ),
-                        maxLines: 10,
+                        maxLines: 8,
                       ),
                     ),
                     Row(
@@ -525,6 +331,7 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                                 fontFamily: 'Open Sans',
                                 color:
                                     FlutterFlowTheme.of(context).primaryColor,
+                                fontSize: 12,
                               ),
                         ),
                       ],
@@ -588,11 +395,11 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                   text: 'SUBMIT',
                   options: FFButtonOptions(
                     width: double.infinity,
-                    height: 50,
+                    height: 36,
                     color: FlutterFlowTheme.of(context).primaryColor,
                     textStyle: FlutterFlowTheme.of(context).subtitle2.override(
                           fontFamily: 'Open Sans',
-                          fontSize: 18,
+                          fontSize: 20,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                         ),
