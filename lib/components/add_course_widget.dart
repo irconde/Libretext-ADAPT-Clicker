@@ -93,12 +93,11 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                             height: 40,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                    //TODO - Update Image to Book Icon after LBTXT-55 is completed
+                                  fit: BoxFit.contain,
                                     image: AssetImage(
-                                        'assets/images/lock.png'))),
+                                        'assets/images/book_icon.png'))),
                           ),
-                          Text('Course Registration',
+                          Text(' Course Registration',
                               style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Open Sans',
                                 fontSize: 20,
@@ -106,21 +105,12 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                                 fontWeight: FontWeight.w700,),)
                         ],
                       ),
-                      // child: Text(
-                      //   'Course Registration',
-                      //   style: FlutterFlowTheme.of(context).bodyText1.override(
-                      //     fontFamily: 'Open Sans',
-                      //     fontSize: 20,
-                      //     color: FlutterFlowTheme.of(context).primaryColor,
-                      //     fontWeight: FontWeight.w700,
-                      //   ),
-                      // ),
                     ),
                     Divider(
                       color: FlutterFlowTheme.of(context).secondaryText,
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                       child: Text(
                         'Please enter the course code used given by your instructor.',
                         style: FlutterFlowTheme.of(context).bodyText1.override(
@@ -169,7 +159,7 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                     Align(
                       alignment: AlignmentDirectional(0, 0),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 32),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 32),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             textStyle: TextStyle(
