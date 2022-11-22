@@ -20,8 +20,6 @@ abstract class FlutterFlowTheme {
   late Color primaryBtnText;
   late Color lineColor;
   late Color textFieldBackground;
-  late Color textFieldBorder;
-  late Color svgIconColor;
   late Color drawerIconColor;
   late Color success;
   late Color failure;
@@ -42,51 +40,17 @@ abstract class FlutterFlowTheme {
   TextStyle get bodyText2 => typography.bodyText2;
 
   Typography get typography => ThemeTypography(this);
-
-
-  OutlineInputBorder _buildBorder(Color color)
-  {
-    return OutlineInputBorder(
-      borderSide: BorderSide(
-          width: 1,
-          color: color
-      ),
-    );
-  }
-
-  InputDecorationTheme inputTheme() => InputDecorationTheme(
-    
-    contentPadding: EdgeInsets.all(16),
-    floatingLabelStyle: TextStyle(color: primaryColor),
-    alignLabelWithHint: true,
-    labelStyle: bodyText2,
-    filled: true,
-
-    //default, all otehr null
-    border: _buildBorder(textFieldBorder),
-    //Enabled and not showing error
-    enabledBorder:  _buildBorder(textFieldBorder),
-    //No Focus but error
-    errorBorder:  _buildBorder(failure),
-    //Focussed with error
-    focusedErrorBorder:_buildBorder(failure),
-    //Focused but no Error
-    focusedBorder:_buildBorder(primaryColor),
-
-    fillColor: textFieldBackground,
-
-  );
 }
 
 class LightModeTheme extends FlutterFlowTheme {
-  late Color primaryColor = const Color(0xFF1862B3);
+  late Color primaryColor = const Color(0xFF056ABD);
   late Color secondaryColor = const Color(0xFF6C757D);
   late Color tertiaryColor = const Color(0xFFEE8B60);
   late Color alternate = const Color(0xFFFF5963);
   late Color primaryBackground = const Color(0xFFFFFFFF);
   late Color secondaryBackground = const Color(0xFFFFFFFF);
   late Color primaryText = const Color(0xFF101213);
-  late Color secondaryText = const Color(0xFF6A6A6A);
+  late Color secondaryText = const Color(0xFF57636C);
 
   late Color primaryBtnText = Color(0xFFFFFFFF);
   late Color lineColor = Color(0xFFE0E3E7);
@@ -130,9 +94,9 @@ class ThemeTypography extends Typography {
   String get title2Family => 'Open Sans';
   TextStyle get title2 => GoogleFonts.getFont(
         'Open Sans',
-      color: theme.primaryBackground,
-      fontSize: 24,
-      fontWeight: FontWeight.bold,
+        color: theme.secondaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 22,
       );
   String get title3Family => 'Open Sans';
   TextStyle get title3 => GoogleFonts.getFont(
@@ -159,14 +123,14 @@ class ThemeTypography extends Typography {
   TextStyle get bodyText1 => GoogleFonts.getFont(
         'Open Sans',
         color: theme.primaryText,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w600,
         fontSize: 14,
       );
   String get bodyText2Family => 'Open Sans';
   TextStyle get bodyText2 => GoogleFonts.getFont(
         'Open Sans',
         color: theme.secondaryText,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w600,
         fontSize: 14,
       );
 }
@@ -211,4 +175,3 @@ extension TextStyleHelper on TextStyle {
               height: lineHeight,
             );
 }
-
