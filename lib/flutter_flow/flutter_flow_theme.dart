@@ -20,6 +20,7 @@ abstract class FlutterFlowTheme {
   late Color primaryBtnText;
   late Color lineColor;
   late Color textFieldBackground;
+  late Color textFieldBorder;
   late Color drawerIconColor;
   late Color success;
   late Color failure;
@@ -123,14 +124,14 @@ class ThemeTypography extends Typography {
   TextStyle get bodyText1 => GoogleFonts.getFont(
         'Open Sans',
         color: theme.primaryText,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.normal,
         fontSize: 14,
       );
   String get bodyText2Family => 'Open Sans';
   TextStyle get bodyText2 => GoogleFonts.getFont(
         'Open Sans',
         color: theme.secondaryText,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.normal,
         fontSize: 14,
       );
 }
