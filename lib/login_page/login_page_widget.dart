@@ -273,9 +273,9 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     style: ElevatedButton.styleFrom(
                                       textStyle: TextStyle(
                                           fontSize: 20, fontWeight: FontWeight.w600),
-                                      foregroundColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                      onPrimary: FlutterFlowTheme.of(context).primaryBtnText,
                                       fixedSize: const Size(330, 36),
-                                      backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+                                      primary: FlutterFlowTheme.of(context).primaryColor,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(4),
                                       ),
@@ -340,9 +340,9 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     style: ElevatedButton.styleFrom(
                                       textStyle: TextStyle(
                                           fontSize: 20, fontWeight: FontWeight.w600),
-                                      foregroundColor: FlutterFlowTheme.of(context).primaryBtnText,
+                                      onPrimary: FlutterFlowTheme.of(context).primaryBtnText,
                                       fixedSize: const Size(330, 36),
-                                      backgroundColor: FlutterFlowTheme.of(context).secondaryText,
+                                      primary: FlutterFlowTheme.of(context).secondaryText,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(4),
                                       ),
