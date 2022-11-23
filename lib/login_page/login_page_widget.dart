@@ -342,7 +342,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                           fontSize: 20, fontWeight: FontWeight.w600),
                                       onPrimary: FlutterFlowTheme.of(context).primaryBtnText,
                                       fixedSize: const Size(330, 36),
-                                      primary: FlutterFlowTheme.of(context).secondaryText,
+                                      primary: FlutterFlowTheme.of(context).tertiaryColor,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(4),
                                       ),
