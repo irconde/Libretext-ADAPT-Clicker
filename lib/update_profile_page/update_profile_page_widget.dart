@@ -284,7 +284,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => ContactUsWidget(),
+                                      builder: (context) => ContactUsWidget(onSubmit: (String? value) {  },),
                                     ),
                                   );
                                 },

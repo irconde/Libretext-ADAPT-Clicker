@@ -162,7 +162,7 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ContactUsWidget(),
+                                  builder: (context) => ContactUsWidget(onSubmit: (String? value) {  },),
                                 ),
                               );
                             },

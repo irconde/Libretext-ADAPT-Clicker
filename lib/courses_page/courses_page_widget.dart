@@ -275,7 +275,7 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => ContactUsWidget(),
+                                        builder: (context) => ContactUsWidget(onSubmit: (String? value) {  },),
                                       ),
                                     );
                                   },

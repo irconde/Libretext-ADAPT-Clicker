@@ -267,7 +267,7 @@ class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => ContactUsWidget(),
+                                      builder: (context) => ContactUsWidget(onSubmit: (String? value) {  },),
                                     ),
                                   );
                                 },

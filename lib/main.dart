@@ -77,7 +77,10 @@ class _MyAppState extends State<MyApp> {
       ],
       locale: _locale,
       supportedLocales: const [Locale('en', '')],
-      theme: ThemeData(brightness: Brightness.light),
+      theme: ThemeData(
+          brightness: Brightness.light,
+          inputDecorationTheme: FlutterFlowTheme.of(context).inputTheme(),
+      ),
       themeMode: _themeMode,
       home: WelcomePageWidget(),
     );
