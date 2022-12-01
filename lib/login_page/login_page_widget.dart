@@ -230,9 +230,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                 await showModalBottomSheet(
                                                   isScrollControlled: true,
                                                   backgroundColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .primaryBackground,
+                                                      Colors.transparent,
                                                   context: context,
                                                   builder: (context) {
                                                     return Padding(
@@ -240,7 +238,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                           MediaQuery.of(context)
                                                               .viewInsets,
                                                       child:
-                                                          ResetPasswordWidget(),
+                                                          ResetPasswordWidget(onSubmit: (String? value) {  },),
                                                     );
                                                   },
                                                 );
