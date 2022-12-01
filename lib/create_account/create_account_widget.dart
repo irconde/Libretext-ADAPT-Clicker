@@ -1,15 +1,12 @@
 import '../backend/api_requests/api_calls.dart';
 import '../courses_page/courses_page_widget.dart';
-import '../flutter_flow/flutter_flow_drop_down.dart';
+import 'package:adapt_clicker/components/TimezoneDropdown.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
 import '../login_page/login_page_widget.dart';
 import 'dart:async';
-import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 String firstNameRequired = "The first name field is required.";
@@ -161,6 +158,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       key: scaffoldKey,
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -180,10 +178,13 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                         opacity: 1.0,
                         child: Text(checkTop(top),
                             style: FlutterFlowTheme.of(context).title2)),
-                    background: SvgPicture.asset(
-                      'assets/images/contact_support.svg',
-                      fit: BoxFit.scaleDown,
-                      color: FlutterFlowTheme.of(context).svgIconColor,
+                    background: Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(64, 28, 0, 0),
+                      child: SvgPicture.asset(
+                        'assets/images/person_add.svg',
+                        fit: BoxFit.scaleDown,
+                        color: FlutterFlowTheme.of(context).svgIconColor,
+                      ),
                     ),
                   );
                 })),
@@ -196,13 +197,13 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(32, 32, 32, 32),
+                  padding:  const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                         child: TextField(
                           controller: firstNameFieldCAController,
                           autofocus: true,
@@ -211,14 +212,14 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             labelText: 'First Name',
                             errorText: _submitted ? _firstNameErrorText : null,
                             prefixIcon: Icon(
-                              Icons.person,
+                              Icons.person_outline,
                             ),
                           ),
                           style: FlutterFlowTheme.of(context).bodyText1,
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                         child: TextField(
                           controller: lastNameFieldCAController,
                           decoration: InputDecoration(
@@ -226,19 +227,19 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             labelText: 'Last Name',
                             errorText: _submitted ? _lastNameErrorText : null,
                             prefixIcon: Icon(
-                              Icons.person,
+                              Icons.person_outline,
                             ),
                           ),
                           style: FlutterFlowTheme.of(context).bodyText1,
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                         child: TextField(
                           controller: studentIDFieldController,
                           decoration: InputDecoration(
                             prefixIcon: Icon(
-                              Icons.school_rounded,
+                              Icons.school_outlined,
                             ),
                             labelText: 'Student ID*',
                             errorText: _submitted ? _idErrorText : null,
@@ -248,7 +249,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                         child: TextField(
                           controller: emailFieldCAController,
                           decoration: InputDecoration(
@@ -256,14 +257,14 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             labelText: 'Email',
                             errorText: _submitted ? _emailErrorText : null,
                             prefixIcon: Icon(
-                              Icons.email_rounded,
+                              Icons.email_outlined,
                             ),
                           ),
                           style: FlutterFlowTheme.of(context).bodyText1,
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                         child: TextField(
                           controller: passwordFieldCAController,
                           obscureText: !passwordFieldCAVisibility,
@@ -272,7 +273,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             labelText: 'Password',
                             errorText: _submitted ? _passwordErrorText : null,
                             prefixIcon: Icon(
-                              Icons.lock_sharp,
+                              Icons.lock_outline,
                             ),
                             suffixIcon: InkWell(
                               onTap: () => setState(
@@ -284,8 +285,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                 passwordFieldCAVisibility
                                     ? Icons.visibility_outlined
                                     : Icons.visibility_off_outlined,
-                                color: Color(0xFF757575),
-                                size: 22,
+                                size: 20,
                               ),
                             ),
                           ),
@@ -293,7 +293,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                         child: TextField(
                           controller: confirmPasswordFieldCAController,
                           obscureText: !confirmPasswordFieldCAVisibility,
@@ -303,7 +303,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             errorText:
                                 _submitted ? _confirmPasswordErrorText : null,
                             prefixIcon: Icon(
-                              Icons.lock_sharp,
+                              Icons.lock_outline,
                             ),
                             suffixIcon: InkWell(
                               onTap: () => setState(
@@ -315,45 +315,15 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                 confirmPasswordFieldCAVisibility
                                     ? Icons.visibility_outlined
                                     : Icons.visibility_off_outlined,
-                                color: Color(0xFF757575),
-                                size: 22,
+                                size: 20,
                               ),
                             ),
                           ),
                           style: FlutterFlowTheme.of(context).bodyText1,
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                        child: FlutterFlowDropDown(
-                          options:
-                              FFAppState.timezoneContainer?.textzones ?? [''],
-                          onChanged: (val) => setState(() => tZDropDownCAValue =
-                              FFAppState.timezoneContainer!.getValue(val)),
-                          width: 365,
-                          height: 50,
-                          textStyle: FlutterFlowTheme.of(context)
-                              .bodyText1
-                              .override(
-                                fontFamily: 'Open Sans',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                              ),
-                          hintText: 'Pick a timezone',
-                          icon: Icon(
-                            Icons.access_time,
-                            size: 15,
-                          ),
-                          fillColor:
-                              FlutterFlowTheme.of(context).primaryBackground,
-                          elevation: 2,
-                          borderColor:
-                              FlutterFlowTheme.of(context).primaryColor,
-                          borderWidth: 1,
-                          borderRadius: 0,
-                          margin: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                          hidesUnderline: true,
-                        ),
-                      ),
+                      TimezoneDropdown(
+                            timezoneDropDownValue: tZDropDownCAValue),
                     ],
                   ),
                 ),
@@ -361,16 +331,25 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                     ? MediaQuery.of(context).viewInsets.bottom > 0
                     : _isKeyboardVisible))
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(32, 0, 32, 100),
+                    padding: const EdgeInsetsDirectional.fromSTEB(32, 0, 32, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                           child: ElevatedButton(
-                            style:ElevatedButton.styleFrom(
+                            style: ElevatedButton.styleFrom(
+                              textStyle: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w600),
+                              primary:
+                              FlutterFlowTheme.of(context).primaryColor,
                               fixedSize: const Size(330, 36),
+                              onPrimary:
+                              FlutterFlowTheme.of(context).primaryBtnText,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4),
+                              ),
                             ),
                             onPressed: () async {
                               createUser = await CreateUserCall.call(
@@ -397,38 +376,56 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
 
                               setState(() {});
                             },
-                            child: Text('REGISTER',
-                              style: FlutterFlowTheme.of(context).bodyText1.override(
-                                fontFamily: 'Open Sans',
-                                color: FlutterFlowTheme.of(context)
-                                    .primaryBtnText,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20,
-                              ),
+                            child: Text(
+                              'REGISTER',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Open Sans',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBtnText,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20,
+                                  ),
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
-                          child: Text(
-                            'OR',
-                            style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Open Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      fontSize: 20,
-                                    ),
-                          ),
+                        Stack(
+                          alignment: AlignmentDirectional(0, 0),
+                          children: [
+                            Divider(
+                              height: 0,
+                              thickness: 1,
+                              color: FlutterFlowTheme.of(context).lineColor,
+                            ),
+                            Container(
+                              color: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                  'OR',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Open Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        fontSize: 20,
+                                      ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 32),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               textStyle: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.w600),
                               primary:
-                                  FlutterFlowTheme.of(context).secondaryText,
+                                  FlutterFlowTheme.of(context).secondaryColor,
                               fixedSize: const Size(330, 36),
                               onPrimary:
                                   FlutterFlowTheme.of(context).primaryBtnText,
@@ -443,41 +440,38 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             child: const Text('CAMPUS REGISTRATION'),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Already have an account? ',
-                                style: FlutterFlowTheme.of(context).bodyText1,
-                              ),
-                              InkWell(
-                                onTap: () async {
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => LoginPageWidget(
-                                        onSubmit: (String value) {},
-                                      ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Already have an account? ',
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                            ),
+                            InkWell(
+                              onTap: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LoginPageWidget(
+                                      onSubmit: (String value) {},
                                     ),
-                                  );
-                                },
-                                child: Text(
-                                  'Login',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                ),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'Login',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Open Sans',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                      decoration: TextDecoration.underline,
+                                    ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

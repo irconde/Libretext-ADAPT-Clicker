@@ -1,6 +1,5 @@
-import 'package:adapt_clicker/components/ContactUsDropDownList.dart';
-
 import '../backend/api_requests/api_calls.dart';
+import 'package:adapt_clicker/components/ContactUsDropDownList.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
