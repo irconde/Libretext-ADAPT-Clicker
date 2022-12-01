@@ -374,7 +374,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            CreateAccountWidget(onSubmit: (String value) {  },),
+                                            CreateAccountWidget(onSubmit: (String? value) {  },),
                                       ),
                                     );
                                   },
