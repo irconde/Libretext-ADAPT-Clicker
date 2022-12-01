@@ -63,6 +63,7 @@ abstract class FlutterFlowTheme {
     labelStyle: bodyText2,
     filled: true,
 
+
     //default, all otehr null
     border: _buildBorder(textFieldBorder),
     //Enabled and not showing error
