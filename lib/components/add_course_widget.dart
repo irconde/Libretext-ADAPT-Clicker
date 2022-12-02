@@ -78,7 +78,7 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                 color: FlutterFlowTheme.of(context).secondaryBackground,
               ),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(40, 0, 40, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(32, 0, 32, 0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -128,7 +128,7 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                         autofocus: true,
                         obscureText: false,
                         decoration: InputDecoration(
-                          hintText: "Course Code",
+                          labelText: "Course Code",
                           prefixIcon: Icon(
                             Icons.mode_edit,
                             color: FlutterFlowTheme.of(context).secondaryText,
