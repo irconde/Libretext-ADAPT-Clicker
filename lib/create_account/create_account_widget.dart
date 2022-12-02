@@ -241,7 +241,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             prefixIcon: Icon(
                               Icons.school_outlined,
                             ),
-                            labelText: 'Student ID*',
+                            labelText: 'Student ID',
                             errorText: _submitted ? _idErrorText : null,
                             hintText: 'Student ID',
                           ),
