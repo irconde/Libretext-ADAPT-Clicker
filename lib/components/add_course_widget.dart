@@ -8,6 +8,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AddCourseWidget extends StatefulWidget {
   const AddCourseWidget({Key? key}) : super(key: key);
@@ -84,27 +85,30 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
-                      child: Row(
-                        children: <Widget>[
-                          Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  fit: BoxFit.contain,
-                                    image: AssetImage(
-                                        'assets/images/book_icon.png'))),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/images/book_icon.svg',
+                          fit: BoxFit.contain,
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(4, 8, 0, 0),
+                          child: Text(
+                            'Course Registration',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyText1
+                                .override(
+                                  fontFamily: 'Open Sans',
+                                  fontSize: 20,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  fontWeight: FontWeight.w700,
+                                ),
                           ),
-                          Text(' Course Registration',
-                              style: FlutterFlowTheme.of(context).bodyText1.override(
-                                fontFamily: 'Open Sans',
-                                fontSize: 20,
-                                color: FlutterFlowTheme.of(context).primaryColor,
-                                fontWeight: FontWeight.w700,),)
-                        ],
-                      ),
+                        )
+                      ],
                     ),
                     Divider(
                       color: FlutterFlowTheme.of(context).secondaryText,
