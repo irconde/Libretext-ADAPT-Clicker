@@ -175,14 +175,17 @@ class AssetGenImage {
 
 class Constants
 {
-  static const int llMargin = 48; //Double spaced
-  static const int lmMargin = 44; //
-  static const int lsMargin = 40; //
-  static const int mlMargin = 36; //margin with a little extra
-  static const int mmMargin = 32; //margin around edge of the pages mainly in intro
-  static const int msMargin = 24; // 2/3 page margin, used in a few widgets
-  static const int sMargin = 16; //half page margin and used in several widgets
-  static const int smMargin = 12; // 1/3 page margin, used in a few widgets
-  static const int xsMargin = 8; //quarter page margin used in between widgets
-  static const int xxsMargin = 4; //smallest margin used to offset text
+  //FontSizes
+  static const double drawerIconSize = 28;
+
+  static const double llMargin = 48; //Double spaced
+  static const double lmMargin = 44; //
+  static const double lsMargin = 40; //
+  static const double mlMargin = 36; //margin with a little extra
+  static const double mmMargin = 32; //margin around edge of the pages mainly in intro
+  static const double msMargin = 24; // 2/3 page margin, used in a few widgets
+  static const double sMargin = 16; //half page margin and used in several widgets
+  static const double smMargin = 12; // 1/3 page margin, used in a few widgets
+  static const double xsMargin = 8; //quarter page margin used in between widgets
+  static const double xxsMargin = 4; //smallest margin used to offset text
 }
