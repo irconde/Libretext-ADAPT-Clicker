@@ -9,6 +9,8 @@ import '../login_page/login_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 
 class WelcomePageWidget extends StatefulWidget {
   const WelcomePageWidget({Key? key}) : super(key: key);
@@ -73,8 +75,8 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                         child: Padding(
                           padding:
                           EdgeInsetsDirectional.fromSTEB(42, 42, 42, 24),
-                          child: Image.asset(
-                            'assets/images/libretexts-adapt-logo-vector.png',
+                          child: SvgPicture.asset(
+                            'assets/images/libetext_adapt_logo.svg',
                             width: 270,
                             height: 170,
                           ),
