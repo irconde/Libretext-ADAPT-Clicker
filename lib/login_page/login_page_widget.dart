@@ -95,7 +95,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           duration: Duration(milliseconds: 300),
                           opacity: 1.0,
                           child: Text(checkTop(top))),
-                      background: Image.asset('assets/images/libreHand.png'));
+                      background: SvgPicture.asset(('assets/images/hand_wave.svg')));
                 })),
           ];
         },
