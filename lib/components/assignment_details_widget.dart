@@ -3,10 +3,9 @@ import '../components/question_c_t_n_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
+import '../gen/assets.gen.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AssignmentDetailsWidget extends StatefulWidget {
   const AssignmentDetailsWidget({
@@ -53,133 +52,151 @@ class _AssignmentDetailsWidgetState extends State<AssignmentDetailsWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 0),
-          child: Row(
+    return Padding(
+      padding: const EdgeInsets.all(Constants.msMargin),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Expanded(
-                flex: 1,
-                child: Align(
-                  alignment: AlignmentDirectional(-0.93, 0),
-                  child: InkWell(
-                    onTap: () async {
-                      Navigator.pop(context);
-                    },
-                    child: Icon(
-                      Icons.close_outlined,
-                      color: Colors.black,
-                      size: 36,
-                    ),
-                  ),
+              InkWell(
+                onTap: () async {
+                  Navigator.pop(context);
+                },
+                child: Icon(
+                  Icons.close_outlined,
+                  color: Colors.black,
+                  size: Constants.mlMargin,
                 ),
               ),
               Expanded(
-                flex: 4,
-                child: Align(
-                  alignment: AlignmentDirectional(0, 0),
-                  child: Text(
-                    getJsonField(
-                      widget.assignmentSum,
-                      r'''$.name''',
-                    ).toString(),
-                    textAlign: TextAlign.center,
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
-                          fontFamily: 'Open Sans',
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                          fontSize: 24,
-                        ),
-                  ).animated([animationsMap['textOnActionTriggerAnimation']!]),
-                ),
+                child: Text(
+                  getJsonField(
+                    widget.assignmentSum,
+                    r'''$.name''',
+                  ).toString(),
+                  textAlign: TextAlign.center,
+                  style: FlutterFlowTheme.of(context).bodyText1.override(
+                      fontFamily: 'Open Sans',
+                      color: FlutterFlowTheme.of(context).primaryColor,
+                      fontSize: Constants.msMargin,
+                      fontWeight: FontWeight.bold),
+                ).animated([animationsMap['textOnActionTriggerAnimation']!]),
               ),
             ],
           ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+          Expanded(
             child: Column(
               mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 16),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Text(
-                        'Number of Points: ',
-                        style: FlutterFlowTheme.of(context).bodyText1,
-                      ),
-                      Text(
-                        getJsonField(
-                          widget.assignmentSum,
-                          r'''$.total_points''',
-                        ).toString(),
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Open Sans',
-                              fontWeight: FontWeight.normal,
-                            ),
-                      ),
-                    ],
+                  padding: EdgeInsetsDirectional.fromSTEB(0, Constants.mmMargin, 0, Constants.msMargin),
+                  child: RichText(
+                    text: TextSpan(
+                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                            fontFamily: 'Open Sans',
+                            fontWeight: FontWeight.w600,
+                          ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'Number of Points: ',
+                        ),
+                        TextSpan(
+                          text: "This assignment is worth a total of " +
+                              getJsonField(
+                                widget.assignmentSum,
+                                r'''$.total_points''',
+                              ).toString() +
+                              " points",
+                          style:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Open Sans',
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Text(
-                        'Number of Questions: ',
-                        style: FlutterFlowTheme.of(context).bodyText1,
-                      ),
-                      Text(
-                        getJsonField(
-                          widget.assignmentSum,
-                          r'''$.number_of_questions''',
-                        ).toString(),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.msMargin),
+                  child: RichText(
+                    text: TextSpan(
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Open Sans',
-                              fontWeight: FontWeight.normal,
+                              fontWeight: FontWeight.w600,
                             ),
-                      ),
-                    ],
+                        children: [
+                          TextSpan(
+                            text: 'Number of Questions: ',
+                          ),
+                          TextSpan(
+                            text: "This assignment has " + getJsonField(
+                              widget.assignmentSum,
+                              r'''$.number_of_questions''',
+                            ).toString() + " questions",
+                            style:
+                                FlutterFlowTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Open Sans',
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                          ),
+                        ]),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Text(
-                        'Due Date: ',
-                        style: FlutterFlowTheme.of(context).bodyText1,
-                      ),
-                      Text(
-                        getJsonField(
-                          widget.assignmentSum,
-                          r'''$.formatted_due''',
-                        ).toString(),
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Open Sans',
-                              fontWeight: FontWeight.normal,
-                            ),
-                      ),
-                    ],
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.msMargin),
+                  child: RichText(
+                    text: TextSpan(
+                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                            fontFamily: 'Open Sans',
+                            fontWeight: FontWeight.w600,
+                          ),
+                      children: [
+                        TextSpan(
+                          text: 'Due Date: ',
+                        ),
+                        TextSpan(
+                          text: "This assignment is due by " + getJsonField(
+                            widget.assignmentSum,
+                            r'''$.formatted_due''',
+                          ).toString(),
+                          style:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Open Sans',
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Container(
                   width: double.infinity,
                   height: 75,
                   decoration: BoxDecoration(),
-                  child: Text(
-                    getJsonField(
-                      widget.assignmentSum,
-                      r'''$.formatted_late_policy''',
-                    ).toString(),
-                    style: FlutterFlowTheme.of(context).bodyText1,
+                  child: RichText(
+                    text: TextSpan(
+                      style: FlutterFlowTheme.of(context).bodyText1,
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: "Late Policy: ",
+                          style:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Open Sans',
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                        ),
+                        TextSpan(
+                          text: getJsonField(
+                            widget.assignmentSum,
+                            r'''$.formatted_late_policy''',
+                          ).toString(),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -201,26 +218,20 @@ class _AssignmentDetailsWidgetState extends State<AssignmentDetailsWidget>
                           ),
                         ],
                       ),
-                      FFButtonWidget(
-                        onPressed: () {
-                          print('Button pressed ...');
-                        },
-                        text: 'Access Questions',
-                        options: FFButtonOptions(
-                          height: 40,
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          textStyle: FlutterFlowTheme.of(context)
-                              .subtitle2
-                              .override(
-                                fontFamily: 'Open Sans',
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                              ),
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(0),
+                      OutlinedButton(
+                        onPressed: () async {},
+                        child: Text('ACCESS QUESTIONS'),
+                        style: ElevatedButton.styleFrom(
+                          textStyle: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold),
+                          foregroundColor:
+                              FlutterFlowTheme.of(context).primaryColor,
+                          fixedSize: const Size(165, Constants.mlMargin),
+                          backgroundColor:
+                              FlutterFlowTheme.of(context).primaryBackground,
+                          side: BorderSide(
+                              width: 1,
+                              color: FlutterFlowTheme.of(context).primaryColor),
                         ),
                       ),
                     ],
@@ -235,7 +246,10 @@ class _AssignmentDetailsWidgetState extends State<AssignmentDetailsWidget>
                       child: Text(
                         'Question',
                         textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
                     ),
                     Expanded(
@@ -243,7 +257,10 @@ class _AssignmentDetailsWidgetState extends State<AssignmentDetailsWidget>
                       child: Text(
                         'Question Points',
                         textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
                     ),
                     Expanded(
@@ -251,7 +268,10 @@ class _AssignmentDetailsWidgetState extends State<AssignmentDetailsWidget>
                       child: Text(
                         'Total Score',
                         textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
                     ),
                     Expanded(
@@ -259,14 +279,17 @@ class _AssignmentDetailsWidgetState extends State<AssignmentDetailsWidget>
                       child: Text(
                         'Solution',
                         textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).bodyText1,
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
                     ),
                   ],
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.msMargin),
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -284,8 +307,8 @@ class _AssignmentDetailsWidgetState extends State<AssignmentDetailsWidget>
                               if (!snapshot.hasData) {
                                 return Center(
                                   child: SizedBox(
-                                    width: 50,
-                                    height: 50,
+                                    width: 48,
+                                    height: 48,
                                     child: CircularProgressIndicator(
                                       color: FlutterFlowTheme.of(context)
                                           .primaryColor,
@@ -348,88 +371,92 @@ class _AssignmentDetailsWidgetState extends State<AssignmentDetailsWidget>
                                             },
                                           );
                                         },
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Expanded(
-                                              flex: 1,
-                                              child: Text(
-                                                functions
-                                                    .addOne(questionsIndex)
-                                                    .toString(),
-                                                textAlign: TextAlign.center,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(0, Constants.sMargin, 0, 0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Expanded(
+                                                flex: 1,
+                                                child: Text(
+                                                  functions
+                                                      .addOne(questionsIndex)
+                                                      .toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Open Sans',
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                      ),
+                                                ),
                                               ),
-                                            ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: Text(
-                                                getJsonField(
-                                                  questionsItem,
-                                                  r'''$.points''',
-                                                ).toString(),
-                                                textAlign: TextAlign.center,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
+                                              Expanded(
+                                                flex: 1,
+                                                child: Text(
+                                                  getJsonField(
+                                                    questionsItem,
+                                                    r'''$.points''',
+                                                  ).toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Open Sans',
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                                ),
                                               ),
-                                            ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: Text(
-                                                getJsonField(
-                                                  questionsItem,
-                                                  r'''$.total_score''',
-                                                ).toString(),
-                                                textAlign: TextAlign.center,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
+                                              Expanded(
+                                                flex: 1,
+                                                child: Text(
+                                                  getJsonField(
+                                                    questionsItem,
+                                                    r'''$.total_score''',
+                                                  ).toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Open Sans',
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                                ),
                                               ),
-                                            ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: Text(
-                                                functions.questionSolution(
-                                                    getJsonField(
-                                                  widget.assignmentSum,
-                                                  r'''$.solution_exists''',
-                                                )),
-                                                textAlign: TextAlign.center,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
+                                              Expanded(
+                                                flex: 1,
+                                                child: Text(
+                                                  functions.questionSolution(
+                                                      getJsonField(
+                                                    widget.assignmentSum,
+                                                    r'''$.solution_exists''',
+                                                  )),
+                                                  textAlign: TextAlign.center,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Open Sans',
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       );
                                     },
@@ -446,8 +473,8 @@ class _AssignmentDetailsWidgetState extends State<AssignmentDetailsWidget>
               ],
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
