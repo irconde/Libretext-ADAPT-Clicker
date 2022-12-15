@@ -216,15 +216,15 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                 alignment: AlignmentDirectional.bottomCenter,
                 child: Padding(
                   padding: const EdgeInsets.all(Constants.mmMargin),
-                  child: ElevatedButton(
+                  child: OutlinedButton(
                       style: ElevatedButton.styleFrom(
                         textStyle: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w600),
-                        primary: FlutterFlowTheme.of(context).primaryBackground,
+                        foregroundColor: FlutterFlowTheme.of(context).secondaryColor,
                         fixedSize: const Size(330, 36),
-                        onPrimary: FlutterFlowTheme.of(context).secondaryColor,
+                        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4),
+                          borderRadius: BorderRadius.circular(1),
                         ),
                       ),
                       onPressed: () async {
