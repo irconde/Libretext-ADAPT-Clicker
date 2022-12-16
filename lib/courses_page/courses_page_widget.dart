@@ -1,6 +1,7 @@
 import '../assignments_page/assignments_page_widget.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/add_course_widget.dart';
+import '../components/drawer_ctn.dart';
 import '../components/no_courses_widget.dart';
 import '../components/drawer_ctn.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
