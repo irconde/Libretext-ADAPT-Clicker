@@ -4,11 +4,9 @@ import '../courses_page/courses_page_widget.dart';
 import '../create_account/create_account_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
 import '../login_page/login_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class WelcomePageWidget extends StatefulWidget {
   const WelcomePageWidget({Key? key}) : super(key: key);
@@ -72,74 +70,64 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                         alignment: AlignmentDirectional(0, -0.6),
                         child: Padding(
                           padding:
-                              EdgeInsetsDirectional.fromSTEB(42, 42, 42, 42),
+                          EdgeInsetsDirectional.fromSTEB(42, 42, 42, 24),
                           child: Image.asset(
-                            'assets/images/libretexts_logo_stacked_blue.png',
-                            width: 244,
+                            'assets/images/libretexts-adapt-logo-vector.png',
+                            width: 270,
                             height: 170,
-                            fit: BoxFit.contain,
                           ),
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
-                        child: FFButtonWidget(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            textStyle: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w600),
+                            onPrimary: FlutterFlowTheme.of(context).primaryBtnText,
+                            fixedSize: const Size(330, 36),
+                            primary: FlutterFlowTheme.of(context).primaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ),
                           onPressed: () async {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => LoginPageWidget(onSubmit: (String value) {  },),
+                                builder: (context) => LoginPageWidget(onSubmit: (String value) {},),
                               ),
                             );
                           },
-                          text: 'LOGIN',
-                          options: FFButtonOptions(
-                            width: 290,
-                            height: 50,
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            textStyle:
-                                FlutterFlowTheme.of(context).subtitle2.override(
-                                      fontFamily: 'Open Sans',
-                                      color: Colors.white,
-                                    ),
-                            borderSide: BorderSide(
-                              color: Colors.transparent,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(0),
-                          ),
+                          child: const Text('LOGIN'),
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                        child: FFButtonWidget(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            textStyle: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w600),
+                            onPrimary: FlutterFlowTheme.of(context).primaryColor,
+                            fixedSize: const Size(330, 36),
+                            primary: FlutterFlowTheme.of(context).primaryBackground,
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                width: 1,
+                                color: FlutterFlowTheme.of(context).primaryColor,
+                              ),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ),
                           onPressed: () async {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => CreateAccountWidget(onSubmit: (String value) {  },),
+                                builder: (context) => CreateAccountWidget(onSubmit: (String? value) {},),
                               ),
                             );
                           },
-                          text: 'CREATE ACCOUNT',
-                          options: FFButtonOptions(
-                            width: 290,
-                            height: 50,
-                            color:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .subtitle2
-                                .override(
-                                  fontFamily: 'Open Sans',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                ),
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(0),
-                          ),
+                          child: const Text('CREATE ACCOUNT'),
                         ),
                       ),
                     ],
@@ -159,10 +147,10 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                           child: Text(
                             'Having problems? ',
                             style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Open Sans',
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                            FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
                         ),
                         Align(
@@ -172,7 +160,7 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ContactUsWidget(),
+                                  builder: (context) => ContactUsWidget(onSubmit: (String? value) {  },),
                                 ),
                               );
                             },
@@ -181,11 +169,11 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
-                                    fontFamily: 'Open Sans',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    fontWeight: FontWeight.normal,
-                                  ),
+                                fontFamily: 'Open Sans',
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryColor,
+                                fontWeight: FontWeight.normal,
+                              ),
                             ),
                           ),
                         ),
