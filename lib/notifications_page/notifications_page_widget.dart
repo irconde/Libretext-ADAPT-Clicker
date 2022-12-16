@@ -45,8 +45,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
             style: FlutterFlowTheme.of(context).bodyText1.override(
                   fontFamily: 'Open Sans',
                   color: FlutterFlowTheme.of(context).primaryBackground,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w400,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
                 ),
           ),
         ),
@@ -54,15 +54,15 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
           Align(
             alignment: AlignmentDirectional(0, 0),
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 30, 0),
               child: Text(
                 'Clear All',
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).bodyText1.override(
                       fontFamily: 'Open Sans',
                       color: FlutterFlowTheme.of(context).primaryBackground,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w300,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
                     ),
               ),
             ),
