@@ -31,6 +31,7 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
   String? dropDownValue1;
   String? dropDownValue2;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  var top = 0.0;
 
   @override
   void initState() {
@@ -41,58 +42,40 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
     });
   }
 
+  String checkTop(var topSize) {
+    if (topSize <= 120) {
+      return "Introduction to this";
+    } else {
+      return "Introduction \n to this";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        leading: InkWell(
-          onTap: () async {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            Icons.arrow_back,
-            color: FlutterFlowTheme.of(context).primaryBackground,
-            size: 28,
-          ),
-        ),
-        title: Text(
-          'Assignment Details',
-          textAlign: TextAlign.start,
-          style: FlutterFlowTheme.of(context).bodyText1.override(
-                fontFamily: 'Open Sans',
-                color: FlutterFlowTheme.of(context).primaryBackground,
-                fontSize: 26,
-              ),
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
-            child: InkWell(
-              onTap: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NotificationsPageWidget(),
-                  ),
-                );
-              },
-              child: Icon(
-                Icons.notifications,
-                color: FlutterFlowTheme.of(context).primaryBtnText,
-                size: 28,
-              ),
-            ),
-          ),
-        ],
-        centerTitle: true,
-        elevation: 0,
-      ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      body: SafeArea(
-        child: GestureDetector(
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+                backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+                expandedHeight: 160.0,
+                pinned: true,
+                snap: false,
+                floating: false,
+                flexibleSpace: LayoutBuilder(builder:
+                    (BuildContext context, BoxConstraints constraints) {
+                  top = constraints.biggest.height;
+                  return FlexibleSpaceBar(
+                    title: AnimatedOpacity(
+                        duration: Duration(milliseconds: 300),
+                        opacity: 1.0,
+                        child: Text(checkTop(top),
+                            style: FlutterFlowTheme.of(context).title2)),
+                  );
+                })),
+          ];
+        },
+        body: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -129,10 +112,10 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                 FlutterFlowTheme.of(context).primaryBackground,
                             tabs: [
                               Tab(
-                                text: 'Home',
+                                text: 'HOME',
                               ),
                               Tab(
-                                text: 'Assignments',
+                                text: 'ASSIGNMENTS',
                               ),
                             ],
                           ),
@@ -141,7 +124,6 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                               children: [
                                 Container(
                                   width: double.infinity,
-                                  height: double.infinity,
                                   decoration: BoxDecoration(
                                     color: FlutterFlowTheme.of(context)
                                         .primaryBackground,
@@ -151,81 +133,113 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                     children: [
                                       Container(
                                         width: double.infinity,
-                                        color: Color(0xFFF3F3F3),
+                                        color: FlutterFlowTheme.of(context)
+                                            .coursePagePullDown,
                                         child: ExpandableNotifier(
                                           initialExpanded: false,
                                           child: ExpandablePanel(
                                             header: Container(
+                                              alignment: Alignment.centerLeft,
                                               width: MediaQuery.of(context)
                                                   .size
                                                   .width,
-                                              height: 100,
+                                              height: 120,
                                               decoration: BoxDecoration(
                                                 color: Color(0xFFF3F3F3),
                                               ),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                32, 0, 0, 12),
-                                                    child: Text(
-                                                      'Instructor:',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1,
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    flex: 3,
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0, 16, 0, 0),
-                                                      child: Container(
-                                                        width: 225,
-                                                        height: double.infinity,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color:
-                                                              Color(0x00FFFFFF),
-                                                        ),
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                0, 0),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      0, 0, 12),
-                                                          child: Text(
-                                                            getJsonField(
-                                                              widget.course,
-                                                              r'''$.instructor''',
-                                                            ).toString(),
-                                                            maxLines: 2,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Open Sans',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
+                                              child: Padding(
+                                                  padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(32, 24, 0, 24),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                     Padding(
+                                                       padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                                                       child: RichText(
+                                                          text: TextSpan(
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyText1
+                                                                  .override(
+                                                                      fontFamily:
+                                                                          'Open Sans',
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      color: FlutterFlowTheme
+                                                                              .of(context)
+                                                                          .tertiaryText),
+                                                              children: [
+                                                                TextSpan(
+                                                                    text:
+                                                                        'Instructor: '),
+                                                                TextSpan(
+                                                                  text: getJsonField(
+                                                                    widget.course,
+                                                                    r'''$.instructor''',
+                                                                  ).toString(),
+                                                                  style: FlutterFlowTheme
+                                                                          .of(context)
+                                                                      .bodyText1
+                                                                      .override(
+                                                                        color: FlutterFlowTheme.of(
+                                                                                context)
+                                                                            .tertiaryText,
+                                                                        fontFamily:
+                                                                            'Open Sans',
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .normal,
+                                                                      ),
                                                                 ),
+                                                              ]),
+                                                        ),
+                                                     ),
+                                                    RichText(
+                                                        text: TextSpan(
+                                                          style:
+                                                          FlutterFlowTheme.of(
+                                                              context)
+                                                              .bodyText1
+                                                              .override(
+                                                            fontFamily:
+                                                            'Open Sans',
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .w600,
+                                                            color: FlutterFlowTheme.of(
+                                                                context)
+                                                                .tertiaryText,
                                                           ),
+                                                          children: <TextSpan>[
+                                                            TextSpan(
+                                                              text: 'Start Date: ',
+                                                            ),
+                                                            TextSpan(
+                                                              text: getJsonField(
+                                                                widget.course,
+                                                                r'''$.start_date''',
+                                                              ).toString(),
+                                                              style: FlutterFlowTheme
+                                                                  .of(context)
+                                                                  .bodyText1
+                                                                  .override(
+                                                                fontFamily:
+                                                                'Open Sans',
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .normal,
+                                                                color: FlutterFlowTheme.of(
+                                                                    context)
+                                                                    .tertiaryText,
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                             collapsed: Container(),
@@ -241,171 +255,92 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(32, 0,
-                                                                    0, 0),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0,
-                                                                          0,
-                                                                          0,
-                                                                          12),
-                                                              child: Text(
-                                                                'Start Date:',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyText1,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              'End Date:',
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyText1,
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0,
-                                                                          12,
-                                                                          0,
-                                                                          0),
-                                                              child: Text(
-                                                                'Description:',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyText1,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        width: 225,
-                                                        height: 100,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color:
-                                                              Color(0x00FFFFFF),
-                                                        ),
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                0, 0),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0,
-                                                                          0,
-                                                                          0,
-                                                                          12),
-                                                              child: Text(
-                                                                getJsonField(
-                                                                  widget.course,
-                                                                  r'''$.start_date''',
-                                                                ).toString(),
-                                                                maxLines: 2,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyText1
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Open Sans',
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .normal,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                            AutoSizeText(
-                                                              getJsonField(
-                                                                widget.course,
-                                                                r'''$.end_date''',
-                                                              ).toString(),
-                                                              maxLines: 2,
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyText1
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Open Sans',
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal,
-                                                                  ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
                                                   Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                32, 0, 32, 0),
-                                                    child: Container(
-                                                      width: double.infinity,
-                                                      decoration: BoxDecoration(
-                                                        color:
-                                                            Color(0x00FFFFFF),
-                                                      ),
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(0, 0,
-                                                                    0, 24),
-                                                        child: Text(
-                                                          getJsonField(
-                                                            widget.course,
-                                                            r'''$.public_description''',
-                                                          ).toString(),
-                                                          maxLines: 10,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Open Sans',
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
-                                                              ),
+                                                    padding: const EdgeInsetsDirectional.fromSTEB(32, 0, 0, 24),
+                                                    child: RichText(
+                                                      text: TextSpan(
+                                                        style:
+                                                        FlutterFlowTheme.of(
+                                                            context)
+                                                            .bodyText1
+                                                            .override(
+                                                          fontFamily:
+                                                          'Open Sans',
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .w600,
+                                                          color: FlutterFlowTheme.of(
+                                                              context)
+                                                              .tertiaryText,
                                                         ),
+                                                        children: <TextSpan>[
+                                                          TextSpan(
+                                                            text: 'End Date: ',
+                                                          ),
+                                                          TextSpan(
+                                                            text:  getJsonField(
+                                                              widget.course,
+                                                              r'''$.end_date''',
+                                                            ).toString(),
+                                                            style: FlutterFlowTheme
+                                                                .of(context)
+                                                                .bodyText1
+                                                                .override(
+                                                              fontFamily:
+                                                              'Open Sans',
+                                                              fontWeight:
+                                                              FontWeight
+                                                                  .normal,
+                                                              color: FlutterFlowTheme.of(
+                                                                  context)
+                                                                  .tertiaryText,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),Padding(
+                                                    padding: const EdgeInsetsDirectional.fromSTEB(32, 0, 0, 24),
+                                                    child: RichText(
+                                                      text: TextSpan(
+                                                        style:
+                                                        FlutterFlowTheme.of(
+                                                            context)
+                                                            .bodyText1
+                                                            .override(
+                                                          fontFamily:
+                                                          'Open Sans',
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .w600,
+                                                          color: FlutterFlowTheme.of(
+                                                              context)
+                                                              .tertiaryText,
+                                                        ),
+                                                        children: <TextSpan>[
+                                                          TextSpan(
+                                                            text:  'Description: ',
+                                                          ),
+                                                          TextSpan(
+                                                            text:  getJsonField(
+                                                              widget.course,
+                                                              r'''$.public_description''',
+                                                            ).toString(),
+                                                            style: FlutterFlowTheme
+                                                                .of(context)
+                                                                .bodyText1
+                                                                .override(
+                                                              fontFamily:
+                                                              'Open Sans',
+                                                              fontWeight:
+                                                              FontWeight
+                                                                  .normal,
+                                                              color: FlutterFlowTheme.of(
+                                                                  context)
+                                                                  .tertiaryText,
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
                                                   ),
@@ -424,27 +359,32 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                   Icons.keyboard_arrow_down,
                                               collapseIcon:
                                                   Icons.keyboard_arrow_up,
-                                              iconSize: 28,
+                                              iconSize: 48,
+                                              iconPadding: EdgeInsets.fromLTRB(0, 0, 20, 0),
                                               iconColor:
                                                   FlutterFlowTheme.of(context)
-                                                      .primaryText,
+                                                      .tertiaryText,
                                             ),
                                           ),
                                         ),
                                       ),
-                                      Container(
-                                        width: double.infinity,
-                                        height: 64,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
-                                        ),
-                                        alignment:
-                                            AlignmentDirectional(-0.8, 0),
-                                        child: Text(
-                                          'Learning Process',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
+                                      Material(
+                                        elevation: 4,
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: 64,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                          ),
+                                          alignment:
+                                              AlignmentDirectional(-0.8, 0),
+                                          child: Text(
+                                            'Learning Process',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1,
+                                          ),
+
                                         ),
                                       ),
                                       AssignmentStatCtnWidget(
@@ -453,10 +393,7 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                     ],
                                   ),
                                 ),
-                                Material(
-                                  color: Colors.transparent,
-                                  elevation: 0,
-                                  child: Container(
+                                Container(
                                     width: double.infinity,
                                     height: double.infinity,
                                     decoration: BoxDecoration(
@@ -825,7 +762,6 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                       ],
                                     ),
                                   ),
-                                ),
                               ],
                             ),
                           ),

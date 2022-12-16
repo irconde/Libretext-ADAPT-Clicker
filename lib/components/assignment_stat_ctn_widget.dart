@@ -21,7 +21,7 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+      padding: EdgeInsetsDirectional.fromSTEB(32, 0, 32, 0),
       child: Container(
         width: double.infinity,
         height: 80,
@@ -33,7 +33,7 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 24, 0),
               child: Container(
                 width: 4,
                 height: double.infinity,
@@ -43,48 +43,47 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
               ),
             ),
             Expanded(
-              child: Align(
-                alignment: AlignmentDirectional(0, -0.25),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+              child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
-                            child: FaIcon(
-                              FontAwesomeIcons.brain,
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              size: 24,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
-                            child: Text(
-                              'Activety Description',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Open Sans',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    fontSize: 16,
-                                  ),
-                            ),
-                          ),
-                        ],
-                      ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(32, 8, 0, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Text(
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                              child: FaIcon(
+                                FontAwesomeIcons.brain,
+                                color: FlutterFlowTheme.of(context).primaryColor,
+                                size: 24,
+                              ),
+                            ),
+                           Text(
+                                'Activity Description',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Open Sans',
+                                      fontWeight: FontWeight.w600,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                      fontSize: 16,
+                                    ),
+                              ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                        child: RichText(
+                          text: TextSpan(
+                          children: [
+                            TextSpan(text:
                               'Due Date: ',
                               style: FlutterFlowTheme.of(context)
                                   .bodyText1
@@ -93,7 +92,7 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
                                     fontWeight: FontWeight.normal,
                                   ),
                             ),
-                            Text(
+                            TextSpan(text:
                               '8/18/2022 at 1:43 pm',
                               style: FlutterFlowTheme.of(context)
                                   .bodyText1
@@ -103,15 +102,15 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
                                   ),
                             ),
                           ],
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-            ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 24, 0),
               child: Text(
                 '15%',
                 style: FlutterFlowTheme.of(context).bodyText1.override(
