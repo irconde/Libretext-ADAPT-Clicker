@@ -9,7 +9,6 @@ import '../notifications_page/notifications_page_widget.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-
 class CoursesPageWidget extends StatefulWidget {
   const CoursesPageWidget({Key? key}) : super(key: key);
 
@@ -183,32 +182,31 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                         itemBuilder: (context, enrollmentsListIndex) {
                           final enrollmentsListItem =
                               enrollmentsList[enrollmentsListIndex];
-                          return Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                24, 24, 24, 0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      8, 0, 8, 0),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              AssignmentsPageWidget(
-                                            courseNumber: getJsonField(
-                                              enrollmentsListItem,
-                                              r'''$.id''',
-                                            ),
-                                            course: enrollmentsListItem,
-                                          ),
-                                        ),
-                                      );
-                                    },
+                          return InkWell(
+                            onTap: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AssignmentsPageWidget(
+                                    courseNumber: getJsonField(
+                                      enrollmentsListItem,
+                                      r'''$.id''',
+                                    ),
+                                    course: enrollmentsListItem,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  24, 24, 24, 0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8, 0, 8, 0),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
@@ -274,12 +272,12 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                                       ],
                                     ),
                                   ),
-                                ),
-                                Divider(
-                                  height: 1,
-                                  thickness: 1,
-                                ),
-                              ],
+                                  Divider(
+                                    height: 1,
+                                    thickness: 1,
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         },
