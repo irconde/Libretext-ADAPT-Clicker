@@ -1,27 +1,35 @@
+import '../gen/assets.gen.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AssignmentStatCtnWidget extends StatefulWidget {
   const AssignmentStatCtnWidget({
-    Key? key,
-    this.severityColor,
-  }) : super(key: key);
-
-  final Color? severityColor;
+    Key? key}) : super(key: key);
 
   @override
   _AssignmentStatCtnWidgetState createState() =>
       _AssignmentStatCtnWidgetState();
 }
 
+Color severityColor(BuildContext context, double percentage)
+{
+  if(percentage < 50)
+    return FlutterFlowTheme.of(context).activityBad;
+  else if(percentage < 80)
+    return FlutterFlowTheme.of(context).activityMedium;
+  else
+    return FlutterFlowTheme.of(context).activityGood;
+}
+
 class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
+
+  double severityVariable = 15.0;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(32, 0, 32, 0),
+      padding: EdgeInsetsDirectional.fromSTEB(Constants.mmMargin, 0, Constants.mmMargin, 0),
       child: Container(
         width: double.infinity,
         height: 80,
@@ -33,12 +41,12 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 24, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, Constants.msMargin, 0),
               child: Container(
                 width: 4,
                 height: double.infinity,
                 decoration: BoxDecoration(
-                  color: widget.severityColor,
+                  color: severityColor(context, severityVariable),
                 ),
               ),
             ),
@@ -51,16 +59,16 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.xsMargin),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, Constants.xsMargin, 0),
                               child: FaIcon(
                                 FontAwesomeIcons.brain,
                                 color: FlutterFlowTheme.of(context).primaryColor,
-                                size: 24,
+                                size: Constants.msMargin,
                               ),
                             ),
                            Text(
@@ -110,13 +118,13 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
                 ),
               ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 24, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, Constants.msMargin, 0),
               child: Text(
-                '15%',
+                severityVariable.toString() + '%',
                 style: FlutterFlowTheme.of(context).bodyText1.override(
                       fontFamily: 'Open Sans',
-                      color: widget.severityColor,
-                      fontSize: 24,
+                      color: severityColor(context, severityVariable),
+                      fontSize: Constants.msMargin,
                       fontWeight: FontWeight.bold,
                     ),
               ),

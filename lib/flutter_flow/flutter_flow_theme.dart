@@ -29,6 +29,10 @@ abstract class FlutterFlowTheme {
   late Color success;
   late Color failure;
 
+  late Color activityGood;
+  late Color activityMedium;
+  late Color activityBad;
+
   String get title1Family => typography.title1Family;
   TextStyle get title1 => typography.title1;
   String get title2Family => typography.title2Family;
@@ -105,6 +109,14 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color svgIconColor2 = Color(0xFF4ABEE2);
   late Color success = Color(0xFF008C3D);
   late Color failure = Color(0xFFD82828);
+
+
+  //Activity Colors
+  late Color activityGood = Color(0xFF008C3D);
+  late Color activityMedium = Color(0xFFFF9D00);
+  late Color activityBad = Color(0xFFEF0C12);
+
+
 }
 
 abstract class Typography {
