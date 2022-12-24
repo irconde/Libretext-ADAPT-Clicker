@@ -173,15 +173,12 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                     (BuildContext context, BoxConstraints constraints) {
                   top = constraints.biggest.height;
                   return FlexibleSpaceBar(
-                    title: AnimatedOpacity(
-                        duration: Duration(milliseconds: 300),
-                        opacity: 1.0,
-                        child: Text(checkTop(top),
-                            style: FlutterFlowTheme.of(context).title2)),
+                    title:  Text(checkTop(top),
+                            style: FlutterFlowTheme.of(context).title2),
                     background: Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(64, 28, 0, 0),
                       child: SvgPicture.asset(
-                        'assets/images/person_add.svg',
+                            'assets/images/person_add1.svg',
                         fit: BoxFit.scaleDown,
                         color: FlutterFlowTheme.of(context).svgIconColor,
                       ),

@@ -23,6 +23,7 @@ abstract class FlutterFlowTheme {
   late Color textFieldBackground;
   late Color textFieldBorder;
   late Color svgIconColor;
+  late Color svgIconColor2;
   late Color drawerIconColor;
   late Color success;
   late Color failure;
@@ -99,6 +100,7 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color textFieldBorder = Color(0xFFD3D8DB);
   late Color drawerIconColor = Color(0xFF66AADB);
   late Color svgIconColor = Color(0xFF4F9FCF);
+  late Color svgIconColor2 = Color(0xFF4ABEE2);
   late Color success = Color(0xFF008C3D);
   late Color failure = Color(0xFFD82828);
 }
