@@ -53,297 +53,290 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 0),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                flex: 1,
-                child: Align(
-                  alignment: AlignmentDirectional(-0.93, 0),
-                  child: InkWell(
-                    onTap: () async {
-                      Navigator.pop(context);
-                    },
-                    child: Icon(
-                      Icons.close_outlined,
-                      color: Colors.black,
-                      size: 36,
-                    ),
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(32, 0, 32, 0),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                InkWell(
+                  onTap: () async {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(
+                    Icons.close_outlined,
+                    color: Colors.black,
+                    size: 36,
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 4,
-                child: Align(
-                  alignment: AlignmentDirectional(0, 0),
-                  child: Text(
-                    widget.assignmentName!,
-                    textAlign: TextAlign.start,
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
-                          fontFamily: 'Open Sans',
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                          fontSize: 24,
-                        ),
-                  ),
+                Text(
+                  widget.assignmentName!,
+                  textAlign: TextAlign.start,
+                  style: FlutterFlowTheme.of(context).bodyText1.override(
+                        fontFamily: 'Open Sans',
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 16),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Text(
-                          'Question Points: ',
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                        ),
-                        Text(
-                          getJsonField(
-                            FFAppState().question,
-                            r'''$.points''',
-                          ).toString().maybeHandleOverflow(
-                                maxChars: 32,
-                                replacement: '…',
-                              ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Open Sans',
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Text(
-                          'Attempts: ',
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                        ),
-                        Text(
-                          getJsonField(
-                            FFAppState().question,
-                            r'''$.submission_count''',
-                          ).toString().maybeHandleOverflow(
-                                maxChars: 32,
-                                replacement: '…',
-                              ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Open Sans',
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Text(
-                          'Submission: ',
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                        ),
-                        Text(
-                          getJsonField(
-                            FFAppState().question,
-                            r'''$.student_response''',
-                          ).toString().maybeHandleOverflow(
-                                maxChars: 32,
-                                replacement: '…',
-                              ),
-                          maxLines: 2,
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Open Sans',
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Text(
-                          'Submitted: ',
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                        ),
-                        Text(
-                          getJsonField(
-                            FFAppState().question,
-                            r'''$.last_submitted''',
-                          ).toString().maybeHandleOverflow(
-                                maxChars: 32,
-                                replacement: '…',
-                              ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Open Sans',
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  if (FFAppState().isBasic)
-                    FlutterFlowWebView(
-                      url: getJsonField(
-                        FFAppState().question,
-                        r'''$.technology_iframe''',
-                      ),
-                      bypass: false,
-                      height: 500,
-                      verticalScroll: true,
-                      horizontalScroll: true,
-                    ),
-                  if (!FFAppState().isBasic)
-                    FutureBuilder<ApiCallResponse>(
-                      future: GetNonTechnologyIframeCall.call(
-                        pageId: getJsonField(
-                          FFAppState().question,
-                          r'''$.page_id''',
-                        ),
-                        token: FFAppState().authToken,
-                      ),
-                      builder: (context, snapshot) {
-                        // Customize what your widget looks like when it's loading.
-                        if (!snapshot.hasData) {
-                          return Center(
-                            child: SizedBox(
-                              width: 50,
-                              height: 50,
-                              child: CircularProgressIndicator(
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                              ),
-                            ),
-                          );
-                        }
-                        final htmlViewGetNonTechnologyIframeResponse =
-                            snapshot.data!;
-                        return Html(
-                          data: htmlViewGetNonTechnologyIframeResponse.jsonBody,
-                        );
-                      },
-                    ),
-                  if (functions.isTextSubmission(getJsonField(
-                    FFAppState().question,
-                    r'''$.open_ended_submission_type''',
-                  ).toString()))
-                    Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        TextFormField(
-                          controller: textController,
-                          autofocus: true,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            hintText: '[Some hint text...]',
-                            hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            errorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            focusedErrorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                          ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                          maxLines: 16,
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
-                          child: FFButtonWidget(
-                            onPressed: () {
-                              print('Button pressed ...');
-                            },
-                            text: 'Submit',
-                            options: FFButtonOptions(
-                              width: 130,
-                              height: 40,
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle2
-                                  .override(
-                                    fontFamily: 'Open Sans',
-                                    color: Colors.white,
-                                  ),
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                ],
-              ),
+              ],
             ),
           ),
-        ),
-        if (!(isWeb
-            ? MediaQuery.of(context).viewInsets.bottom > 0
-            : _isKeyboardVisible))
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-            child: SingleChildScrollView(
+          SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 24),
+                  child: RichText(
+                      text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Question Points: ',
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                      TextSpan(
+                        text: getJsonField(
+                          FFAppState().question,
+                          r'''$.points''',
+                        ).toString().maybeHandleOverflow(
+                              maxChars: 32,
+                              replacement: '…',
+                            ),
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.normal,
+                            ),
+                      ),
+                    ],
+                  )),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                  child:
+                  RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Attempts: ',
+                            style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          TextSpan(
+                            text: getJsonField(
+                              FFAppState().question,
+                              r'''$.submission_count''',
+                            ).toString().maybeHandleOverflow(
+                              maxChars: 32,
+                              replacement: '…',
+                            ),
+                            style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
+                      )),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                  child:
+                  RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text:'Submission: ',
+                            style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          TextSpan(
+                            text: getJsonField(
+                              FFAppState().question,
+                              r'''$.student_response''',
+                            ).toString().maybeHandleOverflow(
+                              maxChars: 32,
+                              replacement: '…',
+                            ),
+                            style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
+                      )),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                  child:
+                  RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Submitted: ',
+                            style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          TextSpan(
+                            text: getJsonField(
+                              FFAppState().question,
+                              r'''$.last_submitted''',
+                            ).toString().maybeHandleOverflow(
+                              maxChars: 32,
+                              replacement: '…',
+                            ),
+                            style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
+                      )),
+                ),
+                if (FFAppState().isBasic)
+                  FlutterFlowWebView(
+                    url: getJsonField(
+                      FFAppState().question,
+                      r'''$.technology_iframe''',
+                    ),
+                    bypass: false,
+                    height: 500,
+                    verticalScroll: true,
+                    horizontalScroll: true,
+                  ),
+                if (!FFAppState().isBasic)
+                  FutureBuilder<ApiCallResponse>(
+                    future: GetNonTechnologyIframeCall.call(
+                      pageId: getJsonField(
+                        FFAppState().question,
+                        r'''$.page_id''',
+                      ),
+                      token: FFAppState().authToken,
+                    ),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: CircularProgressIndicator(
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                            ),
+                          ),
+                        );
+                      }
+                      final htmlViewGetNonTechnologyIframeResponse =
+                          snapshot.data!;
+                      return Html(
+                        data: htmlViewGetNonTechnologyIframeResponse.jsonBody,
+                      );
+                    },
+                  ),
+                if (functions.isTextSubmission(getJsonField(
+                  FFAppState().question,
+                  r'''$.open_ended_submission_type''',
+                ).toString()))
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      TextFormField(
+                        controller: textController,
+                        autofocus: true,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          hintText: '[Some hint text...]',
+                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4.0),
+                              topRight: Radius.circular(4.0),
+                            ),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4.0),
+                              topRight: Radius.circular(4.0),
+                            ),
+                          ),
+                          errorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4.0),
+                              topRight: Radius.circular(4.0),
+                            ),
+                          ),
+                          focusedErrorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4.0),
+                              topRight: Radius.circular(4.0),
+                            ),
+                          ),
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyText1,
+                        maxLines: 16,
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+                        child: FFButtonWidget(
+                          onPressed: () {
+                            print('Button pressed ...');
+                          },
+                          text: 'Submit',
+                          options: FFButtonOptions(
+                            width: 130,
+                            height: 40,
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            textStyle:
+                                FlutterFlowTheme.of(context).subtitle2.override(
+                                      fontFamily: 'Open Sans',
+                                      color: Colors.white,
+                                    ),
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
+          ),
+          if (!(isWeb
+              ? MediaQuery.of(context).viewInsets.bottom > 0
+              : _isKeyboardVisible))
+            SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -424,8 +417,8 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                 ],
               ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }
