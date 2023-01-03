@@ -42,7 +42,7 @@ android {
         disable 'InvalidPackage'
         checkReleaseBuilds false
     }
-
+    //min sdk must be 20 for webview
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "edu.ualr.adapt.clicker"
