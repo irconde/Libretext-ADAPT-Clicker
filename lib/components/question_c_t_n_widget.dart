@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -59,44 +58,50 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
 
   @override
   Widget build(BuildContext context) {
+
+    final questionsList = getJsonField(
+      FFAppState().view,
+      r'''$.questions''',
+    ).toList();
+
     return Padding(
       padding: const EdgeInsets.all(0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(
-                Constants.sMargin, Constants.msMargin, Constants.mmMargin, 0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.close,
-                    color: Colors.black,
-                    size: Constants.mlMargin,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(
+                  Constants.sMargin, Constants.msMargin, Constants.mmMargin, 0),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.close,
+                      color: Colors.black,
+                      size: Constants.mlMargin,
+                    ),
+                    onPressed: () async {
+                      Navigator.pop(context);
+                    },
                   ),
-                  onPressed: () async {
-                    Navigator.pop(context);
-                  },
-                ),
-                Expanded(
-                    child: Text(
-                  widget.assignmentName!,
-                  textAlign: TextAlign.center,
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
-                      fontFamily: 'Open Sans',
-                      color: FlutterFlowTheme.of(context).primaryColor,
-                      fontSize: Constants.msMargin,
-                      fontWeight: FontWeight.bold),
-                )),
-              ],
+                  Expanded(
+                      child: Text(
+                    widget.assignmentName!,
+                    textAlign: TextAlign.center,
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                        fontFamily: 'Open Sans',
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                        fontSize: Constants.msMargin,
+                        fontWeight: FontWeight.bold),
+                  )),
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(
-                Constants.msMargin, Constants.msMargin, Constants.msMargin, 0),
-            child: SingleChildScrollView(
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(Constants.mmMargin,
+                  Constants.msMargin, Constants.mmMargin, 24),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,7 +230,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                     Container(
                       height: 256,
                       padding: EdgeInsets.all(2),
-                      color: Colors.green,
+                      color: Colors.transparent,
                       child: WebView(
                         initialUrl: getJsonField(
                           FFAppState().question,
@@ -236,8 +241,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                           controller = webViewController;
                           injectViewport(controller);
                         },
-                        onPageFinished: (url)
-                        {
+                        onPageFinished: (url) {
                           injectViewport(controller);
                         },
                         javascriptMode: JavascriptMode.unrestricted,
@@ -275,7 +279,9 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                         final htmlViewGetNonTechnologyIframeResponse =
                             snapshot.data!;
                         return Html(
-                          data: htmlViewGetNonTechnologyIframeResponse.jsonBody,
+                          data: htmlViewGetNonTechnologyIframeResponse
+                                  .elements.outerHtml ??
+                              '',
                         );
                       },
                     ),
@@ -367,117 +373,148 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                 ],
               ),
             ),
-          ),
-          if (!(kIsWeb
-              ? MediaQuery.of(context).viewInsets.bottom > 0
-              : _isKeyboardVisible))
-            Padding(
-              padding: const EdgeInsets.all(Constants.mmMargin),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.arrow_left,
-                      color: Colors.black,
-                      size: 24,
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
-                      child: Builder(
-                        builder: (context) {
-                          final questionsList = getJsonField(
-                            FFAppState().view,
-                            r'''$.questions''',
-                          ).toList();
-                          return Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: List.generate(questionsList.length,
-                                (questionsListIndex) {
-                              final questionsListItem =
-                                  questionsList[questionsListIndex];
-                              return Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
-                                child: InkWell(
-                                  onTap: () async {
-                                    setState(() => FFAppState().question =
-                                        questionsListItem);
-                                    setState(() => FFAppState().isBasic =
-                                            functions.isBasic(getJsonField(
-                                          questionsListItem,
-                                          r'''$.technology_iframe''',
-                                        ).toString()));
-                                    setState(() => FFAppState().hasSubmission =
-                                            getJsonField(
-                                          questionsListItem,
-                                          r'''$.has_at_least_one_submission''',
-                                        ));
-                                    setState(() => controller.loadUrl(
-                                        getJsonField(questionsListItem,
-                                            r'''$.technology_iframe'''))
-                                    );
-                                    setState(() {
+            if (!(kIsWeb
+                ? MediaQuery.of(context).viewInsets.bottom > 0
+                : _isKeyboardVisible))
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.arrow_left,
+                    color: Colors.black,
+                    size: 24,
+                  ),
 
-                                    });
+                  Container(
+                    width: 240,
+                    height: 48,
+                    child: ListView.separated(
+                      padding: const EdgeInsets.all(0),
+                      shrinkWrap: true,
+                      itemCount: questionsList.length,
+                      scrollDirection: Axis.horizontal,
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(width: 12);
+                      },
+                      itemBuilder: (BuildContext context, int index) {
 
-
-                                  },
-                                  child: Container(
-                                    width: 25,
-                                    height: 25,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    alignment: AlignmentDirectional(0, 0),
-                                    child: Text(
-                                      functions
-                                          .addOne(questionsListIndex)
-                                          .toString(),
-                                      textAlign: TextAlign.center,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryBackground,
-                                          ),
-                                    ),
-                                  ),
-                                ),
+                        final questionsListItem =
+                        questionsList[index];
+                        return InkWell(
+                          splashColor: Colors.transparent,
+                            onTap: () async {
+                          setState(() { FFAppState().question =
+                              questionsListItem;
+                          FFAppState().isBasic =
+                              functions.isBasic(getJsonField(
+                                questionsListItem,
+                                r'''$.technology_iframe''',
+                              ).toString());
+                          FFAppState().hasSubmission =
+                              getJsonField(
+                                questionsListItem,
+                                r'''$.has_at_least_one_submission''',
                               );
-                            }),
-                          );
+                          controller.loadUrl(
+                              getJsonField(questionsListItem,
+                                  r'''$.technology_iframe'''));
+                          log("Setting index to $index");
+                          FFAppState().selectedIndex = index;
+
+                          });
+
+
                         },
-                      ),
+                        child: containerSelection(++index, context),
+                        );
+                      },
                     ),
-                    Icon(
-                      Icons.arrow_right,
-                      color: Colors.black,
-                      size: 24,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-        ],
+                  ),
+                  Icon(
+                    Icons.arrow_right,
+                    color: Colors.black,
+                    size: 24,
+                  ),
+                ],
+              )
+          ],
+        ),
       ),
     );
   }
 }
 
-void injectViewport(WebViewController controller) async {
+Widget containerSelection(index, context)
+{
+  bool selected = false;
+  int a = FFAppState().selectedIndex;
 
-    controller.runJavascriptReturningResult('''
+  log("Index: $index, selected: $a");
+
+  if(index == FFAppState().selectedIndex)
+    selected = true;
+
+  if(selected)
+    return selectedQuestionCard(index, context);
+  else
+    return unselectedQuestionCard(index, context);
+
+}
+
+
+Widget selectedQuestionCard(int index, BuildContext context) => Container(
+      alignment: AlignmentDirectional(0, 0),
+      width: 24,
+      height: 24,
+      decoration: BoxDecoration(
+        color: FlutterFlowTheme.of(context).primaryColor,
+        shape: BoxShape.circle,
+      ),
+      child: Text(
+        '$index',
+        style: FlutterFlowTheme.of(context)
+            .bodyText1
+            .override(
+          fontFamily: 'Open Sans',
+          fontWeight: FontWeight.w600,
+          color: FlutterFlowTheme.of(context)
+              .primaryBackground,
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
+
+Widget unselectedQuestionCard(int index, BuildContext context) => Container(
+  alignment: AlignmentDirectional(0, 0),
+  width: 24,
+  height: 24,
+  decoration: BoxDecoration(
+    color: FlutterFlowTheme.of(context).primaryBackground,
+    shape: BoxShape.circle,
+      border: Border.all( width: .4, color: FlutterFlowTheme.of(context).tertiaryColor)
+  ),
+  child: Text(
+    '$index',
+    style: FlutterFlowTheme.of(context)
+        .bodyText1
+        .override(
+      fontFamily: 'Open Sans',
+      fontWeight: FontWeight.w600,
+      color: FlutterFlowTheme.of(context)
+          .primaryColor,
+    ),
+    textAlign: TextAlign.center,
+  ),
+);
+
+
+void injectViewport(WebViewController controller) async {
+  controller.runJavascriptReturningResult('''
                           var flutterViewPort=document.createElement('meta');
                           flutterViewPort.name =    "viewport";
                           flutterViewPort.content = "initial-scale=1.0, maximum-scale=1.0, user-scalable=0";
                           document.getElementsByTagName('head')[0].appendChild(flutterViewPort);
                           ''');
 
-    log('Run');
+  log('Run');
 }

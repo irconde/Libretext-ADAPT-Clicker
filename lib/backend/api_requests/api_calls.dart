@@ -408,6 +408,7 @@ class GetNonTechnologyIframeCall {
       apiUrl:
           'https://adapt.libretexts.org/api/get-locally-saved-page-contents/phys/${pageId}',
       callType: ApiCallType.GET,
+      html: true,
       headers: {
         'accept': 'text/html',
         'authorization': '${token}',

@@ -3,6 +3,8 @@ import 'dart:io';
 import 'dart:core';
 
 import 'package:http/http.dart' as http;
+import 'package:html/parser.dart' show parse;
+import 'package:html/dom.dart' as dom;
 import 'package:equatable/equatable.dart';
 
 enum ApiCallType {
@@ -36,8 +38,9 @@ class ApiCallRecord extends Equatable {
 }
 
 class ApiCallResponse {
-  const ApiCallResponse(this.jsonBody, this.headers, this.statusCode);
+  const ApiCallResponse(this.jsonBody, this.headers, this.elements, this.statusCode);
   final dynamic jsonBody;
+  final dom.Document elements;
   final Map<String, String> headers;
   final int statusCode;
   // Whether we recieved a 2xx status (which generally marks success).
@@ -46,19 +49,26 @@ class ApiCallResponse {
 
   static ApiCallResponse fromHttpResponse(
     http.Response response,
-    bool returnBody,
+    bool returnBody, bool html,
   ) {
     var jsonBody;
+    var document = dom.Document();
     try {
-      jsonBody = returnBody ? json.decode(response.body) : null;
+      if(!html)
+        jsonBody = returnBody ? json.decode(response.body) : null;
+      else {
+        document = returnBody ? parse(response.body) : dom.Document();
+      }
     } catch (_) {}
-    return ApiCallResponse(jsonBody, response.headers, response.statusCode);
+    return ApiCallResponse(jsonBody, response.headers, document, response.statusCode);
   }
 
-  static ApiCallResponse fromCloudCallResponse(Map<String, dynamic> response) =>
+  static ApiCallResponse fromCloudCallResponse(Map<String, dynamic> response, bool html) =>
+      //IDK
       ApiCallResponse(
         response['body'],
         ApiManager.toStringMap(response['headers'] ?? {}),
+        dom.Document(),
         response['statusCode'] ?? 400,
       );
 }
@@ -94,6 +104,7 @@ class ApiManager {
     String apiUrl,
     Map<String, dynamic> headers,
     Map<String, dynamic> params,
+    bool html,
     bool returnBody,
   ) async {
     if (params.isNotEmpty) {
@@ -105,7 +116,7 @@ class ApiManager {
     final makeRequest = callType == ApiCallType.GET ? http.get : http.delete;
     final response =
         await makeRequest(Uri.parse(apiUrl), headers: toStringMap(headers));
-    return ApiCallResponse.fromHttpResponse(response, returnBody);
+    return ApiCallResponse.fromHttpResponse(response, returnBody, html);
   }
 
   static Future<ApiCallResponse> requestWithBody(
@@ -115,6 +126,7 @@ class ApiManager {
     Map<String, dynamic> params,
     String? body,
     BodyType? bodyType,
+    bool html,
     bool returnBody,
   ) async {
     assert(
@@ -129,7 +141,7 @@ class ApiManager {
     }[type]!;
     final response = await requestFn(Uri.parse(apiUrl),
         headers: toStringMap(headers), body: postBody);
-    return ApiCallResponse.fromHttpResponse(response, returnBody);
+    return ApiCallResponse.fromHttpResponse(response, returnBody, html);
   }
 
   static dynamic createBody(
@@ -172,6 +184,7 @@ class ApiManager {
     String? body,
     BodyType? bodyType,
     bool returnBody = true,
+    bool html = false,
     bool cache = false,
   }) async {
     final callRecord =
@@ -195,13 +208,13 @@ class ApiManager {
       case ApiCallType.GET:
       case ApiCallType.DELETE:
         result =
-            await urlRequest(callType, apiUrl, headers, params, returnBody);
+            await urlRequest(callType, apiUrl, headers, params, html, returnBody);
         break;
       case ApiCallType.POST:
       case ApiCallType.PUT:
       case ApiCallType.PATCH:
         result = await requestWithBody(
-            callType, apiUrl, headers, params, body, bodyType, returnBody);
+            callType, apiUrl, headers, params, body, bodyType, html, returnBody);
         break;
     }
 

@@ -19,6 +19,7 @@ class FFAppState {
     prefs = await SharedPreferences.getInstance();
     _rememberMe = prefs.getBool('ff_rememberMe') ?? _rememberMe;
     _authToken = prefs.getString('ff_authToken') ?? _authToken;
+    _selectedIndex = prefs.getInt('ff_selectedIndex') ?? _selectedIndex;
   }
 
   late SharedPreferences prefs;
@@ -30,6 +31,17 @@ class FFAppState {
   set rememberMe(bool _value) {
     _rememberMe = _value;
     prefs.setBool('ff_rememberMe', _value);
+  }
+
+
+  //Selected index for questions
+  int _selectedIndex = 1;
+
+  int get selectedIndex => _selectedIndex;
+
+  set selectedIndex(int _value) {
+    _selectedIndex = _value;
+    prefs.setInt('ff_selectedIndex', _value);
   }
 
   String _authToken = '';
