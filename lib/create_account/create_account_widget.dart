@@ -173,6 +173,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                     (BuildContext context, BoxConstraints constraints) {
                   top = constraints.biggest.height;
                   return FlexibleSpaceBar(
+                    titlePadding: const EdgeInsetsDirectional.fromSTEB(48, 0, 0, 12),
                     title:  Text(checkTop(top),
                             style: FlutterFlowTheme.of(context).title2),
                     background: Padding(
