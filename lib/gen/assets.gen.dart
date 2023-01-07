@@ -30,10 +30,6 @@ class $AssetsImagesGen {
   AssetGenImage get coursePlaceholderImg =>
       const AssetGenImage('assets/images/Course_placeholder_img.png');
 
-  /// File path: assets/images/app_launcher_icon.png
-  AssetGenImage get appLauncherIcon =>
-      const AssetGenImage('assets/images/app_launcher_icon.png');
-
   /// File path: assets/images/favicon.png
   AssetGenImage get favicon => const AssetGenImage('assets/images/favicon.png');
 
