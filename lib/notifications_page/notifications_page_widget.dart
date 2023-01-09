@@ -141,6 +141,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                           color: FlutterFlowTheme.of(context)
                                               .primaryColor,
                                           fontSize: 18,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                   ),
                                   Padding(
@@ -156,7 +157,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                           .override(
                                             fontFamily: 'Open Sans',
                                             color: FlutterFlowTheme.of(context)
-                                                .primaryText,
+                                                .secondaryText,
                                             fontWeight: FontWeight.normal,
                                           ),
                                     ),
@@ -171,7 +172,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                         .override(
                                           fontFamily: 'Open Sans',
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryText,
+                                              .secondaryText,
                                           fontWeight: FontWeight.normal,
                                         ),
                                   ),
