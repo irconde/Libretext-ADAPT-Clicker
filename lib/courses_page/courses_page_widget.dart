@@ -34,7 +34,7 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
         leading: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(30, 0, 0, 0),
+          padding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
           child: InkWell(
             onTap: () async {
               scaffoldKey.currentState!.openDrawer();
@@ -57,7 +57,7 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
         ),
         actions: [
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 32, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
             child: InkWell(
               onTap: () async {
                 await Navigator.push(
@@ -400,7 +400,7 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(32, 0, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
                     child: Text(
                       'active ',
                       style: FlutterFlowTheme.of(context).bodyText1.override(
