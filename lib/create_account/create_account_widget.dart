@@ -342,7 +342,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                   fontSize: 20, fontWeight: FontWeight.w600),
                               primary:
                               FlutterFlowTheme.of(context).primaryColor,
-                              fixedSize: const Size(330, 36),
+                              minimumSize: Size.fromHeight(36),
                               onPrimary:
                               FlutterFlowTheme.of(context).primaryBtnText,
                               shape: RoundedRectangleBorder(
@@ -424,7 +424,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                   fontSize: 20, fontWeight: FontWeight.w600),
                               primary:
                               FlutterFlowTheme.of(context).secondaryColor,
-                              fixedSize: const Size(330, 36),
+                              minimumSize: Size.fromHeight(36),
                               onPrimary:
                               FlutterFlowTheme.of(context).primaryBtnText,
                               shape: RoundedRectangleBorder(

@@ -83,13 +83,13 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                        padding: EdgeInsetsDirectional.fromSTEB(32, 0, 32, 8),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             textStyle: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.w600),
                             onPrimary: FlutterFlowTheme.of(context).primaryBtnText,
-                            fixedSize: const Size(330, 36),
+                            minimumSize: Size.fromHeight(36),
                             primary: FlutterFlowTheme.of(context).primaryColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(4),
@@ -107,13 +107,13 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(32, 8, 32, 0),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             textStyle: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.w600),
                             onPrimary: FlutterFlowTheme.of(context).primaryColor,
-                            fixedSize: const Size(330, 36),
+                            minimumSize: Size.fromHeight(36),
                             primary: FlutterFlowTheme.of(context).primaryBackground,
                             shape: RoundedRectangleBorder(
                               side: BorderSide(

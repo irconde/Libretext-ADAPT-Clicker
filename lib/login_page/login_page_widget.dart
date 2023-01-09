@@ -236,14 +236,14 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(32, 16, 32, 0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           textStyle:
                               TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                           surfaceTintColor:
                               FlutterFlowTheme.of(context).primaryBtnText,
-                          fixedSize: const Size(330, 36),
+                          minimumSize: Size.fromHeight(36),
                           backgroundColor: FlutterFlowTheme.of(context).primaryColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4),
@@ -311,22 +311,25 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         ],
                       ),
                     ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        textStyle:
-                            TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                        surfaceTintColor: FlutterFlowTheme.of(context).primaryBtnText,
-                        fixedSize: const Size(330, 36),
-                        backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4),
+                    Padding(
+                      padding: const  EdgeInsetsDirectional.fromSTEB(32, 0, 32, 0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          textStyle:
+                              TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                          surfaceTintColor: FlutterFlowTheme.of(context).primaryBtnText,
+                          minimumSize: Size.fromHeight(36),
+                          backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4),
+                          ),
                         ),
+                        onPressed: () async {
+                          await launchURL(
+                              'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
+                        },
+                        child: const Text('CAMPUS LOGIN'),
                       ),
-                      onPressed: () async {
-                        await launchURL(
-                            'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
-                      },
-                      child: const Text('CAMPUS LOGIN'),
                     ),
                   ],
                 ),
