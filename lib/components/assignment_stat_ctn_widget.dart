@@ -29,7 +29,7 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(Constants.mmMargin, 0, Constants.mmMargin, 0),
+      padding: EdgeInsetsDirectional.fromSTEB(Constants.mmMargin, 0, Constants.mmMargin, 8),
       child: Container(
         width: double.infinity,
         height: 80,
@@ -41,7 +41,7 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, Constants.msMargin, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, Constants.sMargin, 0),
               child: Container(
                 width: 4,
                 height: double.infinity,
@@ -68,7 +68,7 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
                               child: FaIcon(
                                 FontAwesomeIcons.brain,
                                 color: FlutterFlowTheme.of(context).primaryColor,
-                                size: Constants.msMargin,
+                                size: 16,
                               ),
                             ),
                            Text(
@@ -90,24 +90,19 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         child: RichText(
                           text: TextSpan(
+                            style: FlutterFlowTheme.of(context)
+                                .bodyText1
+                                .override(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.normal,
+                              color: FlutterFlowTheme.of(context).tertiaryText,
+                            ),
                           children: [
                             TextSpan(text:
                               'Due Date: ',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Open Sans',
-                                    fontWeight: FontWeight.normal,
-                                  ),
                             ),
                             TextSpan(text:
                               '8/18/2022 at 1:43 pm',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Open Sans',
-                                    fontWeight: FontWeight.normal,
-                                  ),
                             ),
                           ],
                           ),
@@ -118,7 +113,7 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
                 ),
               ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, Constants.msMargin, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, Constants.sMargin, 0),
               child: Text(
                 severityVariable.toString() + '%',
                 style: FlutterFlowTheme.of(context).bodyText1.override(

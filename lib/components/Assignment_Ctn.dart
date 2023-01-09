@@ -25,7 +25,8 @@ class AssignmentCtnState extends State<AssignmentCtn> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(Constants.mmMargin, 0, Constants.mmMargin, 0),
+      padding: EdgeInsetsDirectional.fromSTEB(
+          Constants.mmMargin, 0, Constants.mmMargin, 0),
       child: InkWell(
         onTap: () async {
           assignmentSummary = await GetAssignmentSummaryCall.call(
@@ -56,7 +57,6 @@ class AssignmentCtnState extends State<AssignmentCtn> {
               },
             );
           }
-          await Future.delayed(const Duration(milliseconds: 1000));
           setState(() => FFAppState().assignmentUp = false);
 
           setState(() {});
@@ -90,7 +90,6 @@ class AssignmentCtnState extends State<AssignmentCtn> {
               },
             );
           }
-          await Future.delayed(const Duration(milliseconds: 1000));
           setState(() => FFAppState().assignmentUp = false);
 
           setState(() {});
@@ -99,69 +98,71 @@ class AssignmentCtnState extends State<AssignmentCtn> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, Constants.msMargin, 0, Constants.msMargin),
+              padding: EdgeInsetsDirectional.fromSTEB(
+                  0, Constants.msMargin, 0, Constants.msMargin),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.sMargin),
-                        child: AutoSizeText(
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0, 0, 0, 8),
+                          child: AutoSizeText(
+                            getJsonField(
+                              assignmentsItem,
+                              r'''$.name''',
+                            ).toString().maybeHandleOverflow(
+                                  maxChars: 14,
+                                  replacement: '…',
+                                ),
+                            style: FlutterFlowTheme.of(context)
+                                .bodyText1
+                                .override(
+                                  fontFamily: 'Open Sans',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                        ),
+                        Text(
                           getJsonField(
                             assignmentsItem,
-                            r'''$.name''',
-                          ).toString().maybeHandleOverflow(
-                                maxChars: 16,
-                                replacement: '…',
-                              ),
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText1
-                              .override(
+                            r'''$.assignment_group''',
+                          ).toString().maybeHandleOverflow(maxChars: 20),
+                          style: FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Open Sans',
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                                color: FlutterFlowTheme.of(context).tertiaryText,
                               ),
                         ),
-                      ),
-                      Text(
-                        getJsonField(
-                          assignmentsItem,
-                          r'''$.assignment_group''',
-                        ).toString().maybeHandleOverflow(maxChars: 20),
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Open Sans',
-                              color: FlutterFlowTheme.of(context).tertiaryText,
-                            ),
-                      ),
-                    ],
-                  ),
-                  Expanded(
-                    child: Text(
-                      getJsonField(
-                        assignmentsItem,
-                        r'''$..due_date''',
-                      ).toString(),
-                      textAlign: TextAlign.end,
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Open Sans',
-                            color: FlutterFlowTheme.of(context).tertiaryText,
-                          ),
+                      ],
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
-                    child: Icon(
-                      Icons.today,
-                      color: FlutterFlowTheme.of(context).tertiaryText,
-                      size: 20,
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                      child: Icon(
+                        Icons.today_rounded,
+                        color: FlutterFlowTheme.of(context).tertiaryText,
+                        size: 20,
+                      ),
                     ),
+                  Text(
+                    getJsonField(
+                      assignmentsItem,
+                      r'''$..due_date''',
+                    ).toString(),
+                    textAlign: TextAlign.end,
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily: 'Open Sans',
+                          color: FlutterFlowTheme.of(context).tertiaryText,
+                        ),
                   ),
                 ],
               ),
