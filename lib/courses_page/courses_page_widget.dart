@@ -498,8 +498,8 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                                           fontFamily: 'Open Sans',
                                           color: FlutterFlowTheme.of(context)
                                               .primaryColor,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
                                         ),
                                   ),
                                   Padding(
@@ -516,13 +516,14 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                                             fontFamily: 'Open Sans',
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryText,
-                                            fontWeight: FontWeight.normal,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
                                           ),
                                     ),
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 16),
+                                        0, 0, 0, 24),
                                     child: Text(
                                       getJsonField(
                                         enrollmentsListItem,
@@ -534,6 +535,7 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                                             fontFamily: 'Open Sans',
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryText,
+                                            fontSize: 14,
                                             fontWeight: FontWeight.normal,
                                           ),
                                         ),
