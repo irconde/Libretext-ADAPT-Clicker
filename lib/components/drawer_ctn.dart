@@ -48,6 +48,7 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                       child: SvgPicture.asset(
                         'assets/images/drawer_logo.svg',
                         fit: BoxFit.none,
+                        color: FlutterFlowTheme.of(context).primaryBackground,
                       ),
                     ),
                   ),
