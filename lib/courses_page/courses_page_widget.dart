@@ -1,3 +1,5 @@
+import 'package:move_to_background/move_to_background.dart';
+
 import '../assignments_page/assignments_page_widget.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/add_course_widget.dart';
@@ -271,7 +273,10 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
           ),
         ),
       ),
-      onWillPop: () async { return false; },
+      onWillPop: () async {
+        MoveToBackground.moveTaskToBack();
+        return false;
+        },
     );
   }
 

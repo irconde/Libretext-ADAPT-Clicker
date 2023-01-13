@@ -1,3 +1,5 @@
+import 'package:move_to_background/move_to_background.dart';
+
 import '../backend/api_requests/api_calls.dart';
 import '../contact_us/contact_us_widget.dart';
 import '../courses_page/courses_page_widget.dart';
@@ -192,7 +194,10 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
           ),
         ),
       ),
-      onWillPop: () async { return false; },
+      onWillPop: () async {
+        MoveToBackground.moveTaskToBack();
+      return false;
+      },
     );
   }
 }
