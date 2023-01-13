@@ -184,4 +184,6 @@ class Constants
   static const double smMargin = 12; // 1/3 page margin, used in a few widgets
   static const double xsMargin = 8; //quarter page margin used in between widgets
   static const double xxsMargin = 4; //smallest margin used to offset text
+  static const double dividerThickness = 1; //smallest margin used to offset text
+
 }

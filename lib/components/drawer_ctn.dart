@@ -100,7 +100,7 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                               const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Divider(
                                 height: Constants.llMargin,
-                                thickness: 1,
+                                thickness: Constants.dividerThickness,
                                 color: FlutterFlowTheme.of(context).lineColor,
                               ),
                             ),
