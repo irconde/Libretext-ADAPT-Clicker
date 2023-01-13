@@ -23,252 +23,255 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        leading: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-          child: InkWell(
-            onTap: () async {
-              scaffoldKey.currentState!.openDrawer();
-            },
-            child: Icon(
-              Icons.menu,
-              color: FlutterFlowTheme.of(context).primaryBackground,
-              size: 32,
-            ),
-          ),
-        ),
-        title: Text(
-          'Courses',
-          style: FlutterFlowTheme.of(context).bodyText1.override(
-            fontFamily: 'Open Sans',
-            color: FlutterFlowTheme.of(context).primaryBackground,
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
+    return WillPopScope(
+      child: Scaffold(
+        key: scaffoldKey,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+          automaticallyImplyLeading: false,
+          leading: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
             child: InkWell(
               onTap: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NotificationsPageWidget(),
-                  ),
-                );
+                scaffoldKey.currentState!.openDrawer();
               },
               child: Icon(
-                Icons.notifications,
+                Icons.menu,
                 color: FlutterFlowTheme.of(context).primaryBackground,
-                size: 28,
+                size: 32,
               ),
             ),
           ),
-        ],
-        centerTitle: true,
-        elevation: 4,
-      ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          showModalBottomSheet(
-            isScrollControlled: true,
-            backgroundColor:  Color(0x0E1862B3),
-            context: context,
-            builder: (context) {
-              return Padding(
-                padding: MediaQuery.of(context).viewInsets,
-                child: AddCourseWidget(),
-              );
-            },
-          );
-        },
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        elevation: 8,
-        child: Icon(
-          Icons.add,
-          color: FlutterFlowTheme.of(context).primaryBackground,
-          size: 28,
-        ),
-      ),
-      drawer: DrawerCtnWidget(),
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Container(
-              width: double.infinity,
-              height: 26,
-              decoration: BoxDecoration(
-                color: Color(0xFFD4D4D4),
+          title: Text(
+            'Courses',
+            style: FlutterFlowTheme.of(context).bodyText1.override(
+              fontFamily: 'Open Sans',
+              color: FlutterFlowTheme.of(context).primaryBackground,
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          actions: [
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
+              child: InkWell(
+                onTap: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NotificationsPageWidget(),
+                    ),
+                  );
+                },
+                child: Icon(
+                  Icons.notifications,
+                  color: FlutterFlowTheme.of(context).primaryBackground,
+                  size: 28,
+                ),
               ),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
-                    child: Text(
-                      'active ',
+            ),
+          ],
+          centerTitle: true,
+          elevation: 4,
+        ),
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            showModalBottomSheet(
+              isScrollControlled: true,
+              backgroundColor:  Color(0x0E1862B3),
+              context: context,
+              builder: (context) {
+                return Padding(
+                  padding: MediaQuery.of(context).viewInsets,
+                  child: AddCourseWidget(),
+                );
+              },
+            );
+          },
+          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+          elevation: 8,
+          child: Icon(
+            Icons.add,
+            color: FlutterFlowTheme.of(context).primaryBackground,
+            size: 28,
+          ),
+        ),
+        drawer: DrawerCtnWidget(),
+        body: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Container(
+                width: double.infinity,
+                height: 26,
+                decoration: BoxDecoration(
+                  color: Color(0xFFD4D4D4),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                      child: Text(
+                        'active ',
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily: 'Open Sans',
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      '(0)',
                       style: FlutterFlowTheme.of(context).bodyText1.override(
                         fontFamily: 'Open Sans',
                         fontSize: 12,
                         fontWeight: FontWeight.normal,
                       ),
                     ),
-                  ),
-                  Text(
-                    '(0)',
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
-                      fontFamily: 'Open Sans',
-                      fontSize: 12,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            FutureBuilder<ApiCallResponse>(
-              future: (_apiRequestCompleter ??= Completer<ApiCallResponse>()
-                ..complete(GetEnrollmentsCall.call(
-                  token: FFAppState().authToken,
-                )))
-                  .future,
-              builder: (context, snapshot) {
-                // Customize what your widget looks like when it's loading.
-                if (!snapshot.hasData) {
-                  return Center(
-                    child: SizedBox(
-                      width: 50,
-                      height: 50,
-                      child: CircularProgressIndicator(
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                      ),
-                    ),
-                  );
-                }
-                final listViewGetEnrollmentsResponse = snapshot.data!;
-                return Builder(
-                  builder: (context) {
-                    final enrollmentsList = GetEnrollmentsCall.enrollmentsArray(
-                      listViewGetEnrollmentsResponse.jsonBody,
-                    )?.toList() ?? '';
-                    if (enrollmentsList.isEmpty) {
-                      return Center(
-                        child: NoCoursesWidget(),
-                      );
-                    }
-                    return RefreshIndicator(
-                      onRefresh: () async {
-                        setState(() => _apiRequestCompleter = null);
-                        await waitForApiRequestCompleter();
-                      },
-                      child: ListView.builder(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemCount: enrollmentsList.length,
-                        itemBuilder: (context, enrollmentsListIndex) {
-                          final enrollmentsListItem =
-                          enrollmentsList[enrollmentsListIndex];
-                          return Padding(
-                            padding:
-                            EdgeInsetsDirectional.fromSTEB(24, 24, 24, 0),
-                            child: InkWell(
-                              onTap: () async {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AssignmentsPageWidget(
-                                      courseNumber: getJsonField(
-                                        enrollmentsListItem,
-                                        r'''$.id''',
-                                      ),
-                                      course: enrollmentsListItem,
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    getJsonField(
-                                      enrollmentsListItem,
-                                      r'''$.course_section_name''',
-                                    ).toString(),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                      fontFamily: 'Open Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 8, 0, 8),
-                                    child: Text(
-                                      getJsonField(
-                                        enrollmentsListItem,
-                                        r'''$.instructor''',
-                                      ).toString(),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                        fontFamily: 'Open Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 24),
-                                    child: Text(
-                                      getJsonField(
-                                        enrollmentsListItem,
-                                        r'''$.id''',
-                                      ).toString(),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                        fontFamily: 'Open Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1,
-                                    thickness: 1,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
+              FutureBuilder<ApiCallResponse>(
+                future: (_apiRequestCompleter ??= Completer<ApiCallResponse>()
+                  ..complete(GetEnrollmentsCall.call(
+                    token: FFAppState().authToken,
+                  )))
+                    .future,
+                builder: (context, snapshot) {
+                  // Customize what your widget looks like when it's loading.
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: SizedBox(
+                        width: 50,
+                        height: 50,
+                        child: CircularProgressIndicator(
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                        ),
                       ),
                     );
-                  },
-                );
-              },
-            ),
-          ],
+                  }
+                  final listViewGetEnrollmentsResponse = snapshot.data!;
+                  return Builder(
+                    builder: (context) {
+                      final enrollmentsList = GetEnrollmentsCall.enrollmentsArray(
+                        listViewGetEnrollmentsResponse.jsonBody,
+                      )?.toList() ?? '';
+                      if (enrollmentsList.isEmpty) {
+                        return Center(
+                          child: NoCoursesWidget(),
+                        );
+                      }
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          setState(() => _apiRequestCompleter = null);
+                          await waitForApiRequestCompleter();
+                        },
+                        child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: enrollmentsList.length,
+                          itemBuilder: (context, enrollmentsListIndex) {
+                            final enrollmentsListItem =
+                            enrollmentsList[enrollmentsListIndex];
+                            return Padding(
+                              padding:
+                              EdgeInsetsDirectional.fromSTEB(24, 24, 24, 0),
+                              child: InkWell(
+                                onTap: () async {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AssignmentsPageWidget(
+                                        courseNumber: getJsonField(
+                                          enrollmentsListItem,
+                                          r'''$.id''',
+                                        ),
+                                        course: enrollmentsListItem,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      getJsonField(
+                                        enrollmentsListItem,
+                                        r'''$.course_section_name''',
+                                      ).toString(),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                        fontFamily: 'Open Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 8, 0, 8),
+                                      child: Text(
+                                        getJsonField(
+                                          enrollmentsListItem,
+                                          r'''$.instructor''',
+                                        ).toString(),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                          fontFamily: 'Open Sans',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 24),
+                                      child: Text(
+                                        getJsonField(
+                                          enrollmentsListItem,
+                                          r'''$.id''',
+                                        ).toString(),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                          fontFamily: 'Open Sans',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ),
+                                    Divider(
+                                      height: 1,
+                                      thickness: 1,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
+      onWillPop: () async { return false; },
     );
   }
 
