@@ -1,4 +1,4 @@
-# AdaptClicker
+# LibreTexts ADAPT
 
 A new Flutter project.
 
