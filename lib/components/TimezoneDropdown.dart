@@ -49,7 +49,7 @@ class TimezoneDropdownState extends State<TimezoneDropdown> {
             style: FlutterFlowTheme.of(context).bodyText1,
             underline: Container(),
             hint: Text(
-              'General Inquiry',
+              'Niue Time',
               style: FlutterFlowTheme.of(context).bodyText1,
             ),
           ),

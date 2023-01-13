@@ -116,7 +116,9 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                                           fontWeight: FontWeight.normal,
                                         )),
                                 onPressed: () async {
-                                  context.pushRoute(UpdateProfileRouteWidget());
+                                  context.pushRoute(UpdateProfileRouteWidget(
+                                    onSubmit: (String? value) {},
+                                  ));
                                 }),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(

@@ -188,11 +188,9 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                           maxLines: 8,
                         ),
                       ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
+                      Align(
+                        alignment: Alignment(1,0),
+                        child: Text(
                             '*Required Fields',
                             style: FlutterFlowTheme.of(context)
                                 .bodyText1
@@ -203,7 +201,6 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                                   fontSize: 12,
                                 ),
                           ),
-                        ],
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),

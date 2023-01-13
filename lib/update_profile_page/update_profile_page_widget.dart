@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/components/TimezoneDropdown.dart';
 import 'package:adapt_clicker/components/drawer_ctn.dart';
 import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
@@ -15,28 +16,82 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import '../stored_preferences.dart';
 
 class UpdateProfilePageWidget extends StatefulWidget {
-  const UpdateProfilePageWidget({Key? key}) : super(key: key);
+  const UpdateProfilePageWidget({Key? key, required this.onSubmit})
+      : super(key: key);
+  final ValueChanged<String?> onSubmit;
 
   @override
   _UpdateProfilePageWidgetState createState() =>
       _UpdateProfilePageWidgetState();
 }
 
+String firstNameRequired = "The first name field is required.";
+String lastNameRequired = "The last name field is required.";
+String emailRequired = "The email field is required.";
+String idRequired = "The student ID field is required.";
+String invalidRecords = "These credentials do not match our records.";
+
 class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
-  TextEditingController? emailUpdateTFController;
-
-  TextEditingController? firstNameUpdateTFController;
-
-  TextEditingController? lastNameUpdateTFController;
-
-  TextEditingController? studentIDUpdateTFController;
-
   String? timeZoneUpdateDDValue;
   ApiCallResponse? updateProfile;
   ApiCallResponse? logout;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late StreamSubscription<bool> _keyboardVisibilitySubscription;
   bool _isKeyboardVisible = false;
+
+  TextEditingController? emailUpdateTFController;
+  TextEditingController? firstNameUpdateTFController;
+  TextEditingController? lastNameUpdateTFController;
+  TextEditingController? studentIDUpdateTFController;
+  bool _submitted = false;
+
+  String? get _emailErrorText {
+    final text = emailUpdateTFController?.value.text;
+    if (text != null && text.isEmpty) {
+      return emailRequired;
+    }
+    return null;
+  }
+
+  String? get _firstNameErrorText {
+    final text = firstNameUpdateTFController?.value.text;
+    if (text != null && text.isEmpty) {
+      return firstNameRequired;
+    }
+    return null;
+  }
+
+  String? get _lastNameErrorText {
+    final text = firstNameUpdateTFController?.value.text;
+    if (text != null && text.isEmpty) {
+      return lastNameRequired;
+    }
+    return null;
+  }
+
+  String? get _idErrorText {
+    final text = studentIDUpdateTFController?.value.text;
+    if (text != null && text.isEmpty) {
+      return idRequired;
+    }
+    return null;
+  }
+
+  void _submit() {
+    setState(() => _submitted = true);
+    if (_firstNameErrorText == null) {
+      widget.onSubmit(firstNameUpdateTFController?.value.text);
+    }
+    if (_lastNameErrorText == null) {
+      widget.onSubmit(lastNameUpdateTFController?.value.text);
+    }
+    if (_emailErrorText == null) {
+      widget.onSubmit(emailUpdateTFController?.value.text);
+    }
+    if (_idErrorText == null) {
+      widget.onSubmit(studentIDUpdateTFController?.value.text);
+    }
+  }
 
   @override
   void initState() {
@@ -117,352 +172,156 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                        child: Text(
-                          'The fields marked with an asterisk are required.',
-                          style: FlutterFlowTheme.of(context).bodyText1,
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(32, 0, 32, 0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+                          child: TextField(
+                              controller: firstNameUpdateTFController,
+                              autofocus: true,
+                              decoration: InputDecoration(
+                                labelText: 'First Name*',
+                                errorText:
+                                    _submitted ? _firstNameErrorText : null,
+                                hintText: 'John',
+                                prefixIcon: Icon(
+                                  Icons.person_outline,
+                                ),
+                              )),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                        child: TextFormField(
-                          controller: firstNameUpdateTFController,
-                          autofocus: true,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            hintText: 'First Name*',
-                            hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFF1862B3),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            errorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFFFF0000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            focusedErrorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFFFF0000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            prefixIcon: Icon(
-                              Icons.person_outline,
-                            ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                          child: TextField(
+                              controller: lastNameUpdateTFController,
+                              decoration: InputDecoration(
+                                labelText: 'Last Name*',
+                                errorText:
+                                    _submitted ? _lastNameErrorText : null,
+                                hintText: 'Doe',
+                                prefixIcon: Icon(
+                                  Icons.person_outline,
+                                ),
+                              )),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                          child: TextField(
+                              controller: emailUpdateTFController,
+                              decoration: InputDecoration(
+                                labelText: 'Email*',
+                                errorText: _submitted ? _emailErrorText : null,
+                                hintText: 'example@gmail.com',
+                                prefixIcon: Icon(
+                                  Icons.mail_outline,
+                                ),
+                              )),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                          child: TextField(
+                              controller: studentIDUpdateTFController,
+                              decoration: InputDecoration(
+                                labelText: 'Student ID*',
+                                errorText: _submitted ? _idErrorText : null,
+                                hintText: 'example@gmail.com',
+                                prefixIcon: Icon(
+                                  Icons.school_outlined,
+                                ),
+                              )),
+                        ),
+                        TimezoneDropdown(
+                            timezoneDropDownValue: timeZoneUpdateDDValue),
+                        Align(
+                          alignment: Alignment(1, 0),
+                          child: Text(
+                            '*Required Fields',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyText1
+                                .override(
+                                  fontFamily: 'Open Sans',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  fontSize: 12,
+                                ),
                           ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                        child: TextFormField(
-                          controller: lastNameUpdateTFController,
-                          autofocus: true,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            hintText: 'Last Name*',
-                            hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFF1862B3),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            errorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFFFF0000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            focusedErrorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFFFF0000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            prefixIcon: Icon(
-                              Icons.person_outline,
-                            ),
-                          ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                        child: TextFormField(
-                          controller: emailUpdateTFController,
-                          autofocus: true,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            hintText: 'Email*',
-                            hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFF1862B3),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            errorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFFFF0000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            focusedErrorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFFFF0000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            prefixIcon: Icon(
-                              Icons.person_outline,
-                            ),
-                          ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                        child: TextFormField(
-                          controller: studentIDUpdateTFController,
-                          autofocus: true,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            hintText: 'Student ID*',
-                            hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFF1862B3),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            errorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFFFF0000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            focusedErrorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFFFF0000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            prefixIcon: Icon(
-                              Icons.school_outlined,
-                            ),
-                          ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                        child: FlutterFlowDropDown(
-                          options:
-                              AppState.timezoneContainer?.textzones ?? [''],
-                          onChanged: (val) => setState(() =>
-                              timeZoneUpdateDDValue =
-                                  AppState.timezoneContainer!.getValue(val)),
-                          height: 50,
-                          textStyle:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Open Sans',
-                                    color: Colors.black,
-                                  ),
-                          hintText: 'Timezone*',
-                          icon: Icon(
-                            Icons.access_time,
-                            size: 15,
-                          ),
-                          fillColor: Colors.white,
-                          elevation: 2,
-                          borderColor: Colors.transparent,
-                          borderWidth: 0,
-                          borderRadius: 0,
-                          margin: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 4),
-                          hidesUnderline: true,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
               if (!(isWeb
                   ? MediaQuery.of(context).viewInsets.bottom > 0
                   : _isKeyboardVisible))
-                Align(
-                  alignment: AlignmentDirectional(0, -1),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        updateProfile = await UpdateProfileCall.call(
-                          token: StoredPreferences.authToken,
-                          firstName: firstNameUpdateTFController!.text,
-                          lastName: lastNameUpdateTFController!.text,
-                          email: emailUpdateTFController!.text,
-                          timeZone: timeZoneUpdateDDValue,
-                          studentId: studentIDUpdateTFController!.text,
-                        );
-                        if ((updateProfile?.succeeded ?? true)) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'Profile  Updated Successfully',
-                                style: TextStyle(
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBtnText,
-                                ),
-                              ),
-                              duration: Duration(milliseconds: 4000),
-                              backgroundColor:
-                                  FlutterFlowTheme.of(context).success,
-                            ),
-                          );
-                        } else {
-                          setState(
-                              () => AppState().errorsList = (getJsonField(
-                                    (updateProfile?.jsonBody ?? ''),
-                                    r'''$.errors..*''',
-                                  ) as List)
-                                      .map<String>((s) => s.toString())
-                                      .toList());
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                functions.getTopError(
-                                    AppState().errorsList.toList()),
-                                style: TextStyle(
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBtnText,
-                                ),
-                              ),
-                              duration: Duration(milliseconds: 4000),
-                              backgroundColor:
-                                  FlutterFlowTheme.of(context).failure,
-                            ),
-                          );
-                        }
-
-                        setState(() {});
-                      },
-                      text: 'UPDATE PROFILE',
-                      options: FFButtonOptions(
-                        width: 300,
-                        height: 40,
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                        textStyle:
-                            FlutterFlowTheme.of(context).subtitle2.override(
-                                  fontFamily: 'Open Sans',
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(32, 0, 32, 24),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(36),
+                      textStyle:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                      primary: FlutterFlowTheme.of(context).primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4),
                       ),
                     ),
+                    onPressed: () async {
+                      updateProfile = await UpdateProfileCall.call(
+                        token: StoredPreferences.authToken,
+                        firstName: firstNameUpdateTFController!.text,
+                        lastName: lastNameUpdateTFController!.text,
+                        email: emailUpdateTFController!.text,
+                        timeZone: AppState.timezoneContainer!
+                            .getValue(timeZoneUpdateDDValue),
+                        studentId: studentIDUpdateTFController!.text,
+                      );
+                      if ((updateProfile?.succeeded ?? true)) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Profile Updated Successfully',
+                              style: TextStyle(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
+                              ),
+                            ),
+                            duration: Duration(milliseconds: 4000),
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).success,
+                          ),
+                        );
+                      } else {
+                        _submit();
+                        setState(() => AppState().errorsList = (getJsonField(
+                              (updateProfile?.jsonBody ?? ''),
+                              r'''$.errors..*''',
+                            ) as List)
+                                .map<String>((s) => s.toString())
+                                .toList());
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              functions
+                                  .getTopError(AppState().errorsList.toList()),
+                              style: TextStyle(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
+                              ),
+                            ),
+                            duration: Duration(milliseconds: 4000),
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).failure,
+                          ),
+                        );
+                      }
+                      setState(() {});
+                    },
+                    child: const Text('UPDATE PROFILE'),
                   ),
                 ),
             ],
