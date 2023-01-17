@@ -79,7 +79,7 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                             padding:
                             EdgeInsetsDirectional.fromSTEB(42, 42, 42, 24),
                             child: SvgPicture.asset(
-                              'assets/images/libetext_adapt_logo.svg',
+                              'assets/images/libretexts_adapt_logo.svg',
                               width: 270,
                               height: 170,
                             ),
