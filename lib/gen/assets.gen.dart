@@ -171,7 +171,16 @@ class AssetGenImage {
 class Constants {
   //FontSizes
   static const double drawerIconSize = 28;
+  static const double defaultTextSize = 14;
+  static const double requiredTextSize = 12;
 
+  //Widgets
+  static const double buttonHeight = 36;
+  static const int snackBarDurationMil = 4000; //milliseconds
+  static const int snackBarDurationSec = 4; //seconds
+  static const double TFIconSize = 21; //seconds
+
+  //Margins
   static const double llMargin = 48; //Double spaced
   static const double lmMargin = 44; //
   static const double lsMargin = 40; //

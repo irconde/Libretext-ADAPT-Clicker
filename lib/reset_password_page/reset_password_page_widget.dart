@@ -11,25 +11,30 @@ import 'package:flutter/material.dart';
 import '../stored_preferences.dart';
 
 class ResetPasswordPageWidget extends StatefulWidget {
-  const ResetPasswordPageWidget({Key? key}) : super(key: key);
-
+  const ResetPasswordPageWidget({Key? key, required this.onSubmit})
+      : super(key: key);
+  final ValueChanged<String> onSubmit;
   @override
   _ResetPasswordPageWidgetState createState() =>
       _ResetPasswordPageWidgetState();
 }
 
+String passwordRequired = "The password field is required.";
+String newPasswordRequired = "The new password field is required.";
+String confirmPasswordRequired = "The confirm password field is required.";
+String matchPasswords = "The new passwords must match";
+String catchAllError = "Something went wrong.";
+
 class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
+  TextEditingController? curPasswordTFController;
+  TextEditingController? newPasswordTFController;
   TextEditingController? confirmNewPWTFController;
 
+  late bool curPasswordTFVisibility;
+  late bool newPasswordTFVisibility;
   late bool confirmNewPWTFVisibility;
 
-  TextEditingController? curPasswordTFController;
-
-  late bool curPasswordTFVisibility;
-
-  TextEditingController? newPasswordTFController;
-
-  late bool newPasswordTFVisibility;
+  bool _submitted = false;
 
   ApiCallResponse? updatePassword;
   ApiCallResponse? logout;
@@ -44,6 +49,48 @@ class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
     curPasswordTFVisibility = false;
     newPasswordTFController = TextEditingController();
     newPasswordTFVisibility = false;
+  }
+
+  String? get _passwordErrorText {
+    final text = curPasswordTFController!.value.text;
+    if (text.isEmpty) {
+      return passwordRequired;
+    } else {
+      return catchAllError;
+    }
+  }
+
+  String? get _newPasswordErrorText {
+    final text = newPasswordTFController!.value.text;
+    if (text.isEmpty) {
+      return passwordRequired;
+    } else if (text != confirmNewPWTFController!.value.text) {
+      return matchPasswords;
+    } else
+      return catchAllError;
+  }
+
+  String? get _confirmNewPasswordErrorText {
+    final text = confirmNewPWTFController!.value.text;
+    if (text.isEmpty) {
+      return passwordRequired;
+    } else if (text != newPasswordTFController!.value.text) {
+      return matchPasswords;
+    } else
+      return catchAllError;
+  }
+
+  void _submit() {
+    setState(() => _submitted = true);
+    if (_passwordErrorText == null) {
+      widget.onSubmit(curPasswordTFController!.value.text);
+    }
+    if (_newPasswordErrorText == null) {
+      widget.onSubmit(newPasswordTFController!.value.text);
+    }
+    if (_confirmNewPasswordErrorText == null) {
+      widget.onSubmit(confirmNewPWTFController!.value.text);
+    }
   }
 
   @override
@@ -63,14 +110,11 @@ class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
             size: 28,
           ),
         ),
-        title: Text(
-          'My Password',
-          style: FlutterFlowTheme.of(context).bodyText1.override(
-                fontFamily: 'Open Sans',
-                color: FlutterFlowTheme.of(context).primaryBackground,
-                fontSize: 28,
-              ),
-        ),
+        title: Text('My Password',
+            style: FlutterFlowTheme.of(context).title3.override(
+                  fontFamily: 'Open Sans',
+                  color: FlutterFlowTheme.of(context).primaryBackground,
+                )),
         actions: [
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
@@ -94,302 +138,175 @@ class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                        child: Text(
-                          'The fields marked with an asterisk are required.',
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                        child: TextFormField(
-                          controller: curPasswordTFController,
-                          autofocus: true,
-                          obscureText: !curPasswordTFVisibility,
-                          decoration: InputDecoration(
-                            hintText: 'Current Password*',
-                            hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
+          child: Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(
+                Constants.mmMargin, Constants.mmMargin, Constants.mmMargin, 0),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0, 0, 0, Constants.msMargin),
+                          child: TextField(
+                            controller: curPasswordTFController,
+                            autofocus: true,
+                            obscureText: !curPasswordTFVisibility,
+                            decoration: InputDecoration(
+                              labelText: 'Current Password',
+                              errorText: _submitted ? _passwordErrorText : null,
+                              prefixIcon: Icon(
+                                Icons.lock_outline,
                               ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFF1862B3),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
+                              suffixIcon: InkWell(
+                                onTap: () => setState(
+                                  () => curPasswordTFVisibility =
+                                      !curPasswordTFVisibility,
+                                ),
+                                focusNode: FocusNode(skipTraversal: true),
+                                child: Icon(
+                                  curPasswordTFVisibility
+                                      ? Icons.visibility_outlined
+                                      : Icons.visibility_off_outlined,
+                                  color: FlutterFlowTheme.of(context)
+                                      .tertiaryColor,
+                                  size: Constants.TFIconSize,
+                                ),
                               ),
                             ),
-                            errorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFFFF0000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            focusedErrorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFFFF0000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            prefixIcon: Icon(
-                              Icons.lock_outline,
-                            ),
-                            suffixIcon: InkWell(
-                              onTap: () => setState(
-                                () => curPasswordTFVisibility =
-                                    !curPasswordTFVisibility,
-                              ),
-                              focusNode: FocusNode(skipTraversal: true),
-                              child: Icon(
-                                curPasswordTFVisibility
-                                    ? Icons.visibility_outlined
-                                    : Icons.visibility_off_outlined,
-                                color: Color(0xFF757575),
-                                size: 22,
-                              ),
-                            ),
+                            style: FlutterFlowTheme.of(context).bodyText1,
                           ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                        child: TextFormField(
-                          controller: newPasswordTFController,
-                          autofocus: true,
-                          obscureText: !newPasswordTFVisibility,
-                          decoration: InputDecoration(
-                            hintText: 'New Password*',
-                            hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0, 0, 0, Constants.msMargin),
+                          child: TextField(
+                            controller: newPasswordTFController,
+                            obscureText: !newPasswordTFVisibility,
+                            decoration: InputDecoration(
+                              labelText: 'New Password*',
+                              errorText:
+                                  _submitted ? _newPasswordErrorText : null,
+                              prefixIcon: Icon(
+                                Icons.lock_outline,
                               ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
+                              suffixIcon: InkWell(
+                                onTap: () => setState(
+                                  () => newPasswordTFVisibility =
+                                      !newPasswordTFVisibility,
+                                ),
+                                focusNode: FocusNode(skipTraversal: true),
+                                child: Icon(
+                                  newPasswordTFVisibility
+                                      ? Icons.visibility_outlined
+                                      : Icons.visibility_off_outlined,
+                                  size: Constants.TFIconSize,
+                                ),
                               ),
                             ),
-                            errorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            focusedErrorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            prefixIcon: Icon(
-                              Icons.lock_outline,
-                            ),
-                            suffixIcon: InkWell(
-                              onTap: () => setState(
-                                () => newPasswordTFVisibility =
-                                    !newPasswordTFVisibility,
-                              ),
-                              focusNode: FocusNode(skipTraversal: true),
-                              child: Icon(
-                                newPasswordTFVisibility
-                                    ? Icons.visibility_outlined
-                                    : Icons.visibility_off_outlined,
-                                color: Color(0xFF757575),
-                                size: 22,
-                              ),
-                            ),
+                            style: FlutterFlowTheme.of(context).bodyText1,
                           ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-                        child: TextFormField(
-                          controller: confirmNewPWTFController,
-                          autofocus: true,
-                          obscureText: !confirmNewPWTFVisibility,
-                          decoration: InputDecoration(
-                            hintText: 'Confirm New Password*',
-                            hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0, 0, 0, Constants.msMargin),
+                          child: TextField(
+                            controller: confirmNewPWTFController,
+                            obscureText: !confirmNewPWTFVisibility,
+                            decoration: InputDecoration(
+                              labelText: 'Confirm New Password*',
+                              errorText: _submitted
+                                  ? _confirmNewPasswordErrorText
+                                  : null,
+                              prefixIcon: Icon(
+                                Icons.lock_outline,
                               ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFF1862B3),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
+                              suffixIcon: InkWell(
+                                onTap: () => setState(
+                                  () => confirmNewPWTFVisibility =
+                                      !confirmNewPWTFVisibility,
+                                ),
+                                focusNode: FocusNode(skipTraversal: true),
+                                child: Icon(
+                                  confirmNewPWTFVisibility
+                                      ? Icons.visibility_outlined
+                                      : Icons.visibility_off_outlined,
+                                  size: Constants.TFIconSize,
+                                ),
                               ),
                             ),
-                            errorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFFFF0000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            focusedErrorBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color(0xFFFF0000),
-                                width: 1,
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(4.0),
-                                topRight: Radius.circular(4.0),
-                              ),
-                            ),
-                            prefixIcon: Icon(
-                              Icons.lock_outline,
-                            ),
-                            suffixIcon: InkWell(
-                              onTap: () => setState(
-                                () => confirmNewPWTFVisibility =
-                                    !confirmNewPWTFVisibility,
-                              ),
-                              focusNode: FocusNode(skipTraversal: true),
-                              child: Icon(
-                                confirmNewPWTFVisibility
-                                    ? Icons.visibility_outlined
-                                    : Icons.visibility_off_outlined,
-                                color: Color(0xFF757575),
-                                size: 22,
-                              ),
-                            ),
+                            style: FlutterFlowTheme.of(context).bodyText1,
                           ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                child: FFButtonWidget(
-                  onPressed: () async {
-                    updatePassword = await UpdatePasswordCall.call(
-                      token: StoredPreferences.authToken,
-                      password: newPasswordTFController!.text,
-                      passwordConfirmation: confirmNewPWTFController!.text,
-                    );
-                    if ((updatePassword?.succeeded ?? true)) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Password Updated Successfully',
-                            style: TextStyle(
-                              color:
-                                  FlutterFlowTheme.of(context).primaryBtnText,
-                            ),
+                        Align(
+                          alignment: Alignment(1, 0),
+                          child: Text(
+                            '*Required Fields',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyText1
+                                .override(
+                                  fontFamily: 'Open Sans',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  fontSize: Constants.requiredTextSize,
+                                ),
                           ),
-                          duration: Duration(milliseconds: 4000),
-                          backgroundColor: FlutterFlowTheme.of(context).success,
                         ),
-                      );
-                    } else {
-                      setState(() => AppState().errorsList = (getJsonField(
-                            (updatePassword?.jsonBody ?? ''),
-                            r'''$.errors..*''',
-                          ) as List)
-                              .map<String>((s) => s.toString())
-                              .toList());
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            functions
-                                .getTopError(AppState().errorsList.toList()),
-                            style: TextStyle(
-                              color:
-                                  FlutterFlowTheme.of(context).primaryBtnText,
-                            ),
-                          ),
-                          duration: Duration(milliseconds: 4000),
-                          backgroundColor: FlutterFlowTheme.of(context).failure,
-                        ),
-                      );
-                    }
-
-                    setState(() {});
-                  },
-                  text: 'CHANGE PASSWORD',
-                  options: FFButtonOptions(
-                    width: 300,
-                    height: 40,
-                    color: FlutterFlowTheme.of(context).primaryColor,
-                    textStyle: FlutterFlowTheme.of(context).subtitle2.override(
-                          fontFamily: 'Open Sans',
-                          color: Colors.white,
-                          fontSize: 18,
-                        ),
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1,
+                      ],
                     ),
-                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(
+                      0, 0, 0, Constants.msMargin),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      textStyle: FlutterFlowTheme.of(context).title3,
+                      surfaceTintColor:
+                          FlutterFlowTheme.of(context).primaryBtnText,
+                      minimumSize: Size.fromHeight(Constants.buttonHeight),
+                      backgroundColor:
+                          FlutterFlowTheme.of(context).primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                    onPressed: () async {
+                      updatePassword = await UpdatePasswordCall.call(
+                        token: FFAppState().authToken,
+                        password: newPasswordTFController!.text,
+                        passwordConfirmation: confirmNewPWTFController!.text,
+                      );
+                      if ((updatePassword?.succeeded ?? true)) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Password Updated Successfully',
+                              style: TextStyle(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
+                              ),
+                            ),
+                            duration: Duration(
+                                milliseconds: Constants.snackBarDurationMil),
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).success,
+                          ),
+                        );
+                      } else {
+                        _submit();
+                      }
+                      setState(() {});
+                    },
+                    child: Text('CHANGE PASSWORD'),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
