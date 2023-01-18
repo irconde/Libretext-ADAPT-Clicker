@@ -2,14 +2,11 @@ import 'package:adapt_clicker/components/TimezoneDropdown.dart';
 import 'package:adapt_clicker/components/drawer_ctn.dart';
 import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
-
 import '../backend/api_requests/api_calls.dart';
-import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
+import '../gen/assets.gen.dart';
 import 'dart:async';
-import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
@@ -32,8 +29,9 @@ String idRequired = "The student ID field is required.";
 String invalidRecords = "These credentials do not match our records.";
 
 class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
-  String? timeZoneUpdateDDValue;
+  static String? timeZoneUpdateDDValue;
   ApiCallResponse? updateProfile;
+  ApiCallResponse? getUser;
   ApiCallResponse? logout;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late StreamSubscription<bool> _keyboardVisibilitySubscription;
@@ -50,6 +48,8 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
     if (text != null && text.isEmpty) {
       return emailRequired;
     }
+
+    //Check for Email type (add string extension for this)
     return null;
   }
 
@@ -109,6 +109,55 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
     firstNameUpdateTFController = TextEditingController();
     lastNameUpdateTFController = TextEditingController();
     studentIDUpdateTFController = TextEditingController();
+
+    //Autofills user info
+    updateUserInfo();
+  }
+
+  String firstName = '', lastName = '', email = '', studentID = '';
+
+  Future<void> updateUserInfo() async {
+    getUser = await GetUserCall.call(
+      token: StoredPreferences.authToken,
+    );
+    if ((getUser?.succeeded ?? true)) {
+      //Gets values from API call
+      firstName = getJsonField(
+        getUser!.jsonBody,
+        r'''$.first_name''',
+      ).toString();
+
+      lastName = getJsonField(
+        getUser!.jsonBody,
+        r'''$.last_name''',
+      ).toString();
+
+      email = getJsonField(
+        getUser!.jsonBody,
+        r'''$.email''',
+      ).toString();
+
+      studentID = getJsonField(
+        getUser!.jsonBody,
+        r'''$.student_id''',
+      ).toString();
+
+      //Gets val from apicall
+      AppState.userTimezone!.setValue(getJsonField(
+        getUser!.jsonBody,
+        r'''$.time_zone''',
+      ).toString());
+
+      //Gets text from matching val in list
+      AppState.userTimezone!.setText(AppState.timezoneContainer!
+          .getText(AppState.userTimezone!.value)); //set this
+
+      //Sets text fields
+      firstNameUpdateTFController?.text = firstName;
+      lastNameUpdateTFController?.text = lastName;
+      emailUpdateTFController?.text = email;
+      studentIDUpdateTFController?.text = studentID;
+    }
   }
 
   @override
@@ -138,10 +187,9 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
         ),
         title: Text(
           'My Profile',
-          style: FlutterFlowTheme.of(context).bodyText1.override(
+          style: FlutterFlowTheme.of(context).title3.override(
                 fontFamily: 'Open Sans',
                 color: FlutterFlowTheme.of(context).primaryBackground,
-                fontSize: 28,
               ),
         ),
         actions: [
@@ -173,14 +221,16 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
               Expanded(
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(32, 0, 32, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        Constants.mmMargin, 0, Constants.mmMargin, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0, Constants.msMargin, 0, Constants.msMargin),
                           child: TextField(
                               controller: firstNameUpdateTFController,
                               autofocus: true,
@@ -188,14 +238,16 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                                 labelText: 'First Name*',
                                 errorText:
                                     _submitted ? _firstNameErrorText : null,
-                                hintText: 'John',
+                                hintText: firstName,
+                                filled: true,
                                 prefixIcon: Icon(
                                   Icons.person_outline,
                                 ),
                               )),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0, 0, 0, Constants.msMargin),
                           child: TextField(
                               controller: lastNameUpdateTFController,
                               decoration: InputDecoration(
@@ -209,7 +261,8 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                               )),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0, 0, 0, Constants.msMargin),
                           child: TextField(
                               controller: emailUpdateTFController,
                               decoration: InputDecoration(
@@ -222,7 +275,8 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                               )),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0, 0, 0, Constants.msMargin),
                           child: TextField(
                               controller: studentIDUpdateTFController,
                               decoration: InputDecoration(
@@ -234,8 +288,12 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                                 ),
                               )),
                         ),
-                        TimezoneDropdown(
-                            timezoneDropDownValue: timeZoneUpdateDDValue),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0, 0, 0, Constants.smMargin),
+                          child: TimezoneDropdown(
+                              timezoneDropDownValue: timeZoneUpdateDDValue),
+                        ),
                         Align(
                           alignment: Alignment(1, 0),
                           child: Text(
@@ -246,7 +304,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                                   fontFamily: 'Open Sans',
                                   color:
                                       FlutterFlowTheme.of(context).primaryColor,
-                                  fontSize: 12,
+                                  fontSize: Constants.requiredTextSize,
                                 ),
                           ),
                         ),
@@ -259,12 +317,13 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                   ? MediaQuery.of(context).viewInsets.bottom > 0
                   : _isKeyboardVisible))
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(32, 0, 32, 24),
+                  padding: EdgeInsetsDirectional.fromSTEB(Constants.mmMargin, 0,
+                      Constants.mmMargin, Constants.msMargin),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(36),
-                      textStyle:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                      minimumSize:
+                          const Size.fromHeight(Constants.buttonHeight),
+                      textStyle: FlutterFlowTheme.of(context).title3,
                       primary: FlutterFlowTheme.of(context).primaryColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4),
@@ -276,8 +335,9 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                         firstName: firstNameUpdateTFController!.text,
                         lastName: lastNameUpdateTFController!.text,
                         email: emailUpdateTFController!.text,
-                        timeZone: AppState.timezoneContainer!
-                            .getValue(timeZoneUpdateDDValue),
+                        timeZone: AppState.timezoneContainer
+                                ?.getValue(AppState.userTimezone.toString()) ??
+                            AppState.timezoneContainer!.timezones.first.value,
                         studentId: studentIDUpdateTFController!.text,
                       );
                       if ((updateProfile?.succeeded ?? true)) {
@@ -290,34 +350,14 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                                     FlutterFlowTheme.of(context).primaryBtnText,
                               ),
                             ),
-                            duration: Duration(milliseconds: 4000),
+                            duration: Duration(
+                                milliseconds: Constants.snackBarDurationMil),
                             backgroundColor:
                                 FlutterFlowTheme.of(context).success,
                           ),
                         );
                       } else {
                         _submit();
-                        setState(() => AppState().errorsList = (getJsonField(
-                              (updateProfile?.jsonBody ?? ''),
-                              r'''$.errors..*''',
-                            ) as List)
-                                .map<String>((s) => s.toString())
-                                .toList());
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              functions
-                                  .getTopError(AppState().errorsList.toList()),
-                              style: TextStyle(
-                                color:
-                                    FlutterFlowTheme.of(context).primaryBtnText,
-                              ),
-                            ),
-                            duration: Duration(milliseconds: 4000),
-                            backgroundColor:
-                                FlutterFlowTheme.of(context).failure,
-                          ),
-                        );
                       }
                       setState(() {});
                     },

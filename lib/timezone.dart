@@ -1,7 +1,10 @@
 class Timezone {
-  final String value, text;
+  String value, text;
 
   Timezone(this.value, this.text);
+
+  void setText(String val) => (this.text = val);
+  void setValue(String val) => (this.value = val);
 
   @override
   String toString() {
@@ -34,10 +37,18 @@ class TimezonesContainer {
       ++index;
     }
 
-    if (index < timezones.length && index > 0)
+    if (index < timezones.length && index > -1)
       return timezones.elementAt(index).value;
     else
       return 'Invalid Index';
+  }
+
+  String getText(String? val) {
+    for (var s in timezones) {
+      if (s.value == val) return s.text;
+    }
+
+    return 'Invalid Value';
   }
 
   void setText() {
