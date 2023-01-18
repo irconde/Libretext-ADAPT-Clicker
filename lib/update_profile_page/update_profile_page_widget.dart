@@ -24,7 +24,6 @@ class UpdateProfilePageWidget extends StatefulWidget {
 
 String firstNameRequired = "The first name field is required.";
 String lastNameRequired = "The last name field is required.";
-String emailRequired = "The email field is required.";
 String idRequired = "The student ID field is required.";
 String invalidRecords = "These credentials do not match our records.";
 
@@ -37,21 +36,10 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
   late StreamSubscription<bool> _keyboardVisibilitySubscription;
   bool _isKeyboardVisible = false;
 
-  TextEditingController? emailUpdateTFController;
   TextEditingController? firstNameUpdateTFController;
   TextEditingController? lastNameUpdateTFController;
   TextEditingController? studentIDUpdateTFController;
   bool _submitted = false;
-
-  String? get _emailErrorText {
-    final text = emailUpdateTFController?.value.text;
-    if (text != null && text.isEmpty) {
-      return emailRequired;
-    }
-
-    //Check for Email type (add string extension for this)
-    return null;
-  }
 
   String? get _firstNameErrorText {
     final text = firstNameUpdateTFController?.value.text;
@@ -85,9 +73,6 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
     if (_lastNameErrorText == null) {
       widget.onSubmit(lastNameUpdateTFController?.value.text);
     }
-    if (_emailErrorText == null) {
-      widget.onSubmit(emailUpdateTFController?.value.text);
-    }
     if (_idErrorText == null) {
       widget.onSubmit(studentIDUpdateTFController?.value.text);
     }
@@ -105,7 +90,6 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
       });
     }
 
-    emailUpdateTFController = TextEditingController();
     firstNameUpdateTFController = TextEditingController();
     lastNameUpdateTFController = TextEditingController();
     studentIDUpdateTFController = TextEditingController();
@@ -155,7 +139,6 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
       //Sets text fields
       firstNameUpdateTFController?.text = firstName;
       lastNameUpdateTFController?.text = lastName;
-      emailUpdateTFController?.text = email;
       studentIDUpdateTFController?.text = studentID;
     }
   }
@@ -264,20 +247,6 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0, 0, 0, Constants.msMargin),
                           child: TextField(
-                              controller: emailUpdateTFController,
-                              decoration: InputDecoration(
-                                labelText: 'Email*',
-                                errorText: _submitted ? _emailErrorText : null,
-                                hintText: 'example@gmail.com',
-                                prefixIcon: Icon(
-                                  Icons.mail_outline,
-                                ),
-                              )),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0, 0, 0, Constants.msMargin),
-                          child: TextField(
                               controller: studentIDUpdateTFController,
                               decoration: InputDecoration(
                                 labelText: 'Student ID*',
@@ -334,7 +303,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                         token: StoredPreferences.authToken,
                         firstName: firstNameUpdateTFController!.text,
                         lastName: lastNameUpdateTFController!.text,
-                        email: emailUpdateTFController!.text,
+                        email: email,
                         timeZone: AppState.timezoneContainer
                                 ?.getValue(AppState.userTimezone.toString()) ??
                             AppState.timezoneContainer!.timezones.first.value,
