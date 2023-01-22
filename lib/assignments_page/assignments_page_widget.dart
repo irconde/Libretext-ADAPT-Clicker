@@ -10,7 +10,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AssignmentsPageWidget extends StatefulWidget {
   const AssignmentsPageWidget({
@@ -173,7 +172,11 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                     padding:
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                Constants.mmMargin, 0, 0, 12),
+                                                                Constants
+                                                                    .mmMargin,
+                                                                0,
+                                                                0,
+                                                                12),
                                                     child: Text(
                                                       'Instructor:',
                                                       style:
@@ -188,7 +191,11 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                       padding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  0, Constants.sMargin, 0, 0),
+                                                                  0,
+                                                                  Constants
+                                                                      .sMargin,
+                                                                  0,
+                                                                  0),
                                                       child: Container(
                                                         width: 225,
                                                         height: double.infinity,
@@ -254,8 +261,12 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                       Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
-                                                                .fromSTEB(Constants.mmMargin, 0,
-                                                                    0, 0),
+                                                                .fromSTEB(
+                                                                    Constants
+                                                                        .mmMargin,
+                                                                    0,
+                                                                    0,
+                                                                    0),
                                                         child: Column(
                                                           mainAxisSize:
                                                               MainAxisSize.min,
@@ -378,7 +389,12 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                     padding:
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                Constants.mmMargin, 0, Constants.mmMargin, 0),
+                                                                Constants
+                                                                    .mmMargin,
+                                                                0,
+                                                                Constants
+                                                                    .mmMargin,
+                                                                0),
                                                     child: Container(
                                                       width: double.infinity,
                                                       decoration: BoxDecoration(
@@ -388,8 +404,12 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                       child: Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
-                                                                .fromSTEB(0, 0,
-                                                                    0, Constants.msMargin),
+                                                                .fromSTEB(
+                                                                    0,
+                                                                    0,
+                                                                    0,
+                                                                    Constants
+                                                                        .msMargin),
                                                         child: Text(
                                                           getJsonField(
                                                             widget.course,
@@ -592,13 +612,14 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                                 assignments[
                                                                     assignmentsIndex];
                                                             return Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          Constants.msMargin,
-                                                                          0,
-                                                                          Constants.msMargin,
-                                                                          0),
+                                                              padding: EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      Constants
+                                                                          .msMargin,
+                                                                      0,
+                                                                      Constants
+                                                                          .msMargin,
+                                                                      0),
                                                               child: InkWell(
                                                                 onTap:
                                                                     () async {
@@ -722,12 +743,13 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                                           .max,
                                                                   children: [
                                                                     Padding(
-                                                                      padding: EdgeInsetsDirectional
-                                                                          .fromSTEB(
-                                                                              0,
-                                                                              Constants.msMargin,
-                                                                              0,
-                                                                              Constants.msMargin),
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          0,
+                                                                          Constants
+                                                                              .msMargin,
+                                                                          0,
+                                                                          Constants
+                                                                              .msMargin),
                                                                       child:
                                                                           Row(
                                                                         mainAxisSize:
@@ -804,8 +826,12 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                                     ),
                                                                     Divider(
                                                                       height: 1,
-                                                                      thickness: Constants.dividerThickness,
-                                                                      color: FlutterFlowTheme.of(context).lineColor,
+                                                                      thickness:
+                                                                          Constants
+                                                                              .dividerThickness,
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .lineColor,
                                                                     ),
                                                                   ],
                                                                 ),

@@ -166,11 +166,9 @@ class AssetGenImage {
   String get path => _assetName;
 
   String get keyName => _assetName;
-
 }
 
-class Constants
-{
+class Constants {
   //FontSizes
   static const double drawerIconSize = 28;
 
@@ -178,12 +176,16 @@ class Constants
   static const double lmMargin = 44; //
   static const double lsMargin = 40; //
   static const double mlMargin = 36; //margin with a little extra
-  static const double mmMargin = 32; //margin around edge of the pages mainly in intro
+  static const double mmMargin =
+      32; //margin around edge of the pages mainly in intro
   static const double msMargin = 24; // 2/3 page margin, used in a few widgets
-  static const double sMargin = 16; //half page margin and used in several widgets
+  static const double sMargin =
+      16; //half page margin and used in several widgets
   static const double smMargin = 12; // 1/3 page margin, used in a few widgets
-  static const double xsMargin = 8; //quarter page margin used in between widgets
+  static const double xsMargin =
+      8; //quarter page margin used in between widgets
   static const double xxsMargin = 4; //smallest margin used to offset text
-  static const double dividerThickness = 1; //smallest margin used to offset text
+  static const double dividerThickness =
+      1; //smallest margin used to offset text
 
 }

@@ -4,10 +4,7 @@ import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AddCourseWidget extends StatefulWidget {
@@ -157,7 +154,8 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                           minimumSize: const Size.fromHeight(36),
                           textStyle: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w600),
-                          primary: FlutterFlowTheme.of(context).primaryColor,
+                          backgroundColor:
+                              FlutterFlowTheme.of(context).primaryColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4),
                           ),

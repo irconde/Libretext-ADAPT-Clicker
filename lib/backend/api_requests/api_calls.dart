@@ -4,8 +4,6 @@ import 'api_manager.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
 
-const _kPrivateApiFunctionName = 'ffPrivateApiCall';
-
 class LoginCall {
   static Future<ApiCallResponse> call({
     String? email = '',
@@ -13,8 +11,8 @@ class LoginCall {
   }) {
     final body = '''
 {
-  "email": "${email}",
-  "password": "${password}"
+  "email": "$email",
+  "password": "$password"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'login',
@@ -45,14 +43,14 @@ class CreateUserCall {
   }) {
     final body = '''
 {
-  "email": "${email}",
-  "password": "${password}",
-  "password_confirmation": "${passwordConfirmation}",
-  "first_name": "${firstName}",
-  "last_name": "${lastName}",
-  "registration_type": "${registrationType}",
-  "student_id": "${studentId}",
-  "time_zone": "${timeZone}"
+  "email": "$email",
+  "password": "$password",
+  "password_confirmation": "$passwordConfirmation",
+  "first_name": "$firstName",
+  "last_name": "$lastName",
+  "registration_type": "$registrationType",
+  "student_id": "$studentId",
+  "time_zone": "$timeZone"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'createUser',
@@ -82,7 +80,7 @@ class ForgotPasswordCall {
   }) {
     final body = '''
 {
-  "email": "${email}"
+  "email": "$email"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'forgotPassword',
@@ -109,7 +107,7 @@ class RefreshTokenCall {
       callType: ApiCallType.POST,
       headers: {
         'Accept': 'application/json',
-        'authorization': '${token}',
+        'authorization': '$token',
       },
       params: {},
       bodyType: BodyType.JSON,
@@ -128,7 +126,7 @@ class GetUserCall {
       callType: ApiCallType.GET,
       headers: {
         'Accept': 'application/json',
-        'authorization': '${token}',
+        'authorization': '$token',
       },
       params: {},
       returnBody: true,
@@ -146,7 +144,7 @@ class GetEnrollmentsCall {
       callType: ApiCallType.GET,
       headers: {
         'Accept': 'application/json',
-        'authorization': '${token}',
+        'authorization': '$token',
       },
       params: {},
       returnBody: true,
@@ -170,11 +168,11 @@ class UpdateProfileCall {
   }) {
     final body = '''
 {
-  "first_name": "${firstName}",
-  "last_name": "${lastName}",
-  "email": "${email}",
-  "student_id": "${studentId}",
-  "time_zone": "${timeZone}"
+  "first_name": "$firstName",
+  "last_name": "$lastName",
+  "email": "$email",
+  "student_id": "$studentId",
+  "time_zone": "$timeZone"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'updateProfile',
@@ -182,7 +180,7 @@ class UpdateProfileCall {
       callType: ApiCallType.PATCH,
       headers: {
         'accept': 'application/json',
-        'authorization': '${token}',
+        'authorization': '$token',
       },
       params: {},
       body: body,
@@ -200,8 +198,8 @@ class UpdatePasswordCall {
   }) {
     final body = '''
 {
-  "password": "${password}",
-  "password_confirmation": "${passwordConfirmation}"
+  "password": "$password",
+  "password_confirmation": "$passwordConfirmation"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'updatePassword',
@@ -209,7 +207,7 @@ class UpdatePasswordCall {
       callType: ApiCallType.PATCH,
       headers: {
         'accept': 'application/json',
-        'authorization': '${token}',
+        'authorization': '$token',
       },
       params: {},
       body: body,
@@ -228,9 +226,9 @@ class AddCourseCall {
   }) {
     final body = '''
 {
-  "access_code": "${accessCode}",
-  "is_lms": "${isLms}",
-  "time_zone": "${timeZone}"
+  "access_code": "$accessCode",
+  "is_lms": "$isLms",
+  "time_zone": "$timeZone"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'addCourse',
@@ -238,7 +236,7 @@ class AddCourseCall {
       callType: ApiCallType.POST,
       headers: {
         'Accept': 'application/json',
-        'authorization': '${token}',
+        'authorization': '$token',
       },
       params: {},
       body: body,
@@ -260,13 +258,13 @@ class ContactUsCall {
   }) {
     final body = '''
 {
-  "name": "${name}",
-  "email": "${email}",
-  "school": "${school}",
-  "subject": "${subject}",
-  "text": "${text}",
-  "to_user_id": "${toUserId}",
-  "type": "${type}"
+  "name": "$name",
+  "email": "$email",
+  "school": "$school",
+  "subject": "$subject",
+  "text": "$text",
+  "to_user_id": "$toUserId",
+  "type": "$type"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'contactUs',
@@ -291,11 +289,11 @@ class GetScoresByUserCall {
     return ApiManager.instance.makeApiCall(
       callName: 'getScoresByUser',
       apiUrl:
-          'https://adapt.libretexts.org/api/scores/${course}/get-course-scores-by-user',
+          'https://adapt.libretexts.org/api/scores/$course/get-course-scores-by-user',
       callType: ApiCallType.GET,
       headers: {
         'accept': 'application/json',
-        'authorization': '${token}',
+        'authorization': '$token',
       },
       params: {},
       returnBody: true,
@@ -316,11 +314,11 @@ class ViewCall {
     return ApiManager.instance.makeApiCall(
       callName: 'view',
       apiUrl:
-          'https://adapt.libretexts.org/api/assignments/${assignmentID}/questions/view',
+          'https://adapt.libretexts.org/api/assignments/$assignmentID/questions/view',
       callType: ApiCallType.GET,
       headers: {
         'accept': 'application/json',
-        'authorization': '${token}',
+        'authorization': '$token',
       },
       params: {},
       returnBody: true,
@@ -341,11 +339,11 @@ class GetAssignmentSummaryCall {
     return ApiManager.instance.makeApiCall(
       callName: 'getAssignmentSummary',
       apiUrl:
-          'https://adapt.libretexts.org/api/assignments/${assignmentNum}/summary',
+          'https://adapt.libretexts.org/api/assignments/$assignmentNum/summary',
       callType: ApiCallType.GET,
       headers: {
         'accept': 'application/json',
-        'authorization': '${token}',
+        'authorization': '$token',
       },
       params: {},
       returnBody: true,
@@ -388,7 +386,7 @@ class LogoutCall {
       callType: ApiCallType.POST,
       headers: {
         'accept': 'application/json',
-        'authorization': '${token}',
+        'authorization': '$token',
         'authority': 'adapt.libretexts.org',
       },
       params: {},
@@ -406,12 +404,12 @@ class GetNonTechnologyIframeCall {
     return ApiManager.instance.makeApiCall(
       callName: 'getNonTechnologyIframe',
       apiUrl:
-          'https://adapt.libretexts.org/api/get-locally-saved-page-contents/phys/${pageId}',
+          'https://adapt.libretexts.org/api/get-locally-saved-page-contents/phys/$pageId',
       callType: ApiCallType.GET,
       html: true,
       headers: {
         'accept': 'text/html',
-        'authorization': '${token}',
+        'authorization': '$token',
       },
       params: {},
       returnBody: true,
@@ -434,8 +432,8 @@ class GetTimezonesCall {
   }
 
   static dynamic timezones(dynamic response) => getJsonField(
-    response,
-    r'''$.time_zones''',
-    true,
-  );
+        response,
+        r'''$.time_zones''',
+        true,
+      );
 }

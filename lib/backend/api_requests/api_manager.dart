@@ -38,7 +38,8 @@ class ApiCallRecord extends Equatable {
 }
 
 class ApiCallResponse {
-  const ApiCallResponse(this.jsonBody, this.headers, this.elements, this.statusCode);
+  const ApiCallResponse(
+      this.jsonBody, this.headers, this.elements, this.statusCode);
   final dynamic jsonBody;
   final dom.Document elements;
   final Map<String, String> headers;
@@ -49,21 +50,24 @@ class ApiCallResponse {
 
   static ApiCallResponse fromHttpResponse(
     http.Response response,
-    bool returnBody, bool html,
+    bool returnBody,
+    bool html,
   ) {
     var jsonBody;
     var document = dom.Document();
     try {
-      if(!html)
+      if (!html)
         jsonBody = returnBody ? json.decode(response.body) : null;
       else {
         document = returnBody ? parse(response.body) : dom.Document();
       }
     } catch (_) {}
-    return ApiCallResponse(jsonBody, response.headers, document, response.statusCode);
+    return ApiCallResponse(
+        jsonBody, response.headers, document, response.statusCode);
   }
 
-  static ApiCallResponse fromCloudCallResponse(Map<String, dynamic> response, bool html) =>
+  static ApiCallResponse fromCloudCallResponse(
+          Map<String, dynamic> response, bool html) =>
       //IDK
       ApiCallResponse(
         response['body'],
@@ -207,14 +211,14 @@ class ApiManager {
     switch (callType) {
       case ApiCallType.GET:
       case ApiCallType.DELETE:
-        result =
-            await urlRequest(callType, apiUrl, headers, params, html, returnBody);
+        result = await urlRequest(
+            callType, apiUrl, headers, params, html, returnBody);
         break;
       case ApiCallType.POST:
       case ApiCallType.PUT:
       case ApiCallType.PATCH:
-        result = await requestWithBody(
-            callType, apiUrl, headers, params, body, bodyType, html, returnBody);
+        result = await requestWithBody(callType, apiUrl, headers, params, body,
+            bodyType, html, returnBody);
         break;
     }
 

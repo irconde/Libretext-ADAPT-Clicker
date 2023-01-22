@@ -94,11 +94,14 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                               child: Text(
                             widget.assignmentName!,
                             textAlign: TextAlign.center,
-                            style: FlutterFlowTheme.of(context).bodyText1.override(
-                                fontFamily: 'Open Sans',
-                                color: FlutterFlowTheme.of(context).primaryColor,
-                                fontSize: Constants.msMargin,
-                                fontWeight: FontWeight.bold),
+                            style: FlutterFlowTheme.of(context)
+                                .bodyText1
+                                .override(
+                                    fontFamily: 'Open Sans',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryColor,
+                                    fontSize: Constants.msMargin,
+                                    fontWeight: FontWeight.bold),
                           )),
                         ],
                       ),
@@ -110,8 +113,11 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                       color: FlutterFlowTheme.of(context).lineColor,
                     ),
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(Constants.mmMargin,
-                          Constants.msMargin, Constants.mmMargin, Constants.sMargin),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          Constants.mmMargin,
+                          Constants.msMargin,
+                          Constants.mmMargin,
+                          Constants.sMargin),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,7 +127,8 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 24),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0, 16, 0, 24),
                                 child: RichText(
                                     text: TextSpan(
                                   children: [
@@ -153,7 +160,8 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                 )),
                               ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                                 child: RichText(
                                     text: TextSpan(
                                   children: [
@@ -185,7 +193,8 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                 )),
                               ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                                 child: RichText(
                                     text: TextSpan(
                                   children: [
@@ -217,7 +226,8 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                 )),
                               ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                                 child: RichText(
                                     text: TextSpan(
                                   children: [
@@ -248,34 +258,37 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                   ],
                                 )),
                               ),
-
-                          if (FFAppState().isBasic)
-                            Card(
-                              child: Container(
-                                height: 256,
-                                child: WebView(
-                                  initialUrl: getJsonField(
-                                    FFAppState().question,
-                                    r'''$.technology_iframe''',
+                              if (FFAppState().isBasic)
+                                Card(
+                                  child: Container(
+                                    height: 256,
+                                    child: WebView(
+                                      initialUrl: getJsonField(
+                                        FFAppState().question,
+                                        r'''$.technology_iframe''',
+                                      ),
+                                      onWebViewCreated: (WebViewController
+                                          webViewController) {
+                                        controller = webViewController;
+                                        injectViewport(controller);
+                                      },
+                                      onPageFinished: (url) {
+                                        injectViewport(controller);
+                                      },
+                                      javascriptMode:
+                                          JavascriptMode.unrestricted,
+                                      gestureNavigationEnabled: true,
+                                      gestureRecognizers: Set()
+                                        ..add(Factory(
+                                            () => EagerGestureRecognizer()))
+                                        ..add(Factory<
+                                                VerticalDragGestureRecognizer>(
+                                            () =>
+                                                VerticalDragGestureRecognizer())),
+                                      zoomEnabled: true,
+                                    ),
                                   ),
-                                  onWebViewCreated:
-                                      (WebViewController webViewController) {
-                                    controller = webViewController;
-                                    injectViewport(controller);
-                                  },
-                                  onPageFinished: (url) {
-                                    injectViewport(controller);
-                                  },
-                                  javascriptMode: JavascriptMode.unrestricted,
-                                  gestureNavigationEnabled: true,
-                                  gestureRecognizers: Set()
-                                    ..add(Factory(() => EagerGestureRecognizer()))
-                                    ..add(Factory<VerticalDragGestureRecognizer>(
-                                        () => VerticalDragGestureRecognizer())),
-                                  zoomEnabled: true,
                                 ),
-                              ),
-                            ),
                             ],
                           ),
                           if (!FFAppState().isBasic)
@@ -295,8 +308,8 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                       width: 50,
                                       height: 50,
                                       child: CircularProgressIndicator(
-                                        color:
-                                            FlutterFlowTheme.of(context).primaryColor,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
                                       ),
                                     ),
                                   );
@@ -323,7 +336,8 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     hintText: '[Some hint text...]',
-                                    hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                                    hintStyle:
+                                        FlutterFlowTheme.of(context).bodyText2,
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
@@ -369,7 +383,8 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                   maxLines: 16,
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 24, 0, 24),
                                   child: FFButtonWidget(
                                     onPressed: () {
                                       print('Button pressed ...');
@@ -378,7 +393,8 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                     options: FFButtonOptions(
                                       width: 130,
                                       height: 40,
-                                      color: FlutterFlowTheme.of(context).primaryColor,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
                                       textStyle: FlutterFlowTheme.of(context)
                                           .subtitle2
                                           .override(
@@ -398,7 +414,6 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                         ],
                       ),
                     ),
-
                   ],
                 ),
               ),
@@ -443,9 +458,9 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                               FFAppState().question = questionsListItem;
                               FFAppState().isBasic =
                                   functions.isBasic(getJsonField(
-                                    questionsListItem,
-                                    r'''$.technology_iframe''',
-                                  ).toString());
+                                questionsListItem,
+                                r'''$.technology_iframe''',
+                              ).toString());
                               FFAppState().hasSubmission = getJsonField(
                                 questionsListItem,
                                 r'''$.has_at_least_one_submission''',

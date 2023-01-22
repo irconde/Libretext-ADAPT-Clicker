@@ -4,6 +4,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
+// ignore: unused_import
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -133,10 +134,13 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                   Row(
                                     children: [
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
-                                        child: SvgPicture.asset('assets/images/book_icon.svg',
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 5, 0),
+                                        child: SvgPicture.asset(
+                                          'assets/images/book_icon.svg',
                                           height: 24,
-                                          width: 24,),
+                                          width: 24,
+                                        ),
                                       ),
                                       Text(
                                         getJsonField(
@@ -147,8 +151,9 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                             .bodyText1
                                             .override(
                                               fontFamily: 'Open Sans',
-                                              color: FlutterFlowTheme.of(context)
-                                                  .primaryColor,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold,
                                             ),

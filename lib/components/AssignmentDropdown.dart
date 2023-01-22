@@ -3,7 +3,8 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../gen/assets.gen.dart';
 
 class AssignmentDropdown extends StatefulWidget {
-  const AssignmentDropdown({Key? key, required this.dropDownValue, required this.dropDownList})
+  const AssignmentDropdown(
+      {Key? key, required this.dropDownValue, required this.dropDownList})
       : super(key: key);
   final String? dropDownValue;
   final List<String>? dropDownList;
@@ -47,15 +48,9 @@ class AssignmentDropdownState extends State<AssignmentDropdown> {
                     child: Text(
                       value,
                       style: FlutterFlowTheme.of(context).bodyText1.override(
-                          fontFamily:
-                          'Open Sans',
-                          fontWeight:
-                          FontWeight
-                              .bold,
-                          color: FlutterFlowTheme
-                              .of(context)
-                              .tertiaryText
-                      ),
+                          fontFamily: 'Open Sans',
+                          fontWeight: FontWeight.bold,
+                          color: FlutterFlowTheme.of(context).tertiaryText),
                     ),
                   ),
                 );

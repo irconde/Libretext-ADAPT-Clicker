@@ -66,7 +66,7 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                           children: [
                             Padding(
                               padding:
-                              EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                               child: TextButton.icon(
                                 icon: Icon(
                                   Icons.menu_book,
@@ -76,15 +76,16 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                                 ),
                                 label: Text('Courses'),
                                 style: TextButton.styleFrom(
-                                    primary: FlutterFlowTheme.of(context)
-                                        .secondaryColor,
+                                    foregroundColor:
+                                        FlutterFlowTheme.of(context)
+                                            .secondaryColor,
                                     textStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
-                                      fontFamily: 'Open Sans',
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.normal,
-                                    )),
+                                          fontFamily: 'Open Sans',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                        )),
                                 onPressed: () async {
                                   await Navigator.push(
                                     context,
@@ -97,7 +98,7 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                             ),
                             Padding(
                               padding:
-                              const EdgeInsets.symmetric(horizontal: 8.0),
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Divider(
                                 height: Constants.llMargin,
                                 thickness: Constants.dividerThickness,
@@ -108,20 +109,20 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                               icon: Icon(
                                 Icons.person_sharp,
                                 color:
-                                FlutterFlowTheme.of(context).secondaryColor,
+                                    FlutterFlowTheme.of(context).secondaryColor,
                                 size: Constants.drawerIconSize,
                               ),
                               label: Text('My Profile'),
                               style: TextButton.styleFrom(
-                                  primary: FlutterFlowTheme.of(context)
+                                  foregroundColor: FlutterFlowTheme.of(context)
                                       .secondaryColor,
                                   textStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                    fontFamily: 'Open Sans',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                  )),
+                                        fontFamily: 'Open Sans',
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      )),
                               onPressed: () async {
                                 await Navigator.push(
                                   context,
@@ -144,15 +145,16 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                                 ),
                                 label: Text('My Password'),
                                 style: TextButton.styleFrom(
-                                    primary: FlutterFlowTheme.of(context)
-                                        .secondaryColor,
+                                    foregroundColor:
+                                        FlutterFlowTheme.of(context)
+                                            .secondaryColor,
                                     textStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
-                                      fontFamily: 'Open Sans',
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.normal,
-                                    )),
+                                          fontFamily: 'Open Sans',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                        )),
                                 onPressed: () async {
                                   await Navigator.push(
                                     context,
@@ -166,7 +168,7 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                             ),
                             Padding(
                               padding:
-                              const EdgeInsets.symmetric(horizontal: 8.0),
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Divider(
                                 height: Constants.llMargin,
                                 thickness: 1,
@@ -177,20 +179,20 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                               icon: Icon(
                                 Icons.send_sharp,
                                 color:
-                                FlutterFlowTheme.of(context).secondaryColor,
+                                    FlutterFlowTheme.of(context).secondaryColor,
                                 size: Constants.drawerIconSize,
                               ),
                               label: Text('Contact Us'),
                               style: TextButton.styleFrom(
-                                  primary: FlutterFlowTheme.of(context)
+                                  foregroundColor: FlutterFlowTheme.of(context)
                                       .secondaryColor,
                                   textStyle: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                    fontFamily: 'Open Sans',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                  )),
+                                        fontFamily: 'Open Sans',
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      )),
                               onPressed: () async {
                                 await Navigator.push(
                                   context,
@@ -218,9 +220,11 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                       style: ElevatedButton.styleFrom(
                         textStyle: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w600),
-                        foregroundColor: FlutterFlowTheme.of(context).secondaryColor,
+                        foregroundColor:
+                            FlutterFlowTheme.of(context).secondaryColor,
                         fixedSize: const Size(330, 36),
-                        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+                        backgroundColor:
+                            FlutterFlowTheme.of(context).primaryBackground,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(1),
                         ),

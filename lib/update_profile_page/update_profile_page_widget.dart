@@ -1,20 +1,15 @@
 import 'package:adapt_clicker/components/drawer_ctn.dart';
 
 import '../backend/api_requests/api_calls.dart';
-import '../contact_us/contact_us_widget.dart';
-import '../courses_page/courses_page_widget.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../notifications_page/notifications_page_widget.dart';
-import '../reset_password_page/reset_password_page_widget.dart';
-import '../welcome_page/welcome_page_widget.dart';
 import 'dart:async';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class UpdateProfilePageWidget extends StatefulWidget {
   const UpdateProfilePageWidget({Key? key}) : super(key: key);
@@ -363,9 +358,11 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
                         child: FlutterFlowDropDown(
-                          options: FFAppState.timezoneContainer?.textzones ?? [''],
-                          onChanged: (val) =>
-                              setState(() => timeZoneUpdateDDValue = FFAppState.timezoneContainer!.getValue(val)),
+                          options:
+                              FFAppState.timezoneContainer?.textzones ?? [''],
+                          onChanged: (val) => setState(() =>
+                              timeZoneUpdateDDValue =
+                                  FFAppState.timezoneContainer!.getValue(val)),
                           height: 50,
                           textStyle:
                               FlutterFlowTheme.of(context).bodyText1.override(

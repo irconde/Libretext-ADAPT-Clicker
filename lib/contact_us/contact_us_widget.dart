@@ -100,18 +100,17 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                     (BuildContext context, BoxConstraints constraints) {
                   top = constraints.biggest.height;
                   return FlexibleSpaceBar(
-                      title: AnimatedOpacity(
-                          duration: Duration(milliseconds: 300),
-                          opacity: 1.0,
-                          child: Text(
-                            checkTop(top),
-                            style: FlutterFlowTheme.of(context)
-                                .title2)),
-                      background: SvgPicture.asset(
-                            'assets/images/contact_support.svg',
-                            fit: BoxFit.scaleDown,
-                        color: FlutterFlowTheme.of(context).svgIconColor,),
-                    );
+                    title: AnimatedOpacity(
+                        duration: Duration(milliseconds: 300),
+                        opacity: 1.0,
+                        child: Text(checkTop(top),
+                            style: FlutterFlowTheme.of(context).title2)),
+                    background: SvgPicture.asset(
+                      'assets/images/contact_support.svg',
+                      fit: BoxFit.scaleDown,
+                      color: FlutterFlowTheme.of(context).svgIconColor,
+                    ),
+                  );
                 })),
           ];
         },
@@ -141,14 +140,13 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                         child: TextField(
-                          autofocus: true,
-                          controller: contactUsNameTextFieldController,
-                          decoration: InputDecoration(
-                            labelText: 'Name*',
-                            errorText: _submitted ? _nameErrorText : null,
-                            hintText: 'FirstName LastName',
-                          )
-                        ),
+                            autofocus: true,
+                            controller: contactUsNameTextFieldController,
+                            decoration: InputDecoration(
+                              labelText: 'Name*',
+                              errorText: _submitted ? _nameErrorText : null,
+                              hintText: 'FirstName LastName',
+                            )),
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
@@ -156,15 +154,18 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                           controller: contactUsEmailTextFieldController,
                           decoration: InputDecoration(
                             labelText: 'Email*',
-                            floatingLabelStyle: TextStyle(color: FlutterFlowTheme.of(context)
-                                .primaryColor),
+                            floatingLabelStyle: TextStyle(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor),
                             errorText: _submitted ? _emailErrorText : null,
                             hintText: 'example@email.com',
                           ),
                           style: FlutterFlowTheme.of(context).bodyText1,
                         ),
                       ),
-                      ContactUsDropDownList(contactUsSubjectDropDownValue: contactUsSubjectDropDownValue),
+                      ContactUsDropDownList(
+                          contactUsSubjectDropDownValue:
+                              contactUsSubjectDropDownValue),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                         child: TextField(
@@ -207,9 +208,10 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             minimumSize: const Size.fromHeight(36),
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).primaryColor,
                             textStyle: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.w600),
-                            primary: FlutterFlowTheme.of(context).primaryColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(4),
                             ),

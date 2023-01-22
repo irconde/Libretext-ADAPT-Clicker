@@ -1,7 +1,5 @@
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class NoCoursesWidget extends StatefulWidget {
   const NoCoursesWidget({Key? key}) : super(key: key);
@@ -28,11 +26,11 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
                 'Oops. it seems there are no classes registered yet',
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).bodyText1.override(
-                  fontFamily: 'Open Sans',
-                  color: FlutterFlowTheme.of(context).secondaryText,
-                  fontSize: 20,
-                  fontWeight: FontWeight.normal,
-                ),
+                      fontFamily: 'Open Sans',
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      fontSize: 20,
+                      fontWeight: FontWeight.normal,
+                    ),
               ),
             ),
             Align(
@@ -55,20 +53,20 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
                   Text(
                     'ASK YOUR ',
                     style: FlutterFlowTheme.of(context).bodyText1.override(
-                      fontFamily: 'Open Sans',
-                      color: FlutterFlowTheme.of(context).primaryColor,
-                      fontSize: 24,
-                      fontWeight: FontWeight.normal,
-                    ),
+                          fontFamily: 'Open Sans',
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          fontSize: 24,
+                          fontWeight: FontWeight.normal,
+                        ),
                   ),
                   Text(
                     'INSTRUCTOR',
                     style: FlutterFlowTheme.of(context).bodyText1.override(
-                      fontFamily: 'Open Sans',
-                      color: FlutterFlowTheme.of(context).primaryColor,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                          fontFamily: 'Open Sans',
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                 ],
               ),
@@ -82,20 +80,20 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
                   Text(
                     'FOR A ',
                     style: FlutterFlowTheme.of(context).bodyText1.override(
-                      fontFamily: 'Open Sans',
-                      color: FlutterFlowTheme.of(context).primaryColor,
-                      fontSize: 24,
-                      fontWeight: FontWeight.normal,
-                    ),
+                          fontFamily: 'Open Sans',
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          fontSize: 24,
+                          fontWeight: FontWeight.normal,
+                        ),
                   ),
                   Text(
                     'CODE TO JOIN',
                     style: FlutterFlowTheme.of(context).bodyText1.override(
-                      fontFamily: 'Open Sans',
-                      color: FlutterFlowTheme.of(context).primaryColor,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                          fontFamily: 'Open Sans',
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                 ],
               ),

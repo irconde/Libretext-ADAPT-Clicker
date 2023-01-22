@@ -4,9 +4,7 @@ import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
 import '../welcome_page/welcome_page_widget.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -180,9 +178,10 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget>
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size.fromHeight(36),
+                          backgroundColor:
+                              FlutterFlowTheme.of(context).primaryColor,
                           textStyle: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w600),
-                          primary: FlutterFlowTheme.of(context).primaryColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4),
                           ),

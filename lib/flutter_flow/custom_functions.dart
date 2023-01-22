@@ -1,13 +1,5 @@
-import 'dart:math' as math;
-
 import 'package:adapt_clicker/flutter_flow/flutter_flow_util.dart';
 import 'package:adapt_clicker/timezone.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
-import 'package:timeago/timeago.dart' as timeago;
-import 'lat_lng.dart';
-import 'place.dart';
 
 String createToken(String token) {
   return "Bearer $token";
@@ -37,10 +29,8 @@ bool isTextSubmission(String textSubmission) {
   return (textSubmission == "text");
 }
 
-
 //Timezones come in form of value: example/example, text: example
 void initTimezones(dynamic timezoneAPI) {
-
   //gets official values
   List<String> timezoneValues = (getJsonField(
     timezoneAPI,
@@ -61,9 +51,9 @@ void initTimezones(dynamic timezoneAPI) {
 
   List<Timezone> timezones = <Timezone>[];
 
-  for(int i = 0; i < timezoneTexts.length; i++)
-  {
-    Timezone timezone = new Timezone(timezoneValues.elementAt(i),timezoneTexts.elementAt(i));
+  for (int i = 0; i < timezoneTexts.length; i++) {
+    Timezone timezone =
+        new Timezone(timezoneValues.elementAt(i), timezoneTexts.elementAt(i));
     timezones.add(timezone);
   }
 

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'dart:io';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -35,7 +37,7 @@ String dateTimeFormat(String format, DateTime? dateTime) {
 Future launchURL(String url) async {
   var uri = Uri.parse(url).toString();
   try {
-    await launch(uri);
+    await launchURL(uri);
   } catch (e) {
     throw 'Could not launch $uri: $e';
   }

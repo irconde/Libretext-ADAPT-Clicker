@@ -6,13 +6,10 @@ import '../courses_page/courses_page_widget.dart';
 import '../create_account/create_account_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
 import '../login_page/login_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 
 class WelcomePageWidget extends StatefulWidget {
   const WelcomePageWidget({Key? key}) : super(key: key);
@@ -77,7 +74,7 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                           alignment: AlignmentDirectional(0, -0.6),
                           child: Padding(
                             padding:
-                            EdgeInsetsDirectional.fromSTEB(42, 42, 42, 24),
+                                EdgeInsetsDirectional.fromSTEB(42, 42, 42, 24),
                             child: SvgPicture.asset(
                               'assets/images/libretexts_adapt_logo.svg',
                               width: 270,
@@ -89,11 +86,13 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(32, 0, 32, 8),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
+                              foregroundColor:
+                                  FlutterFlowTheme.of(context).primaryBtnText,
+                              backgroundColor:
+                                  FlutterFlowTheme.of(context).primaryColor,
                               textStyle: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.w600),
-                              onPrimary: FlutterFlowTheme.of(context).primaryBtnText,
                               minimumSize: Size.fromHeight(36),
-                              primary: FlutterFlowTheme.of(context).primaryColor,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(4),
                               ),
@@ -102,7 +101,9 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => LoginPageWidget(onSubmit: (String value) {},),
+                                  builder: (context) => LoginPageWidget(
+                                    onSubmit: (String value) {},
+                                  ),
                                 ),
                               );
                             },
@@ -113,15 +114,18 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(32, 8, 32, 0),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
+                              foregroundColor:
+                                  FlutterFlowTheme.of(context).primaryColor,
+                              backgroundColor: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
                               textStyle: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.w600),
-                              onPrimary: FlutterFlowTheme.of(context).primaryColor,
                               minimumSize: Size.fromHeight(36),
-                              primary: FlutterFlowTheme.of(context).primaryBackground,
                               shape: RoundedRectangleBorder(
                                 side: BorderSide(
                                   width: 1,
-                                  color: FlutterFlowTheme.of(context).primaryColor,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
                                 ),
                                 borderRadius: BorderRadius.circular(4),
                               ),
@@ -130,7 +134,9 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => CreateAccountWidget(onSubmit: (String? value) {},),
+                                  builder: (context) => CreateAccountWidget(
+                                    onSubmit: (String? value) {},
+                                  ),
                                 ),
                               );
                             },
@@ -153,11 +159,12 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                             alignment: AlignmentDirectional(-0.06, 1),
                             child: Text(
                               'Having problems? ',
-                              style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                fontFamily: 'Open Sans',
-                                fontWeight: FontWeight.normal,
-                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Open Sans',
+                                    fontWeight: FontWeight.normal,
+                                  ),
                             ),
                           ),
                           Align(
@@ -167,7 +174,9 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ContactUsWidget(onSubmit: (String? value) {  },),
+                                    builder: (context) => ContactUsWidget(
+                                      onSubmit: (String? value) {},
+                                    ),
                                   ),
                                 );
                               },
@@ -176,11 +185,11 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
-                                  fontFamily: 'Open Sans',
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryColor,
-                                  fontWeight: FontWeight.normal,
-                                ),
+                                      fontFamily: 'Open Sans',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                      fontWeight: FontWeight.normal,
+                                    ),
                               ),
                             ),
                           ),
@@ -196,7 +205,7 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
       ),
       onWillPop: () async {
         MoveToBackground.moveTaskToBack();
-      return false;
+        return false;
       },
     );
   }

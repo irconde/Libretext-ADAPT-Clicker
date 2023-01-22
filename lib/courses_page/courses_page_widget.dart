@@ -52,7 +52,8 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
         ),
         actions: [
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, Constants.msMargin, 0),
+            padding:
+                EdgeInsetsDirectional.fromSTEB(0, 0, Constants.msMargin, 0),
             child: InkWell(
               onTap: () async {
                 await Navigator.push(
@@ -118,7 +119,8 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(Constants.mmMargin, 0, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        Constants.mmMargin, 0, 0, 0),
                     child: Text(
                       'active ',
                       style: FlutterFlowTheme.of(context).bodyText1.override(
@@ -200,7 +202,10 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                             },
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  Constants.msMargin, Constants.msMargin, Constants.msMargin, 0),
+                                  Constants.msMargin,
+                                  Constants.msMargin,
+                                  Constants.msMargin,
+                                  0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -231,7 +236,10 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0, Constants.sMargin, 0, Constants.sMargin),
+                                                  0,
+                                                  Constants.sMargin,
+                                                  0,
+                                                  Constants.sMargin),
                                           child: Text(
                                             getJsonField(
                                               enrollmentsListItem,
@@ -276,7 +284,8 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
                                   Divider(
                                     height: 1,
                                     thickness: Constants.dividerThickness,
-                                    color: FlutterFlowTheme.of(context).lineColor,
+                                    color:
+                                        FlutterFlowTheme.of(context).lineColor,
                                   ),
                                 ],
                               ),

@@ -1,8 +1,5 @@
-import 'dart:convert';
-import 'dart:developer';
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/flutter_flow/custom_functions.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -64,7 +61,6 @@ class _MyAppState extends State<MyApp> {
     fetchTimezone();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -78,8 +74,8 @@ class _MyAppState extends State<MyApp> {
       locale: _locale,
       supportedLocales: const [Locale('en', '')],
       theme: ThemeData(
-          brightness: Brightness.light,
-          inputDecorationTheme: FlutterFlowTheme.of(context).inputTheme(),
+        brightness: Brightness.light,
+        inputDecorationTheme: FlutterFlowTheme.of(context).inputTheme(),
       ),
       themeMode: _themeMode,
       home: WelcomePageWidget(),

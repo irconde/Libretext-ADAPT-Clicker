@@ -1,34 +1,29 @@
 import 'package:flutter/material.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 
-class ContactUsDropDownList extends StatefulWidget
-
-{
-  const ContactUsDropDownList({Key? key, required this.contactUsSubjectDropDownValue}) : super(key: key);
+class ContactUsDropDownList extends StatefulWidget {
+  const ContactUsDropDownList(
+      {Key? key, required this.contactUsSubjectDropDownValue})
+      : super(key: key);
   final String? contactUsSubjectDropDownValue;
   @override
   State<StatefulWidget> createState() => ContactUsDropDownListState();
-
 }
 
-class ContactUsDropDownListState extends State<ContactUsDropDownList>
-{
+class ContactUsDropDownListState extends State<ContactUsDropDownList> {
   String? contactUsSubjectDropDownValue;
 
   @override
-  Widget build(BuildContext context)
-  {
-    return  Padding(
+  Widget build(BuildContext context) {
+    return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(
             width: 1,
-            color:
-            FlutterFlowTheme.of(context).textFieldBorder,
+            color: FlutterFlowTheme.of(context).textFieldBorder,
           ),
-          color: FlutterFlowTheme.of(context)
-              .textFieldBackground,
+          color: FlutterFlowTheme.of(context).textFieldBackground,
         ),
         child: ButtonTheme(
           alignedDropdown: true,
@@ -48,13 +43,11 @@ class ContactUsDropDownListState extends State<ContactUsDropDownList>
                 value: value,
                 child: Text(
                   value,
-                  style:
-                  FlutterFlowTheme.of(context).bodyText1,
+                  style: FlutterFlowTheme.of(context).bodyText1,
                 ),
               );
             }).toList(),
-            dropdownColor: FlutterFlowTheme.of(context)
-                .textFieldBackground,
+            dropdownColor: FlutterFlowTheme.of(context).textFieldBackground,
             onChanged: (String? value) {
               // This is called when the user selects an item.
               setState(() {

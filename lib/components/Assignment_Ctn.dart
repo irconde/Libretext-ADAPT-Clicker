@@ -111,8 +111,7 @@ class AssignmentCtnState extends State<AssignmentCtn> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0, 0, 0, 8),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                           child: AutoSizeText(
                             getJsonField(
                               assignmentsItem,
@@ -137,22 +136,25 @@ class AssignmentCtnState extends State<AssignmentCtn> {
                             assignmentsItem,
                             r'''$.assignment_group''',
                           ).toString().maybeHandleOverflow(maxChars: 20),
-                          style: FlutterFlowTheme.of(context).bodyText1.override(
+                          style: FlutterFlowTheme.of(context)
+                              .bodyText1
+                              .override(
                                 fontFamily: 'Open Sans',
-                                color: FlutterFlowTheme.of(context).tertiaryText,
+                                color:
+                                    FlutterFlowTheme.of(context).tertiaryText,
                               ),
                         ),
                       ],
                     ),
                   ),
                   Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
-                      child: Icon(
-                        Icons.today_rounded,
-                        color: FlutterFlowTheme.of(context).tertiaryText,
-                        size: 20,
-                      ),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                    child: Icon(
+                      Icons.today_rounded,
+                      color: FlutterFlowTheme.of(context).tertiaryText,
+                      size: 20,
                     ),
+                  ),
                   Text(
                     getJsonField(
                       assignmentsItem,

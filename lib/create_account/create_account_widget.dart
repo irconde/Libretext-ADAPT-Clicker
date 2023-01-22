@@ -131,10 +131,10 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
     if (!isWeb) {
       _keyboardVisibilitySubscription =
           KeyboardVisibilityController().onChange.listen((bool visible) {
-            setState(() {
-              _isKeyboardVisible = visible;
-            });
-          });
+        setState(() {
+          _isKeyboardVisible = visible;
+        });
+      });
     }
 
     confirmPasswordFieldCAController = TextEditingController();
@@ -173,13 +173,15 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                     (BuildContext context, BoxConstraints constraints) {
                   top = constraints.biggest.height;
                   return FlexibleSpaceBar(
-                    titlePadding: const EdgeInsetsDirectional.fromSTEB(48, 0, 0, 12),
-                    title:  Text(checkTop(top),
-                            style: FlutterFlowTheme.of(context).title2),
+                    titlePadding:
+                        const EdgeInsetsDirectional.fromSTEB(48, 0, 0, 12),
+                    title: Text(checkTop(top),
+                        style: FlutterFlowTheme.of(context).title2),
                     background: Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(64, 28, 0, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(64, 28, 0, 0),
                       child: SvgPicture.asset(
-                            'assets/images/person_add1.svg',
+                        'assets/images/person_add1.svg',
                         fit: BoxFit.scaleDown,
                         color: FlutterFlowTheme.of(context).svgIconColor,
                       ),
@@ -195,13 +197,14 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding:  const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                         child: TextField(
                           controller: firstNameFieldCAController,
                           autofocus: true,
@@ -217,7 +220,8 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                         child: TextField(
                           controller: lastNameFieldCAController,
                           decoration: InputDecoration(
@@ -232,7 +236,8 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                         child: TextField(
                           controller: studentIDFieldController,
                           decoration: InputDecoration(
@@ -247,7 +252,8 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                         child: TextField(
                           controller: emailFieldCAController,
                           decoration: InputDecoration(
@@ -262,7 +268,8 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                         child: TextField(
                           controller: passwordFieldCAController,
                           obscureText: !passwordFieldCAVisibility,
@@ -275,8 +282,8 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             ),
                             suffixIcon: InkWell(
                               onTap: () => setState(
-                                    () => passwordFieldCAVisibility =
-                                !passwordFieldCAVisibility,
+                                () => passwordFieldCAVisibility =
+                                    !passwordFieldCAVisibility,
                               ),
                               focusNode: FocusNode(skipTraversal: true),
                               child: Icon(
@@ -291,7 +298,8 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                         child: TextField(
                           controller: confirmPasswordFieldCAController,
                           obscureText: !confirmPasswordFieldCAVisibility,
@@ -299,14 +307,14 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             hintText: 'Confirm Password',
                             labelText: 'Confirm Password',
                             errorText:
-                            _submitted ? _confirmPasswordErrorText : null,
+                                _submitted ? _confirmPasswordErrorText : null,
                             prefixIcon: Icon(
                               Icons.lock_outline,
                             ),
                             suffixIcon: InkWell(
                               onTap: () => setState(
-                                    () => confirmPasswordFieldCAVisibility =
-                                !confirmPasswordFieldCAVisibility,
+                                () => confirmPasswordFieldCAVisibility =
+                                    !confirmPasswordFieldCAVisibility,
                               ),
                               focusNode: FocusNode(skipTraversal: true),
                               child: Icon(
@@ -335,16 +343,17 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
+                              foregroundColor:
+                                  FlutterFlowTheme.of(context).primaryBtnText,
+                              backgroundColor:
+                                  FlutterFlowTheme.of(context).primaryColor,
                               textStyle: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.w600),
-                              primary:
-                              FlutterFlowTheme.of(context).primaryColor,
                               minimumSize: Size.fromHeight(36),
-                              onPrimary:
-                              FlutterFlowTheme.of(context).primaryBtnText,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(4),
                               ),
@@ -354,7 +363,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                 email: emailFieldCAController!.text,
                                 password: passwordFieldCAController!.text,
                                 passwordConfirmation:
-                                confirmPasswordFieldCAController!.text,
+                                    confirmPasswordFieldCAController!.text,
                                 firstName: firstNameFieldCAController!.text,
                                 lastName: lastNameFieldCAController!.text,
                                 registrationType: '3',
@@ -379,12 +388,12 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
-                                fontFamily: 'Open Sans',
-                                color: FlutterFlowTheme.of(context)
-                                    .primaryBtnText,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20,
-                              ),
+                                    fontFamily: 'Open Sans',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBtnText,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20,
+                                  ),
                             ),
                           ),
                         ),
@@ -406,27 +415,28 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                   style: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                    fontFamily: 'Open Sans',
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    fontSize: 20,
-                                  ),
+                                        fontFamily: 'Open Sans',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        fontSize: 20,
+                                      ),
                                 ),
                               ),
                             ),
                           ],
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 32),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0, 20, 0, 32),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
+                              foregroundColor:
+                                  FlutterFlowTheme.of(context).primaryBtnText,
+                              backgroundColor:
+                                  FlutterFlowTheme.of(context).secondaryColor,
                               textStyle: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.w600),
-                              primary:
-                              FlutterFlowTheme.of(context).secondaryColor,
                               minimumSize: Size.fromHeight(36),
-                              onPrimary:
-                              FlutterFlowTheme.of(context).primaryBtnText,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(4),
                               ),
@@ -462,11 +472,11 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
-                                  fontFamily: 'Open Sans',
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryColor,
-                                  decoration: TextDecoration.underline,
-                                ),
+                                      fontFamily: 'Open Sans',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                      decoration: TextDecoration.underline,
+                                    ),
                               ),
                             ),
                           ],

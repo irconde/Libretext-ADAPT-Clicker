@@ -2,34 +2,28 @@ import 'package:flutter/material.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 
-class TimezoneDropdown extends StatefulWidget
-
-{
-  const TimezoneDropdown({Key? key, required this.timezoneDropDownValue}) : super(key: key);
+class TimezoneDropdown extends StatefulWidget {
+  const TimezoneDropdown({Key? key, required this.timezoneDropDownValue})
+      : super(key: key);
   final String? timezoneDropDownValue;
   @override
   State<StatefulWidget> createState() => TimezoneDropdownState();
-
 }
 
-class TimezoneDropdownState extends State<TimezoneDropdown>
-{
+class TimezoneDropdownState extends State<TimezoneDropdown> {
   String? timezoneDropDownValue;
 
   @override
-  Widget build(BuildContext context)
-  {
-    return  Padding(
+  Widget build(BuildContext context) {
+    return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(
             width: 1,
-            color:
-            FlutterFlowTheme.of(context).textFieldBorder,
+            color: FlutterFlowTheme.of(context).textFieldBorder,
           ),
-          color: FlutterFlowTheme.of(context)
-              .textFieldBackground,
+          color: FlutterFlowTheme.of(context).textFieldBackground,
         ),
         child: ButtonTheme(
           alignedDropdown: true,
@@ -41,13 +35,11 @@ class TimezoneDropdownState extends State<TimezoneDropdown>
                 value: value,
                 child: Text(
                   value,
-                  style:
-                  FlutterFlowTheme.of(context).bodyText1,
+                  style: FlutterFlowTheme.of(context).bodyText1,
                 ),
               );
             }).toList(),
-            dropdownColor: FlutterFlowTheme.of(context)
-                .textFieldBackground,
+            dropdownColor: FlutterFlowTheme.of(context).textFieldBackground,
             onChanged: (String? value) {
               // This is called when the user selects an item.
               setState(() {

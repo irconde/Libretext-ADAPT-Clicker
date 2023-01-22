@@ -50,42 +50,34 @@ abstract class FlutterFlowTheme {
 
   Typography get typography => ThemeTypography(this);
 
-
-  OutlineInputBorder _buildBorder(Color color)
-  {
+  OutlineInputBorder _buildBorder(Color color) {
     return OutlineInputBorder(
-      borderSide: BorderSide(
-          width: 1,
-          color: color
-      ),
+      borderSide: BorderSide(width: 1, color: color),
     );
   }
 
   InputDecorationTheme inputTheme() => InputDecorationTheme(
+        contentPadding: EdgeInsets.all(16),
+        floatingLabelStyle: TextStyle(color: primaryColor),
+        alignLabelWithHint: true,
+        labelStyle: bodyText2,
+        filled: true,
 
-    contentPadding: EdgeInsets.all(16),
-    floatingLabelStyle: TextStyle(color: primaryColor),
-    alignLabelWithHint: true,
-    labelStyle: bodyText2,
-    filled: true,
+        //default, all otehr null
+        border: _buildBorder(textFieldBorder),
+        //Enabled and not showing error
+        enabledBorder: _buildBorder(textFieldBorder),
+        //No Focus but error
+        errorBorder: _buildBorder(failure),
+        //Focussed with error
+        focusedErrorBorder: _buildBorder(failure),
+        //Focused but no Error
+        focusedBorder: _buildBorder(primaryColor),
 
-
-    //default, all otehr null
-    border: _buildBorder(textFieldBorder),
-    //Enabled and not showing error
-    enabledBorder:  _buildBorder(textFieldBorder),
-    //No Focus but error
-    errorBorder:  _buildBorder(failure),
-    //Focussed with error
-    focusedErrorBorder:_buildBorder(failure),
-    //Focused but no Error
-    focusedBorder:_buildBorder(primaryColor),
-
-    fillColor: textFieldBackground,
-    prefixIconColor: tertiaryColor,
-    suffixIconColor: tertiaryColor,
-
-  );
+        fillColor: textFieldBackground,
+        prefixIconColor: tertiaryColor,
+        suffixIconColor: tertiaryColor,
+      );
 }
 
 class LightModeTheme extends FlutterFlowTheme {
@@ -110,13 +102,10 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color success = Color(0xFF008C3D);
   late Color failure = Color(0xFFD82828);
 
-
   //Activity Colors
   late Color activityGood = Color(0xFF008C3D);
   late Color activityMedium = Color(0xFFFF9D00);
   late Color activityBad = Color(0xFFEF0C12);
-
-
 }
 
 abstract class Typography {
@@ -143,53 +132,53 @@ class ThemeTypography extends Typography {
 
   String get title1Family => 'Open Sans';
   TextStyle get title1 => GoogleFonts.getFont(
-    'Open Sans',
-    color: theme.primaryText,
-    fontWeight: FontWeight.w600,
-    fontSize: 24,
-  );
+        'Open Sans',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 24,
+      );
   String get title2Family => 'Open Sans';
   TextStyle get title2 => GoogleFonts.getFont(
-    'Open Sans',
-    color: theme.primaryBackground,
-    fontSize: 24,
-    fontWeight: FontWeight.bold,
-  );
+        'Open Sans',
+        color: theme.primaryBackground,
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+      );
   String get title3Family => 'Open Sans';
   TextStyle get title3 => GoogleFonts.getFont(
-    'Open Sans',
-    color: theme.primaryText,
-    fontWeight: FontWeight.w600,
-    fontSize: 20,
-  );
+        'Open Sans',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 20,
+      );
   String get subtitle1Family => 'Open Sans';
   TextStyle get subtitle1 => GoogleFonts.getFont(
-    'Open Sans',
-    color: theme.primaryText,
-    fontWeight: FontWeight.w600,
-    fontSize: 18,
-  );
+        'Open Sans',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 18,
+      );
   String get subtitle2Family => 'Open Sans';
   TextStyle get subtitle2 => GoogleFonts.getFont(
-    'Open Sans',
-    color: theme.secondaryText,
-    fontWeight: FontWeight.w600,
-    fontSize: 16,
-  );
+        'Open Sans',
+        color: theme.secondaryText,
+        fontWeight: FontWeight.w600,
+        fontSize: 16,
+      );
   String get bodyText1Family => 'Open Sans';
   TextStyle get bodyText1 => GoogleFonts.getFont(
-    'Open Sans',
-    color: theme.primaryText,
-    fontWeight: FontWeight.normal,
-    fontSize: 14,
-  );
+        'Open Sans',
+        color: theme.primaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 14,
+      );
   String get bodyText2Family => 'Open Sans';
   TextStyle get bodyText2 => GoogleFonts.getFont(
-    'Open Sans',
-    color: theme.secondaryText,
-    fontWeight: FontWeight.normal,
-    fontSize: 14,
-  );
+        'Open Sans',
+        color: theme.secondaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 14,
+      );
 }
 
 extension TextStyleHelper on TextStyle {
@@ -209,26 +198,26 @@ extension TextStyleHelper on TextStyle {
   }) =>
       useGoogleFonts
           ? GoogleFonts.getFont(
-        fontFamily!,
-        color: color ?? this.color,
-        fontSize: fontSize ?? this.fontSize,
-        letterSpacing: letterSpacing ?? this.letterSpacing,
-        fontWeight: fontWeight ?? this.fontWeight,
-        fontStyle: fontStyle ?? this.fontStyle,
-        decoration: decoration,
-        decorationColor: decorationColor ?? this.color,
-        height: lineHeight,
-        shadows: shadows,
-        decorationThickness: decorationThickness,
-      )
+              fontFamily!,
+              color: color ?? this.color,
+              fontSize: fontSize ?? this.fontSize,
+              letterSpacing: letterSpacing ?? this.letterSpacing,
+              fontWeight: fontWeight ?? this.fontWeight,
+              fontStyle: fontStyle ?? this.fontStyle,
+              decoration: decoration,
+              decorationColor: decorationColor ?? this.color,
+              height: lineHeight,
+              shadows: shadows,
+              decorationThickness: decorationThickness,
+            )
           : copyWith(
-        fontFamily: fontFamily,
-        color: color,
-        fontSize: fontSize,
-        letterSpacing: letterSpacing,
-        fontWeight: fontWeight,
-        fontStyle: fontStyle,
-        decoration: decoration,
-        height: lineHeight,
-      );
+              fontFamily: fontFamily,
+              color: color,
+              fontSize: fontSize,
+              letterSpacing: letterSpacing,
+              fontWeight: fontWeight,
+              fontStyle: fontStyle,
+              decoration: decoration,
+              height: lineHeight,
+            );
 }

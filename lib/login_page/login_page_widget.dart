@@ -91,7 +91,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                     (BuildContext context, BoxConstraints constraints) {
                   top = constraints.biggest.height;
                   return FlexibleSpaceBar(
-                    titlePadding: const EdgeInsetsDirectional.fromSTEB(48, 0, 0, 12),
+                    titlePadding:
+                        const EdgeInsetsDirectional.fromSTEB(48, 0, 0, 12),
                     title: Text(checkTop(top),
                         style: FlutterFlowTheme.of(context).title2),
                     background: Padding(
@@ -117,7 +118,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
                       child: TextField(
                         controller: _controller1,
                         autofocus: true,
@@ -157,7 +159,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               passwordVisibility
                                   ? Icons.visibility_outlined
                                   : Icons.visibility_off_outlined,
-                              color: FlutterFlowTheme.of(context).secondaryColor,
+                              color:
+                                  FlutterFlowTheme.of(context).secondaryColor,
                               size: 22,
                             ),
                           ),
@@ -169,14 +172,15 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(18, 0, 32, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(18, 0, 32, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           ToggleIcon(
                             onPressed: () async {
-                              setState(() =>
-                                  FFAppState().rememberMe = !FFAppState().rememberMe);
+                              setState(() => FFAppState().rememberMe =
+                                  !FFAppState().rememberMe);
                             },
                             value: FFAppState().rememberMe,
                             onIcon: Icon(
@@ -186,7 +190,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             ),
                             offIcon: Icon(
                               Icons.check_box_outline_blank,
-                              color: FlutterFlowTheme.of(context).secondaryColor,
+                              color:
+                                  FlutterFlowTheme.of(context).secondaryColor,
                               size: 28,
                             ),
                           ),
@@ -200,8 +205,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       .bodyText1
                                       .override(
                                         fontFamily: 'Open Sans',
-                                        color:
-                                            FlutterFlowTheme.of(context).secondaryText,
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
                                       ),
                                 ),
                                 InkWell(
@@ -224,8 +229,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                         .override(
                                           fontFamily: 'Open Sans',
                                           decoration: TextDecoration.underline,
-                                          color:
-                                              FlutterFlowTheme.of(context).primaryColor,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
                                         ),
                                   ),
                                 ),
@@ -239,12 +244,13 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(32, 16, 32, 0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          textStyle:
-                              TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                          textStyle: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w600),
                           surfaceTintColor:
                               FlutterFlowTheme.of(context).primaryBtnText,
                           minimumSize: Size.fromHeight(36),
-                          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+                          backgroundColor:
+                              FlutterFlowTheme.of(context).primaryColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4),
                           ),
@@ -267,12 +273,13 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               ),
                             );
                           } else {
-                            setState(() => FFAppState().errorsList = (getJsonField(
-                                  (loginAttempt?.jsonBody ?? ''),
-                                  r'''$.errors..*''',
-                                ) as List)
-                                    .map<String>((s) => s.toString())
-                                    .toList());
+                            setState(
+                                () => FFAppState().errorsList = (getJsonField(
+                                      (loginAttempt?.jsonBody ?? ''),
+                                      r'''$.errors..*''',
+                                    ) as List)
+                                        .map<String>((s) => s.toString())
+                                        .toList());
                             _submit();
                           }
 
@@ -282,7 +289,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(32, 24, 32, 24),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(32, 24, 32, 24),
                       child: Stack(
                         alignment: AlignmentDirectional(0, 0),
                         children: [
@@ -292,7 +300,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             color: FlutterFlowTheme.of(context).lineColor,
                           ),
                           Container(
-                            color: FlutterFlowTheme.of(context).primaryBackground,
+                            color:
+                                FlutterFlowTheme.of(context).primaryBackground,
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: Text(
@@ -301,8 +310,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     .bodyText1
                                     .override(
                                       fontFamily: 'Open Sans',
-                                      color:
-                                          FlutterFlowTheme.of(context).secondaryText,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
                                       fontSize: 20,
                                     ),
                               ),
@@ -312,14 +321,17 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                       ),
                     ),
                     Padding(
-                      padding: const  EdgeInsetsDirectional.fromSTEB(32, 0, 32, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(32, 0, 32, 0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          textStyle:
-                              TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                          surfaceTintColor: FlutterFlowTheme.of(context).primaryBtnText,
+                          textStyle: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w600),
+                          surfaceTintColor:
+                              FlutterFlowTheme.of(context).primaryBtnText,
                           minimumSize: Size.fromHeight(36),
-                          backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
+                          backgroundColor:
+                              FlutterFlowTheme.of(context).secondaryColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4),
                           ),
@@ -345,12 +357,12 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
-                                color:
-                                FlutterFlowTheme.of(context).primaryColor,
-                                decoration: TextDecoration.underline,
-                                fontFamily: 'Open Sans',
-                                fontWeight: FontWeight.normal,
-                              ),
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryColor,
+                                    decoration: TextDecoration.underline,
+                                    fontFamily: 'Open Sans',
+                                    fontWeight: FontWeight.normal,
+                                  ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () async {
                                   await Navigator.push(
