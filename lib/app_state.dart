@@ -1,10 +1,13 @@
 import 'package:adapt_clicker/timezone.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'flutter_flow/lat_lng.dart';
-import 'dart:convert';
 
 class FFAppState {
   static final FFAppState _instance = FFAppState._internal();
+  static const _keyRememberMe = 'ff_rememberMe';
+  static const _keyAuthToken = 'ff_authToken';
+  static const _keySelectedIndex = 'ff_selectedIndex';
+
+  SharedPreferences? prefs;
 
   factory FFAppState() {
     return _instance;
@@ -14,15 +17,12 @@ class FFAppState {
     initializePersistedState();
   }
 
-
   Future initializePersistedState() async {
     prefs = await SharedPreferences.getInstance();
-    _rememberMe = prefs.getBool('ff_rememberMe') ?? _rememberMe;
-    _authToken = prefs.getString('ff_authToken') ?? _authToken;
-    _selectedIndex = prefs.getInt('ff_selectedIndex') ?? _selectedIndex;
+    _rememberMe = prefs!.getBool(_keyRememberMe) ?? _rememberMe;
+    _authToken = prefs!.getString(_keyAuthToken) ?? _authToken;
+    _selectedIndex = prefs!.getInt(_keySelectedIndex) ?? _selectedIndex;
   }
-
-  late SharedPreferences prefs;
 
   bool _rememberMe = false;
 
@@ -30,9 +30,8 @@ class FFAppState {
 
   set rememberMe(bool _value) {
     _rememberMe = _value;
-    prefs.setBool('ff_rememberMe', _value);
+    prefs?.setBool(_keyRememberMe, _value);
   }
-
 
   //Selected index for questions
   int _selectedIndex = 1;
@@ -41,7 +40,7 @@ class FFAppState {
 
   set selectedIndex(int _value) {
     _selectedIndex = _value;
-    prefs.setInt('ff_selectedIndex', _value);
+    prefs?.setInt(_keySelectedIndex, _value);
   }
 
   String _authToken = '';
@@ -50,7 +49,7 @@ class FFAppState {
 
   set authToken(String _value) {
     _authToken = _value;
-    prefs.setString('ff_authToken', _value);
+    prefs?.setString(_keyAuthToken, _value);
   }
 
   List<String> errorsList = [];
@@ -66,14 +65,4 @@ class FFAppState {
   bool hasSubmission = false;
 
   static TimezonesContainer? timezoneContainer;
-
-  LatLng? _latLngFromString(String? val) {
-    if (val == null) {
-      return null;
-    }
-    final split = val.split(',');
-    final lat = double.parse(split.first);
-    final lng = double.parse(split.last);
-    return LatLng(lat, lng);
-  }
 }
