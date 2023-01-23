@@ -1,5 +1,7 @@
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/gestures.dart';
+
 import '../backend/api_requests/api_calls.dart';
 import '../components/no_notifications_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -39,20 +41,31 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
           Align(
             alignment: const AlignmentDirectional(0, 0),
             child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
-              child: Text(
-                'Clear All',
-                textAlign: TextAlign.center,
-                style: FlutterFlowTheme.of(context).bodyText1.override(
-                      fontFamily: 'Open Sans',
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
+              child: RichText(
+                  text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                      text: 'Clear All ',
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          debugPrint('The button is clicked!');
+                          //enrollmentsList.clear();
+                        },
+                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                            fontFamily: 'Open Sans',
+                            color:
+                                FlutterFlowTheme.of(context).primaryBackground,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          )),
+                ],
+              )),
             ),
           ),
         ],
+        centerTitle: true,
+        elevation: 2,
       ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
