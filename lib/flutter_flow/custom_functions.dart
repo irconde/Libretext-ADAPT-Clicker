@@ -57,5 +57,5 @@ void initTimezones(dynamic timezoneAPI) {
     timezones.add(timezone);
   }
 
-  FFAppState.timezoneContainer = new TimezonesContainer(timezones);
+  AppState.timezoneContainer = new TimezonesContainer(timezones);
 }

@@ -179,10 +179,10 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         children: [
                           ToggleIcon(
                             onPressed: () async {
-                              setState(() => FFAppState().rememberMe =
-                                  !FFAppState().rememberMe);
+                              setState(() => AppState().rememberMe =
+                                  !AppState().rememberMe);
                             },
-                            value: FFAppState().rememberMe,
+                            value: AppState().rememberMe,
                             onIcon: Icon(
                               Icons.check_box,
                               color: FlutterFlowTheme.of(context).primaryColor,
@@ -261,7 +261,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             password: _controller2.text,
                           );
                           if ((loginAttempt?.succeeded ?? true)) {
-                            setState(() => FFAppState().authToken =
+                            setState(() => AppState().authToken =
                                     functions.createToken(getJsonField(
                                   (loginAttempt?.jsonBody ?? ''),
                                   r'''$.token''',
@@ -274,7 +274,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             );
                           } else {
                             setState(
-                                () => FFAppState().errorsList = (getJsonField(
+                                () => AppState().errorsList = (getJsonField(
                                       (loginAttempt?.jsonBody ?? ''),
                                       r'''$.errors..*''',
                                     ) as List)

@@ -59,7 +59,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
   @override
   Widget build(BuildContext context) {
     final questionsList = getJsonField(
-      FFAppState().view,
+      AppState().view,
       r'''$.questions''',
     ).toList();
 
@@ -143,7 +143,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                     ),
                                     TextSpan(
                                       text: getJsonField(
-                                        FFAppState().question,
+                                        AppState().question,
                                         r'''$.points''',
                                       ).toString().maybeHandleOverflow(
                                             maxChars: 32,
@@ -176,7 +176,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                     ),
                                     TextSpan(
                                       text: getJsonField(
-                                        FFAppState().question,
+                                        AppState().question,
                                         r'''$.submission_count''',
                                       ).toString().maybeHandleOverflow(
                                             maxChars: 32,
@@ -209,7 +209,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                     ),
                                     TextSpan(
                                       text: getJsonField(
-                                        FFAppState().question,
+                                        AppState().question,
                                         r'''$.student_response''',
                                       ).toString().maybeHandleOverflow(
                                             maxChars: 32,
@@ -242,7 +242,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                     ),
                                     TextSpan(
                                       text: getJsonField(
-                                        FFAppState().question,
+                                        AppState().question,
                                         r'''$.last_submitted''',
                                       ).toString().maybeHandleOverflow(
                                             maxChars: 32,
@@ -258,13 +258,13 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                   ],
                                 )),
                               ),
-                              if (FFAppState().isBasic)
+                              if (AppState().isBasic)
                                 Card(
                                   child: Container(
                                     height: 256,
                                     child: WebView(
                                       initialUrl: getJsonField(
-                                        FFAppState().question,
+                                        AppState().question,
                                         r'''$.technology_iframe''',
                                       ),
                                       onWebViewCreated: (WebViewController
@@ -291,14 +291,14 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                 ),
                             ],
                           ),
-                          if (!FFAppState().isBasic)
+                          if (!AppState().isBasic)
                             FutureBuilder<ApiCallResponse>(
                               future: GetNonTechnologyIframeCall.call(
                                 pageId: getJsonField(
-                                  FFAppState().question,
+                                  AppState().question,
                                   r'''$.page_id''',
                                 ),
-                                token: FFAppState().authToken,
+                                token: AppState().authToken,
                               ),
                               builder: (context, snapshot) {
                                 // Customize what your widget looks like when it's loading.
@@ -324,7 +324,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                               },
                             ),
                           if (functions.isTextSubmission(getJsonField(
-                            FFAppState().question,
+                            AppState().question,
                             r'''$.open_ended_submission_type''',
                           ).toString()))
                             Column(
@@ -455,20 +455,20 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                           splashColor: Colors.transparent,
                           onTap: () async {
                             setState(() {
-                              FFAppState().question = questionsListItem;
-                              FFAppState().isBasic =
+                              AppState().question = questionsListItem;
+                              AppState().isBasic =
                                   functions.isBasic(getJsonField(
                                 questionsListItem,
                                 r'''$.technology_iframe''',
                               ).toString());
-                              FFAppState().hasSubmission = getJsonField(
+                              AppState().hasSubmission = getJsonField(
                                 questionsListItem,
                                 r'''$.has_at_least_one_submission''',
                               );
                               controller.loadUrl(getJsonField(questionsListItem,
                                   r'''$.technology_iframe'''));
                               log("Setting index to $index");
-                              FFAppState().selectedIndex = index;
+                              AppState().selectedIndex = index;
                             });
                           },
                           child: containerSelection(++index, context),
@@ -492,11 +492,11 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
 
 Widget containerSelection(index, context) {
   bool selected = false;
-  int a = FFAppState().selectedIndex;
+  int a = AppState().selectedIndex;
 
   log("Index: $index, selected: $a");
 
-  if (index == FFAppState().selectedIndex) selected = true;
+  if (index == AppState().selectedIndex) selected = true;
 
   if (selected)
     return selectedQuestionCard(index, context);

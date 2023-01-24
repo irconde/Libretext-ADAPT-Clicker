@@ -30,14 +30,14 @@ class AssignmentCtnState extends State<AssignmentCtn> {
       child: InkWell(
         onTap: () async {
           assignmentSummary = await GetAssignmentSummaryCall.call(
-            token: FFAppState().authToken,
+            token: AppState().authToken,
             assignmentNum: getJsonField(
               assignmentsItem,
               r'''$.id''',
             ),
           );
-          if (!FFAppState().assignmentUp) {
-            setState(() => FFAppState().assignmentUp = true);
+          if (!AppState().assignmentUp) {
+            setState(() => AppState().assignmentUp = true);
             await showModalBottomSheet(
               isScrollControlled: true,
               backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -57,20 +57,20 @@ class AssignmentCtnState extends State<AssignmentCtn> {
               },
             );
           }
-          setState(() => FFAppState().assignmentUp = false);
+          setState(() => AppState().assignmentUp = false);
 
           setState(() {});
         },
         onDoubleTap: () async {
           assignmentSum = await GetAssignmentSummaryCall.call(
-            token: FFAppState().authToken,
+            token: AppState().authToken,
             assignmentNum: getJsonField(
               assignmentsItem,
               r'''$.id''',
             ),
           );
-          if (!FFAppState().assignmentUp) {
-            setState(() => FFAppState().assignmentUp = true);
+          if (!AppState().assignmentUp) {
+            setState(() => AppState().assignmentUp = true);
             await showModalBottomSheet(
               isScrollControlled: true,
               backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -90,7 +90,7 @@ class AssignmentCtnState extends State<AssignmentCtn> {
               },
             );
           }
-          setState(() => FFAppState().assignmentUp = false);
+          setState(() => AppState().assignmentUp = false);
 
           setState(() {});
         },

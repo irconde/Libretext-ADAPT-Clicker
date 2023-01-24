@@ -330,7 +330,7 @@ class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
                 child: FFButtonWidget(
                   onPressed: () async {
                     updatePassword = await UpdatePasswordCall.call(
-                      token: FFAppState().authToken,
+                      token: AppState().authToken,
                       password: newPasswordTFController!.text,
                       passwordConfirmation: confirmNewPWTFController!.text,
                     );
@@ -349,7 +349,7 @@ class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
                         ),
                       );
                     } else {
-                      setState(() => FFAppState().errorsList = (getJsonField(
+                      setState(() => AppState().errorsList = (getJsonField(
                             (updatePassword?.jsonBody ?? ''),
                             r'''$.errors..*''',
                           ) as List)
@@ -359,7 +359,7 @@ class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
                         SnackBar(
                           content: Text(
                             functions
-                                .getTopError(FFAppState().errorsList.toList()),
+                                .getTopError(AppState().errorsList.toList()),
                             style: TextStyle(
                               color:
                                   FlutterFlowTheme.of(context).primaryBtnText,

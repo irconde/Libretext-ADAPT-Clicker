@@ -324,7 +324,7 @@ class _AssignmentDetailsWidgetState extends State<AssignmentDetailsWidget>
                               widget.assignmentSum,
                               r'''$.id''',
                             ),
-                            token: FFAppState().authToken,
+                            token: AppState().authToken,
                           ),
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
@@ -357,16 +357,16 @@ class _AssignmentDetailsWidgetState extends State<AssignmentDetailsWidget>
                                     return InkWell(
                                       splashColor: Colors.transparent,
                                       onTap: () async {
-                                        setState(() => FFAppState().view =
+                                        setState(() => AppState().view =
                                             listViewViewResponse.jsonBody);
-                                        setState(() => FFAppState().question =
+                                        setState(() => AppState().question =
                                             questionsItem);
-                                        setState(() => FFAppState().isBasic =
+                                        setState(() => AppState().isBasic =
                                                 functions.isBasic(getJsonField(
                                               questionsItem,
                                               r'''$.technology_iframe''',
                                             ).toString()));
-                                        setState(() => FFAppState()
+                                        setState(() => AppState()
                                                 .hasSubmission = getJsonField(
                                               questionsItem,
                                               r'''$.has_at_least_one_submission''',

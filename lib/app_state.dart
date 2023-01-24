@@ -1,19 +1,19 @@
 import 'package:adapt_clicker/timezone.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class FFAppState {
-  static final FFAppState _instance = FFAppState._internal();
+class AppState {
+  static final AppState _instance = AppState._internal();
   static const _keyRememberMe = 'ff_rememberMe';
   static const _keyAuthToken = 'ff_authToken';
   static const _keySelectedIndex = 'ff_selectedIndex';
 
   SharedPreferences? prefs;
 
-  factory FFAppState() {
+  factory AppState() {
     return _instance;
   }
 
-  FFAppState._internal() {
+  AppState._internal() {
     initializePersistedState();
   }
 

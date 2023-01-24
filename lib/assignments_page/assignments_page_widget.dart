@@ -37,7 +37,7 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() => FFAppState().assignmentUp = false);
+      setState(() => AppState().assignmentUp = false);
     });
   }
 
@@ -569,7 +569,7 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                   future:
                                                       GetScoresByUserCall.call(
                                                     token:
-                                                        FFAppState().authToken,
+                                                        AppState().authToken,
                                                     course: widget.courseNumber,
                                                   ),
                                                   builder: (context, snapshot) {
@@ -626,7 +626,7 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                                   assignmentSummary =
                                                                       await GetAssignmentSummaryCall
                                                                           .call(
-                                                                    token: FFAppState()
+                                                                    token: AppState()
                                                                         .authToken,
                                                                     assignmentNum:
                                                                         getJsonField(
@@ -634,10 +634,10 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                                       r'''$.id''',
                                                                     ),
                                                                   );
-                                                                  if (!FFAppState()
+                                                                  if (!AppState()
                                                                       .assignmentUp) {
                                                                     setState(() =>
-                                                                        FFAppState().assignmentUp =
+                                                                        AppState().assignmentUp =
                                                                             true);
                                                                     await showModalBottomSheet(
                                                                       isScrollControlled:
@@ -672,7 +672,7 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                                           milliseconds:
                                                                               1000));
                                                                   setState(() =>
-                                                                      FFAppState()
+                                                                      AppState()
                                                                               .assignmentUp =
                                                                           false);
 
@@ -684,7 +684,7 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                                   assignmentSum =
                                                                       await GetAssignmentSummaryCall
                                                                           .call(
-                                                                    token: FFAppState()
+                                                                    token: AppState()
                                                                         .authToken,
                                                                     assignmentNum:
                                                                         getJsonField(
@@ -692,10 +692,10 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                                       r'''$.id''',
                                                                     ),
                                                                   );
-                                                                  if (!FFAppState()
+                                                                  if (!AppState()
                                                                       .assignmentUp) {
                                                                     setState(() =>
-                                                                        FFAppState().assignmentUp =
+                                                                        AppState().assignmentUp =
                                                                             true);
                                                                     await showModalBottomSheet(
                                                                       isScrollControlled:
@@ -730,7 +730,7 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                                           milliseconds:
                                                                               1000));
                                                                   setState(() =>
-                                                                      FFAppState()
+                                                                      AppState()
                                                                               .assignmentUp =
                                                                           false);
 

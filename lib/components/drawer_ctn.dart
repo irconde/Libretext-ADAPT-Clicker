@@ -231,9 +231,9 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                       ),
                       onPressed: () async {
                         logout = await LogoutCall.call(
-                          token: FFAppState().authToken,
+                          token: AppState().authToken,
                         );
-                        setState(() => FFAppState().authToken = '');
+                        setState(() => AppState().authToken = '');
                         await Navigator.push(
                           context,
                           MaterialPageRoute(

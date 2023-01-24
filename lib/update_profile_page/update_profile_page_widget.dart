@@ -359,10 +359,10 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
                         child: FlutterFlowDropDown(
                           options:
-                              FFAppState.timezoneContainer?.textzones ?? [''],
+                              AppState.timezoneContainer?.textzones ?? [''],
                           onChanged: (val) => setState(() =>
                               timeZoneUpdateDDValue =
-                                  FFAppState.timezoneContainer!.getValue(val)),
+                                  AppState.timezoneContainer!.getValue(val)),
                           height: 50,
                           textStyle:
                               FlutterFlowTheme.of(context).bodyText1.override(
@@ -397,7 +397,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                     child: FFButtonWidget(
                       onPressed: () async {
                         updateProfile = await UpdateProfileCall.call(
-                          token: FFAppState().authToken,
+                          token: AppState().authToken,
                           firstName: firstNameUpdateTFController!.text,
                           lastName: lastNameUpdateTFController!.text,
                           email: emailUpdateTFController!.text,
@@ -421,7 +421,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                           );
                         } else {
                           setState(
-                              () => FFAppState().errorsList = (getJsonField(
+                              () => AppState().errorsList = (getJsonField(
                                     (updateProfile?.jsonBody ?? ''),
                                     r'''$.errors..*''',
                                   ) as List)
@@ -431,7 +431,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                             SnackBar(
                               content: Text(
                                 functions.getTopError(
-                                    FFAppState().errorsList.toList()),
+                                    AppState().errorsList.toList()),
                                 style: TextStyle(
                                   color: FlutterFlowTheme.of(context)
                                       .primaryBtnText,

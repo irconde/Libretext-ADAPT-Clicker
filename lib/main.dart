@@ -15,7 +15,7 @@ void main() async {
   ));
   // This removes the bottom navigation and fills the empty space
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  FFAppState(); // Initialize FFAppState
+  AppState(); // Initialize FFAppState
 
   runApp(MyApp());
 }

@@ -163,7 +163,7 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                         ),
                         onPressed: () async {
                           addCourse = await AddCourseCall.call(
-                            token: FFAppState().authToken,
+                            token: AppState().authToken,
                             accessCode: accessCodeACController!.text,
                             timeZone: 'America/Belize',
                           );
@@ -185,7 +185,7 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                             );
                           } else {
                             setState(
-                                () => FFAppState().errorsList = (getJsonField(
+                                () => AppState().errorsList = (getJsonField(
                                       (addCourse?.jsonBody ?? ''),
                                       r'''$.errors..*''',
                                     ) as List)

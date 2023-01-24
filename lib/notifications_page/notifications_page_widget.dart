@@ -83,7 +83,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
               FutureBuilder<ApiCallResponse>(
                 future: (_apiRequestCompleter ??= Completer<ApiCallResponse>()
                       ..complete(GetEnrollmentsCall.call(
-                        token: FFAppState().authToken,
+                        token: AppState().authToken,
                       )))
                     .future,
                 builder: (context, snapshot) {
