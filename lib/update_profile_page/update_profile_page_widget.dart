@@ -205,7 +205,10 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
-                        Constants.mmMargin, 0, Constants.mmMargin, 0),
+                        Constants.mmMargin,
+                        Constants.mmMargin,
+                        Constants.mmMargin,
+                        0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -213,7 +216,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0, Constants.msMargin, 0, Constants.msMargin),
+                              0, 0, 0, Constants.msMargin),
                           child: TextField(
                               controller: firstNameUpdateTFController,
                               autofocus: true,
@@ -286,8 +289,8 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                   ? MediaQuery.of(context).viewInsets.bottom > 0
                   : _isKeyboardVisible))
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(Constants.mmMargin, 0,
-                      Constants.mmMargin, Constants.msMargin),
+                  padding: EdgeInsetsDirectional.fromSTEB(
+                      Constants.mmMargin, 0, Constants.mmMargin, 0),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       minimumSize:
