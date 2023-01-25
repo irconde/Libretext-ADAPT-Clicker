@@ -25,7 +25,7 @@ class AppRouter extends _i3.RootStackRouter {
     WelcomeRouteWidget.name: (routeData) {
       return _i3.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i1.WelcomePageWidget(),
+        child: _i1.WelcomePageWidget(),
       );
     },
     CoursesRouteWidget.name: (routeData) {

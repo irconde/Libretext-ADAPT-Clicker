@@ -235,7 +235,11 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                         logout = await LogoutCall.call(
                           token: StoredPreferences.authToken,
                         );
-                        setState(() => StoredPreferences.authToken = '');
+                        setState(() {
+                          StoredPreferences.authToken = '';
+                          StoredPreferences.userAccount = '';
+                          StoredPreferences.userPassword = '';
+                        });
                         await Navigator.push(
                           context,
                           MaterialPageRoute(

@@ -1,6 +1,6 @@
 import 'package:adapt_clicker/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
-
+import '../flutter_flow/custom_functions.dart' as functions;
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/flutter_flow/custom_functions.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
 import 'flutter_flow/app_router.gr.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,22 +21,32 @@ void main() async {
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   bool isAuthenticated = await userIsAuthenticated();
   AppState();
-  runApp(MyApp(authenticated: isAuthenticated));
   fetchTimezone();
+  runApp(MyApp(authenticated: isAuthenticated));
 }
 
 Future<bool> userIsAuthenticated() async {
   bool _isSignedIn = false;
   await StoredPreferences.init();
   bool _rememberMe = StoredPreferences.rememberMe;
-  String _authToken = StoredPreferences.authToken;
+  String _userAccount = StoredPreferences.userAccount;
+  String _userPassword = StoredPreferences.userPassword;
+  String _currentToken = StoredPreferences.authToken;
   if (_rememberMe) {
-    if (_authToken != '') {
-      ApiCallResponse? getUser = await GetUserCall.call(
-        token: _authToken,
+    if (_userAccount.isNotEmpty && _userPassword.isNotEmpty) {
+      ApiCallResponse loginAttempt = await LoginCall.call(
+        email: _userAccount,
+        password: _userPassword,
       );
-      if ((getUser?.succeeded ?? true)) {
+      if ((loginAttempt?.succeeded ?? true)) {
         _isSignedIn = true;
+        String _newToken = functions.createToken(getJsonField(
+          (loginAttempt?.jsonBody ?? ''),
+          r'''$.token''',
+        ).toString());
+        if (_newToken != _currentToken) {
+          StoredPreferences.authToken = _newToken;
+        }
       }
     }
   }

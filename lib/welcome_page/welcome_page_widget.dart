@@ -1,58 +1,14 @@
 import 'package:move_to_background/move_to_background.dart';
 
-import '../backend/api_requests/api_calls.dart';
 import '../contact_us/contact_us_widget.dart';
-import '../courses_page/courses_page_widget.dart';
 import '../create_account/create_account_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
 import '../login_page/login_page_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../stored_preferences.dart';
-
-class WelcomePageWidget extends StatefulWidget {
-  const WelcomePageWidget({Key? key}) : super(key: key);
-
-  @override
-  _WelcomePageWidgetState createState() => _WelcomePageWidgetState();
-}
-
-class _WelcomePageWidgetState extends State<WelcomePageWidget> {
-  ApiCallResponse? getUser;
+class WelcomePageWidget extends StatelessWidget {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void initState() {
-    super.initState();
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      bool _rememberMe = StoredPreferences.rememberMe;
-      String _authToken = StoredPreferences.authToken;
-      if (_rememberMe) {
-        if (_authToken != '') {
-          getUser = await GetUserCall.call(
-            token: _authToken,
-          );
-          if ((getUser?.succeeded ?? true)) {
-            await Navigator.push(
-              context,
-              PageTransition(
-                type: PageTransitionType.fade,
-                duration: Duration(milliseconds: 1000),
-                reverseDuration: Duration(milliseconds: 1000),
-                child: CoursesPageWidget(),
-              ),
-            );
-          }
-        }
-      } else {
-        setState(() => StoredPreferences.authToken = '');
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
