@@ -56,9 +56,13 @@ class AppRouter extends _i10.RootStackRouter {
       );
     },
     UpdateProfileRouteWidget.name: (routeData) {
+      final args = routeData.argsAs<UpdateProfileRouteWidgetArgs>();
       return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i4.UpdateProfilePageWidget(),
+        child: _i4.UpdateProfilePageWidget(
+          key: args.key,
+          onSubmit: args.onSubmit,
+        ),
       );
     },
     NotificationsRouteWidget.name: (routeData) {
@@ -212,14 +216,37 @@ class LoginRouteWidgetArgs {
 
 /// generated route for
 /// [_i4.UpdateProfilePageWidget]
-class UpdateProfileRouteWidget extends _i10.PageRouteInfo<void> {
-  const UpdateProfileRouteWidget()
-      : super(
+class UpdateProfileRouteWidget
+    extends _i10.PageRouteInfo<UpdateProfileRouteWidgetArgs> {
+  UpdateProfileRouteWidget({
+    _i11.Key? key,
+    required void Function(String?) onSubmit,
+  }) : super(
           UpdateProfileRouteWidget.name,
           path: '/update-profile-page-widget',
+          args: UpdateProfileRouteWidgetArgs(
+            key: key,
+            onSubmit: onSubmit,
+          ),
         );
 
   static const String name = 'UpdateProfileRouteWidget';
+}
+
+class UpdateProfileRouteWidgetArgs {
+  const UpdateProfileRouteWidgetArgs({
+    this.key,
+    required this.onSubmit,
+  });
+
+  final _i11.Key? key;
+
+  final void Function(String?) onSubmit;
+
+  @override
+  String toString() {
+    return 'UpdateProfileRouteWidgetArgs{key: $key, onSubmit: $onSubmit}';
+  }
 }
 
 /// generated route for
