@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:adapt_clicker/components/libre_app_bar.dart';
 
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/components/ContactUsDropDownList.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 String nameRequired = "The name field is required.";
 String emailRequired = "The email field is required.";
@@ -25,7 +25,6 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
   String? contactUsSubjectDropDownValue;
   TextEditingController? contactUsMessageTextFieldController;
   bool _submitted = false;
-  var top = 0.0;
 
   ApiCallResponse? contactUs;
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -78,42 +77,18 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
     }
   }
 
-  String checkTop(var topSize) {
-    if (topSize <= 120) {
-      return "Contact Us";
-    } else {
-      return "Contact\nUs";
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
-            SliverAppBar(
-                backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-                expandedHeight: 160.0,
-                pinned: true,
-                snap: false,
-                floating: false,
-                flexibleSpace: LayoutBuilder(builder:
-                    (BuildContext context, BoxConstraints constraints) {
-                  top = constraints.biggest.height;
-                  return FlexibleSpaceBar(
-                    title: AnimatedOpacity(
-                        duration: Duration(milliseconds: 300),
-                        opacity: 1.0,
-                        child: Text(checkTop(top),
-                            style: FlutterFlowTheme.of(context).title2)),
-                    background: SvgPicture.asset(
-                      'assets/images/contact_support.svg',
-                      fit: BoxFit.scaleDown,
-                      color: FlutterFlowTheme.of(context).svgIconColor,
-                    ),
-                  );
-                })),
+            LibreAppBar(
+              titleNoSpace: "Contact Us",
+              titleSpace: "Contact\nUs",
+              iconPath: 'assets/images/contact_support.svg',
+              svgIconColor: FlutterFlowTheme.of(context).svgIconColor,
+            ),
           ];
         },
         body: GestureDetector(
@@ -189,18 +164,18 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                         ),
                       ),
                       Align(
-                        alignment: Alignment(1,0),
+                        alignment: Alignment(1, 0),
                         child: Text(
-                            '*Required Fields',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyText1
-                                .override(
-                                  fontFamily: 'Open Sans',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  fontSize: 12,
-                                ),
-                          ),
+                          '*Required Fields',
+                          style: FlutterFlowTheme.of(context)
+                              .bodyText1
+                              .override(
+                                fontFamily: 'Open Sans',
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                                fontSize: 12,
+                              ),
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),

@@ -3,6 +3,7 @@ import 'package:adapt_clicker/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import '../backend/api_requests/api_calls.dart';
+import '../components/libre_app_bar.dart';
 import '../components/reset_password_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_toggle_icon.dart';
@@ -67,47 +68,16 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
     }
   }
 
-  String checkTop(var topSize) {
-    if (topSize <= 120) {
-      return "Welcome Back";
-    } else {
-      return "Welcome\nBack";
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    var top = 0.0;
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       key: scaffoldKey,
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
-            SliverAppBar(
-                backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-                expandedHeight: 160.0,
-                pinned: true,
-                flexibleSpace: LayoutBuilder(builder:
-                    (BuildContext context, BoxConstraints constraints) {
-                  top = constraints.biggest.height;
-                  return FlexibleSpaceBar(
-                    titlePadding:
-                        const EdgeInsetsDirectional.fromSTEB(48, 0, 0, 12),
-                    title: Text(checkTop(top),
-                        style: FlutterFlowTheme.of(context).title2),
-                    background: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(64, 28, 0, 0),
-                      child: SvgPicture.asset(
-                        'assets/images/hand_wave.svg',
-                        fit: BoxFit.scaleDown,
-                        color: FlutterFlowTheme.of(context).svgIconColor2,
-                      ),
-                    ),
-                  );
-                })),
-          ];
+            LibreAppBar(titleNoSpace: "Welcome Back", titleSpace: "Welcome\nBack",  iconPath:  'assets/images/hand_wave.svg',  svgIconColor: FlutterFlowTheme.of(context).svgIconColor2),
+            ];
         },
         body: SingleChildScrollView(
           child: GestureDetector(

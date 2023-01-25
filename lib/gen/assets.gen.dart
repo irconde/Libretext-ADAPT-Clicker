@@ -181,6 +181,10 @@ class Constants {
   static const double TFIconSize = 21; //seconds
 
   //Margins
+  static const double appBarHeight = 240.0;
+  static const double appBarTransitionHeight = 100.0;
+
+  static const double xlMargin = 64;
   static const double llMargin = 48; //Double spaced
   static const double lmMargin = 44; //
   static const double lsMargin = 40; //
@@ -196,5 +200,4 @@ class Constants {
   static const double xxsMargin = 4; //smallest margin used to offset text
   static const double dividerThickness =
       1; //smallest margin used to offset text
-
 }

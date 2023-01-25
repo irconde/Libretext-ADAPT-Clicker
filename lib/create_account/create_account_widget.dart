@@ -1,5 +1,7 @@
 import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:adapt_clicker/components/libre_app_bar.dart';
+
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/components/TimezoneDropdown.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -7,7 +9,6 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../stored_preferences.dart';
 
@@ -29,7 +30,6 @@ class CreateAccountWidget extends StatefulWidget {
 }
 
 class _CreateAccountWidgetState extends State<CreateAccountWidget> {
-  var top = 0.0;
   bool _submitted = false;
 
   TextEditingController? firstNameFieldCAController;
@@ -119,14 +119,6 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
     }
   }
 
-  String checkTop(var topSize) {
-    if (topSize <= 120) {
-      return "Create Account";
-    } else {
-      return "Create\nAccount";
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -165,31 +157,12 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
-            SliverAppBar(
-                backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-                expandedHeight: 160.0,
-                pinned: true,
-                snap: false,
-                floating: false,
-                flexibleSpace: LayoutBuilder(builder:
-                    (BuildContext context, BoxConstraints constraints) {
-                  top = constraints.biggest.height;
-                  return FlexibleSpaceBar(
-                    titlePadding:
-                        const EdgeInsetsDirectional.fromSTEB(48, 0, 0, 12),
-                    title: Text(checkTop(top),
-                        style: FlutterFlowTheme.of(context).title2),
-                    background: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(64, 28, 0, 0),
-                      child: SvgPicture.asset(
-                        'assets/images/person_add1.svg',
-                        fit: BoxFit.scaleDown,
-                        color: FlutterFlowTheme.of(context).svgIconColor,
-                      ),
-                    ),
-                  );
-                })),
+            LibreAppBar(
+              titleNoSpace: "Create Account",
+              titleSpace: "Create\nAccount",
+              iconPath: 'assets/images/person_add1.svg',
+              svgIconColor: FlutterFlowTheme.of(context).svgIconColor,
+            ),
           ];
         },
         body: GestureDetector(
