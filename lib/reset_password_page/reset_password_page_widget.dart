@@ -14,6 +14,7 @@ class ResetPasswordPageWidget extends StatefulWidget {
   const ResetPasswordPageWidget({Key? key, required this.onSubmit})
       : super(key: key);
   final ValueChanged<String> onSubmit;
+
   @override
   _ResetPasswordPageWidgetState createState() =>
       _ResetPasswordPageWidgetState();
