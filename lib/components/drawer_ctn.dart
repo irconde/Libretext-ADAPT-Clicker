@@ -141,8 +141,9 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                                             fontWeight: FontWeight.normal,
                                           )),
                                   onPressed: () async {
-                                    context
-                                        .pushRoute(ResetPasswordRouteWidget());
+                                    context.pushRoute(ResetPasswordRouteWidget(
+                                      onSubmit: (String value) {},
+                                    ));
                                   }),
                             ),
                             Padding(

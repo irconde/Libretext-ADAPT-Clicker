@@ -88,9 +88,13 @@ class AppRouter extends _i10.RootStackRouter {
       );
     },
     ResetPasswordRouteWidget.name: (routeData) {
+      final args = routeData.argsAs<ResetPasswordRouteWidgetArgs>();
       return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i8.ResetPasswordPageWidget(),
+        child: _i8.ResetPasswordPageWidget(
+          key: args.key,
+          onSubmit: args.onSubmit,
+        ),
       );
     },
     AssignmentsRouteWidget.name: (routeData) {
@@ -300,14 +304,37 @@ class ContactUsWidgetArgs {
 
 /// generated route for
 /// [_i8.ResetPasswordPageWidget]
-class ResetPasswordRouteWidget extends _i10.PageRouteInfo<void> {
-  const ResetPasswordRouteWidget()
-      : super(
+class ResetPasswordRouteWidget
+    extends _i10.PageRouteInfo<ResetPasswordRouteWidgetArgs> {
+  ResetPasswordRouteWidget({
+    _i11.Key? key,
+    required void Function(String) onSubmit,
+  }) : super(
           ResetPasswordRouteWidget.name,
           path: '/reset-password-page-widget',
+          args: ResetPasswordRouteWidgetArgs(
+            key: key,
+            onSubmit: onSubmit,
+          ),
         );
 
   static const String name = 'ResetPasswordRouteWidget';
+}
+
+class ResetPasswordRouteWidgetArgs {
+  const ResetPasswordRouteWidgetArgs({
+    this.key,
+    required this.onSubmit,
+  });
+
+  final _i11.Key? key;
+
+  final void Function(String) onSubmit;
+
+  @override
+  String toString() {
+    return 'ResetPasswordRouteWidgetArgs{key: $key, onSubmit: $onSubmit}';
+  }
 }
 
 /// generated route for

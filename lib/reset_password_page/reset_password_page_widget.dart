@@ -3,9 +3,7 @@ import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
+import '../gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 
 import '../stored_preferences.dart';
@@ -278,7 +276,7 @@ class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
                     ),
                     onPressed: () async {
                       updatePassword = await UpdatePasswordCall.call(
-                        token: FFAppState().authToken,
+                        token: StoredPreferences.authToken,
                         password: newPasswordTFController!.text,
                         passwordConfirmation: confirmNewPWTFController!.text,
                       );
