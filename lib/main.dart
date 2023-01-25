@@ -1,5 +1,4 @@
 import 'package:adapt_clicker/stored_preferences.dart';
-import 'package:auto_route/auto_route.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/flutter_flow/custom_functions.dart';
@@ -93,17 +92,10 @@ class MyApp extends StatelessWidget {
         inputDecorationTheme: FlutterFlowTheme.of(context).inputTheme(),
       ),
       themeMode: _themeMode,
-      routerDelegate: AutoRouterDelegate.declarative(
-        _appRouter,
-        routes: (_) => [
-          // if the user is logged in, they may proceed to the course list
-          if (authenticated)
-            CoursesRouteWidget()
-          // if they are not logged in, bring them to the Welcome page
-          else
-            WelcomeRouteWidget()
-        ],
-      ),
+      routerDelegate: _appRouter.delegate(
+          initialRoutes: authenticated
+              ? [const CoursesRouteWidget()]
+              : [const WelcomeRouteWidget()]),
       routeInformationParser: _appRouter.defaultRouteParser(),
     );
   }

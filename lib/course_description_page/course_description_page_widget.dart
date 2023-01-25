@@ -1,6 +1,8 @@
+import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
+import 'package:auto_route/auto_route.dart';
+
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../notifications_page/notifications_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -21,12 +23,7 @@ class _CourseDescriptionPageWidgetState
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => NotificationsPageWidget(),
-        ),
-      );
+      context.pushRoute(NotificationsRouteWidget());
     });
   }
 

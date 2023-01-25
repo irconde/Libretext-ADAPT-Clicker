@@ -1,9 +1,9 @@
+import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
+import 'package:auto_route/auto_route.dart';
 import '../backend/api_requests/api_calls.dart';
-import '../courses_page/courses_page_widget.dart';
 import 'package:adapt_clicker/components/TimezoneDropdown.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../login_page/login_page_widget.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -362,7 +362,8 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             ),
                             onPressed: () async {
                               String _email = passwordFieldCAController!.text;
-                              String _password = passwordFieldCAController!.text;
+                              String _password =
+                                  passwordFieldCAController!.text;
                               createUser = await CreateUserCall.call(
                                 email: _email,
                                 password: _password,
@@ -379,12 +380,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                   StoredPreferences.userAccount = _email;
                                   StoredPreferences.userPassword = _password;
                                 });
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => CoursesPageWidget(),
-                                  ),
-                                );
+                                await context.pushRoute(CoursesRouteWidget());
                               } else {
                                 _submit();
                               }
@@ -466,14 +462,9 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             ),
                             InkWell(
                               onTap: () async {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LoginPageWidget(
-                                      onSubmit: (String value) {},
-                                    ),
-                                  ),
-                                );
+                                context.pushRoute(LoginRouteWidget(
+                                  onSubmit: (String? value) {},
+                                ));
                               },
                               child: Text(
                                 'Login',

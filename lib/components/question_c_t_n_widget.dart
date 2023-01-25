@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -89,7 +90,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                               size: Constants.mlMargin,
                             ),
                             onPressed: () async {
-                              Navigator.pop(context);
+                              context.popRoute();
                             },
                           ),
                           Expanded(

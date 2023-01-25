@@ -1,11 +1,12 @@
 import 'package:adapt_clicker/components/drawer_ctn.dart';
+import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
+import 'package:auto_route/auto_route.dart';
 
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../notifications_page/notifications_page_widget.dart';
 import 'dart:async';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
@@ -93,12 +94,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
             child: InkWell(
               onTap: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NotificationsPageWidget(),
-                  ),
-                );
+                context.pushRoute(NotificationsRouteWidget());
               },
               child: Icon(
                 Icons.notifications,

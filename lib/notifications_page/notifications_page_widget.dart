@@ -1,13 +1,11 @@
 import 'package:adapt_clicker/stored_preferences.dart';
-
+import 'package:auto_route/auto_route.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/no_notifications_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
-// ignore: unused_import
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class NotificationsPageWidget extends StatefulWidget {
@@ -33,7 +31,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
           padding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
           child: InkWell(
             onTap: () async {
-              Navigator.pop(context);
+              context.popRoute();
             },
             child: Icon(
               Icons.arrow_back,

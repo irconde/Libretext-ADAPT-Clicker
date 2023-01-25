@@ -1,3 +1,5 @@
+import 'package:auto_route/auto_route.dart';
+
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/components/ContactUsDropDownList.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -227,7 +229,7 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                               type: 'contact_us',
                             );
                             if ((contactUs?.succeeded ?? true)) {
-                              Navigator.pop(context);
+                              context.popRoute();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(

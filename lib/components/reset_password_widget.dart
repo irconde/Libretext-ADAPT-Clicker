@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'package:auto_route/auto_route.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -79,7 +79,7 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget>
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        Navigator.pop(context); //pop back on blur
+        context.popRoute(); //pop back on blur
       },
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
@@ -191,6 +191,7 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget>
                           forgotPassword = await ForgotPasswordCall.call(
                             email: forgotPasswordEmailFieldController!.text,
                           );
+                          // todo. Replace animation with CustomRoute
                           if ((forgotPassword?.succeeded ?? true)) {
                             await Future.delayed(
                                 const Duration(milliseconds: 3000));

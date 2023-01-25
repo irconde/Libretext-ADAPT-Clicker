@@ -1,13 +1,14 @@
 import 'package:adapt_clicker/stored_preferences.dart';
+import 'package:auto_route/auto_route.dart';
 
 import '../backend/api_requests/api_calls.dart';
 import '../components/assignment_details_widget.dart';
 import '../components/assignment_stat_ctn_widget.dart';
+import '../flutter_flow/app_router.gr.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../gen/assets.gen.dart';
-import '../notifications_page/notifications_page_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,7 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
         automaticallyImplyLeading: false,
         leading: InkWell(
           onTap: () async {
-            Navigator.pop(context);
+            context.popRoute();
           },
           child: Icon(
             Icons.arrow_back,
@@ -74,12 +75,7 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
             child: InkWell(
               onTap: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NotificationsPageWidget(),
-                  ),
-                );
+                context.pushRoute(NotificationsRouteWidget());
               },
               child: Icon(
                 Icons.notifications,

@@ -1,7 +1,6 @@
 import 'dart:ui';
-
 import 'package:adapt_clicker/stored_preferences.dart';
-
+import 'package:auto_route/auto_route.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -56,7 +55,7 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        Navigator.pop(context);
+        context.popRoute();
       },
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
@@ -170,7 +169,7 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                             timeZone: 'America/Belize',
                           );
                           if ((addCourse?.succeeded ?? true)) {
-                            Navigator.pop(context);
+                            context.popRoute();
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(

@@ -1,16 +1,11 @@
+import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
 import 'package:adapt_clicker/stored_preferences.dart';
-
-import '../app_state.dart';
+import 'package:auto_route/auto_route.dart';
 import '../backend/api_requests/api_calls.dart';
-import '../contact_us/contact_us_widget.dart';
-import '../courses_page/courses_page_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../reset_password_page/reset_password_page_widget.dart';
-import '../update_profile_page/update_profile_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../gen/assets.gen.dart';
-import '../welcome_page/welcome_page_widget.dart';
 
 class DrawerCtnWidget extends StatefulWidget {
   const DrawerCtnWidget({Key? key}) : super(key: key);
@@ -70,33 +65,27 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                               child: TextButton.icon(
-                                icon: Icon(
-                                  Icons.menu_book,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryColor,
-                                  size: Constants.drawerIconSize,
-                                ),
-                                label: Text('Courses'),
-                                style: TextButton.styleFrom(
-                                    foregroundColor:
-                                        FlutterFlowTheme.of(context)
-                                            .secondaryColor,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.normal,
-                                        )),
-                                onPressed: () async {
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => CoursesPageWidget(),
-                                    ),
-                                  );
-                                },
-                              ),
+                                  icon: Icon(
+                                    Icons.menu_book,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryColor,
+                                    size: Constants.drawerIconSize,
+                                  ),
+                                  label: Text('Courses'),
+                                  style: TextButton.styleFrom(
+                                      foregroundColor:
+                                          FlutterFlowTheme.of(context)
+                                              .secondaryColor,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal,
+                                          )),
+                                  onPressed: () async {
+                                    context.pushRoute(CoursesRouteWidget());
+                                  }),
                             ),
                             Padding(
                               padding:
@@ -108,44 +97,13 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                               ),
                             ),
                             TextButton.icon(
-                              icon: Icon(
-                                Icons.person_sharp,
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryColor,
-                                size: Constants.drawerIconSize,
-                              ),
-                              label: Text('My Profile'),
-                              style: TextButton.styleFrom(
-                                  foregroundColor: FlutterFlowTheme.of(context)
-                                      .secondaryColor,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                      )),
-                              onPressed: () async {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        UpdateProfilePageWidget(),
-                                  ),
-                                );
-                              },
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, Constants.xsMargin, 0, 0),
-                              child: TextButton.icon(
                                 icon: Icon(
-                                  Icons.lock_rounded,
+                                  Icons.person_sharp,
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryColor,
                                   size: Constants.drawerIconSize,
                                 ),
-                                label: Text('My Password'),
+                                label: Text('My Profile'),
                                 style: TextButton.styleFrom(
                                     foregroundColor:
                                         FlutterFlowTheme.of(context)
@@ -158,15 +116,34 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                                           fontWeight: FontWeight.normal,
                                         )),
                                 onPressed: () async {
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          ResetPasswordPageWidget(),
-                                    ),
-                                  );
-                                },
-                              ),
+                                  context.pushRoute(UpdateProfileRouteWidget());
+                                }),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, Constants.xsMargin, 0, 0),
+                              child: TextButton.icon(
+                                  icon: Icon(
+                                    Icons.lock_rounded,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryColor,
+                                    size: Constants.drawerIconSize,
+                                  ),
+                                  label: Text('My Password'),
+                                  style: TextButton.styleFrom(
+                                      foregroundColor:
+                                          FlutterFlowTheme.of(context)
+                                              .secondaryColor,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal,
+                                          )),
+                                  onPressed: () async {
+                                    context
+                                        .pushRoute(ResetPasswordRouteWidget());
+                                  }),
                             ),
                             Padding(
                               padding:
@@ -178,34 +155,31 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                               ),
                             ),
                             TextButton.icon(
-                              icon: Icon(
-                                Icons.send_sharp,
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryColor,
-                                size: Constants.drawerIconSize,
-                              ),
-                              label: Text('Contact Us'),
-                              style: TextButton.styleFrom(
-                                  foregroundColor: FlutterFlowTheme.of(context)
+                                icon: Icon(
+                                  Icons.send_sharp,
+                                  color: FlutterFlowTheme.of(context)
                                       .secondaryColor,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                      )),
-                              onPressed: () async {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ContactUsWidget(
+                                  size: Constants.drawerIconSize,
+                                ),
+                                label: Text('Contact Us'),
+                                style: TextButton.styleFrom(
+                                    foregroundColor:
+                                        FlutterFlowTheme.of(context)
+                                            .secondaryColor,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                        )),
+                                onPressed: () async {
+                                  context.pushRoute(
+                                    ContactUsWidget(
                                       onSubmit: (String? value) {},
                                     ),
-                                  ),
-                                );
-                              },
-                            ),
+                                  );
+                                }),
                           ],
                         ),
                       ],
@@ -240,13 +214,7 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                           StoredPreferences.userAccount = '';
                           StoredPreferences.userPassword = '';
                         });
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => WelcomePageWidget(),
-                          ),
-                        );
-
+                        await context.pushRoute(WelcomeRouteWidget());
                         setState(() {});
                       },
                       child: Text('LOGOUT')),

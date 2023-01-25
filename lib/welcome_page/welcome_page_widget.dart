@@ -1,9 +1,7 @@
+import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:move_to_background/move_to_background.dart';
-
-import '../contact_us/contact_us_widget.dart';
-import '../create_account/create_account_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../login_page/login_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -58,14 +56,7 @@ class WelcomePageWidget extends StatelessWidget {
                               ),
                             ),
                             onPressed: () async {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => LoginPageWidget(
-                                    onSubmit: (String value) {},
-                                  ),
-                                ),
-                              );
+                              context.pushRoute(LoginRouteWidget(onSubmit: (String? value) {},),);
                             },
                             child: const Text('LOGIN'),
                           ),
@@ -91,14 +82,7 @@ class WelcomePageWidget extends StatelessWidget {
                               ),
                             ),
                             onPressed: () async {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => CreateAccountWidget(
-                                    onSubmit: (String? value) {},
-                                  ),
-                                ),
-                              );
+                              context.pushRoute(CreateAccountWidget(onSubmit: (String? value) {},),);
                             },
                             child: const Text('CREATE ACCOUNT'),
                           ),
@@ -131,14 +115,7 @@ class WelcomePageWidget extends StatelessWidget {
                             alignment: AlignmentDirectional(-0.06, 1),
                             child: InkWell(
                               onTap: () async {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ContactUsWidget(
-                                      onSubmit: (String? value) {},
-                                    ),
-                                  ),
-                                );
+                                context.pushRoute(ContactUsWidget(onSubmit: (String? value) {},),);
                               },
                               child: Text(
                                 'Contact us',

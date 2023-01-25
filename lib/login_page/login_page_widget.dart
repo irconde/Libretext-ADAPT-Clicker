@@ -1,9 +1,9 @@
+import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
 import 'package:adapt_clicker/stored_preferences.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/reset_password_widget.dart';
-import '../courses_page/courses_page_widget.dart';
-import '../create_account/create_account_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_toggle_icon.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -267,18 +267,13 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             setState(() {
                               StoredPreferences.authToken =
                                   functions.createToken(getJsonField(
-                                    (loginAttempt?.jsonBody ?? ''),
-                                    r'''$.token''',
-                                  ).toString());
+                                (loginAttempt?.jsonBody ?? ''),
+                                r'''$.token''',
+                              ).toString());
                               StoredPreferences.userAccount = _email;
                               StoredPreferences.userPassword = _password;
                             });
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CoursesPageWidget(),
-                              ),
-                            );
+                            await context.pushRoute(CoursesRouteWidget());
                           } else {
                             setState(
                                 () => AppState().errorsList = (getJsonField(
@@ -372,12 +367,9 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                   ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () async {
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => CreateAccountWidget(
-                                        onSubmit: (String? value) {},
-                                      ),
+                                  context.pushRoute(
+                                    CreateAccountWidget(
+                                      onSubmit: (String? value) {},
                                     ),
                                   );
                                 }),

@@ -28,7 +28,7 @@ class _TOSPageWidgetState extends State<TOSPageWidget> {
               children: [
                 InkWell(
                   onTap: () async {
-                    Navigator.pop(context);
+                    context.popRoute();
                   },
                   child: Icon(
                     Icons.arrow_back_sharp,
