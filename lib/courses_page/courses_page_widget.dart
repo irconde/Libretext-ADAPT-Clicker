@@ -1,3 +1,5 @@
+import 'package:adapt_clicker/stored_preferences.dart';
+
 import '../assignments_page/assignments_page_widget.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/add_course_widget.dart';
@@ -144,7 +146,7 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
             FutureBuilder<ApiCallResponse>(
               future: (_apiRequestCompleter ??= Completer<ApiCallResponse>()
                     ..complete(GetEnrollmentsCall.call(
-                      token: AppState().authToken,
+                      token: StoredPreferences.authToken,
                     )))
                   .future,
               builder: (context, snapshot) {

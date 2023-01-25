@@ -1,3 +1,5 @@
+import 'package:adapt_clicker/stored_preferences.dart';
+
 import '../backend/api_requests/api_calls.dart';
 import '../components/assignment_details_widget.dart';
 import '../components/assignment_stat_ctn_widget.dart';
@@ -569,7 +571,7 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                   future:
                                                       GetScoresByUserCall.call(
                                                     token:
-                                                        AppState().authToken,
+                                                        StoredPreferences.authToken,
                                                     course: widget.courseNumber,
                                                   ),
                                                   builder: (context, snapshot) {
@@ -626,7 +628,7 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                                   assignmentSummary =
                                                                       await GetAssignmentSummaryCall
                                                                           .call(
-                                                                    token: AppState()
+                                                                    token: StoredPreferences
                                                                         .authToken,
                                                                     assignmentNum:
                                                                         getJsonField(
@@ -684,7 +686,7 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                                   assignmentSum =
                                                                       await GetAssignmentSummaryCall
                                                                           .call(
-                                                                    token: AppState()
+                                                                    token: StoredPreferences
                                                                         .authToken,
                                                                     assignmentNum:
                                                                         getJsonField(

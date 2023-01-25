@@ -1,3 +1,5 @@
+import 'package:adapt_clicker/stored_preferences.dart';
+
 import '../backend/api_requests/api_calls.dart';
 import '../components/no_notifications_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -83,7 +85,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
               FutureBuilder<ApiCallResponse>(
                 future: (_apiRequestCompleter ??= Completer<ApiCallResponse>()
                       ..complete(GetEnrollmentsCall.call(
-                        token: AppState().authToken,
+                        token: StoredPreferences.authToken,
                       )))
                     .future,
                 builder: (context, snapshot) {

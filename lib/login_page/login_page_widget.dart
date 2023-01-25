@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/stored_preferences.dart';
 import 'package:flutter/gestures.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/reset_password_widget.dart';
@@ -179,10 +180,10 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         children: [
                           ToggleIcon(
                             onPressed: () async {
-                              setState(() => AppState().rememberMe =
-                                  !AppState().rememberMe);
+                              setState(() => StoredPreferences.rememberMe =
+                                  !StoredPreferences.rememberMe);
                             },
-                            value: AppState().rememberMe,
+                            value: StoredPreferences.rememberMe,
                             onIcon: Icon(
                               Icons.check_box,
                               color: FlutterFlowTheme.of(context).primaryColor,
@@ -261,7 +262,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             password: _controller2.text,
                           );
                           if ((loginAttempt?.succeeded ?? true)) {
-                            setState(() => AppState().authToken =
+                            setState(() => StoredPreferences.authToken =
                                     functions.createToken(getJsonField(
                                   (loginAttempt?.jsonBody ?? ''),
                                   r'''$.token''',

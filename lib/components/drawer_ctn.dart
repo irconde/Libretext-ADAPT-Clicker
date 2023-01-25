@@ -1,3 +1,5 @@
+import 'package:adapt_clicker/stored_preferences.dart';
+
 import '../app_state.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../contact_us/contact_us_widget.dart';
@@ -231,9 +233,9 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                       ),
                       onPressed: () async {
                         logout = await LogoutCall.call(
-                          token: AppState().authToken,
+                          token: StoredPreferences.authToken,
                         );
-                        setState(() => AppState().authToken = '');
+                        setState(() => StoredPreferences.authToken = '');
                         await Navigator.push(
                           context,
                           MaterialPageRoute(

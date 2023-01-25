@@ -13,6 +13,8 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import '../gen/assets.gen.dart';
 import 'dart:developer';
 
+import '../stored_preferences.dart';
+
 class QuestionCTNWidget extends StatefulWidget {
   const QuestionCTNWidget({
     Key? key,
@@ -298,7 +300,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                   AppState().question,
                                   r'''$.page_id''',
                                 ),
-                                token: AppState().authToken,
+                                token: StoredPreferences.authToken,
                               ),
                               builder: (context, snapshot) {
                                 // Customize what your widget looks like when it's loading.
@@ -468,7 +470,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                               controller.loadUrl(getJsonField(questionsListItem,
                                   r'''$.technology_iframe'''));
                               log("Setting index to $index");
-                              AppState().selectedIndex = index;
+                              StoredPreferences.selectedIndex = index;
                             });
                           },
                           child: containerSelection(++index, context),
@@ -492,11 +494,11 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
 
 Widget containerSelection(index, context) {
   bool selected = false;
-  int a = AppState().selectedIndex;
+  int a = StoredPreferences.selectedIndex;
 
   log("Index: $index, selected: $a");
 
-  if (index == AppState().selectedIndex) selected = true;
+  if (index == StoredPreferences.selectedIndex) selected = true;
 
   if (selected)
     return selectedQuestionCard(index, context);

@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:adapt_clicker/stored_preferences.dart';
+
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -163,7 +165,7 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                         ),
                         onPressed: () async {
                           addCourse = await AddCourseCall.call(
-                            token: AppState().authToken,
+                            token: StoredPreferences.authToken,
                             accessCode: accessCodeACController!.text,
                             timeZone: 'America/Belize',
                           );

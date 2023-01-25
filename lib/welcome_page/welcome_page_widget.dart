@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../stored_preferences.dart';
+
 class WelcomePageWidget extends StatefulWidget {
   const WelcomePageWidget({Key? key}) : super(key: key);
 
@@ -27,10 +29,12 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (AppState().rememberMe) {
-        if (AppState().authToken != null && AppState().authToken != '') {
+      bool _rememberMe = StoredPreferences.rememberMe;
+      String _authToken = StoredPreferences.authToken;
+      if (_rememberMe) {
+        if (_authToken != '') {
           getUser = await GetUserCall.call(
-            token: AppState().authToken,
+            token: _authToken,
           );
           if ((getUser?.succeeded ?? true)) {
             await Navigator.push(
@@ -45,7 +49,7 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> {
           }
         }
       } else {
-        setState(() => AppState().authToken = '');
+        setState(() => StoredPreferences.authToken = '');
       }
     });
   }

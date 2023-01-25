@@ -11,6 +11,8 @@ import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
+import '../stored_preferences.dart';
+
 class UpdateProfilePageWidget extends StatefulWidget {
   const UpdateProfilePageWidget({Key? key}) : super(key: key);
 
@@ -397,7 +399,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                     child: FFButtonWidget(
                       onPressed: () async {
                         updateProfile = await UpdateProfileCall.call(
-                          token: AppState().authToken,
+                          token: StoredPreferences.authToken,
                           firstName: firstNameUpdateTFController!.text,
                           lastName: lastNameUpdateTFController!.text,
                           email: emailUpdateTFController!.text,

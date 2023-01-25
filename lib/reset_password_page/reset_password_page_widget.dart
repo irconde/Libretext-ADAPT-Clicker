@@ -7,6 +7,8 @@ import '../notifications_page/notifications_page_widget.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 
+import '../stored_preferences.dart';
+
 class ResetPasswordPageWidget extends StatefulWidget {
   const ResetPasswordPageWidget({Key? key}) : super(key: key);
 
@@ -330,7 +332,7 @@ class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
                 child: FFButtonWidget(
                   onPressed: () async {
                     updatePassword = await UpdatePasswordCall.call(
-                      token: AppState().authToken,
+                      token: StoredPreferences.authToken,
                       password: newPasswordTFController!.text,
                       passwordConfirmation: confirmNewPWTFController!.text,
                     );

@@ -1,3 +1,5 @@
+import 'package:adapt_clicker/stored_preferences.dart';
+
 import '../backend/api_requests/api_calls.dart';
 import '../components/question_c_t_n_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
@@ -324,7 +326,7 @@ class _AssignmentDetailsWidgetState extends State<AssignmentDetailsWidget>
                               widget.assignmentSum,
                               r'''$.id''',
                             ),
-                            token: AppState().authToken,
+                            token: StoredPreferences.authToken,
                           ),
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
