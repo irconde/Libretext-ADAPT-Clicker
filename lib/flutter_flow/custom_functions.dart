@@ -1,5 +1,6 @@
 import 'package:adapt_clicker/flutter_flow/flutter_flow_util.dart';
 import 'package:adapt_clicker/timezone.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 String createToken(String token) {
   return "Bearer $token";
@@ -58,4 +59,46 @@ void initTimezones(dynamic timezoneAPI) {
   }
 
   AppState.timezoneContainer = new TimezonesContainer(timezones);
+}
+
+void preloadSVGs() async {
+  // Preload SVG used in the next screen to avoid rendering delays
+  Future.wait([
+    // LibreTexts logo
+    precachePicture(
+      ExactAssetPicture(SvgPicture.svgStringDecoderOutsideViewBoxBuilder,
+          'assets/images/libretexts_adapt_logo.svg'),
+      null,
+    ),
+    // Hand icon
+    precachePicture(
+      ExactAssetPicture(SvgPicture.svgStringDecoderOutsideViewBoxBuilder,
+          'assets/images/hand_wave.svg'),
+      null,
+    ),
+    // Book icon
+    precachePicture(
+      ExactAssetPicture(SvgPicture.svgStringDecoderOutsideViewBoxBuilder,
+          'assets/images/book_icon.svg'),
+      null,
+    ),
+    // Lock icon
+    precachePicture(
+      ExactAssetPicture(SvgPicture.svgStringDecoderOutsideViewBoxBuilder,
+          'assets/images/lock.svg'),
+      null,
+    ),
+    // Person add
+    precachePicture(
+      ExactAssetPicture(SvgPicture.svgStringDecoderOutsideViewBoxBuilder,
+          'assets/images/person_add1.svg'),
+      null,
+    ),
+    // Contact support
+    precachePicture(
+      ExactAssetPicture(SvgPicture.svgStringDecoderOutsideViewBoxBuilder,
+          'assets/images/contact_support.svg'),
+      null,
+    ),
+  ]);
 }

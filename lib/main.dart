@@ -10,7 +10,6 @@ import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
 import 'flutter_flow/app_router.gr.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +21,7 @@ void main() async {
   bool isAuthenticated = await userIsAuthenticated();
   AppState();
   fetchTimezone();
+  functions.preloadSVGs();
   runApp(MyApp(authenticated: isAuthenticated));
 }
 
