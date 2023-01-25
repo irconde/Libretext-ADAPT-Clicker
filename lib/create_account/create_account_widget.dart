@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../stored_preferences.dart';
+
 String firstNameRequired = "The first name field is required.";
 String lastNameRequired = "The last name field is required.";
 String idRequired = "The student ID field is required.";
@@ -359,9 +361,11 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                               ),
                             ),
                             onPressed: () async {
+                              String _email = passwordFieldCAController!.text;
+                              String _password = passwordFieldCAController!.text;
                               createUser = await CreateUserCall.call(
-                                email: emailFieldCAController!.text,
-                                password: passwordFieldCAController!.text,
+                                email: _email,
+                                password: _password,
                                 passwordConfirmation:
                                     confirmPasswordFieldCAController!.text,
                                 firstName: firstNameFieldCAController!.text,
@@ -371,6 +375,10 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                 timeZone: tZDropDownCAValue,
                               );
                               if ((createUser?.succeeded ?? true)) {
+                                setState(() {
+                                  StoredPreferences.userAccount = _email;
+                                  StoredPreferences.userPassword = _password;
+                                });
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(

@@ -257,16 +257,22 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           ),
                         ),
                         onPressed: () async {
+                          String _email = _controller1.text;
+                          String _password = _controller2.text;
                           loginAttempt = await LoginCall.call(
-                            email: _controller1.text,
-                            password: _controller2.text,
+                            email: _email,
+                            password: _password,
                           );
                           if ((loginAttempt?.succeeded ?? true)) {
-                            setState(() => StoredPreferences.authToken =
-                                    functions.createToken(getJsonField(
-                                  (loginAttempt?.jsonBody ?? ''),
-                                  r'''$.token''',
-                                ).toString()));
+                            setState(() {
+                              StoredPreferences.authToken =
+                                  functions.createToken(getJsonField(
+                                    (loginAttempt?.jsonBody ?? ''),
+                                    r'''$.token''',
+                                  ).toString());
+                              StoredPreferences.userAccount = _email;
+                              StoredPreferences.userPassword = _password;
+                            });
                             await Navigator.push(
                               context,
                               MaterialPageRoute(

@@ -6,7 +6,7 @@ import '../courses_page/courses_page_widget.dart';
 @AdaptiveAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
-    AutoRoute(page: WelcomePageWidget, initial: true),
+    AutoRoute(page: WelcomePageWidget),
     AutoRoute(page: CoursesPageWidget),
   ],
 )

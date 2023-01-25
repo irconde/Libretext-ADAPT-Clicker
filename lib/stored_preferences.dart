@@ -9,6 +9,8 @@ class StoredPreferences {
   // Key values
   static const _keyRememberMe = 'ff_rememberMe';
   static const _keyAuthToken = 'ff_authToken';
+  static const _keyUserAccount = 'ff_userAccount';
+  static const _keyUserPassword = 'ff_userPassword';
   static const _keySelectedIndex = 'ff_selectedIndex';
 
   // Call this method from iniState() function of mainApp().
@@ -31,6 +33,8 @@ class StoredPreferences {
 
   static bool get rememberMe => getBool(_keyRememberMe);
   static String get authToken => getString(_keyAuthToken);
+  static String get userAccount => getString(_keyUserAccount);
+  static String get userPassword => getString(_keyUserPassword);
   static int get selectedIndex => getInt(_keySelectedIndex);
 
   static Future<bool> setString(String key, String value) async {
@@ -54,6 +58,14 @@ class StoredPreferences {
 
   static set authToken(String value) {
     setString(_keyAuthToken, value);
+  }
+
+  static set userAccount(String value) {
+    setString(_keyUserAccount, value);
+  }
+
+  static set userPassword(String value) {
+    setString(_keyUserPassword, value);
   }
 
   static set selectedIndex(int value) {

@@ -40,7 +40,7 @@ class AppRouter extends _i3.RootStackRouter {
   List<_i3.RouteConfig> get routes => [
         _i3.RouteConfig(
           WelcomeRouteWidget.name,
-          path: '/',
+          path: '/welcome-page-widget',
         ),
         _i3.RouteConfig(
           CoursesRouteWidget.name,
@@ -55,7 +55,7 @@ class WelcomeRouteWidget extends _i3.PageRouteInfo<void> {
   const WelcomeRouteWidget()
       : super(
           WelcomeRouteWidget.name,
-          path: '/',
+          path: '/welcome-page-widget',
         );
 
   static const String name = 'WelcomeRouteWidget';
