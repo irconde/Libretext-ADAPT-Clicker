@@ -32,7 +32,6 @@ class _LibreAppBarState extends State<LibreAppBar>  {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     if(svgIconColor == null)
       svgIconColor = FlutterFlowTheme.of(context).svgIconColor;
@@ -52,7 +51,6 @@ class _LibreAppBarState extends State<LibreAppBar>  {
       {
         Navigator.of(context).pop();
       },),
-        leadingWidth: Constants.mmMargin,
         flexibleSpace: LayoutBuilder(builder:
             (BuildContext context, BoxConstraints constraints) {
           top = constraints.biggest.height;
@@ -76,7 +74,7 @@ class _LibreAppBarState extends State<LibreAppBar>  {
 
   //This determines the title and padding switch
   bool checkTop(var topSize) {
-    if (topSize <= Constants.appBarTransitionHeight) {
+    if (topSize <= Constants.appBarHeight) {
       return true;
     } else {
       return false;
@@ -90,12 +88,31 @@ class _LibreAppBarState extends State<LibreAppBar>  {
       return titleSpace;
   }
 
+  double getTransition(double diff)
+  {
+    double result = 32 + Constants.xlMargin - diff;
+
+    if(result < 32)
+      return 32;
+
+    if(result > Constants.xlMargin)
+      return Constants.xlMargin;
+
+    return result;
+  }
   EdgeInsetsGeometry getPadding(var top)
   {
-    if(checkTop(top))
-      return  EdgeInsetsDirectional.fromSTEB(Constants.xlMargin, 0, 0, Constants.smMargin);
+
+    if(checkTop(top)) {
+      double diff = (top -  Constants.appBarTransitionMin)/Constants.appBarTitleSpeed + Constants.appBarTitleOffset;
+
+      return EdgeInsetsDirectional.fromSTEB(getTransition(diff), 0, 0, Constants.smMargin);
+
+    }
     else
       return  EdgeInsetsDirectional.fromSTEB(Constants.mmMargin, 0, 0, Constants.mmMargin);
 
   }
+
+
 }

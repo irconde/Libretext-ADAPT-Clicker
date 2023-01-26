@@ -180,11 +180,13 @@ class Constants {
   static const int snackBarDurationSec = 4; //seconds
   static const double TFIconSize = 21; //seconds
 
-  //Margins
+  //Intro pages AppBar
   static const double appBarHeight = 240.0;
-  static const double appBarTransitionHeight = 100.0;
+  static const double appBarTransitionMin = 80;
+  static const double appBarTitleOffset = 32; //higher means closer to top
+  static const double appBarTitleSpeed = 2; //higher means slower
 
-  static const double xlMargin = 64;
+  static const double xlMargin = 68;
   static const double llMargin = 48; //Double spaced
   static const double lmMargin = 44; //
   static const double lsMargin = 40; //
