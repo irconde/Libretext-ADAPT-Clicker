@@ -5,7 +5,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../components/assignment_details_widget.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../gen/assets.gen.dart';
-import '../stored_preferences.dart';
+import '../utils/stored_preferences.dart';
 
 class AssignmentCtn extends StatefulWidget {
   const AssignmentCtn({Key? key, required this.assignmentsItem})

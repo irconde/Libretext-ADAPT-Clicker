@@ -1,4 +1,6 @@
-import 'package:adapt_clicker/stored_preferences.dart';
+import 'package:adapt_clicker/utils/check_internet_connectivity.dart';
+import 'package:adapt_clicker/utils/stored_preferences.dart';
+import 'package:provider/provider.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/flutter_flow/custom_functions.dart';
@@ -27,7 +29,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp(authenticated: isAuthenticated));
+  runApp(
+    ChangeNotifierProvider(
+        create: (_) => CheckInternet(),
+        child: MyApp(authenticated: isAuthenticated)),
+  );
 }
 
 Future<bool> userIsAuthenticated() async {

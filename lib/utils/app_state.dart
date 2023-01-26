@@ -1,4 +1,4 @@
-import 'package:adapt_clicker/timezone.dart';
+import 'package:adapt_clicker/utils/timezone.dart';
 
 class AppState {
   static final AppState _instance = AppState._internal();
@@ -27,5 +27,4 @@ class AppState {
 
   static TimezonesContainer? timezoneContainer;
   static Timezone? userTimezone = Timezone('UnsetV', 'UnsetT');
-
 }

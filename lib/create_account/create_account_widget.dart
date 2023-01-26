@@ -10,7 +10,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
-import '../stored_preferences.dart';
+import '../utils/stored_preferences.dart';
 
 String firstNameRequired = "The first name field is required.";
 String lastNameRequired = "The last name field is required.";

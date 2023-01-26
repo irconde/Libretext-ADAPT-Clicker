@@ -6,7 +6,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 
-import '../stored_preferences.dart';
+import '../utils/stored_preferences.dart';
 
 class ResetPasswordPageWidget extends StatefulWidget {
   const ResetPasswordPageWidget({Key? key, required this.onSubmit})

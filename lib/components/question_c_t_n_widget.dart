@@ -14,7 +14,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import '../gen/assets.gen.dart';
 import 'dart:developer';
 
-import '../stored_preferences.dart';
+import '../utils/stored_preferences.dart';
 
 class QuestionCTNWidget extends StatefulWidget {
   const QuestionCTNWidget({

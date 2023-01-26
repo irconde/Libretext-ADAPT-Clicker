@@ -1,4 +1,4 @@
-import 'package:adapt_clicker/stored_preferences.dart';
+import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/question_c_t_n_widget.dart';

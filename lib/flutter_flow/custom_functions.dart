@@ -1,5 +1,5 @@
 import 'package:adapt_clicker/flutter_flow/flutter_flow_util.dart';
-import 'package:adapt_clicker/timezone.dart';
+import 'package:adapt_clicker/utils/timezone.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 String createToken(String token) {

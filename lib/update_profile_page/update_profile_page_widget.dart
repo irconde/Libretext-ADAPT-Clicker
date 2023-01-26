@@ -10,7 +10,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
-import '../stored_preferences.dart';
+import '../utils/stored_preferences.dart';
 
 class UpdateProfilePageWidget extends StatefulWidget {
   const UpdateProfilePageWidget({Key? key, required this.onSubmit})
@@ -276,7 +276,9 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       minimumSize:
-                          const Size.fromHeight(Constants.buttonHeight), backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+                          const Size.fromHeight(Constants.buttonHeight),
+                      backgroundColor:
+                          FlutterFlowTheme.of(context).primaryColor,
                       textStyle: FlutterFlowTheme.of(context).title3,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4),
