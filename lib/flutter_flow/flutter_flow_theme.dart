@@ -56,6 +56,9 @@ abstract class FlutterFlowTheme {
     );
   }
 
+
+
+
   InputDecorationTheme inputTheme() => InputDecorationTheme(
         contentPadding: EdgeInsets.all(16),
         floatingLabelStyle: TextStyle(color: primaryColor),
@@ -78,7 +81,25 @@ abstract class FlutterFlowTheme {
         prefixIconColor: tertiaryColor,
         suffixIconColor: tertiaryColor,
       );
+
+  IconThemeData appBarIconThemes() =>
+      IconThemeData(
+        size: 24,
+        color: primaryBackground,
+      );
+
+  AppBarTheme appBarTheme() =>AppBarTheme(
+    backgroundColor: primaryColor,
+    titleTextStyle: title3,
+    centerTitle: false,
+    actionsIconTheme: appBarIconThemes(),
+    iconTheme: appBarIconThemes(),
+    titleSpacing: 14, //This is because the built in padding
+    elevation: 0,
+  );
 }
+
+
 
 class LightModeTheme extends FlutterFlowTheme {
   late Color primaryColor = const Color(0xFF056ABD);
@@ -147,7 +168,7 @@ class ThemeTypography extends Typography {
   String get title3Family => 'Open Sans';
   TextStyle get title3 => GoogleFonts.getFont(
         'Open Sans',
-        color: theme.primaryText,
+        color: theme.primaryBackground,
         fontWeight: FontWeight.w600,
         fontSize: 20,
       );

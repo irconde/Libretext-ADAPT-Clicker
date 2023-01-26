@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:adapt_clicker/components/libre_app_bar.dart';
+import 'package:adapt_clicker/components/collapsing_libre_app_bar.dart';
 
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/components/ContactUsDropDownList.dart';
@@ -83,7 +83,7 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
-            LibreAppBar(
+            CollapsingLibreAppBar(
               titleNoSpace: "Contact Us",
               titleSpace: "Contact\nUs",
               iconPath: 'assets/images/contact_support.svg',

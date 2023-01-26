@@ -97,40 +97,24 @@ class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
-        leading: InkWell(
-          onTap: () async {
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () {
             scaffoldKey.currentState!.openDrawer();
           },
-          child: Icon(
-            Icons.menu,
-            color: FlutterFlowTheme.of(context).primaryBackground,
-            size: 28,
-          ),
         ),
-        title: Text('My Password',
-            style: FlutterFlowTheme.of(context).title3.override(
-                  fontFamily: 'Open Sans',
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                )),
+        title: Text('My Password'),
         actions: [
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
-            child: InkWell(
-              onTap: () async {
-                context.pushRoute(NotificationsRouteWidget());
-              },
-              child: Icon(
-                Icons.notifications,
-                color: FlutterFlowTheme.of(context).primaryBackground,
-                size: 28,
-              ),
+          IconButton(
+            icon: Icon(
+              Icons.notifications,
             ),
+            onPressed: () async {
+              context.pushRoute(NotificationsRouteWidget());
+            },
           ),
         ],
-        centerTitle: true,
-        elevation: 2,
       ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       drawer: DrawerCtnWidget(),

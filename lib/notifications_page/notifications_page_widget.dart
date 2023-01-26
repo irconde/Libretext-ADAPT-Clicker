@@ -25,33 +25,16 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
-        leading: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-          child: InkWell(
-            onTap: () async {
-              context.popRoute();
-            },
-            child: Icon(
-              Icons.arrow_back,
-              color: FlutterFlowTheme.of(context).primaryBackground,
-              size: 32,
-            ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
           ),
+          onPressed: () async {
+            context.popRoute();
+          },
         ),
-        title: Align(
-          alignment: AlignmentDirectional(0, 0),
-          child: Text(
-            'Notifications',
-            style: FlutterFlowTheme.of(context).bodyText1.override(
-                  fontFamily: 'Open Sans',
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                ),
-          ),
-        ),
+        title: Text('Notifications'),
         actions: [
           Align(
             alignment: AlignmentDirectional(0, 0),
@@ -70,8 +53,6 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
             ),
           ),
         ],
-        centerTitle: true,
-        elevation: 2,
       ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(

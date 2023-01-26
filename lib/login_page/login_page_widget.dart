@@ -3,7 +3,7 @@ import 'package:adapt_clicker/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import '../backend/api_requests/api_calls.dart';
-import '../components/libre_app_bar.dart';
+import '../components/collapsing_libre_app_bar.dart';
 import '../components/reset_password_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_toggle_icon.dart';
@@ -76,7 +76,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
-            LibreAppBar(titleNoSpace: "Welcome Back", titleSpace: "Welcome\nBack",  iconPath:  'assets/images/hand_wave.svg',  svgIconColor: FlutterFlowTheme.of(context).svgIconColor2),
+            CollapsingLibreAppBar(titleNoSpace: "Welcome Back", titleSpace: "Welcome\nBack",  iconPath:  'assets/images/hand_wave.svg',  svgIconColor: FlutterFlowTheme.of(context).svgIconColor2),
             ];
         },
         body: SingleChildScrollView(

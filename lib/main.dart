@@ -90,6 +90,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.light,
         inputDecorationTheme: FlutterFlowTheme.of(context).inputTheme(),
+        appBarTheme: FlutterFlowTheme.of(context).appBarTheme(),
       ),
       themeMode: _themeMode,
       routerDelegate: _appRouter.delegate(

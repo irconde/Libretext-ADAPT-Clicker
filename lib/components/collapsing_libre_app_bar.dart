@@ -5,8 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../gen/assets.gen.dart';
 
-class LibreAppBar extends StatefulWidget {
-  const LibreAppBar({Key? key, required this.titleNoSpace, required this.titleSpace, this.top = 0.0, required this.iconPath, this.svgIconColor}) : super(key: key);
+class CollapsingLibreAppBar extends StatefulWidget {
+  const CollapsingLibreAppBar({Key? key, required this.titleNoSpace, required this.titleSpace, this.top = 0.0, required this.iconPath, this.svgIconColor}) : super(key: key);
 
   final String titleNoSpace;
   final String titleSpace;
@@ -15,14 +15,14 @@ class LibreAppBar extends StatefulWidget {
   final Color? svgIconColor;
 
   @override
-  _LibreAppBarState createState() => _LibreAppBarState(top, titleNoSpace, titleSpace, iconPath, svgIconColor);
+  _CollapsingLibreAppBarState createState() => _CollapsingLibreAppBarState(top, titleNoSpace, titleSpace, iconPath, svgIconColor);
 }
 
 
 
 
-class _LibreAppBarState extends State<LibreAppBar>  {
-  _LibreAppBarState(this.top, this.titleNoSpace, this.titleSpace, this.iconPath, this.svgIconColor);
+class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar>  {
+  _CollapsingLibreAppBarState(this.top, this.titleNoSpace, this.titleSpace, this.iconPath, this.svgIconColor);
   ApiCallResponse? logout;
   double top;
   String titleNoSpace;
