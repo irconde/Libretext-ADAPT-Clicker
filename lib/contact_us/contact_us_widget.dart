@@ -1,17 +1,20 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:adapt_clicker/components/collapsing_libre_app_bar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/components/ContactUsDropDownList.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 
+import '../utils/check_internet_connectivity.dart';
+
 String nameRequired = "The name field is required.";
 String emailRequired = "The email field is required.";
 String messageRequired = "The message field is required.";
 String invalidRecords = "These credentials do not match our records.";
 
-class ContactUsWidget extends StatefulWidget {
+class ContactUsWidget extends ConsumerStatefulWidget {
   const ContactUsWidget({Key? key, required this.onSubmit}) : super(key: key);
   final ValueChanged<String?> onSubmit;
 
@@ -19,7 +22,7 @@ class ContactUsWidget extends StatefulWidget {
   _ContactUsWidgetState createState() => _ContactUsWidgetState();
 }
 
-class _ContactUsWidgetState extends State<ContactUsWidget> {
+class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
   TextEditingController? contactUsEmailTextFieldController;
   TextEditingController? contactUsNameTextFieldController;
   String? contactUsSubjectDropDownValue;
@@ -75,6 +78,28 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
     if (_messageErrorText == null) {
       widget.onSubmit(contactUsMessageTextFieldController?.value.text);
     }
+  }
+
+  bool _checkConnection() {
+    ConnectivityStatus? status = ref.read(provider).value;
+    if (status != ConnectivityStatus.isConnected) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'No Internet connection',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+            ),
+          ),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Color(0xFFD82828),
+        ),
+      );
+      return false;
+    }
+    return true;
   }
 
   @override
@@ -191,6 +216,7 @@ class _ContactUsWidgetState extends State<ContactUsWidget> {
                             ),
                           ),
                           onPressed: () async {
+                            if (!_checkConnection()) return;
                             contactUs = await ContactUsCall.call(
                               email: contactUsEmailTextFieldController!.text,
                               name: contactUsNameTextFieldController!.text,
