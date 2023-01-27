@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:move_to_background/move_to_background.dart';
 import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
 import 'package:adapt_clicker/stored_preferences.dart';
@@ -10,6 +11,10 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_app_installations/firebase_app_installations.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 
 class CoursesPageWidget extends StatefulWidget {
   const CoursesPageWidget({Key? key}) : super(key: key);
@@ -18,10 +23,71 @@ class CoursesPageWidget extends StatefulWidget {
   _CoursesPageWidgetState createState() => _CoursesPageWidgetState();
 }
 
+
+
+
 class _CoursesPageWidgetState extends State<CoursesPageWidget> {
   ApiCallResponse? logout;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   Completer<ApiCallResponse>? _apiRequestCompleter;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    requestPermission(); //gets push notification permission
+    getToken();
+    firebaseID();
+    super.initState();
+  }
+
+  //In app messaging ID
+  void firebaseID () async
+  {
+    String id = await FirebaseInstallations.instance.getId();
+    print(" Installation ID: $id");
+  }
+
+  //Permission check
+  void requestPermission() async
+  {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    NotificationSettings settings = await messaging.requestPermission(
+
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized)
+      print('User granted permission');
+    else if (settings.authorizationStatus == AuthorizationStatus.provisional)
+      print('User granted provisional permission');
+    else
+      print('User declined or has not accepted permission');
+  }
+
+  void getToken() async
+  {
+    await FirebaseMessaging.instance.getToken().then(
+            (token)
+        {
+          setState(() {
+            var mtoken = token;
+            print ("My token is $mtoken");
+          });
+        }
+    );
+
+  }
+
+  void saveToken(String token) async {
+
+    //Fix me to work with API call
+    await FirebaseFirestore.instance.collection("UserTokens").doc("User1").set(
+        {
+          'token' : token,
+        });
+  }
+
 
   @override
   Widget build(BuildContext context) {
