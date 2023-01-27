@@ -1,6 +1,6 @@
 import 'package:adapt_clicker/utils/check_internet_connectivity.dart';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/flutter_flow/custom_functions.dart';
@@ -23,17 +23,14 @@ void main() async {
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   bool isAuthenticated = await userIsAuthenticated();
   AppState();
+  // TODO. Move this to a different place;
   fetchTimezone();
   functions.preloadSVGs();
   // Firebase initialization
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(
-    ChangeNotifierProvider(
-        create: (_) => CheckInternet(),
-        child: MyApp(authenticated: isAuthenticated)),
-  );
+  runApp(ProviderScope(child: MyApp(authenticated: isAuthenticated)));
 }
 
 Future<bool> userIsAuthenticated() async {

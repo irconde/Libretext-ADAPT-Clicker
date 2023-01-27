@@ -1,48 +1,59 @@
 import 'dart:async';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CheckInternet extends ChangeNotifier {
-  String status = 'waiting...';
-  final Connectivity _connectivity = Connectivity();
-  late StreamSubscription _streamSubscription;
+enum ConnectivityStatus {
+  initializing,
+  notDetermined,
+  isConnected,
+  isDisconnected
+}
 
-  void checkConnectivity() async {
-    var connectionResult = await _connectivity.checkConnectivity();
-    if (connectionResult == ConnectivityResult.mobile) {
-      status = "Connected to MobileData";
-      notifyListeners();
-    } else if (connectionResult == ConnectivityResult.wifi) {
-      status = "Connected to Wifi";
-      notifyListeners();
-    } else {
-      status = "Offline";
-      notifyListeners();
+final provider =
+    AsyncNotifierProvider<ConnectivityStatusNotifier, ConnectivityStatus>(() {
+  return ConnectivityStatusNotifier();
+});
+
+class ConnectivityStatusNotifier extends AsyncNotifier<ConnectivityStatus> {
+
+  bool firstTime = true;
+  bool startedListening = false;
+
+  ConnectivityStatus _resultToStatus(ConnectivityResult connectionResult, {bool firstTime = false}) {
+    ConnectivityStatus newState = ConnectivityStatus.notDetermined;
+    switch (connectionResult) {
+      case ConnectivityResult.mobile:
+      case ConnectivityResult.wifi:
+        newState = ConnectivityStatus.isConnected;
+        break;
+      case ConnectivityResult.none:
+        newState = ConnectivityStatus.isDisconnected;
+        break;
     }
+    return newState;
   }
 
-  void checkRealtimeConnection() {
-    _streamSubscription = _connectivity.onConnectivityChanged.listen((event) {
-      switch (event) {
-        case ConnectivityResult.mobile:
-          {
-            status = "Connected to MobileData";
-            notifyListeners();
-          }
-          break;
-        case ConnectivityResult.wifi:
-          {
-            status = "Connected to Wifi";
-            notifyListeners();
-          }
-          break;
-        default:
-          {
-            status = 'Offline';
-            notifyListeners();
-          }
-          break;
+  @override
+  Future<ConnectivityStatus> build() async {
+    final ConnectivityResult initConnection = await Connectivity().checkConnectivity();
+    ConnectivityStatus connectionStatus = _resultToStatus(initConnection);
+    if (firstTime) {
+      if (connectionStatus == ConnectivityStatus.isConnected) {
+        connectionStatus = ConnectivityStatus.initializing;
       }
+      firstTime = !firstTime;
+    }
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      print("on listening");
+       if (startedListening) state = AsyncValue.data(_resultToStatus(result));
+       if (!startedListening) {
+         startedListening = ! startedListening;
+         if (state.value == ConnectivityStatus.isDisconnected) {
+           state = AsyncValue.data(_resultToStatus(result));
+         }
+       }
     });
+    return connectionStatus;
   }
 }

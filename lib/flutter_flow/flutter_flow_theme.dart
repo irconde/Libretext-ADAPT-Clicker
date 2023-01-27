@@ -123,6 +123,7 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color success = Color(0xFF008C3D);
   late Color failure = Color(0xFFD82828);
 
+
   //Activity Colors
   late Color activityGood = Color(0xFF008C3D);
   late Color activityMedium = Color(0xFFFF9D00);
