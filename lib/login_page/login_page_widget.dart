@@ -2,6 +2,7 @@ import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/collapsing_libre_app_bar.dart';
 import '../components/reset_password_widget.dart';
@@ -11,11 +12,13 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 
+import '../utils/check_internet_connectivity.dart';
+
 String passwordRequired = "The password field is required.";
 String emailRequired = "The email field is required.";
 String invalidRecords = "These credentials do not match our records.";
 
-class LoginPageWidget extends StatefulWidget {
+class LoginPageWidget extends ConsumerStatefulWidget {
   const LoginPageWidget({Key? key, required this.onSubmit}) : super(key: key);
   final ValueChanged<String> onSubmit;
 
@@ -23,7 +26,7 @@ class LoginPageWidget extends StatefulWidget {
   _LoginPageWidgetState createState() => _LoginPageWidgetState();
 }
 
-class _LoginPageWidgetState extends State<LoginPageWidget> {
+class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
   final _controller1 = TextEditingController();
   final _controller2 = TextEditingController();
   bool _submitted = false;
@@ -65,6 +68,28 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
     if (_passwordErrorText == null) {
       widget.onSubmit(_controller2.value.text);
     }
+  }
+
+  bool _checkConnection() {
+    ConnectivityStatus? status = ref.read(provider).value;
+    if (status != ConnectivityStatus.isConnected) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'No Internet connection',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+            ),
+          ),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Color(0xFFD82828),
+        ),
+      );
+      return false;
+    }
+    return true;
   }
 
   @override
@@ -230,6 +255,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           ),
                         ),
                         onPressed: () async {
+                          if (!_checkConnection()) return;
                           String _email = _controller1.text;
                           String _password = _controller2.text;
                           loginAttempt = await LoginCall.call(
@@ -312,6 +338,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           ),
                         ),
                         onPressed: () async {
+                          if (!_checkConnection()) return;
                           await launchURL(
                               'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
                         },

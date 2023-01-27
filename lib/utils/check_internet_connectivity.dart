@@ -16,11 +16,10 @@ final provider =
 });
 
 class ConnectivityStatusNotifier extends AsyncNotifier<ConnectivityStatus> {
-
   bool firstTime = true;
   bool startedListening = false;
 
-  ConnectivityStatus _resultToStatus(ConnectivityResult connectionResult, {bool firstTime = false}) {
+  ConnectivityStatus _resultToStatus(ConnectivityResult connectionResult) {
     ConnectivityStatus newState = ConnectivityStatus.notDetermined;
     switch (connectionResult) {
       case ConnectivityResult.mobile:
@@ -36,7 +35,8 @@ class ConnectivityStatusNotifier extends AsyncNotifier<ConnectivityStatus> {
 
   @override
   Future<ConnectivityStatus> build() async {
-    final ConnectivityResult initConnection = await Connectivity().checkConnectivity();
+    final ConnectivityResult initConnection =
+        await Connectivity().checkConnectivity();
     ConnectivityStatus connectionStatus = _resultToStatus(initConnection);
     if (firstTime) {
       if (connectionStatus == ConnectivityStatus.isConnected) {
@@ -45,15 +45,18 @@ class ConnectivityStatusNotifier extends AsyncNotifier<ConnectivityStatus> {
       firstTime = !firstTime;
     }
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      print("on listening");
-       if (startedListening) state = AsyncValue.data(_resultToStatus(result));
-       if (!startedListening) {
-         startedListening = ! startedListening;
-         if (state.value == ConnectivityStatus.isDisconnected) {
-           state = AsyncValue.data(_resultToStatus(result));
-         }
-       }
+      if (startedListening) {
+        ConnectivityStatus newState = _resultToStatus(result);
+        state = AsyncValue.data(newState);
+      }
+      if (!startedListening) {
+        startedListening = !startedListening;
+        if (state.value == ConnectivityStatus.isDisconnected) {
+          state = AsyncValue.data(_resultToStatus(result));
+        }
+      }
     });
+
     return connectionStatus;
   }
 }
