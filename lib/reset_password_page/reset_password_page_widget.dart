@@ -1,14 +1,16 @@
 import 'package:adapt_clicker/components/drawer_ctn.dart';
 import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 
+import '../utils/check_internet_connectivity.dart';
 import '../utils/stored_preferences.dart';
 
-class ResetPasswordPageWidget extends StatefulWidget {
+class ResetPasswordPageWidget extends ConsumerStatefulWidget {
   const ResetPasswordPageWidget({Key? key, required this.onSubmit})
       : super(key: key);
   final ValueChanged<String> onSubmit;
@@ -24,7 +26,7 @@ String confirmPasswordRequired = "The confirm password field is required.";
 String matchPasswords = "The new passwords must match";
 String catchAllError = "Something went wrong.";
 
-class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
+class _ResetPasswordPageWidgetState extends ConsumerState<ResetPasswordPageWidget> {
   TextEditingController? curPasswordTFController;
   TextEditingController? newPasswordTFController;
   TextEditingController? confirmNewPWTFController;
@@ -90,6 +92,28 @@ class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
     if (_confirmNewPasswordErrorText == null) {
       widget.onSubmit(confirmNewPWTFController!.value.text);
     }
+  }
+
+  bool _checkConnection(){
+    ConnectivityStatus? status = ref.read(provider).value;
+    if (status != ConnectivityStatus.isConnected) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'No Internet connection',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+            ),
+          ),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Color(0xFFD82828),
+        ),
+      );
+      return false;
+    }
+    return true;
   }
 
   @override
@@ -259,6 +283,7 @@ class _ResetPasswordPageWidgetState extends State<ResetPasswordPageWidget> {
                       ),
                     ),
                     onPressed: () async {
+                      if (!_checkConnection()) return;
                       updatePassword = await UpdatePasswordCall.call(
                         token: StoredPreferences.authToken,
                         password: newPasswordTFController!.text,
