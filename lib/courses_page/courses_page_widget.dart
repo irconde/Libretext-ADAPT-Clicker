@@ -8,7 +8,6 @@ import '../components/no_courses_widget.dart';
 import '../components/drawer_ctn.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../gen/assets.gen.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 
@@ -30,47 +29,15 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
       child: Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
           automaticallyImplyLeading: false,
-          leading: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-            child: InkWell(
-              onTap: () async {
-                scaffoldKey.currentState!.openDrawer();
-              },
-              child: Icon(
-                Icons.menu,
-                color: FlutterFlowTheme.of(context).primaryBackground,
-                size: Constants.mmMargin,
-              ),
-            ),
-          ),
-          title: Text(
-            'Courses',
-            style: FlutterFlowTheme.of(context).bodyText1.override(
-                  fontFamily: 'Open Sans',
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                ),
-          ),
+          leading: IconButton(icon: Icon(Icons.menu), onPressed: () {  scaffoldKey.currentState!.openDrawer(); },),
+          title: Text('Courses'),
           actions: [
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
-              child: InkWell(
-                onTap: () async {
-                  context.pushRoute(NotificationsRouteWidget());
-                },
-                child: Icon(
-                  Icons.notifications,
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  size: 28,
-                ),
-              ),
+            IconButton(icon: Icon(Icons.notifications,), onPressed: () async {
+              context.pushRoute(NotificationsRouteWidget());
+            },
             ),
           ],
-          centerTitle: true,
-          elevation: 4,
         ),
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         floatingActionButton: FloatingActionButton(
