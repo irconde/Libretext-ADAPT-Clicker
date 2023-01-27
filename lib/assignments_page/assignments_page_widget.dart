@@ -1,18 +1,15 @@
 import 'package:adapt_clicker/stored_preferences.dart';
-import 'package:auto_route/auto_route.dart';
-
+import 'package:adapt_clicker/components/AssignmentDropdown.dart';
+import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import '../backend/api_requests/api_calls.dart';
-import '../components/assignment_details_widget.dart';
+import '../components/Assignment_Ctn.dart';
 import '../components/assignment_stat_ctn_widget.dart';
-import '../flutter_flow/app_router.gr.dart';
-import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../gen/assets.gen.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import '../gen/assets.gen.dart';
 
 class AssignmentsPageWidget extends StatefulWidget {
   const AssignmentsPageWidget({
@@ -29,11 +26,23 @@ class AssignmentsPageWidget extends StatefulWidget {
 }
 
 class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
-  ApiCallResponse? assignmentSum;
-  ApiCallResponse? assignmentSummary;
-  String? dropDownValue1;
+  String? dropDownValue;
   String? dropDownValue2;
+  List<String> dropDownList1 = [
+    'ALL ASSIGNMENTS',
+    'EXAM',
+    'EXTRA CREDIT',
+    'HOMEWORK',
+    'LAB'
+  ];
+  List<String> dropDownList2 = [
+    'ORDER BY: NAME',
+    'ORDER BY: START DATE',
+    'ORDER BY: DUE DATE'
+  ];
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  var top = 0.0;
+  late ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -47,50 +56,34 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        leading: InkWell(
-          onTap: () async {
-            context.popRoute();
-          },
-          child: Icon(
-            Icons.arrow_back,
-            color: FlutterFlowTheme.of(context).primaryBackground,
-            size: 28,
-          ),
-        ),
-        title: Text(
-          'Assignment Details',
-          textAlign: TextAlign.start,
-          style: FlutterFlowTheme.of(context).bodyText1.override(
-                fontFamily: 'Open Sans',
-                color: FlutterFlowTheme.of(context).primaryBackground,
-                fontSize: 26,
-              ),
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
-            child: InkWell(
-              onTap: () async {
-                context.pushRoute(NotificationsRouteWidget());
-              },
-              child: Icon(
-                Icons.notifications,
-                color: FlutterFlowTheme.of(context).primaryBtnText,
-                size: 28,
-              ),
-            ),
-          ),
-        ],
-        centerTitle: true,
-        elevation: 0,
-      ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      body: SafeArea(
-        child: GestureDetector(
+      body: NestedScrollView(
+        controller: _scrollController,
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+                backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+                expandedHeight: 160.0,
+                pinned: true,
+                snap: false,
+                floating: false,
+                flexibleSpace: LayoutBuilder(builder:
+                    (BuildContext context, BoxConstraints constraints) {
+                  top = constraints.biggest.height;
+                  return FlexibleSpaceBar(
+                    title: AnimatedOpacity(
+                        duration: Duration(milliseconds: 300),
+                        opacity: 1.0,
+                        child: Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 32, 0),
+                          child: Text("Introduction to this",
+                              style: FlutterFlowTheme.of(context).title2),
+                        )),
+                  );
+                })),
+          ];
+        },
+        body: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -127,10 +120,10 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                 FlutterFlowTheme.of(context).primaryBackground,
                             tabs: [
                               Tab(
-                                text: 'Home',
+                                text: 'HOME',
                               ),
                               Tab(
-                                text: 'Assignments',
+                                text: 'ASSIGNMENTS',
                               ),
                             ],
                           ),
@@ -139,83 +132,118 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                               children: [
                                 Container(
                                   width: double.infinity,
-                                  height: double.infinity,
                                   decoration: BoxDecoration(
                                     color: FlutterFlowTheme.of(context)
                                         .primaryBackground,
                                   ),
                                   child: Column(
-                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Container(
                                         width: double.infinity,
-                                        color: Color(0xFFF3F3F3),
+                                        color: FlutterFlowTheme.of(context)
+                                            .coursePagePullDown,
                                         child: ExpandableNotifier(
                                           initialExpanded: false,
                                           child: ExpandablePanel(
                                             header: Container(
+                                              alignment: Alignment.centerLeft,
                                               width: MediaQuery.of(context)
                                                   .size
                                                   .width,
-                                              height: 100,
+                                              height: 116,
                                               decoration: BoxDecoration(
-                                                color: Color(0xFFF3F3F3),
-                                              ),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .coursePagePullDown),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                Constants
-                                                                    .mmMargin,
-                                                                0,
-                                                                0,
-                                                                12),
-                                                    child: Text(
-                                                      'Instructor:',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText1,
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    flex: 3,
-                                                    child: Padding(
+                                                        Constants.mmMargin,
+                                                        Constants.msMargin,
+                                                        0,
+                                                        Constants.msMargin),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0,
-                                                                  Constants
-                                                                      .sMargin,
-                                                                  0,
-                                                                  0),
-                                                      child: Container(
-                                                        width: 225,
-                                                        height: double.infinity,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color:
-                                                              Color(0x00FFFFFF),
-                                                        ),
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                0, 0),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      0, 0, 12),
-                                                          child: Text(
-                                                            getJsonField(
+                                                          const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                              0,
+                                                              0,
+                                                              0,
+                                                              Constants
+                                                                  .msMargin),
+                                                      child: RichText(
+                                                        text: TextSpan(
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyText1
+                                                                .override(
+                                                                    fontFamily:
+                                                                        'Open Sans',
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .tertiaryText),
+                                                            children: [
+                                                              TextSpan(
+                                                                  text:
+                                                                      'Instructor: '),
+                                                              TextSpan(
+                                                                text:
+                                                                    getJsonField(
+                                                                  widget.course,
+                                                                  r'''$.instructor''',
+                                                                ).toString(),
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyText1
+                                                                    .override(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .tertiaryText,
+                                                                      fontFamily:
+                                                                          'Open Sans',
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                    ),
+                                                              ),
+                                                            ]),
+                                                      ),
+                                                    ),
+                                                    RichText(
+                                                      text: TextSpan(
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Open Sans',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .tertiaryText,
+                                                                ),
+                                                        children: <TextSpan>[
+                                                          TextSpan(
+                                                            text:
+                                                                'Start Date: ',
+                                                          ),
+                                                          TextSpan(
+                                                            text: getJsonField(
                                                               widget.course,
-                                                              r'''$.instructor''',
+                                                              r'''$.start_date''',
                                                             ).toString(),
-                                                            maxLines: 2,
                                                             style: FlutterFlowTheme
                                                                     .of(context)
                                                                 .bodyText1
@@ -225,206 +253,136 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .normal,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .tertiaryText,
                                                                 ),
                                                           ),
-                                                        ),
+                                                        ],
                                                       ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ),
-                                            collapsed: Container(),
+                                            collapsed: Container(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .coursePagePullDown),
                                             expanded: Container(
                                               width: MediaQuery.of(context)
                                                   .size
                                                   .width,
                                               decoration: BoxDecoration(
-                                                color: Color(0xFFF3F3F3),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .coursePagePullDown,
                                               ),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.min,
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
                                                                 .fromSTEB(
-                                                                    Constants
-                                                                        .mmMargin,
-                                                                    0,
-                                                                    0,
-                                                                    0),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0,
-                                                                          0,
-                                                                          0,
-                                                                          12),
-                                                              child: Text(
-                                                                'Start Date:',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyText1,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              'End Date:',
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyText1,
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0,
-                                                                          12,
-                                                                          0,
-                                                                          0),
-                                                              child: Text(
-                                                                'Description:',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyText1,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
+                                                            Constants.mmMargin,
+                                                            0,
+                                                            0,
+                                                            Constants.msMargin),
+                                                    child: RichText(
+                                                      text: TextSpan(
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Open Sans',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .tertiaryText,
+                                                                ),
+                                                        children: <TextSpan>[
+                                                          TextSpan(
+                                                            text: 'End Date: ',
+                                                          ),
+                                                          TextSpan(
+                                                            text: getJsonField(
+                                                              widget.course,
+                                                              r'''$.end_date''',
+                                                            ).toString(),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Open Sans',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .tertiaryText,
+                                                                ),
+                                                          ),
+                                                        ],
                                                       ),
-                                                      Container(
-                                                        width: 225,
-                                                        height: 100,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color:
-                                                              Color(0x00FFFFFF),
-                                                        ),
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                0, 0),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0,
-                                                                          0,
-                                                                          0,
-                                                                          12),
-                                                              child: Text(
-                                                                getJsonField(
-                                                                  widget.course,
-                                                                  r'''$.start_date''',
-                                                                ).toString(),
-                                                                maxLines: 2,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyText1
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Open Sans',
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .normal,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                            AutoSizeText(
-                                                              getJsonField(
-                                                                widget.course,
-                                                                r'''$.end_date''',
-                                                              ).toString(),
-                                                              maxLines: 2,
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyText1
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Open Sans',
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal,
-                                                                  ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
+                                                    ),
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                Constants
-                                                                    .mmMargin,
-                                                                0,
-                                                                Constants
-                                                                    .mmMargin,
-                                                                0),
-                                                    child: Container(
-                                                      width: double.infinity,
-                                                      decoration: BoxDecoration(
-                                                        color:
-                                                            Color(0x00FFFFFF),
-                                                      ),
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
+                                                        const EdgeInsetsDirectional
                                                                 .fromSTEB(
-                                                                    0,
-                                                                    0,
-                                                                    0,
-                                                                    Constants
-                                                                        .msMargin),
-                                                        child: Text(
-                                                          getJsonField(
-                                                            widget.course,
-                                                            r'''$.public_description''',
-                                                          ).toString(),
-                                                          maxLines: 10,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Open Sans',
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
-                                                              ),
-                                                        ),
+                                                            Constants.mmMargin,
+                                                            0,
+                                                            0,
+                                                            Constants.msMargin),
+                                                    child: RichText(
+                                                      text: TextSpan(
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Open Sans',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .tertiaryText,
+                                                                ),
+                                                        children: <TextSpan>[
+                                                          TextSpan(
+                                                            text:
+                                                                'Description: ',
+                                                          ),
+                                                          TextSpan(
+                                                            text: getJsonField(
+                                                              widget.course,
+                                                              r'''$.public_description''',
+                                                            ).toString(),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Open Sans',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .tertiaryText,
+                                                                ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
                                                   ),
@@ -443,410 +401,154 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
                                                   Icons.keyboard_arrow_down,
                                               collapseIcon:
                                                   Icons.keyboard_arrow_up,
-                                              iconSize: 28,
+                                              iconSize: Constants.llMargin,
+                                              iconPadding: EdgeInsets.fromLTRB(
+                                                  0, 0, 20, 0),
                                               iconColor:
                                                   FlutterFlowTheme.of(context)
-                                                      .primaryText,
+                                                      .tertiaryText,
                                             ),
                                           ),
                                         ),
                                       ),
                                       Container(
                                         width: double.infinity,
-                                        height: 64,
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryBackground,
                                         ),
-                                        alignment:
-                                            AlignmentDirectional(-0.8, 0),
-                                        child: Text(
-                                          'Learning Process',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
+                                        child: Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(32, 24, 24, 24),
+                                          child: Text(
+                                            'Learning Process',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'Open Sans',
+                                                  fontWeight: FontWeight.bold,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .tertiaryText,
+                                                ),
+                                          ),
                                         ),
                                       ),
-                                      AssignmentStatCtnWidget(),
+                                      Flexible(
+                                        child: ScrollShadow(
+                                          controller: _scrollController,
+                                          color: Colors.grey,
+                                          child: ListView.builder(
+                                            padding: EdgeInsets.all(0),
+                                            itemCount: 10,
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              return AssignmentStatCtnWidget();
+                                            },
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
-                                Material(
-                                  color: Colors.transparent,
-                                  elevation: 0,
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
-                                      shape: BoxShape.rectangle,
-                                    ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Container(
-                                          width: double.infinity,
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFFF3F3F3),
-                                          ),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
+                                Container(
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBackground,
+                                    shape: BoxShape.rectangle,
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Container(
+                                        width: double.infinity,
+                                        height: 100,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .coursePagePullDown,
+                                        ),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            AssignmentDropdown(
+                                                dropDownValue: dropDownValue,
+                                                dropDownList: dropDownList1),
+                                            AssignmentDropdown(
+                                                dropDownValue: dropDownValue2,
+                                                dropDownList: dropDownList2),
+                                          ],
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: SingleChildScrollView(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
                                             children: [
-                                              FlutterFlowDropDown(
-                                                initialOption:
-                                                    dropDownValue1 ??=
-                                                        'ALL ASSIGNMENTS',
-                                                options: ['ALL ASSIGNMENTS'],
-                                                onChanged: (val) => setState(
-                                                    () => dropDownValue1 = val),
-                                                width: 172,
-                                                height: 40,
-                                                textStyle: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyText1
-                                                    .override(
-                                                      fontFamily: 'Open Sans',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      fontSize: 13,
-                                                    ),
-                                                hintText: 'ALL ASSIGNMENTS',
-                                                fillColor: Color(0x00FFFFFF),
-                                                elevation: 2,
-                                                borderColor: Color(0x6F101213),
-                                                borderWidth: 1,
-                                                borderRadius: 0,
-                                                margin: EdgeInsetsDirectional
-                                                    .fromSTEB(12, 4, 12, 4),
-                                                hidesUnderline: true,
-                                              ),
-                                              FlutterFlowDropDown(
-                                                initialOption:
-                                                    dropDownValue2 ??=
-                                                        'ORDER: BY NAME',
-                                                options: ['ORDER: BY NAME'],
-                                                onChanged: (val) => setState(
-                                                    () => dropDownValue2 = val),
-                                                width: 172,
-                                                height: 40,
-                                                textStyle: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyText1
-                                                    .override(
-                                                      fontFamily: 'Open Sans',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      fontSize: 13,
-                                                    ),
-                                                hintText: 'ORDER: BY NAME',
-                                                fillColor: Color(0x00FFFFFF),
-                                                elevation: 2,
-                                                borderColor: Color(0x6F101213),
-                                                borderWidth: 1,
-                                                borderRadius: 0,
-                                                margin: EdgeInsetsDirectional
-                                                    .fromSTEB(12, 4, 12, 4),
-                                                hidesUnderline: true,
+                                              FutureBuilder<ApiCallResponse>(
+                                                future:
+                                                    GetScoresByUserCall.call(
+                                                  token: StoredPreferences
+                                                      .authToken,
+                                                  course: widget.courseNumber,
+                                                ),
+                                                builder: (context, snapshot) {
+                                                  // Customize what your widget looks like when it's loading.
+                                                  if (!snapshot.hasData) {
+                                                    return Center(
+                                                      child: SizedBox(
+                                                        width: 50,
+                                                        height: 50,
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryColor,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
+                                                  final listViewGetScoresByUserResponse =
+                                                      snapshot.data!;
+                                                  return Builder(
+                                                    builder: (context) {
+                                                      final assignments =
+                                                          GetScoresByUserCall
+                                                              .assignments(
+                                                        listViewGetScoresByUserResponse
+                                                            .jsonBody,
+                                                      ).toList();
+                                                      return ListView.builder(
+                                                        padding:
+                                                            EdgeInsets.zero,
+                                                        shrinkWrap: true,
+                                                        scrollDirection:
+                                                            Axis.vertical,
+                                                        itemCount:
+                                                            assignments.length,
+                                                        itemBuilder: (context,
+                                                            assignmentsIndex) {
+                                                          final assignmentsItem =
+                                                              assignments[
+                                                                  assignmentsIndex];
+
+                                                          return AssignmentCtn(
+                                                              assignmentsItem:
+                                                                  (assignmentsItem));
+                                                        },
+                                                      );
+                                                    },
+                                                  );
+                                                },
                                               ),
                                             ],
                                           ),
                                         ),
-                                        Expanded(
-                                          child: SingleChildScrollView(
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                FutureBuilder<ApiCallResponse>(
-                                                  future:
-                                                      GetScoresByUserCall.call(
-                                                    token:
-                                                        StoredPreferences.authToken,
-                                                    course: widget.courseNumber,
-                                                  ),
-                                                  builder: (context, snapshot) {
-                                                    // Customize what your widget looks like when it's loading.
-                                                    if (!snapshot.hasData) {
-                                                      return Center(
-                                                        child: SizedBox(
-                                                          width: 50,
-                                                          height: 50,
-                                                          child:
-                                                              CircularProgressIndicator(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryColor,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }
-                                                    final listViewGetScoresByUserResponse =
-                                                        snapshot.data!;
-                                                    return Builder(
-                                                      builder: (context) {
-                                                        final assignments =
-                                                            GetScoresByUserCall
-                                                                .assignments(
-                                                          listViewGetScoresByUserResponse
-                                                              .jsonBody,
-                                                        ).toList();
-                                                        return ListView.builder(
-                                                          padding:
-                                                              EdgeInsets.zero,
-                                                          shrinkWrap: true,
-                                                          scrollDirection:
-                                                              Axis.vertical,
-                                                          itemCount: assignments
-                                                              .length,
-                                                          itemBuilder: (context,
-                                                              assignmentsIndex) {
-                                                            final assignmentsItem =
-                                                                assignments[
-                                                                    assignmentsIndex];
-                                                            return Padding(
-                                                              padding: EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      Constants
-                                                                          .msMargin,
-                                                                      0,
-                                                                      Constants
-                                                                          .msMargin,
-                                                                      0),
-                                                              child: InkWell(
-                                                                onTap:
-                                                                    () async {
-                                                                  assignmentSummary =
-                                                                      await GetAssignmentSummaryCall
-                                                                          .call(
-                                                                    token: StoredPreferences
-                                                                        .authToken,
-                                                                    assignmentNum:
-                                                                        getJsonField(
-                                                                      assignmentsItem,
-                                                                      r'''$.id''',
-                                                                    ),
-                                                                  );
-                                                                  if (!AppState()
-                                                                      .assignmentUp) {
-                                                                    setState(() =>
-                                                                        AppState().assignmentUp =
-                                                                            true);
-                                                                    await showModalBottomSheet(
-                                                                      isScrollControlled:
-                                                                          true,
-                                                                      backgroundColor:
-                                                                          FlutterFlowTheme.of(context)
-                                                                              .primaryBackground,
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) {
-                                                                        return Padding(
-                                                                          padding:
-                                                                              MediaQuery.of(context).viewInsets,
-                                                                          child:
-                                                                              Container(
-                                                                            height:
-                                                                                double.infinity,
-                                                                            child:
-                                                                                AssignmentDetailsWidget(
-                                                                              assignmentSum: GetAssignmentSummaryCall.assignment(
-                                                                                (assignmentSummary?.jsonBody ?? ''),
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                        );
-                                                                      },
-                                                                    );
-                                                                  }
-                                                                  await Future.delayed(
-                                                                      const Duration(
-                                                                          milliseconds:
-                                                                              1000));
-                                                                  setState(() =>
-                                                                      AppState()
-                                                                              .assignmentUp =
-                                                                          false);
-
-                                                                  setState(
-                                                                      () {});
-                                                                },
-                                                                onDoubleTap:
-                                                                    () async {
-                                                                  assignmentSum =
-                                                                      await GetAssignmentSummaryCall
-                                                                          .call(
-                                                                    token: StoredPreferences
-                                                                        .authToken,
-                                                                    assignmentNum:
-                                                                        getJsonField(
-                                                                      assignmentsItem,
-                                                                      r'''$.id''',
-                                                                    ),
-                                                                  );
-                                                                  if (!AppState()
-                                                                      .assignmentUp) {
-                                                                    setState(() =>
-                                                                        AppState().assignmentUp =
-                                                                            true);
-                                                                    await showModalBottomSheet(
-                                                                      isScrollControlled:
-                                                                          true,
-                                                                      backgroundColor:
-                                                                          FlutterFlowTheme.of(context)
-                                                                              .primaryBackground,
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) {
-                                                                        return Padding(
-                                                                          padding:
-                                                                              MediaQuery.of(context).viewInsets,
-                                                                          child:
-                                                                              Container(
-                                                                            height:
-                                                                                double.infinity,
-                                                                            child:
-                                                                                AssignmentDetailsWidget(
-                                                                              assignmentSum: GetAssignmentSummaryCall.assignment(
-                                                                                (assignmentSum?.jsonBody ?? ''),
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                        );
-                                                                      },
-                                                                    );
-                                                                  }
-                                                                  await Future.delayed(
-                                                                      const Duration(
-                                                                          milliseconds:
-                                                                              1000));
-                                                                  setState(() =>
-                                                                      AppState()
-                                                                              .assignmentUp =
-                                                                          false);
-
-                                                                  setState(
-                                                                      () {});
-                                                                },
-                                                                child: Column(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  children: [
-                                                                    Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          0,
-                                                                          Constants
-                                                                              .msMargin,
-                                                                          0,
-                                                                          Constants
-                                                                              .msMargin),
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.center,
-                                                                        children: [
-                                                                          Column(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.min,
-                                                                            crossAxisAlignment:
-                                                                                CrossAxisAlignment.start,
-                                                                            children: [
-                                                                              Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.sMargin),
-                                                                                child: AutoSizeText(
-                                                                                  getJsonField(
-                                                                                    assignmentsItem,
-                                                                                    r'''$.name''',
-                                                                                  ).toString().maybeHandleOverflow(
-                                                                                        maxChars: 16,
-                                                                                        replacement: '…',
-                                                                                      ),
-                                                                                  style: FlutterFlowTheme.of(context).bodyText1.override(
-                                                                                        fontFamily: 'Open Sans',
-                                                                                        color: FlutterFlowTheme.of(context).primaryColor,
-                                                                                        fontSize: 16,
-                                                                                      ),
-                                                                                ),
-                                                                              ),
-                                                                              Text(
-                                                                                getJsonField(
-                                                                                  assignmentsItem,
-                                                                                  r'''$.assignment_group''',
-                                                                                ).toString().maybeHandleOverflow(maxChars: 20),
-                                                                                style: FlutterFlowTheme.of(context).bodyText1.override(
-                                                                                      fontFamily: 'Open Sans',
-                                                                                      fontWeight: FontWeight.normal,
-                                                                                    ),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                          Expanded(
-                                                                            child:
-                                                                                Text(
-                                                                              getJsonField(
-                                                                                assignmentsItem,
-                                                                                r'''$..due_date''',
-                                                                              ).toString(),
-                                                                              textAlign: TextAlign.end,
-                                                                              style: FlutterFlowTheme.of(context).bodyText1.override(
-                                                                                    fontFamily: 'Open Sans',
-                                                                                    fontWeight: FontWeight.normal,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                17,
-                                                                                0,
-                                                                                0,
-                                                                                0),
-                                                                            child:
-                                                                                Icon(
-                                                                              Icons.today_sharp,
-                                                                              color: FlutterFlowTheme.of(context).secondaryColor,
-                                                                              size: Constants.msMargin,
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                    Divider(
-                                                                      height: 1,
-                                                                      thickness:
-                                                                          Constants
-                                                                              .dividerThickness,
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .lineColor,
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            );
-                                                          },
-                                                        );
-                                                      },
-                                                    );
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],

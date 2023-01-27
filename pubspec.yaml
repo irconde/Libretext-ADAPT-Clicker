@@ -50,6 +50,7 @@ dependencies:
   selectable_container: ^1.0.7
   move_to_background: ^1.0.2
   auto_route: ^5.0.4
+  flutter_scroll_shadow: ^1.1.0
   # Uncomment this to update splash screen image
   # flutter_native_splash: ^2.2.17
 
