@@ -21,10 +21,13 @@ void main() async {
   ));
   // This removes the bottom navigation and fills the empty space
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  bool isAuthenticated = await userIsAuthenticated();
+  bool isAuthenticated = false;
+  try {
+    isAuthenticated = await userIsAuthenticated();
+  } catch (e){}
   AppState();
   // TODO. Move this to a different place;
-  fetchTimezone();
+  //fetchTimezone();
   functions.preloadSVGs();
   // Firebase initialization
   await Firebase.initializeApp(
