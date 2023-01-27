@@ -25,6 +25,7 @@ class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar>  {
   _CollapsingLibreAppBarState(this.top, this.titleNoSpace, this.titleSpace, this.iconPath, this.svgIconColor);
   ApiCallResponse? logout;
   double top;
+  double? a;
   String titleNoSpace;
   String iconPath;
   final String titleSpace;
@@ -55,9 +56,9 @@ class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar>  {
             (BuildContext context, BoxConstraints constraints) {
           top = constraints.biggest.height;
           return FlexibleSpaceBar(
-            titlePadding: getPadding(top),
-            title: Text(getTitle(top),
-                style: FlutterFlowTheme.of(context).title2),
+            titlePadding: getPadding(),
+
+            title: Text(getTitle(), style: getTitleStyle()),
             background: Align(
              alignment: Alignment(0,.5),
               child: SvgPicture.asset(
@@ -73,19 +74,44 @@ class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar>  {
 
 
   //This determines the title and padding switch
-  bool checkTop(var topSize) {
-    if (topSize <= Constants.appBarHeight) {
+  bool checkTop() {
+    if (top <= Constants.appBarHeight) {
       return true;
     } else {
       return false;
     }
   }
 
-  String getTitle(var top){
-    if(checkTop(top))
+  String getTitle(){
+    if(checkTop())
       return titleNoSpace;
     else
       return titleSpace;
+  }
+
+  TextStyle getTitleStyle()
+  {
+    double transitionVal = 4;
+    if(checkTop())
+      transitionVal = ((top/Constants.appBarTransitionMin)/(264/Constants.appBarTransitionMin)) * 4; //264 is max appbar size (max + 24 I believe).
+
+    double result = 20 + transitionVal;
+    FontWeight fw;
+    if(transitionVal < 1.25)
+      fw = FontWeight.w600;
+    else if(transitionVal < 2.5)
+      fw = FontWeight.w700;
+    else
+      fw = FontWeight.bold;
+
+
+    return FlutterFlowTheme.of(context).title3.override(
+      fontFamily: 'Open Sans',
+      fontSize: result,
+      fontWeight: fw,
+    );
+
+    return FlutterFlowTheme.of(context).title2;
   }
 
   double getTransition(double diff)
@@ -100,18 +126,23 @@ class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar>  {
 
     return result;
   }
-  EdgeInsetsGeometry getPadding(var top)
+  EdgeInsetsGeometry getPadding()
   {
 
-    if(checkTop(top)) {
-      double diff = (top -  Constants.appBarTransitionMin)/Constants.appBarTitleSpeed + Constants.appBarTitleOffset;
+    if(checkTop()) {
+      double diff = getDiff();
 
-      return EdgeInsetsDirectional.fromSTEB(getTransition(diff), 0, 0, Constants.smMargin);
+      return EdgeInsetsDirectional.fromSTEB(getTransition(diff), 0, 0, Constants.smMargin + 1); // +1 made text align better with arrow.
 
     }
     else
       return  EdgeInsetsDirectional.fromSTEB(Constants.mmMargin, 0, 0, Constants.mmMargin);
 
+  }
+
+  double getDiff()
+  {
+     return (top -  Constants.appBarTransitionMin)/Constants.appBarTitleSpeed + Constants.appBarTitleOffset;
   }
 
 
