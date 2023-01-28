@@ -303,8 +303,12 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                           style: FlutterFlowTheme.of(context).bodyText1,
                         ),
                       ),
-                      TimezoneDropdown(
-                          timezoneDropDownValue: tZDropDownCAValue),
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                        child: TimezoneDropdown(
+                            timezoneDropDownValue: tZDropDownCAValue),
+                      ),
                     ],
                   ),
                 ),
@@ -357,7 +361,6 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                               } else {
                                 _submit();
                               }
-
                               setState(() {});
                             },
                             child: Text(
