@@ -79,15 +79,15 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                   children: [
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
-                          0, Constants.msMargin, Constants.mmMargin, 0),
+                          0, Constants.mmMargin, Constants.mmMargin, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           IconButton(
                             icon: Icon(
                               Icons.close,
-                              color: Colors.black,
-                              size: Constants.mlMargin,
+                              color: Colors.grey,
+                              size: 28,
                             ),
                             onPressed: () async {
                               context.popRoute();
@@ -103,8 +103,8 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                     fontFamily: 'Open Sans',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryColor,
-                                    fontSize: Constants.msMargin,
-                                    fontWeight: FontWeight.bold),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700),
                           )),
                         ],
                       ),

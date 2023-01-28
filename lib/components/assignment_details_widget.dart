@@ -62,15 +62,15 @@ class _AssignmentDetailsWidgetState extends State<AssignmentDetailsWidget>
           children: [
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(
-                  0, 24, Constants.mmMargin, 0),
+                  0, Constants.mmMargin, Constants.mmMargin, 0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   IconButton(
                     icon: Icon(
                       Icons.close,
-                      color: Colors.black,
-                      size: Constants.mlMargin,
+                      color: Colors.grey,
+                      size: 28,
                     ),
                     onPressed: () async {
                       context.popRoute();
@@ -86,8 +86,8 @@ class _AssignmentDetailsWidgetState extends State<AssignmentDetailsWidget>
                       style: FlutterFlowTheme.of(context).bodyText1.override(
                           fontFamily: 'Open Sans',
                           color: FlutterFlowTheme.of(context).primaryColor,
-                          fontSize: Constants.msMargin,
-                          fontWeight: FontWeight.bold),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700),
                     ).animated(
                         [animationsMap['textOnActionTriggerAnimation']!]),
                   ),
