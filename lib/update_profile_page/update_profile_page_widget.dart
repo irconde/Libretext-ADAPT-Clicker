@@ -276,9 +276,8 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       minimumSize:
-                          const Size.fromHeight(Constants.buttonHeight),
+                          const Size.fromHeight(Constants.buttonHeight), backgroundColor: FlutterFlowTheme.of(context).primaryColor,
                       textStyle: FlutterFlowTheme.of(context).title3,
-                      primary: FlutterFlowTheme.of(context).primaryColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4),
                       ),

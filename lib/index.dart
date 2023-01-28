@@ -2,7 +2,6 @@
 export 'welcome_page/welcome_page_widget.dart' show WelcomePageWidget;
 export 'login_page/login_page_widget.dart' show LoginPageWidget;
 export 'create_account/create_account_widget.dart' show CreateAccountWidget;
-export 't_o_s_page/t_o_s_page_widget.dart' show TOSPageWidget;
 export 'courses_page/courses_page_widget.dart' show CoursesPageWidget;
 export 'update_profile_page/update_profile_page_widget.dart'
     show UpdateProfilePageWidget;

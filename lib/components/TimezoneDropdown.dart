@@ -7,7 +7,6 @@ class TimezoneDropdown extends StatefulWidget {
       : super(key: key);
   String? timezoneDropDownValue;
 
-  @override
   void initState() {
     if (timezoneDropDownValue == null)
       timezoneDropDownValue = AppState.timezoneContainer!.textzones.first;

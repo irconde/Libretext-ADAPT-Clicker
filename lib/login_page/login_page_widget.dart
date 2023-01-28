@@ -10,7 +10,6 @@ import '../flutter_flow/flutter_flow_toggle_icon.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 String passwordRequired = "The password field is required.";
 String emailRequired = "The email field is required.";
@@ -76,8 +75,12 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
-            CollapsingLibreAppBar(titleNoSpace: "Welcome Back", titleSpace: "Welcome\nBack",  iconPath:  'assets/images/hand_wave.svg',  svgIconColor: FlutterFlowTheme.of(context).svgIconColor2),
-            ];
+            CollapsingLibreAppBar(
+                titleNoSpace: "Welcome Back",
+                titleSpace: "Welcome\nBack",
+                iconPath: 'assets/images/hand_wave.svg',
+                svgIconColor: FlutterFlowTheme.of(context).svgIconColor2),
+          ];
         },
         body: SingleChildScrollView(
           child: GestureDetector(
