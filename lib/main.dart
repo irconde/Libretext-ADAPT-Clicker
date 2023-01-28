@@ -23,11 +23,11 @@ void main() async {
   AppState();
   fetchTimezone();
   functions.preloadSVGs();
-  runApp(MyApp(authenticated: isAuthenticated));
   // Firebase initialization
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  runApp(MyApp(authenticated: isAuthenticated));
 }
 
 Future<bool> userIsAuthenticated() async {
