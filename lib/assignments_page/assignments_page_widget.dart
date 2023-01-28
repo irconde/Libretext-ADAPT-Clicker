@@ -4,6 +4,7 @@ import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/Assignment_Ctn.dart';
 import '../components/assignment_stat_ctn_widget.dart';
+import '../components/collapsing_libre_app_bar.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:expandable/expandable.dart';
@@ -60,27 +61,10 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
         controller: _scrollController,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
-            SliverAppBar(
-                backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-                expandedHeight: 160.0,
-                pinned: true,
-                snap: false,
-                floating: false,
-                flexibleSpace: LayoutBuilder(builder:
-                    (BuildContext context, BoxConstraints constraints) {
-                  top = constraints.biggest.height;
-                  return FlexibleSpaceBar(
-                    title: AnimatedOpacity(
-                        duration: Duration(milliseconds: 300),
-                        opacity: 1.0,
-                        child: Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 32, 0),
-                          child: Text("Introduction to this",
-                              style: FlutterFlowTheme.of(context).title2),
-                        )),
-                  );
-                })),
+            CollapsingLibreAppBar(
+              titleNoSpace: "Introduction to this",
+              titleSpace: "Introduction to\nthis",
+            ),
           ];
         },
         body: GestureDetector(
