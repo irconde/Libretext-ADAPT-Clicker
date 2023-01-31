@@ -166,6 +166,7 @@ class _UpdateProfilePageWidgetState
 
   @override
   Widget build(BuildContext context) {
+    fetchTimezone(); //import from main.dart
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
