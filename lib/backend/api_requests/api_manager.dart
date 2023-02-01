@@ -133,6 +133,7 @@ class ApiManager {
     bool html,
     bool returnBody,
   ) async {
+    //("requestWithBodyStart: $body");
     assert(
       {ApiCallType.POST, ApiCallType.PUT, ApiCallType.PATCH}.contains(type),
       'Invalid ApiCallType $type for request with body',
@@ -145,6 +146,7 @@ class ApiManager {
     }[type]!;
     final response = await requestFn(Uri.parse(apiUrl),
         headers: toStringMap(headers), body: postBody);
+    //print("requestWithBodyEnd: $body");
     return ApiCallResponse.fromHttpResponse(response, returnBody, html);
   }
 
@@ -176,6 +178,7 @@ class ApiManager {
     if (contentType != null) {
       headers['Content-Type'] = contentType;
     }
+    //print("PostBody: $postBody");
     return postBody;
   }
 

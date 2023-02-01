@@ -1,9 +1,8 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:move_to_background/move_to_background.dart';
 import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
-import 'package:adapt_clicker/utils/stored_preferences.dart';
+import 'package:adapt_clicker/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/add_course_widget.dart';
 import '../components/no_courses_widget.dart';
@@ -16,31 +15,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app_installations/firebase_app_installations.dart';
 import '../utils/check_internet_connectivity.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 
-class CoursesPageWidget extends ConsumerStatefulWidget {
-  final bool? isFirstScreen;
-
-  const CoursesPageWidget({Key? key, this.isFirstScreen = false})
-      : super(key: key);
+class CoursesPageWidget extends StatefulWidget {
+  const CoursesPageWidget({Key? key}) : super(key: key);
 
   @override
   _CoursesPageWidgetState createState() => _CoursesPageWidgetState();
 }
 
-class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
+class _CoursesPageWidgetState extends State<CoursesPageWidget> {
   ApiCallResponse? logout;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   Completer<ApiCallResponse>? _apiRequestCompleter;
-
-  bool _checkConnection() {
-    ConnectivityStatus? status =
-        ref.read(provider.notifier).getConnectionStatus();
-    if (status != ConnectivityStatus.isConnected) {
-      functions.showSnackbar(context, status);
-      return false;
-    }
-    return true;
-  }
 
   @override
   void initState() {
@@ -90,23 +78,6 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.isFirstScreen != null && widget.isFirstScreen == true) {
-      final AsyncValue<ConnectivityStatus> connectivityStatusProvider =
-          ref.watch(provider);
-      ConnectivityStatus? status;
-      connectivityStatusProvider.whenData((value) => {status = value});
-      if (status != null) {
-        if (status != ConnectivityStatus.isConnected) {
-          ref.read(provider.notifier).startWatchingConnectivity();
-        }
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (status == null || status == ConnectivityStatus.initializing)
-            return;
-          functions.showSnackbar(context, status!);
-        });
-      }
-    }
-
     return WillPopScope(
       child: Scaffold(
         key: scaffoldKey,
@@ -133,7 +104,6 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            if (!_checkConnection()) return;
             showModalBottomSheet(
               useSafeArea: true,
               isScrollControlled: true,
@@ -155,7 +125,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
             size: 28,
           ),
         ),
-        drawer: DrawerCtnWidget(currentSelected: DrawerItems.courses),
+        drawer: DrawerCtnWidget(),
         body: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Column(
@@ -242,7 +212,6 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
                                   EdgeInsetsDirectional.fromSTEB(24, 24, 24, 0),
                               child: InkWell(
                                 onTap: () async {
-                                  if (!_checkConnection()) return;
                                   context.pushRoute(AssignmentsRouteWidget(
                                     courseNumber: getJsonField(
                                       enrollmentsListItem,
@@ -259,7 +228,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
                                       getJsonField(
                                         enrollmentsListItem,
                                         r'''$.course_section_name''',
-                                      ).toString().split('-')[0],
+                                      ).toString(),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -272,7 +241,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 8, 0, 24),
+                                          0, 8, 0, 8),
                                       child: Text(
                                         getJsonField(
                                           enrollmentsListItem,
@@ -287,6 +256,26 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
                                                       .secondaryText,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 24),
+                                      child: Text(
+                                        getJsonField(
+                                          enrollmentsListItem,
+                                          r'''$.id''',
+                                        ).toString(),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: 'Open Sans',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.normal,
                                             ),
                                       ),
                                     ),

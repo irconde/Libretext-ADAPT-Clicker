@@ -9,6 +9,7 @@ class StoredPreferences {
   // Key values
   static const _keyRememberMe = 'ff_rememberMe';
   static const _keyAuthToken = 'ff_authToken';
+  static const _deviceIDToken = 'ff_deviceIDToken';
   static const _keyUserAccount = 'ff_userAccount';
   static const _keyUserPassword = 'ff_userPassword';
   static const _keySelectedIndex = 'ff_selectedIndex';
@@ -33,6 +34,7 @@ class StoredPreferences {
 
   static bool get rememberMe => getBool(_keyRememberMe);
   static String get authToken => getString(_keyAuthToken);
+  static String get deviceIDToken => getString(_deviceIDToken);
   static String get userAccount => getString(_keyUserAccount);
   static String get userPassword => getString(_keyUserPassword);
   static int get selectedIndex => getInt(_keySelectedIndex);
@@ -59,6 +61,10 @@ class StoredPreferences {
   static set authToken(String value) {
     setString(_keyAuthToken, value);
   }
+  static set deviceIDToken(String value) {
+    setString(_deviceIDToken, value);
+  }
+
 
   static set userAccount(String value) {
     setString(_keyUserAccount, value);

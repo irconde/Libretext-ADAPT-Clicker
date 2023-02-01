@@ -1,6 +1,7 @@
 import '../../flutter_flow/flutter_flow_util.dart';
 
 import 'api_manager.dart';
+import 'dart:convert';
 
 export 'api_manager.dart' show ApiCallResponse;
 
@@ -350,6 +351,8 @@ class GetAssignmentSummaryCall {
     );
   }
 
+
+
   static dynamic id(dynamic response) => getJsonField(
         response,
         r'''$.assignment.id''',
@@ -436,4 +439,49 @@ class GetTimezonesCall {
         r'''$.time_zones''',
         true,
       );
+}
+
+class SendTokenCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? fcmToken = '',
+  }) {
+    final body = '''
+{
+"fcm_token": "$fcmToken"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'sendToken',
+      apiUrl: 'https://adapt.libretexts.org/api/fcm-tokens',
+      callType: ApiCallType.POST,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'authorization': '$token',
+      },
+      params: {},
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      cache: false,
+    );
+  }
+}
+
+String _serializeList(List? list) {
+  list ??= <String>[];
+  try {
+    return json.encode(list);
+  } catch (_) {
+    return '[]';
+  }
+}
+
+String _serializeJson(dynamic jsonVar) {
+  jsonVar ??= {};
+  try {
+    return json.encode(jsonVar);
+  } catch (_) {
+    return '{}';
+  }
 }
