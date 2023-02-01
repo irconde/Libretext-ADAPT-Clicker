@@ -29,6 +29,7 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
   ApiCallResponse? logout;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   Completer<ApiCallResponse>? _apiRequestCompleter;
+  ApiCallResponse? sendTokenResponse;
 
   @override
   void initState() {
@@ -36,14 +37,15 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
 
     requestPermission(); //gets push notification permission
     getToken();
-    firebaseID();
+    sendToken();
+    //firebaseID();
     super.initState();
   }
 
   //In app messaging ID
   void firebaseID() async {
     String id = await FirebaseInstallations.instance.getId();
-    print(" Installation ID: $id");
+    //print(" Installation ID: $id");
   }
 
   //Permission check
@@ -60,20 +62,28 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
       print('User declined or has not accepted permission');
   }
 
+  void saveToken(var token) async {
+    StoredPreferences.setString("ff_deviceIDToken", token);
+    print("My token is " + token);
+  }
+
   void getToken() async {
     await FirebaseMessaging.instance.getToken().then((token) {
       setState(() {
         var mtoken = token;
-        print("My token is $mtoken");
+        saveToken(mtoken);
       });
     });
   }
 
-  void saveToken(String token) async {
-    //Fix me to work with API call
-    await FirebaseFirestore.instance.collection("UserTokens").doc("User1").set({
-      'token': token,
-    });
+  Future<void> sendToken() async {
+    sendTokenResponse = await SendTokenCall.call(
+      token: StoredPreferences.authToken,
+      fcmToken: StoredPreferences.deviceIDToken,
+    );
+    // print("We did it");
+    //print(StoredPreferences.deviceIDToken);
+    print(sendTokenResponse?.jsonBody.toString());
   }
 
   @override
