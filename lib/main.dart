@@ -69,20 +69,6 @@ Future<bool> userIsAuthenticated() async {
   return Future(() => isSignedIn);
 }
 
-Future<void> fetchTimezone() async {
-  final response = await GetTimezonesCall.call(); //contact server
-
-  if (response.succeeded) {
-    // If the call to the server was successful, init timezones
-    initTimezones(response.jsonBody);
-  } else {
-    // If that call was not successful, throw an error.
-    throw Exception(getJsonField(response.jsonBody,
-        r'''$.message''')); //message should give error message.
-    //note all errors will be logged in backend for server-side fix
-  }
-}
-
 class MyApp extends StatelessWidget {
   final ThemeMode _themeMode = ThemeMode.system;
   final _appRouter = AppRouter();
