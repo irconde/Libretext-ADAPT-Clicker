@@ -1,5 +1,6 @@
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:adapt_clicker/components/notfication_single.dart';
 import 'package:flutter/gestures.dart';
 
 import '../backend/api_requests/api_calls.dart';
@@ -19,7 +20,34 @@ class NotificationsPageWidget extends StatefulWidget {
 }
 
 class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
-  Completer<ApiCallResponse>? _apiRequestCompleter;
+  ApiCallResponse? _apiRequestCompleter;
+
+  List<NotificationSingle> notificationList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getEnrollments();
+  }
+
+  void getEnrollments() async {
+    _apiRequestCompleter ??= await GetEnrollmentsCall.call(
+      token: FFAppState().authToken,
+    );
+
+    final enrollmentsList =
+        getJsonField(_apiRequestCompleter?.jsonBody, r'''$.enrollments''');
+    if (enrollmentsList.isEmpty) {
+      return;
+    }
+
+    for (var item in enrollmentsList) {
+      NotificationSingle temp =
+          new NotificationSingle(enrollmentsListItem: item);
+      notificationList.add(temp);
+    }
+  }
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -74,139 +102,17 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              FutureBuilder<ApiCallResponse>(
-                future: (_apiRequestCompleter ??= Completer<ApiCallResponse>()
-                      ..complete(GetEnrollmentsCall.call(
-                        token: StoredPreferences.authToken,
-                      )))
-                    .future,
-                builder: (context, snapshot) {
-                  // Customize what your widget looks like when it's loading.
-                  if (!snapshot.hasData) {
-                    return Center(
-                      child: SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: CircularProgressIndicator(
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                        ),
-                      ),
-                    );
-                  }
-                  final listViewGetEnrollmentsResponse = snapshot.data!;
-                  return Builder(
-                    builder: (context) {
-                      final enrollmentsList =
-                          GetEnrollmentsCall.enrollmentsArray(
-                        listViewGetEnrollmentsResponse.jsonBody,
-                      ).toList();
-                      if (enrollmentsList.isEmpty) {
-                        return const Center(
-                          child: NoNotificationsWidget(),
-                        );
-                      }
-                      return RefreshIndicator(
-                        onRefresh: () async {
-                          setState(() => _apiRequestCompleter = null);
-                          await waitForApiRequestCompleter();
-                        },
-                        child: ListView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemCount: enrollmentsList.length,
-                          itemBuilder: (context, enrollmentsListIndex) {
-                            final enrollmentsListItem =
-                                enrollmentsList[enrollmentsListIndex];
-                            return Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  30, 24, 0, 0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 0, 5, 0),
-                                        child: SvgPicture.asset(
-                                          'assets/images/book_icon.svg',
-                                          height: 24,
-                                          width: 24,
-                                        ),
-                                      ),
-                                      Text(
-                                        getJsonField(
-                                          enrollmentsListItem,
-                                          r'''$.course_section_name''',
-                                        ).toString(),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                              fontFamily: 'Open Sans',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryColor,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            30, 8, 0, 24),
-                                    child: Text(
-                                      getJsonField(
-                                        enrollmentsListItem,
-                                        r'''$.instructor''',
-                                      ).toString(),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                    ),
-                                  ),
-                                  const Divider(
-                                    height: 1,
-                                    thickness: 1,
-                                    endIndent: 30,
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
+              ListView.builder(
+                  itemCount: notificationList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    // access element from list using index
+                    // you can create and return a widget of your choice
+                    return notificationList[index];
+                  })
             ],
           ),
         ),
       ),
     );
-  }
-
-  Future waitForApiRequestCompleter({
-    double minWait = 0,
-    double maxWait = double.infinity,
-  }) async {
-    final stopwatch = Stopwatch()..start();
-    while (true) {
-      await Future.delayed(const Duration(milliseconds: 50));
-      final timeElapsed = stopwatch.elapsedMilliseconds;
-      final requestComplete = _apiRequestCompleter?.isCompleted ?? false;
-      if (timeElapsed > maxWait || (requestComplete && timeElapsed > minWait)) {
-        break;
-      }
-    }
   }
 }
