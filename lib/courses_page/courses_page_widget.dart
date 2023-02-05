@@ -3,6 +3,7 @@ import 'package:move_to_background/move_to_background.dart';
 import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/add_course_widget.dart';
 import '../components/no_courses_widget.dart';
@@ -15,18 +16,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app_installations/firebase_app_installations.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
+import '../utils/check_internet_connectivity.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 
-class CoursesPageWidget extends StatefulWidget {
-  const CoursesPageWidget({Key? key}) : super(key: key);
+class CoursesPageWidget extends ConsumerStatefulWidget {
+  final bool? isFirstScreen;
+
+  const CoursesPageWidget({Key? key, this.isFirstScreen = false})
+      : super(key: key);
 
   @override
   _CoursesPageWidgetState createState() => _CoursesPageWidgetState();
 }
 
-
-
-
-class _CoursesPageWidgetState extends State<CoursesPageWidget> {
+class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
   ApiCallResponse? logout;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   Completer<ApiCallResponse>? _apiRequestCompleter;
@@ -42,20 +45,16 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
   }
 
   //In app messaging ID
-  void firebaseID () async
-  {
+  void firebaseID() async {
     String id = await FirebaseInstallations.instance.getId();
     print(" Installation ID: $id");
   }
 
   //Permission check
-  void requestPermission() async
-  {
+  void requestPermission() async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-    NotificationSettings settings = await messaging.requestPermission(
-
-    );
+    NotificationSettings settings = await messaging.requestPermission();
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized)
       print('User granted permission');
@@ -65,43 +64,61 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
       print('User declined or has not accepted permission');
   }
 
-  void getToken() async
-  {
-    await FirebaseMessaging.instance.getToken().then(
-            (token)
-        {
-          setState(() {
-            var mtoken = token;
-            print ("My token is $mtoken");
-          });
-        }
-    );
-
+  void getToken() async {
+    await FirebaseMessaging.instance.getToken().then((token) {
+      setState(() {
+        var mtoken = token;
+        print("My token is $mtoken");
+      });
+    });
   }
 
   void saveToken(String token) async {
-
     //Fix me to work with API call
-    await FirebaseFirestore.instance.collection("UserTokens").doc("User1").set(
-        {
-          'token' : token,
-        });
+    await FirebaseFirestore.instance.collection("UserTokens").doc("User1").set({
+      'token': token,
+    });
   }
-
 
   @override
   Widget build(BuildContext context) {
+    if (widget.isFirstScreen != null && widget.isFirstScreen == true) {
+      final AsyncValue<ConnectivityStatus> connectivityStatusProvider =
+          ref.watch(provider);
+      ConnectivityStatus? status;
+      connectivityStatusProvider.whenData((value) => {status = value});
+      if (status != null) {
+        if (status != ConnectivityStatus.isConnected) {
+          ref.read(provider.notifier).startWatchingConnectivity();
+        }
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (status == null || status == ConnectivityStatus.initializing)
+            return;
+          functions.showSnackbar(context, status!);
+        });
+      }
+    }
+
     return WillPopScope(
       child: Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          leading: IconButton(icon: Icon(Icons.menu), onPressed: () {  scaffoldKey.currentState!.openDrawer(); },),
+          leading: IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () {
+              scaffoldKey.currentState!.openDrawer();
+            },
+          ),
           title: Text('Courses'),
           actions: [
-            IconButton(icon: Icon(Icons.notifications,), onPressed: () async {
-              context.pushRoute(NotificationsRouteWidget());
-            },
+            IconButton(
+              icon: Icon(
+                Icons.notifications,
+              ),
+              onPressed: () async {
+                context.pushRoute(NotificationsRouteWidget());
+              },
             ),
           ],
         ),

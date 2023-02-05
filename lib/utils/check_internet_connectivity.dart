@@ -16,8 +16,8 @@ final provider =
 });
 
 class ConnectivityStatusNotifier extends AsyncNotifier<ConnectivityStatus> {
-  bool firstTime = true;
-  bool startedListening = false;
+  ConnectivityStatus _lastState = ConnectivityStatus.notDetermined;
+  bool _startedListening = false;
 
   ConnectivityStatus _resultToStatus(ConnectivityResult connectionResult) {
     ConnectivityStatus newState = ConnectivityStatus.notDetermined;
@@ -33,30 +33,30 @@ class ConnectivityStatusNotifier extends AsyncNotifier<ConnectivityStatus> {
     return newState;
   }
 
+  void startWatchingConnectivity() {
+    if(_startedListening) return;
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+        ConnectivityStatus newState = _resultToStatus(result);
+        if (newState != _lastState) {
+          _lastState = newState;
+          state = AsyncData(newState);
+        }
+    });
+    _startedListening = true;
+  }
+
   @override
   Future<ConnectivityStatus> build() async {
+    ConnectivityStatus connectionStatus = ConnectivityStatus.notDetermined;
     final ConnectivityResult initConnection =
         await Connectivity().checkConnectivity();
-    ConnectivityStatus connectionStatus = _resultToStatus(initConnection);
-    if (firstTime) {
-      if (connectionStatus == ConnectivityStatus.isConnected) {
-        connectionStatus = ConnectivityStatus.initializing;
-      }
-      firstTime = !firstTime;
+    ConnectivityStatus _auxConnectionStatus = _resultToStatus(initConnection);
+    if (_auxConnectionStatus == ConnectivityStatus.isConnected){
+      connectionStatus = ConnectivityStatus.initializing;
+    } else {
+      connectionStatus = _auxConnectionStatus;
     }
-    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      if (startedListening) {
-        ConnectivityStatus newState = _resultToStatus(result);
-        state = AsyncValue.data(newState);
-      }
-      if (!startedListening) {
-        startedListening = !startedListening;
-        if (state.value == ConnectivityStatus.isDisconnected) {
-          state = AsyncValue.data(_resultToStatus(result));
-        }
-      }
-    });
-
+    _lastState = _auxConnectionStatus;
     return connectionStatus;
   }
 }

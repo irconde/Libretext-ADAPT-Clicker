@@ -6,35 +6,32 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../utils/check_internet_connectivity.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 
 class WelcomePageWidget extends ConsumerWidget {
+  final bool? isFirstScreen;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  WelcomePageWidget({this.isFirstScreen = false});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<ConnectivityStatus> connectivityStatusProvider = ref.watch(provider);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ConnectivityStatus? status = connectivityStatusProvider.value;
-      if(status == null || status == ConnectivityStatus.initializing) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            status == ConnectivityStatus.isConnected
-                ? 'Connected to Internet'
-                : 'No Internet connection',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-            ),
-          ),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor:
-              status == ConnectivityStatus.isConnected
-                  ? Color(0xFF008C3D)
-                  : Color(0xFFD82828),
-        ),
-      );
-    });
+    if (this.isFirstScreen != null && this.isFirstScreen == true) {
+      final AsyncValue<ConnectivityStatus> connectivityStatusProvider =
+          ref.watch(provider);
+      ConnectivityStatus? status;
+      connectivityStatusProvider.whenData((value) => {status = value});
+      if (status != null) {
+        if (status != ConnectivityStatus.isConnected) {
+          ref.read(provider.notifier).startWatchingConnectivity();
+        }
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (status == null || status == ConnectivityStatus.initializing)
+            return;
+          functions.showSnackbar(context, status!);
+        });
+      }
+    }
 
     return WillPopScope(
       child: Scaffold(

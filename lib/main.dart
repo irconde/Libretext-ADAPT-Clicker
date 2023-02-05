@@ -107,8 +107,8 @@ class MyApp extends StatelessWidget {
       themeMode: _themeMode,
       routerDelegate: _appRouter.delegate(
           initialRoutes: authenticated
-              ? [const CoursesRouteWidget()]
-              : [const WelcomeRouteWidget()]),
+              ? [CoursesRouteWidget(isFirstScreen: true)]
+              : [WelcomeRouteWidget(isFirstScreen: true)]),
       routeInformationParser: _appRouter.defaultRouteParser(),
     );
   }

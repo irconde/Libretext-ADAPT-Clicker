@@ -1,5 +1,7 @@
 import 'package:adapt_clicker/flutter_flow/flutter_flow_util.dart';
+import 'package:adapt_clicker/utils/check_internet_connectivity.dart';
 import 'package:adapt_clicker/utils/timezone.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 String createToken(String token) {
@@ -59,6 +61,27 @@ void initTimezones(dynamic timezoneAPI) {
   }
 
   AppState.timezoneContainer = new TimezonesContainer(timezones);
+}
+
+void showSnackbar(BuildContext context, ConnectivityStatus? status) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(
+        status == ConnectivityStatus.isConnected
+            ? 'Connected to Internet'
+            : 'No Internet connection',
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+        ),
+      ),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor:
+      status == ConnectivityStatus.isConnected
+          ? Color(0xFF008C3D)
+          : Color(0xFFD82828),
+    ),
+  );
 }
 
 void preloadSVGs() async {
