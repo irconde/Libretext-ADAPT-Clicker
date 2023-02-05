@@ -59,4 +59,8 @@ class ConnectivityStatusNotifier extends AsyncNotifier<ConnectivityStatus> {
     _lastState = _auxConnectionStatus;
     return connectionStatus;
   }
+
+  ConnectivityStatus getConnectionStatus() {
+    return _lastState;
+  }
 }

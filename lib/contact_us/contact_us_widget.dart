@@ -1,12 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:adapt_clicker/components/collapsing_libre_app_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/components/ContactUsDropDownList.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
-
+import '../flutter_flow/custom_functions.dart' as functions;
 import '../utils/check_internet_connectivity.dart';
 
 String nameRequired = "The name field is required.";
@@ -81,22 +80,10 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
   }
 
   bool _checkConnection() {
-    ConnectivityStatus? status = ref.read(provider).value;
+    ConnectivityStatus? status =
+        ref.read(provider.notifier).getConnectionStatus();
     if (status != ConnectivityStatus.isConnected) {
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'No Internet connection',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-            ),
-          ),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Color(0xFFD82828),
-        ),
-      );
+      functions.showSnackbar(context, status);
       return false;
     }
     return true;

@@ -1,21 +1,33 @@
 import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../gen/assets.gen.dart';
+import '../utils/check_internet_connectivity.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 
-class DrawerCtnWidget extends StatefulWidget {
+class DrawerCtnWidget extends ConsumerStatefulWidget {
   const DrawerCtnWidget({Key? key}) : super(key: key);
 
   @override
   _DrawerCtnWidgetState createState() => _DrawerCtnWidgetState();
 }
 
-class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
+class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
   ApiCallResponse? logout;
+
+  bool _checkConnection(){
+    ConnectivityStatus? status = ref.read(provider.notifier).getConnectionStatus();
+    if (status != ConnectivityStatus.isConnected) {
+      functions.showSnackbar(context, status);
+      return false;
+    }
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -209,6 +221,7 @@ class _DrawerCtnWidgetState extends State<DrawerCtnWidget> {
                         ),
                       ),
                       onPressed: () async {
+                        if (!_checkConnection()) return;
                         logout = await LogoutCall.call(
                           token: StoredPreferences.authToken,
                         );

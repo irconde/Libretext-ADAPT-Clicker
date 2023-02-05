@@ -71,22 +71,10 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
   }
 
   bool _checkConnection() {
-    ConnectivityStatus? status = ref.read(provider).value;
+    ConnectivityStatus? status =
+        ref.read(provider.notifier).getConnectionStatus();
     if (status != ConnectivityStatus.isConnected) {
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'No Internet connection',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-            ),
-          ),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Color(0xFFD82828),
-        ),
-      );
+      functions.showSnackbar(context, status);
       return false;
     }
     return true;

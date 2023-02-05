@@ -1,5 +1,6 @@
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/question_c_t_n_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
@@ -8,8 +9,9 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../gen/assets.gen.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
+import '../utils/check_internet_connectivity.dart';
 
-class AssignmentDetailsWidget extends StatefulWidget {
+class AssignmentDetailsWidget extends ConsumerStatefulWidget {
   const AssignmentDetailsWidget({
     Key? key,
     this.assignmentSum,
@@ -22,7 +24,8 @@ class AssignmentDetailsWidget extends StatefulWidget {
       _AssignmentDetailsWidgetState();
 }
 
-class _AssignmentDetailsWidgetState extends State<AssignmentDetailsWidget>
+class _AssignmentDetailsWidgetState
+    extends ConsumerState<AssignmentDetailsWidget>
     with TickerProviderStateMixin {
   final animationsMap = {
     'textOnActionTriggerAnimation': AnimationInfo(
@@ -41,6 +44,16 @@ class _AssignmentDetailsWidgetState extends State<AssignmentDetailsWidget>
       ),
     ),
   };
+
+  bool _checkConnection() {
+    ConnectivityStatus? status =
+        ref.read(provider.notifier).getConnectionStatus();
+    if (status != ConnectivityStatus.isConnected) {
+      functions.showSnackbar(context, status);
+      return false;
+    }
+    return true;
+  }
 
   @override
   void initState() {
@@ -359,6 +372,7 @@ class _AssignmentDetailsWidgetState extends State<AssignmentDetailsWidget>
                                     return InkWell(
                                       splashColor: Colors.transparent,
                                       onTap: () async {
+                                        if (!_checkConnection()) return;
                                         setState(() => AppState().view =
                                             listViewViewResponse.jsonBody);
                                         setState(() => AppState().question =

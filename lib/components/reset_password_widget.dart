@@ -1,12 +1,15 @@
 import 'dart:ui';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../utils/check_internet_connectivity.dart';
 import '../welcome_page/welcome_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 
 String emailRequired = "The email field is required.";
 String emailNotFound = "We were unable to find an account with that email.";
@@ -14,7 +17,7 @@ String emailNotFound = "We were unable to find an account with that email.";
 TextEditingController? forgotPasswordEmailFieldController;
 bool _submitted = false;
 
-class ResetPasswordWidget extends StatefulWidget {
+class ResetPasswordWidget extends ConsumerStatefulWidget {
   const ResetPasswordWidget({Key? key, required this.onSubmit})
       : super(key: key);
   final ValueChanged<String?> onSubmit;
@@ -23,7 +26,7 @@ class ResetPasswordWidget extends StatefulWidget {
   _ResetPasswordWidgetState createState() => _ResetPasswordWidgetState();
 }
 
-class _ResetPasswordWidgetState extends State<ResetPasswordWidget>
+class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
     with TickerProviderStateMixin {
   TextEditingController? forgotPasswordEmailFieldController;
 
@@ -73,6 +76,15 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget>
     );
 
     forgotPasswordEmailFieldController = TextEditingController();
+  }
+
+  bool _checkConnection(){
+    ConnectivityStatus? status = ref.read(provider.notifier).getConnectionStatus();
+    if (status != ConnectivityStatus.isConnected) {
+      functions.showSnackbar(context, status);
+      return false;
+    }
+    return true;
   }
 
   @override
@@ -188,6 +200,7 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget>
                           elevation: 4,
                         ),
                         onPressed: () async {
+                          if (!_checkConnection()) return;
                           forgotPassword = await ForgotPasswordCall.call(
                             email: forgotPasswordEmailFieldController!.text,
                           );

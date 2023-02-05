@@ -34,6 +34,16 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   Completer<ApiCallResponse>? _apiRequestCompleter;
 
+  bool _checkConnection() {
+    ConnectivityStatus? status =
+        ref.read(provider.notifier).getConnectionStatus();
+    if (status != ConnectivityStatus.isConnected) {
+      functions.showSnackbar(context, status);
+      return false;
+    }
+    return true;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -232,6 +242,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
                                   EdgeInsetsDirectional.fromSTEB(24, 24, 24, 0),
                               child: InkWell(
                                 onTap: () async {
+                                  if (!_checkConnection()) return;
                                   context.pushRoute(AssignmentsRouteWidget(
                                     courseNumber: getJsonField(
                                       enrollmentsListItem,

@@ -2,7 +2,7 @@ import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:adapt_clicker/components/AssignmentDropdown.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:auto_route/auto_route.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/Assignment_Ctn.dart';
 import '../components/assignment_stat_ctn_widget.dart';
@@ -13,8 +13,10 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import '../gen/assets.gen.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
+import '../utils/check_internet_connectivity.dart';
 
-class AssignmentsPageWidget extends StatefulWidget {
+class AssignmentsPageWidget extends ConsumerStatefulWidget {
   const AssignmentsPageWidget({
     Key? key,
     this.courseNumber,
@@ -28,8 +30,10 @@ class AssignmentsPageWidget extends StatefulWidget {
   _AssignmentsPageWidgetState createState() => _AssignmentsPageWidgetState();
 }
 
-class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
-  String? dropDownValue;
+class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
+  ApiCallResponse? assignmentSum;
+  ApiCallResponse? assignmentSummary;
+  String? dropDownValue1;
   String? dropDownValue2;
   List<String> dropDownList1 = [
     'ALL ASSIGNMENTS',
@@ -54,6 +58,16 @@ class _AssignmentsPageWidgetState extends State<AssignmentsPageWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       setState(() => AppState().assignmentUp = false);
     });
+  }
+
+  bool _checkConnection() {
+    ConnectivityStatus? status =
+        ref.read(provider.notifier).getConnectionStatus();
+    if (status != ConnectivityStatus.isConnected) {
+      functions.showSnackbar(context, status);
+      return false;
+    }
+    return true;
   }
 
   @override

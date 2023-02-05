@@ -10,7 +10,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-
+import '../flutter_flow/custom_functions.dart' as functions;
 import '../utils/check_internet_connectivity.dart';
 import '../utils/stored_preferences.dart';
 
@@ -152,22 +152,10 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
   }
 
   bool _checkConnection() {
-    ConnectivityStatus? status = ref.read(provider).value;
+    ConnectivityStatus? status =
+        ref.read(provider.notifier).getConnectionStatus();
     if (status != ConnectivityStatus.isConnected) {
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'No Internet connection',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-            ),
-          ),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Color(0xFFD82828),
-        ),
-      );
+      functions.showSnackbar(context, status);
       return false;
     }
     return true;

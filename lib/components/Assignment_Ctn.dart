@@ -1,27 +1,40 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../components/assignment_details_widget.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../gen/assets.gen.dart';
+import '../utils/check_internet_connectivity.dart';
 import '../utils/stored_preferences.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 
-class AssignmentCtn extends StatefulWidget {
+class AssignmentCtn extends ConsumerStatefulWidget {
   const AssignmentCtn({Key? key, required this.assignmentsItem})
       : super(key: key);
   final assignmentsItem;
 
   @override
-  State<StatefulWidget> createState() => AssignmentCtnState(assignmentsItem);
+  AssignmentCtnState createState() => AssignmentCtnState(assignmentsItem);
 }
 
-class AssignmentCtnState extends State<AssignmentCtn> {
+class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
   AssignmentCtnState(this.assignmentsItem);
 
   ApiCallResponse? assignmentSummary;
   ApiCallResponse? assignmentSum;
   dynamic assignmentsItem;
+
+  bool _checkConnection() {
+    ConnectivityStatus? status =
+        ref.read(provider.notifier).getConnectionStatus();
+    if (status != ConnectivityStatus.isConnected) {
+      functions.showSnackbar(context, status);
+      return false;
+    }
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +43,7 @@ class AssignmentCtnState extends State<AssignmentCtn> {
           Constants.mmMargin, 0, Constants.mmMargin, 0),
       child: InkWell(
         onTap: () async {
+          if (!_checkConnection()) return;
           assignmentSummary = await GetAssignmentSummaryCall.call(
             token: StoredPreferences.authToken,
             assignmentNum: getJsonField(

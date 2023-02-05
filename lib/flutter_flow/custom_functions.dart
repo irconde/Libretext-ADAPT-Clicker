@@ -64,6 +64,7 @@ void initTimezones(dynamic timezoneAPI) {
 }
 
 void showSnackbar(BuildContext context, ConnectivityStatus? status) {
+  ScaffoldMessenger.of(context).hideCurrentSnackBar();
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(

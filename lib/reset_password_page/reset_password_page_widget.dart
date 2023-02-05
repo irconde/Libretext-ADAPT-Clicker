@@ -6,7 +6,7 @@ import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../gen/assets.gen.dart';
 import 'package:flutter/material.dart';
-
+import '../flutter_flow/custom_functions.dart' as functions;
 import '../utils/check_internet_connectivity.dart';
 import '../utils/stored_preferences.dart';
 
@@ -95,22 +95,9 @@ class _ResetPasswordPageWidgetState extends ConsumerState<ResetPasswordPageWidge
   }
 
   bool _checkConnection(){
-    ConnectivityStatus? status = ref.read(provider).value;
+    ConnectivityStatus? status = ref.read(provider.notifier).getConnectionStatus();
     if (status != ConnectivityStatus.isConnected) {
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'No Internet connection',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-            ),
-          ),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Color(0xFFD82828),
-        ),
-      );
+      functions.showSnackbar(context, status);
       return false;
     }
     return true;

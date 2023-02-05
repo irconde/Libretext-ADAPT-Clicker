@@ -2,6 +2,7 @@ import 'package:adapt_clicker/components/TimezoneDropdown.dart';
 import 'package:adapt_clicker/components/drawer_ctn.dart';
 import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -9,10 +10,11 @@ import '../gen/assets.gen.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-
+import '../flutter_flow/custom_functions.dart' as functions;
+import '../utils/check_internet_connectivity.dart';
 import '../utils/stored_preferences.dart';
 
-class UpdateProfilePageWidget extends StatefulWidget {
+class UpdateProfilePageWidget extends ConsumerStatefulWidget {
   const UpdateProfilePageWidget({Key? key, required this.onSubmit})
       : super(key: key);
   final ValueChanged<String?> onSubmit;
@@ -27,7 +29,7 @@ String lastNameRequired = "The last name field is required.";
 String idRequired = "The student ID field is required.";
 String invalidRecords = "These credentials do not match our records.";
 
-class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
+class _UpdateProfilePageWidgetState extends ConsumerState<UpdateProfilePageWidget> {
   static String? timeZoneUpdateDDValue;
   ApiCallResponse? updateProfile;
   ApiCallResponse? getUser;
@@ -149,6 +151,15 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
       _keyboardVisibilitySubscription.cancel();
     }
     super.dispose();
+  }
+
+  bool _checkConnection(){
+    ConnectivityStatus? status = ref.read(provider.notifier).getConnectionStatus();
+    if (status != ConnectivityStatus.isConnected) {
+      functions.showSnackbar(context, status);
+      return false;
+    }
+    return true;
   }
 
   @override
@@ -285,6 +296,7 @@ class _UpdateProfilePageWidgetState extends State<UpdateProfilePageWidget> {
                       ),
                     ),
                     onPressed: () async {
+                      if (!_checkConnection()) return;
                       updateProfile = await UpdateProfileCall.call(
                         token: StoredPreferences.authToken,
                         firstName: firstNameUpdateTFController!.text,
