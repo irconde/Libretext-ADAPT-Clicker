@@ -1,21 +1,24 @@
 import 'dart:ui';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
+import '../utils/check_internet_connectivity.dart';
 
-class AddCourseWidget extends StatefulWidget {
+class AddCourseWidget extends ConsumerStatefulWidget {
   const AddCourseWidget({Key? key}) : super(key: key);
 
   @override
   _AddCourseWidgetState createState() => _AddCourseWidgetState();
 }
 
-class _AddCourseWidgetState extends State<AddCourseWidget>
+class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
     with TickerProviderStateMixin {
   TextEditingController? accessCodeACController;
 
@@ -49,6 +52,16 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
     );
 
     accessCodeACController = TextEditingController();
+  }
+
+  bool _checkConnection() {
+    ConnectivityStatus? status =
+    ref.read(provider.notifier).getConnectionStatus();
+    if (status != ConnectivityStatus.isConnected) {
+      functions.showSnackbar(context, status);
+      return false;
+    }
+    return true;
   }
 
   @override
@@ -163,6 +176,7 @@ class _AddCourseWidgetState extends State<AddCourseWidget>
                           elevation: 4,
                         ),
                         onPressed: () async {
+                          if (!_checkConnection()) return;
                           addCourse = await AddCourseCall.call(
                             token: StoredPreferences.authToken,
                             accessCode: accessCodeACController!.text,

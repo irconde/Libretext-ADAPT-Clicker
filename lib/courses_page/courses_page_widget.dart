@@ -135,6 +135,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
+            if (!_checkConnection()) return;
             showModalBottomSheet(
               isScrollControlled: true,
               backgroundColor: Color(0x0E1862B3),
