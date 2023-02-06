@@ -292,7 +292,7 @@ class _AssignmentDetailsWidgetState
                       Expanded(
                         flex: 1,
                         child: Text(
-                          'Question Points',
+                          'Points',
                           textAlign: TextAlign.center,
                           style:
                               FlutterFlowTheme.of(context).bodyText1.override(
@@ -304,7 +304,7 @@ class _AssignmentDetailsWidgetState
                       Expanded(
                         flex: 1,
                         child: Text(
-                          'Total Score',
+                          'Score',
                           textAlign: TextAlign.center,
                           style:
                               FlutterFlowTheme.of(context).bodyText1.override(

@@ -136,7 +136,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                     text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: 'Question Points: ',
+                                      text: 'Points: ',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
