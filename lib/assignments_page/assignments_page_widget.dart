@@ -67,6 +67,7 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
             CollapsingLibreAppBar(
               titleNoSpace: "Introduction to this",
               titleSpace: "Introduction to\nthis",
+              iconPath: 'assets/images/libretexts_logo.svg',
             ),
           ];
         },

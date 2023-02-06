@@ -88,7 +88,7 @@ void showSnackbar(BuildContext context, ConnectivityStatus? status) {
 void preloadSVGs() async {
   // Preload SVG used in the next screen to avoid rendering delays
   Future.wait([
-    // LibreTexts logo
+    // LibreTexts ADAPT logo
     precachePicture(
       ExactAssetPicture(SvgPicture.svgStringDecoderOutsideViewBoxBuilder,
           'assets/images/libretexts_adapt_logo.svg'),
@@ -122,6 +122,12 @@ void preloadSVGs() async {
     precachePicture(
       ExactAssetPicture(SvgPicture.svgStringDecoderOutsideViewBoxBuilder,
           'assets/images/contact_support.svg'),
+      null,
+    ),
+    // LibreTexts logo
+    precachePicture(
+      ExactAssetPicture(SvgPicture.svgStringDecoderOutsideViewBoxBuilder,
+          'assets/images/libretexts_logo.svg'),
       null,
     ),
   ]);
