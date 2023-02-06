@@ -96,6 +96,7 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                             fontWeight: FontWeight.normal,
                                           )),
                                   onPressed: () async {
+                                    Navigator.pop(context);
                                     context.pushRoute(CoursesRouteWidget());
                                   }),
                             ),
@@ -128,6 +129,7 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                           fontWeight: FontWeight.normal,
                                         )),
                                 onPressed: () async {
+                                  Navigator.pop(context);
                                   context.pushRoute(UpdateProfileRouteWidget(
                                     onSubmit: (String? value) {},
                                   ));
@@ -155,6 +157,7 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                             fontWeight: FontWeight.normal,
                                           )),
                                   onPressed: () async {
+                                    Navigator.pop(context);
                                     context.pushRoute(ResetPasswordRouteWidget(
                                       onSubmit: (String value) {},
                                     ));
@@ -189,6 +192,7 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                           fontWeight: FontWeight.normal,
                                         )),
                                 onPressed: () async {
+                                  Navigator.pop(context);
                                   context.pushRoute(
                                     ContactUsWidget(
                                       onSubmit: (String? value) {},
@@ -221,6 +225,7 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                         ),
                       ),
                       onPressed: () async {
+                        Navigator.pop(context);
                         if (!_checkConnection()) return;
                         logout = await LogoutCall.call(
                           token: StoredPreferences.authToken,
