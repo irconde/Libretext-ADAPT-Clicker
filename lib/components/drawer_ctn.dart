@@ -36,7 +36,7 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 270,
+      width: 273,
       child: Container(
         width: double.infinity,
         height: double.maxFinite,
@@ -58,16 +58,19 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                     ),
                     child: SafeArea(
                       bottom: false,
-                      child: SvgPicture.asset(
-                        'assets/images/libretexts_adapt_logo.svg',
-                        fit: BoxFit.none,
-                        color: FlutterFlowTheme.of(context).primaryBackground,
+                      child: Padding(
+                        padding: const EdgeInsets.all(Constants.msMargin),
+                        child: SvgPicture.asset(
+                          'assets/images/libretexts_adapt_logo.svg',
+                          fit: BoxFit.scaleDown,
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                        ),
                       ),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(Constants.msMargin,
-                        Constants.mmMargin, Constants.msMargin, 0),
+                        Constants.msMargin, Constants.msMargin, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -78,66 +81,98 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                              padding: const EdgeInsets.all(0),
                               child: TextButton.icon(
                                   icon: Icon(
                                     Icons.menu_book,
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryColor,
+                                    color: widget.currentSelected ==
+                                            DrawerItems.courses
+                                        ? FlutterFlowTheme.of(context)
+                                            .primaryColor
+                                        : FlutterFlowTheme.of(context)
+                                            .secondaryColor,
                                     size: Constants.drawerIconSize,
                                   ),
                                   label: Text('Courses'),
                                   style: TextButton.styleFrom(
-                                      foregroundColor:
-                                          FlutterFlowTheme.of(context)
+                                      fixedSize: Size(224, 48),
+                                      padding: EdgeInsets.only(left: 12),
+                                      alignment: Alignment.centerLeft,
+                                      foregroundColor: widget.currentSelected ==
+                                              DrawerItems.courses
+                                          ? FlutterFlowTheme.of(context)
+                                              .primaryColor
+                                          : FlutterFlowTheme.of(context)
                                               .secondaryColor,
+                                      backgroundColor: widget.currentSelected ==
+                                              DrawerItems.courses
+                                          ? FlutterFlowTheme.of(context)
+                                              .lightPrimaryColor
+                                          : Colors.white,
                                       textStyle: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
                                             fontFamily: 'Open Sans',
                                             fontSize: 14,
-                                            fontWeight: FontWeight.normal,
+                                            fontWeight:
+                                                widget.currentSelected ==
+                                                        DrawerItems.courses
+                                                    ? FontWeight.w700
+                                                    : FontWeight.normal,
                                           )),
                                   onPressed: () async {
                                     Navigator.pop(context);
-                                    if (widget.currentSelected == DrawerItems.courses)
-                                      return;
+                                    if (widget.currentSelected ==
+                                        DrawerItems.courses) return;
                                     context.pushRoute(CoursesRouteWidget());
                                   }),
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Divider(
-                                height: Constants.llMargin,
-                                thickness: Constants.dividerThickness,
-                                color: FlutterFlowTheme.of(context).lineColor,
-                              ),
+                            Divider(
+                              height: Constants.llMargin,
+                              thickness: Constants.dividerThickness,
+                              color: FlutterFlowTheme.of(context).lineColor,
                             ),
                             TextButton.icon(
                                 icon: Icon(
                                   Icons.person_sharp,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryColor,
+                                  color: widget.currentSelected ==
+                                          DrawerItems.profile
+                                      ? FlutterFlowTheme.of(context)
+                                          .primaryColor
+                                      : FlutterFlowTheme.of(context)
+                                          .secondaryColor,
                                   size: Constants.drawerIconSize,
                                 ),
                                 label: Text('My Profile'),
                                 style: TextButton.styleFrom(
-                                    foregroundColor:
-                                        FlutterFlowTheme.of(context)
+                                    fixedSize: Size(224, 48),
+                                    padding: EdgeInsets.only(left: 12),
+                                    alignment: Alignment.centerLeft,
+                                    backgroundColor: widget.currentSelected ==
+                                            DrawerItems.profile
+                                        ? FlutterFlowTheme.of(context)
+                                            .lightPrimaryColor
+                                        : Colors.white,
+                                    foregroundColor: widget.currentSelected ==
+                                            DrawerItems.profile
+                                        ? FlutterFlowTheme.of(context)
+                                            .primaryColor
+                                        : FlutterFlowTheme.of(context)
                                             .secondaryColor,
                                     textStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
                                           fontFamily: 'Open Sans',
                                           fontSize: 14,
-                                          fontWeight: FontWeight.normal,
+                                          fontWeight: widget.currentSelected ==
+                                                  DrawerItems.profile
+                                              ? FontWeight.w700
+                                              : FontWeight.normal,
                                         )),
                                 onPressed: () async {
                                   Navigator.pop(context);
-                                  if (widget.currentSelected == DrawerItems.profile)
-                                    return;
+                                  if (widget.currentSelected ==
+                                      DrawerItems.profile) return;
                                   context.pushRoute(UpdateProfileRouteWidget(
                                     onSubmit: (String? value) {},
                                   ));
@@ -148,63 +183,96 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                               child: TextButton.icon(
                                   icon: Icon(
                                     Icons.lock_rounded,
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryColor,
+                                    color: widget.currentSelected ==
+                                            DrawerItems.password
+                                        ? FlutterFlowTheme.of(context)
+                                            .primaryColor
+                                        : FlutterFlowTheme.of(context)
+                                            .secondaryColor,
                                     size: Constants.drawerIconSize,
                                   ),
                                   label: Text('My Password'),
                                   style: TextButton.styleFrom(
-                                      foregroundColor:
-                                          FlutterFlowTheme.of(context)
+                                      fixedSize: Size(224, 48),
+                                      padding: EdgeInsets.only(left: 12),
+                                      alignment: Alignment.centerLeft,
+                                      backgroundColor: widget.currentSelected ==
+                                              DrawerItems.password
+                                          ? FlutterFlowTheme.of(context)
+                                              .lightPrimaryColor
+                                          : Colors.white,
+                                      foregroundColor: widget.currentSelected ==
+                                              DrawerItems.password
+                                          ? FlutterFlowTheme.of(context)
+                                              .primaryColor
+                                          : FlutterFlowTheme.of(context)
                                               .secondaryColor,
                                       textStyle: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
                                             fontFamily: 'Open Sans',
                                             fontSize: 14,
-                                            fontWeight: FontWeight.normal,
+                                            fontWeight:
+                                                widget.currentSelected ==
+                                                        DrawerItems.password
+                                                    ? FontWeight.w700
+                                                    : FontWeight.normal,
                                           )),
                                   onPressed: () async {
                                     Navigator.pop(context);
-                                    if (widget.currentSelected == DrawerItems.password)
-                                      return;
+                                    if (widget.currentSelected ==
+                                        DrawerItems.password) return;
                                     context.pushRoute(ResetPasswordRouteWidget(
                                       onSubmit: (String value) {},
                                     ));
                                   }),
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Divider(
-                                height: Constants.llMargin,
-                                thickness: 1,
-                                color: FlutterFlowTheme.of(context).lineColor,
-                              ),
+                            Divider(
+                              height: Constants.llMargin,
+                              thickness: 1,
+                              color: FlutterFlowTheme.of(context).lineColor,
                             ),
                             TextButton.icon(
                                 icon: Icon(
                                   Icons.send_sharp,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryColor,
+                                  color: widget.currentSelected ==
+                                          DrawerItems.contact
+                                      ? FlutterFlowTheme.of(context)
+                                          .primaryColor
+                                      : FlutterFlowTheme.of(context)
+                                          .secondaryColor,
                                   size: Constants.drawerIconSize,
                                 ),
                                 label: Text('Contact Us'),
                                 style: TextButton.styleFrom(
-                                    foregroundColor:
-                                        FlutterFlowTheme.of(context)
+                                    fixedSize: Size(224, 48),
+                                    padding: EdgeInsets.only(left: 12),
+                                    alignment: Alignment.centerLeft,
+                                    backgroundColor: widget.currentSelected ==
+                                            DrawerItems.contact
+                                        ? FlutterFlowTheme.of(context)
+                                            .lightPrimaryColor
+                                        : Colors.white,
+                                    foregroundColor: widget.currentSelected ==
+                                            DrawerItems.contact
+                                        ? FlutterFlowTheme.of(context)
+                                            .primaryColor
+                                        : FlutterFlowTheme.of(context)
                                             .secondaryColor,
                                     textStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
                                           fontFamily: 'Open Sans',
                                           fontSize: 14,
-                                          fontWeight: FontWeight.normal,
+                                          fontWeight: widget.currentSelected ==
+                                                  DrawerItems.contact
+                                              ? FontWeight.w700
+                                              : FontWeight.normal,
                                         )),
                                 onPressed: () async {
                                   Navigator.pop(context);
-                                  if (widget.currentSelected == DrawerItems.contact)
-                                    return;
+                                  if (widget.currentSelected ==
+                                      DrawerItems.contact) return;
                                   context.pushRoute(
                                     ContactUsWidget(
                                       onSubmit: (String? value) {},
@@ -222,18 +290,18 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
             Align(
                 alignment: AlignmentDirectional.bottomCenter,
                 child: Padding(
-                  padding: const EdgeInsets.all(Constants.mmMargin),
+                  padding: const EdgeInsets.all(Constants.msMargin),
                   child: OutlinedButton(
                       style: ElevatedButton.styleFrom(
                         textStyle: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w600),
+                            fontSize: 20, fontWeight: FontWeight.w700),
                         foregroundColor:
                             FlutterFlowTheme.of(context).secondaryColor,
                         fixedSize: const Size(330, 36),
                         backgroundColor:
                             FlutterFlowTheme.of(context).primaryBackground,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(1),
+                          borderRadius: BorderRadius.circular(4),
                         ),
                       ),
                       onPressed: () async {

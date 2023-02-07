@@ -9,6 +9,7 @@ abstract class FlutterFlowTheme {
   }
 
   late Color primaryColor;
+  late Color lightPrimaryColor;
   late Color secondaryColor;
   late Color tertiaryColor;
   late Color alternate;
@@ -56,9 +57,6 @@ abstract class FlutterFlowTheme {
     );
   }
 
-
-
-
   InputDecorationTheme inputTheme() => InputDecorationTheme(
         contentPadding: EdgeInsets.all(16),
         floatingLabelStyle: TextStyle(color: primaryColor),
@@ -82,28 +80,26 @@ abstract class FlutterFlowTheme {
         suffixIconColor: tertiaryColor,
       );
 
-  IconThemeData appBarIconThemes() =>
-      IconThemeData(
+  IconThemeData appBarIconThemes() => IconThemeData(
         size: 24,
         color: primaryBackground,
       );
 
-  AppBarTheme appBarTheme() =>AppBarTheme(
-    backgroundColor: primaryColor,
-    titleTextStyle: title3,
-    centerTitle: false,
-    actionsIconTheme: appBarIconThemes(),
-    iconTheme: appBarIconThemes(),
-    titleSpacing: 14, //This is because the built in padding
-    elevation: 0,
-  );
+  AppBarTheme appBarTheme() => AppBarTheme(
+        backgroundColor: primaryColor,
+        titleTextStyle: title3,
+        centerTitle: false,
+        actionsIconTheme: appBarIconThemes(),
+        iconTheme: appBarIconThemes(),
+        titleSpacing: 14, //This is because the built in padding
+        elevation: 0,
+      );
 }
-
-
 
 class LightModeTheme extends FlutterFlowTheme {
   late Color primaryColor = const Color(0xFF056ABD);
-  late Color secondaryColor = const Color(0xFF707070);
+  late Color lightPrimaryColor = const Color(0xFFB6E1FF);
+  late Color secondaryColor = const Color(0xFF787878);
   late Color tertiaryColor = const Color(0xFF898C8E);
   late Color alternate = const Color(0xFFFF5963);
   late Color primaryBackground = const Color(0xFFFFFFFF);
@@ -122,7 +118,6 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color svgIconColor2 = Color(0xFF4ABEE2);
   late Color success = Color(0xFF008C3D);
   late Color failure = Color(0xFFD82828);
-
 
   //Activity Colors
   late Color activityGood = Color(0xFF008C3D);
