@@ -10,8 +10,11 @@ import '../gen/assets.gen.dart';
 import '../utils/check_internet_connectivity.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 
+enum DrawerItems { courses, profile, password, contact }
+
 class DrawerCtnWidget extends ConsumerStatefulWidget {
-  const DrawerCtnWidget({Key? key}) : super(key: key);
+  final DrawerItems? currentSelected;
+  const DrawerCtnWidget({Key? key, this.currentSelected}) : super(key: key);
 
   @override
   _DrawerCtnWidgetState createState() => _DrawerCtnWidgetState();
@@ -20,8 +23,9 @@ class DrawerCtnWidget extends ConsumerStatefulWidget {
 class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
   ApiCallResponse? logout;
 
-  bool _checkConnection(){
-    ConnectivityStatus? status = ref.read(provider.notifier).getConnectionStatus();
+  bool _checkConnection() {
+    ConnectivityStatus? status =
+        ref.read(provider.notifier).getConnectionStatus();
     if (status != ConnectivityStatus.isConnected) {
       functions.showSnackbar(context, status);
       return false;
@@ -97,6 +101,8 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                           )),
                                   onPressed: () async {
                                     Navigator.pop(context);
+                                    if (widget.currentSelected == DrawerItems.courses)
+                                      return;
                                     context.pushRoute(CoursesRouteWidget());
                                   }),
                             ),
@@ -130,6 +136,8 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                         )),
                                 onPressed: () async {
                                   Navigator.pop(context);
+                                  if (widget.currentSelected == DrawerItems.profile)
+                                    return;
                                   context.pushRoute(UpdateProfileRouteWidget(
                                     onSubmit: (String? value) {},
                                   ));
@@ -158,6 +166,8 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                           )),
                                   onPressed: () async {
                                     Navigator.pop(context);
+                                    if (widget.currentSelected == DrawerItems.password)
+                                      return;
                                     context.pushRoute(ResetPasswordRouteWidget(
                                       onSubmit: (String value) {},
                                     ));
@@ -193,6 +203,8 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                         )),
                                 onPressed: () async {
                                   Navigator.pop(context);
+                                  if (widget.currentSelected == DrawerItems.contact)
+                                    return;
                                   context.pushRoute(
                                     ContactUsWidget(
                                       onSubmit: (String? value) {},

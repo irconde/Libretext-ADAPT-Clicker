@@ -128,7 +128,7 @@ class _ResetPasswordPageWidgetState extends ConsumerState<ResetPasswordPageWidge
         ],
       ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      drawer: DrawerCtnWidget(),
+      drawer: DrawerCtnWidget(currentSelected: DrawerItems.password),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),

@@ -187,7 +187,7 @@ class _UpdateProfilePageWidgetState extends ConsumerState<UpdateProfilePageWidge
         ],
       ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      drawer: DrawerCtnWidget(),
+      drawer: DrawerCtnWidget(currentSelected: DrawerItems.profile),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),

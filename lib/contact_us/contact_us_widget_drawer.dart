@@ -103,7 +103,7 @@ class _ContactUsDrawerWidgetState extends State<ContactUsDrawerWidget> {
           ),
         ],
       ),
-      drawer: DrawerCtnWidget(),
+      drawer: DrawerCtnWidget(currentSelected: DrawerItems.contact),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Column(

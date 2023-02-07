@@ -156,7 +156,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
             size: 28,
           ),
         ),
-        drawer: DrawerCtnWidget(),
+        drawer: DrawerCtnWidget(currentSelected: DrawerItems.courses),
         body: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Column(
