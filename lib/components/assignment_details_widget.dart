@@ -115,9 +115,7 @@ class _AssignmentDetailsWidgetState
                                           .primaryColor,
                                       fontSize: 20,
                                       fontWeight: FontWeight.w700),
-                            ).animated([
-                              animationsMap['textOnActionTriggerAnimation']!
-                            ]),
+                            ),
                           ),
                         ),
                       ),

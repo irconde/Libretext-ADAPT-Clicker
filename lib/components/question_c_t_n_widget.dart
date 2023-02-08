@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -94,18 +95,33 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                             },
                           ),
                           Expanded(
-                              child: Text(
-                            widget.assignmentName!,
-                            textAlign: TextAlign.center,
-                            style: FlutterFlowTheme.of(context)
-                                .bodyText1
-                                .override(
-                                    fontFamily: 'Open Sans',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700),
-                          )),
+                            child: FadingEdgeScrollView.fromSingleChildScrollView(
+                              child: SingleChildScrollView(
+                                controller: ScrollController(),
+                                scrollDirection: Axis.horizontal,
+                                child: ConstrainedBox(
+                                  constraints: BoxConstraints(
+                                      minWidth: MediaQuery.of(context).size.width - 80),
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      widget.assignmentName!,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.fade,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                          fontFamily: 'Open Sans',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
