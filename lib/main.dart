@@ -1,5 +1,7 @@
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:adapt_clicker/stored_preferences.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/flutter_flow/custom_functions.dart';
@@ -22,16 +24,15 @@ void main() async {
   bool isAuthenticated = false;
   try {
     isAuthenticated = await userIsAuthenticated();
-  } catch (e){}
+  } catch (e) {}
   AppState();
-  // TODO. Move this to a different place;
-  //fetchTimezone();
+  fetchTimezone();
   functions.preloadSVGs();
   // Firebase initialization
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(ProviderScope(child: MyApp(authenticated: isAuthenticated)));
+  runApp(MyApp(authenticated: isAuthenticated));
 }
 
 Future<bool> userIsAuthenticated() async {

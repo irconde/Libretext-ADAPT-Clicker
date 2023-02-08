@@ -15,6 +15,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app_installations/firebase_app_installations.dart';
 import '../utils/check_internet_connectivity.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 
@@ -35,6 +36,7 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
   void initState() {
     // TODO: implement initState
 
+    initFirebase();
     requestPermission(); //gets push notification permission
     getToken();
     sendToken();
@@ -42,10 +44,11 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
     super.initState();
   }
 
-  //In app messaging ID
-  void firebaseID() async {
-    String id = await FirebaseInstallations.instance.getId();
-    //print(" Installation ID: $id");
+  //Creating Firebase
+  Future<void> initFirebase() async {
+    FirebaseMessaging.instance.setDeliveryMetricsExportToBigQuery(true);
+    //FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+    //String id = await FirebaseInstallations.instance.getId();
   }
 
   //Permission check

@@ -49,6 +49,7 @@ class DefaultFirebaseOptions {
     }
   }
 
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDQ753MLJz_U5WhkMzHQJiOflrfI9c_jqE',
     appId: '1:869752552275:android:2fb68a2412db18c98c3fa6',
@@ -66,4 +67,6 @@ class DefaultFirebaseOptions {
     iosClientId: '869752552275-0h1p0l0jospngggj57ha6fv2j8p4lldk.apps.googleusercontent.com',
     iosBundleId: 'edu.ualr.adapt.clicker',
   );
+
+
 }
