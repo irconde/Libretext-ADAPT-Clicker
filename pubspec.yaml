@@ -60,6 +60,7 @@ dependencies:
   cloud_firestore: ^4.0.1
   firebase_in_app_messaging: ^0.7.0+10
   firebase_app_installations: ^0.2.1+8
+  fading_edge_scrollview: ^3.0.0
 
 dependency_overrides:
   # Uncomment this to update the launcher icon

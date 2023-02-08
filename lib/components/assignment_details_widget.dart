@@ -10,6 +10,7 @@ import '../gen/assets.gen.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import '../utils/check_internet_connectivity.dart';
+import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 
 class AssignmentDetailsWidget extends ConsumerStatefulWidget {
   const AssignmentDetailsWidget({
@@ -90,19 +91,37 @@ class _AssignmentDetailsWidgetState
                     },
                   ),
                   Expanded(
-                    child: Text(
-                      getJsonField(
-                        widget.assignmentSum,
-                        r'''$.name''',
-                      ).toString(),
-                      textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                          fontFamily: 'Open Sans',
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700),
-                    ).animated(
-                        [animationsMap['textOnActionTriggerAnimation']!]),
+                    child: FadingEdgeScrollView.fromSingleChildScrollView(
+                      child: SingleChildScrollView(
+                        controller: ScrollController(),
+                        scrollDirection: Axis.horizontal,
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                              minWidth: MediaQuery.of(context).size.width - 80),
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: Text(
+                              getJsonField(
+                                widget.assignmentSum,
+                                r'''$.name''',
+                              ).toString(),
+                              maxLines: 1,
+                              overflow: TextOverflow.fade,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                      fontFamily: 'Open Sans',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700),
+                            ).animated([
+                              animationsMap['textOnActionTriggerAnimation']!
+                            ]),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
