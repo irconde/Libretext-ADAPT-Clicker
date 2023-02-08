@@ -170,8 +170,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             CollapsingLibreAppBar(
-              titleNoSpace: "Create Account",
-              titleSpace: "Create\nAccount",
+              title: "Create Account",
               iconPath: 'assets/images/person_add1.svg',
               svgIconColor: FlutterFlowTheme.of(context).svgIconColor,
             ),

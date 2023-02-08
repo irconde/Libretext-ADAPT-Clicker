@@ -305,7 +305,6 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                         ),
                       ),
                       onPressed: () async {
-                        Navigator.pop(context);
                         if (!_checkConnection()) return;
                         logout = await LogoutCall.call(
                           token: StoredPreferences.authToken,

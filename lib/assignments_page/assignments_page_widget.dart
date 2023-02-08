@@ -65,8 +65,7 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             CollapsingLibreAppBar(
-              titleNoSpace: "Introduction to this",
-              titleSpace: "Introduction to\nthis",
+              title: "Introduction to this",
               iconPath: 'assets/images/libretexts_logo.svg',
             ),
           ];

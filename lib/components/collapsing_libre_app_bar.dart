@@ -8,40 +8,53 @@ import '../gen/assets.gen.dart';
 class CollapsingLibreAppBar extends StatefulWidget {
   const CollapsingLibreAppBar(
       {Key? key,
-      required this.titleNoSpace,
-      required this.titleSpace,
+      required this.title,
       this.top = 0.0,
       this.iconPath,
       this.svgIconColor})
       : super(key: key);
 
-  final String titleNoSpace;
-  final String titleSpace;
+  final String title;
   final String? iconPath;
   final double top;
   final Color? svgIconColor;
 
   @override
-  _CollapsingLibreAppBarState createState() => _CollapsingLibreAppBarState(
-      top, titleNoSpace, titleSpace, iconPath, svgIconColor);
+  _CollapsingLibreAppBarState createState() => _CollapsingLibreAppBarState();
 }
 
 class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar> {
-  _CollapsingLibreAppBarState(this.top, this.titleNoSpace, this.titleSpace,
-      this.iconPath, this.svgIconColor);
   ApiCallResponse? logout;
-  double top;
   double? a;
-  String titleNoSpace;
-  String? iconPath;
-  final String titleSpace;
-  Color? svgIconColor;
+  Color? iconColor;
+  double top = 0.0;
+  String? titleSpace;
 
   @override
   void initState() {
     super.initState();
-    if (svgIconColor == null)
-      svgIconColor = FlutterFlowTheme.of(context).svgIconColor;
+    iconColor = widget.svgIconColor == null
+        ? FlutterFlowTheme.of(context).svgIconColor
+        : widget.svgIconColor;
+    top = widget.top;
+    titleSpace = formatExpandedTitle(widget.title);
+  }
+
+  String formatExpandedTitle(String regularTitle) {
+    String expandedTitle = "";
+    int numWords = regularTitle.split(' ').length;
+    switch (numWords) {
+      case 1:
+        expandedTitle = regularTitle;
+        break;
+      case 2:
+        expandedTitle = regularTitle.replaceFirst(' ', '\n');
+        break;
+      default:
+        expandedTitle =
+            regularTitle.replaceFirst(' ', '\n', regularTitle.indexOf(' ') + 1);
+    }
+    return expandedTitle;
   }
 
   @override
@@ -64,14 +77,17 @@ class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar> {
           top = constraints.biggest.height;
           return FlexibleSpaceBar(
             titlePadding: getPadding(),
-            title: Text(getTitle(), style: getTitleStyle()),
-            background: iconPath != null
+            title: Text(getTitle(),
+                maxLines: checkTop() ? 1 : 2,
+                overflow: TextOverflow.ellipsis,
+                style: getTitleStyle()),
+            background: widget.iconPath != null
                 ? Align(
                     alignment: Alignment(0, .5),
                     child: SvgPicture.asset(
-                      iconPath!,
+                      widget.iconPath!,
                       fit: BoxFit.scaleDown,
-                      color: svgIconColor,
+                      color: iconColor,
                     ),
                   )
                 : null,
@@ -89,10 +105,7 @@ class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar> {
   }
 
   String getTitle() {
-    if (checkTop())
-      return titleNoSpace;
-    else
-      return titleSpace;
+    return checkTop() ? widget.title : titleSpace!;
   }
 
   TextStyle getTitleStyle() {
@@ -120,18 +133,14 @@ class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar> {
 
   double getTransition(double diff) {
     double result = 32 + Constants.xlMargin - diff;
-
     if (result < 32) return 32;
-
     if (result > Constants.xlMargin) return Constants.xlMargin;
-
     return result;
   }
 
   EdgeInsetsGeometry getPadding() {
     if (checkTop()) {
       double diff = getDiff();
-
       return EdgeInsetsDirectional.fromSTEB(getTransition(diff), 0, 0,
           Constants.smMargin + 1); // +1 made text align better with arrow.
     } else

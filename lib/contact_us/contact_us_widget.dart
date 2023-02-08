@@ -96,8 +96,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             CollapsingLibreAppBar(
-              titleNoSpace: "Contact Us",
-              titleSpace: "Contact\nUs",
+              title: "Contact Us",
               iconPath: 'assets/images/contact_support.svg',
               svgIconColor: FlutterFlowTheme.of(context).svgIconColor,
             ),

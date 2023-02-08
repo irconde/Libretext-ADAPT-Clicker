@@ -89,8 +89,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             CollapsingLibreAppBar(
-                titleNoSpace: "Welcome Back",
-                titleSpace: "Welcome\nBack",
+                title: "Welcome Back",
                 iconPath: 'assets/images/hand_wave.svg',
                 svgIconColor: FlutterFlowTheme.of(context).svgIconColor2),
           ];
