@@ -165,7 +165,6 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
 
   @override
   Widget build(BuildContext context) {
-    fetchTimezone(); //import from main.dart
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       key: scaffoldKey,

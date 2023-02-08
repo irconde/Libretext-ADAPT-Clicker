@@ -60,7 +60,9 @@ void initTimezones(dynamic timezoneAPI) {
     timezones.add(timezone);
   }
 
-  AppState.timezoneContainer = TimezonesContainer(timezones);
+  timezones.toSet().toList();
+
+  AppState.timezoneContainer = new TimezonesContainer(timezones);
 }
 
 void showSnackbar(BuildContext context, ConnectivityStatus? status) {
@@ -77,8 +79,7 @@ void showSnackbar(BuildContext context, ConnectivityStatus? status) {
         ),
       ),
       behavior: SnackBarBehavior.floating,
-      backgroundColor:
-      status == ConnectivityStatus.isConnected
+      backgroundColor: status == ConnectivityStatus.isConnected
           ? const Color(0xFF008C3D)
           : const Color(0xFFD82828),
     ),

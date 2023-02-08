@@ -26,5 +26,5 @@ class AppState {
   bool hasSubmission = false;
 
   static TimezonesContainer? timezoneContainer;
-  static Timezone? userTimezone = Timezone('UnsetV', 'UnsetT');
+  static Timezone? userTimezone = Timezone('UnsetV', 'Timezone');
 }
