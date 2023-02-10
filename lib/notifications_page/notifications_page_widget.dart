@@ -19,33 +19,52 @@ class NotificationsPageWidget extends StatefulWidget {
       _NotificationsPageWidgetState();
 }
 
-class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
-  ApiCallResponse? _apiRequestCompleter;
+ApiCallResponse? _notificationsResponse;
+List<NotificationSingle> notificationList = [];
 
-  List<NotificationSingle> notificationList = [];
+void getEnrollments() async {
+  List<dynamic> list = [];
 
-  @override
-  void initState() {
-    super.initState();
-    getEnrollments();
-  }
+  if (FFAppState().notificationSet) {
+    dynamic temp;
+    for (var item in FFAppState().notificationList) {
+      list.add(getJsonField(temp, item));
+    }
+    createList(list);
+    return;
+  } else {
+    //Dummy code, this is only until push notifications replace the api call. Then get enrollments will just be the if statement
 
-  void getEnrollments() async {
-    _apiRequestCompleter ??= await GetEnrollmentsCall.call(
+    _notificationsResponse ??= await GetEnrollmentsCall.call(
       token: FFAppState().authToken,
     );
 
-    final enrollmentsList =
-        getJsonField(_apiRequestCompleter?.jsonBody, r'''$.enrollments''');
-    if (enrollmentsList.isEmpty) {
-      return;
-    }
-
-    for (var item in enrollmentsList) {
+    list = getJsonField(_notificationsResponse?.jsonBody, r'''$.enrollments''');
+    for (var item in list) {
+      FFAppState().addNotification(item.toString());
       NotificationSingle temp =
           new NotificationSingle(enrollmentsListItem: item);
       notificationList.add(temp);
     }
+    FFAppState().notificationSet = true;
+  }
+}
+
+void createList(List<dynamic> list) {
+  if (notificationList.isNotEmpty) notificationList.clear();
+
+  for (var item in list) {
+    NotificationSingle temp = new NotificationSingle(enrollmentsListItem: item);
+    notificationList.add(temp);
+  }
+}
+
+class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getEnrollments();
   }
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -78,7 +97,9 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
                           debugPrint('The button is clicked!');
-                          //enrollmentsList.clear();
+                          setState(() {
+                            notificationList.clear();
+                          });
                         },
                       style: FlutterFlowTheme.of(context).bodyText1.override(
                             fontFamily: 'Open Sans',
@@ -102,13 +123,16 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              ListView.builder(
-                  itemCount: notificationList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    // access element from list using index
-                    // you can create and return a widget of your choice
-                    return notificationList[index];
-                  })
+              Expanded(
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: notificationList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      // access element from list using index
+                      // you can create and return a widget of your choice
+                      return notificationList[index];
+                    }),
+              )
             ],
           ),
         ),

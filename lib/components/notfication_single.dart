@@ -16,19 +16,7 @@ class NotificationSingle extends StatefulWidget {
       _NotificationSingleWidgetState(enrollmentsListItem);
 }
 
-Color severityColor(BuildContext context, double percentage)
-{
-  if(percentage < 50)
-    return FlutterFlowTheme.of(context).activityBad;
-  else if(percentage < 80)
-    return FlutterFlowTheme.of(context).activityMedium;
-  else
-    return FlutterFlowTheme.of(context).activityGood;
-}
-
 class _NotificationSingleWidgetState extends State<NotificationSingle> {
-
-  double severityVariable = 15.0;
   _NotificationSingleWidgetState(this.enrollmentsListItem);
   dynamic enrollmentsListItem;
 
