@@ -337,8 +337,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                     snapshot.data!;
                                 return Html(
                                   data: htmlViewGetNonTechnologyIframeResponse
-                                          .elements.outerHtml ??
-                                      '',
+                                          .elements.outerHtml,
                                 );
                               },
                             ),

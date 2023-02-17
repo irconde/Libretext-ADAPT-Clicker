@@ -1,4 +1,3 @@
-import 'package:adapt_clicker/utils/check_internet_connectivity.dart';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
@@ -49,10 +48,10 @@ Future<bool> userIsAuthenticated() async {
         email: _userAccount,
         password: _userPassword,
       );
-      if ((loginAttempt?.succeeded ?? true)) {
+      if ((loginAttempt.succeeded)) {
         _isSignedIn = true;
         String _newToken = functions.createToken(getJsonField(
-          (loginAttempt?.jsonBody ?? ''),
+          (loginAttempt.jsonBody ?? ''),
           r'''$.token''',
         ).toString());
         if (_newToken != _currentToken) {

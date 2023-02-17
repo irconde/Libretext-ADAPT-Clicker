@@ -14,8 +14,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app_installations/firebase_app_installations.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import '../utils/check_internet_connectivity.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 

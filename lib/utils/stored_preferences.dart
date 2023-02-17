@@ -39,17 +39,17 @@ class StoredPreferences {
 
   static Future<bool> setString(String key, String value) async {
     var prefs = await _instance;
-    return prefs?.setString(key, value) ?? Future.value(false);
+    return prefs.setString(key, value);
   }
 
   static Future<bool> setBool(String key, bool value) async {
     var prefs = await _instance;
-    return prefs?.setBool(key, value) ?? Future.value(false);
+    return prefs.setBool(key, value);
   }
 
   static Future<bool> setInt(String key, int value) async {
     var prefs = await _instance;
-    return prefs?.setInt(key, value) ?? Future.value(false);
+    return prefs.setInt(key, value);
   }
 
   static set rememberMe(bool value) {
