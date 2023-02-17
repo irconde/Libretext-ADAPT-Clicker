@@ -3,6 +3,7 @@ import 'package:move_to_background/move_to_background.dart';
 import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
 import 'package:adapt_clicker/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/add_course_widget.dart';
 import '../components/no_courses_widget.dart';
@@ -55,11 +56,19 @@ class _CoursesPageWidgetState extends State<CoursesPageWidget> {
   void requestPermission() async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-    NotificationSettings settings = await messaging.requestPermission();
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
 
-    if (settings.authorizationStatus == AuthorizationStatus.authorized)
+    if (await Permission.notification.request().isGranted)
       print('User granted permission');
-    else if (settings.authorizationStatus == AuthorizationStatus.provisional)
+    else if (await Permission.notification.status.isLimited)
       print('User granted provisional permission');
     else
       print('User declined or has not accepted permission');
