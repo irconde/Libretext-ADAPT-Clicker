@@ -431,9 +431,12 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                                           color: Colors.grey,
                                           child: SingleChildScrollView(
                                             controller: _scrollController2,
+                                            padding: EdgeInsets.only(
+                                                bottom: Constants.msMargin),
                                             child: Column(
                                               //TODO : Task 108 : Make this API generated
-                                              children: List.generate(10, (index) {
+                                              children:
+                                                  List.generate(10, (index) {
                                                 return AssignmentStatCtnWidget();
                                               }),
                                             ),
