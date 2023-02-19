@@ -46,7 +46,8 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
   ];
   final scaffoldKey = GlobalKey<ScaffoldState>();
   var top = 0.0;
-  late ScrollController _scrollController = ScrollController();
+  ScrollController _scrollController = ScrollController();
+  ScrollController _scrollController2 = ScrollController();
 
   @override
   void initState() {
@@ -65,7 +66,10 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             CollapsingLibreAppBar(
-              title: "Introduction to this",
+              title: getJsonField(
+                widget.course,
+                r'''$.course_section_name''',
+              ).toString(),
               iconPath: 'assets/images/libretexts_logo.svg',
             ),
           ];
@@ -423,15 +427,16 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                                       ),
                                       Flexible(
                                         child: ScrollShadow(
-                                          controller: _scrollController,
+                                          controller: _scrollController2,
                                           color: Colors.grey,
-                                          child: ListView.builder(
-                                            padding: EdgeInsets.all(0),
-                                            itemCount: 10,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              return AssignmentStatCtnWidget();
-                                            },
+                                          child: SingleChildScrollView(
+                                            controller: _scrollController2,
+                                            child: Column(
+                                              //TODO : Task 108 : Make this API generated
+                                              children: List.generate(10, (index) {
+                                                return AssignmentStatCtnWidget();
+                                              }),
+                                            ),
                                           ),
                                         ),
                                       ),
