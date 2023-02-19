@@ -1,5 +1,3 @@
-import 'package:adapt_clicker/utils/stored_preferences.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:adapt_clicker/stored_preferences.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
@@ -104,10 +102,8 @@ class MyApp extends StatelessWidget {
         appBarTheme: FlutterFlowTheme.of(context).appBarTheme(),
       ),
       themeMode: _themeMode,
-      routerDelegate: _appRouter.delegate(
-          initialRoutes: authenticated
-              ? [CoursesRouteWidget(isFirstScreen: true)]
-              : [WelcomeRouteWidget(isFirstScreen: true)]),
+      routerDelegate:
+          _appRouter.delegate(initialRoutes: [const WelcomeRouteWidget()]),
       routeInformationParser: _appRouter.defaultRouteParser(),
     );
   }
