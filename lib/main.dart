@@ -16,10 +16,9 @@ import 'Firebase/firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    systemNavigationBarColor: Colors.transparent,
+    systemNavigationBarColor: Colors.white,
+    systemNavigationBarIconBrightness: Brightness.dark,
   ));
-  // This removes the bottom navigation and fills the empty space
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   bool isAuthenticated = false;
   try {
     isAuthenticated = await userIsAuthenticated();
