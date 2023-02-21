@@ -276,6 +276,7 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                   context.pushRoute(
                                     ContactUsWidget(
                                       onSubmit: (String? value) {},
+                                      openFromDrawer: true,
                                     ),
                                   );
                                 }),

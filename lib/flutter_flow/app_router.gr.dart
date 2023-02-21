@@ -95,6 +95,7 @@ class AppRouter extends _i10.RootStackRouter {
         child: _i7.ContactUsWidget(
           key: args.key,
           onSubmit: args.onSubmit,
+          openFromDrawer: args.openFromDrawer,
         ),
       );
     },
@@ -342,12 +343,14 @@ class ContactUsWidget extends _i10.PageRouteInfo<ContactUsWidgetArgs> {
   ContactUsWidget({
     _i11.Key? key,
     required void Function(String?) onSubmit,
+    bool? openFromDrawer = false,
   }) : super(
           ContactUsWidget.name,
           path: '/contact-us-widget',
           args: ContactUsWidgetArgs(
             key: key,
             onSubmit: onSubmit,
+            openFromDrawer: openFromDrawer,
           ),
         );
 
@@ -358,15 +361,18 @@ class ContactUsWidgetArgs {
   const ContactUsWidgetArgs({
     this.key,
     required this.onSubmit,
+    this.openFromDrawer = false,
   });
 
   final _i11.Key? key;
 
   final void Function(String?) onSubmit;
 
+  final bool? openFromDrawer;
+
   @override
   String toString() {
-    return 'ContactUsWidgetArgs{key: $key, onSubmit: $onSubmit}';
+    return 'ContactUsWidgetArgs{key: $key, onSubmit: $onSubmit, openFromDrawer: $openFromDrawer}';
   }
 }
 
