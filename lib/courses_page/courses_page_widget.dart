@@ -135,6 +135,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
           onPressed: () async {
             if (!_checkConnection()) return;
             showModalBottomSheet(
+              useSafeArea: true,
               isScrollControlled: true,
               backgroundColor: Color(0x0E1862B3),
               context: context,

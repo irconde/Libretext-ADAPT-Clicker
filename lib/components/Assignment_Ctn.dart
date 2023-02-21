@@ -54,6 +54,7 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
           if (!AppState().assignmentUp) {
             setState(() => AppState().assignmentUp = true);
             await showModalBottomSheet(
+              useSafeArea: true,
               isScrollControlled: true,
               backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
               context: context,
@@ -87,6 +88,7 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
           if (!AppState().assignmentUp) {
             setState(() => AppState().assignmentUp = true);
             await showModalBottomSheet(
+              useSafeArea: true,
               isScrollControlled: true,
               backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
               context: context,
