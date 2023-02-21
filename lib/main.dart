@@ -29,7 +29,6 @@ void main() async {
   //FirebaseMessaging.onMessage.listen(_firebaseMessagingBackgroundHandler);
   await StoredPreferences.init();
   AppState();
-  //fetchTimezone();
   functions.preloadSVGs();
   // Firebase initialization
   await Firebase.initializeApp(
