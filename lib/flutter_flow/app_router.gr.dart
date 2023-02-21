@@ -34,9 +34,11 @@ class AppRouter extends _i10.RootStackRouter {
   @override
   final Map<String, _i10.PageFactory> pagesMap = {
     WelcomeRouteWidget.name: (routeData) {
+      final args = routeData.argsAs<WelcomeRouteWidgetArgs>(
+          orElse: () => const WelcomeRouteWidgetArgs());
       return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: _i1.WelcomePageWidget(),
+        child: _i1.WelcomePageWidget(isFirstScreen: args.isFirstScreen),
       );
     },
     CoursesRouteWidget.name: (routeData) {
@@ -159,14 +161,26 @@ class AppRouter extends _i10.RootStackRouter {
 
 /// generated route for
 /// [_i1.WelcomePageWidget]
-class WelcomeRouteWidget extends _i10.PageRouteInfo<void> {
-  const WelcomeRouteWidget()
+class WelcomeRouteWidget extends _i10.PageRouteInfo<WelcomeRouteWidgetArgs> {
+  WelcomeRouteWidget({bool? isFirstScreen = false})
       : super(
           WelcomeRouteWidget.name,
           path: '/welcome-page-widget',
+          args: WelcomeRouteWidgetArgs(isFirstScreen: isFirstScreen),
         );
 
   static const String name = 'WelcomeRouteWidget';
+}
+
+class WelcomeRouteWidgetArgs {
+  const WelcomeRouteWidgetArgs({this.isFirstScreen = false});
+
+  final bool? isFirstScreen;
+
+  @override
+  String toString() {
+    return 'WelcomeRouteWidgetArgs{isFirstScreen: $isFirstScreen}';
+  }
 }
 
 /// generated route for

@@ -1,4 +1,5 @@
 import 'package:adapt_clicker/utils/stored_preferences.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/flutter_flow/custom_functions.dart';
@@ -32,7 +33,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp(authenticated: isAuthenticated)));
 }
 
 Future<bool> userIsAuthenticated() async {
@@ -83,8 +84,9 @@ Future<void> fetchTimezone() async {
 class MyApp extends StatelessWidget {
   final ThemeMode _themeMode = ThemeMode.system;
   final _appRouter = AppRouter();
+  final bool authenticated;
 
-  MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key, required this.authenticated}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -103,8 +105,8 @@ class MyApp extends StatelessWidget {
         appBarTheme: FlutterFlowTheme.of(context).appBarTheme(),
       ),
       themeMode: _themeMode,
-      routerDelegate:
-          _appRouter.delegate(initialRoutes: [WelcomeRouteWidget()]),
+      routerDelegate: _appRouter
+          .delegate(initialRoutes: [WelcomeRouteWidget(isFirstScreen: true)]),
       routeInformationParser: _appRouter.defaultRouteParser(),
     );
   }
