@@ -71,8 +71,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
   }
 
   bool _checkConnection() {
-    ConnectivityStatus? status =
-        ref.read(provider.notifier).getConnectionStatus();
+    ConnectivityStatus? status = ref.read(provider.notifier).getConnectionStatus();
     if (status != ConnectivityStatus.isConnected) {
       functions.showSnackbar(context, status);
       return false;

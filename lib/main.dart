@@ -1,5 +1,4 @@
-import 'package:adapt_clicker/stored_preferences.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:adapt_clicker/utils/stored_preferences.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/flutter_flow/custom_functions.dart';
@@ -23,6 +22,9 @@ void main() async {
   try {
     isAuthenticated = await userIsAuthenticated();
   } catch (e) {}
+  //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  //FirebaseMessaging.onMessage.listen(_firebaseMessagingBackgroundHandler);
+  await StoredPreferences.init();
   AppState();
   fetchTimezone();
   functions.preloadSVGs();
@@ -30,7 +32,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp(authenticated: isAuthenticated));
+  runApp(MyApp());
 }
 
 Future<bool> userIsAuthenticated() async {
@@ -81,9 +83,8 @@ Future<void> fetchTimezone() async {
 class MyApp extends StatelessWidget {
   final ThemeMode _themeMode = ThemeMode.system;
   final _appRouter = AppRouter();
-  final bool authenticated;
 
-  MyApp({Key? key, required this.authenticated}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +104,7 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: _themeMode,
       routerDelegate:
-          _appRouter.delegate(initialRoutes: [const WelcomeRouteWidget()]),
+          _appRouter.delegate(initialRoutes: [WelcomeRouteWidget()]),
       routeInformationParser: _appRouter.defaultRouteParser(),
     );
   }

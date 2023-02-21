@@ -1,7 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:move_to_background/move_to_background.dart';
 import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
-import 'package:adapt_clicker/stored_preferences.dart';
+import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../backend/api_requests/api_calls.dart';
@@ -12,13 +12,6 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_app_installations/firebase_app_installations.dart';
-import '../utils/check_internet_connectivity.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 
 class CoursesPageWidget extends StatefulWidget {
   const CoursesPageWidget({Key? key}) : super(key: key);

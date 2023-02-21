@@ -60,6 +60,8 @@ dependencies:
   firebase_analytics: ^10.1.0
   fading_edge_scrollview: ^3.0.0
   permission_handler: ^10.2.0
+  flutter_riverpod: ^2.2.0
+  connectivity_plus: ^3.0.3
 
 dependency_overrides:
   # Uncomment this to update the launcher icon

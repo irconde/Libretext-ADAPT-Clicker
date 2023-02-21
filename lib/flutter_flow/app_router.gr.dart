@@ -34,22 +34,15 @@ class AppRouter extends _i10.RootStackRouter {
   @override
   final Map<String, _i10.PageFactory> pagesMap = {
     WelcomeRouteWidget.name: (routeData) {
-      final args = routeData.argsAs<WelcomeRouteWidgetArgs>(
-          orElse: () => const WelcomeRouteWidgetArgs());
       return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: _i1.WelcomePageWidget(isFirstScreen: args.isFirstScreen),
+        child: _i1.WelcomePageWidget(),
       );
     },
     CoursesRouteWidget.name: (routeData) {
-      final args = routeData.argsAs<CoursesRouteWidgetArgs>(
-          orElse: () => const CoursesRouteWidgetArgs());
       return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: _i2.CoursesPageWidget(
-          key: args.key,
-          isFirstScreen: args.isFirstScreen,
-        ),
+        child: const _i2.CoursesPageWidget(),
       );
     },
     LoginRouteWidget.name: (routeData) {
@@ -166,60 +159,26 @@ class AppRouter extends _i10.RootStackRouter {
 
 /// generated route for
 /// [_i1.WelcomePageWidget]
-class WelcomeRouteWidget extends _i10.PageRouteInfo<WelcomeRouteWidgetArgs> {
-  WelcomeRouteWidget({bool? isFirstScreen = false})
+class WelcomeRouteWidget extends _i10.PageRouteInfo<void> {
+  const WelcomeRouteWidget()
       : super(
           WelcomeRouteWidget.name,
           path: '/welcome-page-widget',
-          args: WelcomeRouteWidgetArgs(isFirstScreen: isFirstScreen),
         );
 
   static const String name = 'WelcomeRouteWidget';
 }
 
-class WelcomeRouteWidgetArgs {
-  const WelcomeRouteWidgetArgs({this.isFirstScreen = false});
-
-  final bool? isFirstScreen;
-
-  @override
-  String toString() {
-    return 'WelcomeRouteWidgetArgs{isFirstScreen: $isFirstScreen}';
-  }
-}
-
 /// generated route for
 /// [_i2.CoursesPageWidget]
-class CoursesRouteWidget extends _i10.PageRouteInfo<CoursesRouteWidgetArgs> {
-  CoursesRouteWidget({
-    _i11.Key? key,
-    bool? isFirstScreen = false,
-  }) : super(
+class CoursesRouteWidget extends _i10.PageRouteInfo<void> {
+  const CoursesRouteWidget()
+      : super(
           CoursesRouteWidget.name,
           path: '/courses-page-widget',
-          args: CoursesRouteWidgetArgs(
-            key: key,
-            isFirstScreen: isFirstScreen,
-          ),
         );
 
   static const String name = 'CoursesRouteWidget';
-}
-
-class CoursesRouteWidgetArgs {
-  const CoursesRouteWidgetArgs({
-    this.key,
-    this.isFirstScreen = false,
-  });
-
-  final _i11.Key? key;
-
-  final bool? isFirstScreen;
-
-  @override
-  String toString() {
-    return 'CoursesRouteWidgetArgs{key: $key, isFirstScreen: $isFirstScreen}';
-  }
 }
 
 /// generated route for
