@@ -19,6 +19,7 @@ abstract class FlutterFlowTheme {
   late Color secondaryText;
   late Color tertiaryText;
   late Color coursePagePullDown;
+  late Color shadowGrey;
 
   late Color primaryBtnText;
   late Color lineColor;
@@ -105,6 +106,7 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color primaryBackground = const Color(0xFFFFFFFF);
   late Color secondaryBackground = const Color(0xFFFFFFFF);
   late Color coursePagePullDown = const Color(0xFFF3F3F3);
+  late Color shadowGrey = const Color(0xFFCCCCCC);
   late Color primaryText = const Color(0xFF101213);
   late Color secondaryText = const Color(0xFF57636C);
   late Color tertiaryText = const Color(0xFF6A6A6A);

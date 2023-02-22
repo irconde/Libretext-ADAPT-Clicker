@@ -428,7 +428,8 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                                       Flexible(
                                         child: ScrollShadow(
                                           controller: _scrollController2,
-                                          color: Colors.grey,
+                                          color: FlutterFlowTheme.of(context)
+                                              .shadowGrey,
                                           child: SingleChildScrollView(
                                             controller: _scrollController2,
                                             padding: EdgeInsets.only(
