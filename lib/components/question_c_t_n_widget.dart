@@ -272,11 +272,12 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                     javascriptMode: JavascriptMode.unrestricted,
                                     gestureNavigationEnabled: true,
                                     gestureRecognizers: Set()
-                                      ..add(
-                                          Factory(() => EagerGestureRecognizer()))
+                                      ..add(Factory(
+                                          () => EagerGestureRecognizer()))
                                       ..add(Factory<
                                               VerticalDragGestureRecognizer>(
-                                          () => VerticalDragGestureRecognizer())),
+                                          () =>
+                                              VerticalDragGestureRecognizer())),
                                     zoomEnabled: true,
                                   ),
                                 ),
@@ -374,8 +375,8 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                 maxLines: 16,
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0, 24, 0, 24),
                                 child: FFButtonWidget(
                                   onPressed: () {
                                     print('Button pressed ...');
@@ -384,8 +385,8 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                   options: FFButtonOptions(
                                     width: 130,
                                     height: 40,
-                                    color:
-                                        FlutterFlowTheme.of(context).primaryColor,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryColor,
                                     textStyle: FlutterFlowTheme.of(context)
                                         .subtitle2
                                         .override(
@@ -473,7 +474,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                   ),
                 ],
               ),
-            )
+            ),
         ],
       ),
     );
