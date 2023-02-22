@@ -389,6 +389,7 @@ class _AssignmentDetailsWidgetState
                                             r'''$.has_at_least_one_submission''',
                                           ));
                                           await showModalBottomSheet(
+                                            useSafeArea: true,
                                             isScrollControlled: true,
                                             backgroundColor:
                                             FlutterFlowTheme.of(context)
