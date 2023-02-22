@@ -8,8 +8,6 @@ export 'update_profile_page/update_profile_page_widget.dart'
 export 'reset_password_page/reset_password_page_widget.dart'
     show ResetPasswordPageWidget;
 export 'contact_us/contact_us_widget.dart' show ContactUsWidget;
-export 'course_description_page/course_description_page_widget.dart'
-    show CourseDescriptionPageWidget;
 export 'assignments_page/assignments_page_widget.dart'
     show AssignmentsPageWidget;
 export 'notifications_page/notifications_page_widget.dart'
