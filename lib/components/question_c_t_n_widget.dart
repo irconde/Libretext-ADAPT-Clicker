@@ -537,12 +537,15 @@ Widget unselectedQuestionCard(int index, BuildContext context) => Container(
     );
 
 void injectViewport(WebViewController controller) async {
-  controller.runJavascriptReturningResult('''
-                          var flutterViewPort=document.createElement('meta');
-                          flutterViewPort.name =    "viewport";
-                          flutterViewPort.content = "initial-scale=1.0, maximum-scale=1.0, user-scalable=0";
-                          document.getElementsByTagName('head')[0].appendChild(flutterViewPort);
-                          ''');
-
-  log('Run');
+  await controller.evaluateJavascript('''
+    var viewport = document.querySelector("meta[name=viewport]");
+    if (viewport != null) {
+      viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes');
+    } else {
+      var newViewport = document.createElement('meta');
+      newViewport.setAttribute('name', 'viewport');
+      newViewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes');
+      document.head.appendChild(newViewport);
+    }
+  ''');
 }
