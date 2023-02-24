@@ -28,6 +28,16 @@ class _NotificationSingleWidgetState extends State<NotificationSingle> {
         color: Colors.red,
         child: Align(
           child: Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: Icon(Icons.delete),
+          ),
+          alignment: Alignment.centerLeft,
+        ),
+      ),
+      secondaryBackground: Container(
+        color: Colors.red,
+        child: Align(
+          child: Padding(
             padding: const EdgeInsets.only(right: 16),
             child: Icon(Icons.delete),
           ),
