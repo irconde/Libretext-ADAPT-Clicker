@@ -27,11 +27,13 @@ class LoginPageWidget extends ConsumerStatefulWidget {
 }
 
 class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
-  final _controller1 = TextEditingController();
-  final _controller2 = TextEditingController();
-  bool _submitted = false;
+  //Text Controllers
+  final _emailTFController = TextEditingController();
+  final _passwordTFController = TextEditingController();
 
-  late bool passwordVisibility;
+
+  bool _submitted = false;
+  bool passwordVisibility = false;
 
   ApiCallResponse? loginAttempt;
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -40,10 +42,32 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
   void initState() {
     super.initState();
     passwordVisibility = false;
+  //Remember Me
+    init();
+  }
+
+  //Added so can do async
+  Future<void> init() async {
+    //Remember Me
+    try {
+     await _rememberMeCheck();
+    } catch (e){}
+  }
+
+  Future<void> _rememberMeCheck() async {
+    String _userAccount = StoredPreferences.userAccount;
+    String _userPassword = StoredPreferences.userPassword;
+
+    if (StoredPreferences.rememberMe) {
+      if (_userAccount.isNotEmpty && _userPassword.isNotEmpty) {
+        _emailTFController?.text = _userAccount;
+        _passwordTFController?.text = _userPassword;
+      }
+    }
   }
 
   String? get _emailErrorText {
-    final text = _controller1.value.text;
+    final text = _emailTFController.value.text;
     if (text.isEmpty) {
       return emailRequired;
     } else {
@@ -52,7 +76,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
   }
 
   String? get _passwordErrorText {
-    final text = _controller2.value.text;
+    final text = _passwordTFController.value.text;
     if (text.isEmpty) {
       return passwordRequired;
     } else {
@@ -63,10 +87,10 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
   void _submit() {
     setState(() => _submitted = true);
     if (_emailErrorText == null) {
-      widget.onSubmit(_controller1.value.text);
+      widget.onSubmit(_emailTFController.value.text);
     }
     if (_passwordErrorText == null) {
-      widget.onSubmit(_controller2.value.text);
+      widget.onSubmit(_passwordTFController.value.text);
     }
   }
 
@@ -107,7 +131,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
                       child: TextField(
-                        controller: _controller1,
+                        controller: _emailTFController,
                         autofocus: true,
                         obscureText: false,
                         decoration: InputDecoration(
@@ -127,7 +151,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(32, 24, 32, 24),
                       child: TextField(
-                        controller: _controller2,
+                        controller: _passwordTFController,
                         autofocus: true,
                         obscureText: !passwordVisibility,
                         decoration: InputDecoration(
@@ -242,9 +266,9 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
                           ),
                         ),
                         onPressed: () async {
-                          if (!_checkConnection()) return;
-                          String _email = _controller1.text;
-                          String _password = _controller2.text;
+                          //if (!_checkConnection()) return;
+                          String _email = _emailTFController.text;
+                          String _password = _passwordTFController.text;
                           loginAttempt = await LoginCall.call(
                             email: _email,
                             password: _password,
