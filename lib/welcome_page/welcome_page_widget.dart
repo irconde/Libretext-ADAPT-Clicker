@@ -12,11 +12,11 @@ class WelcomePageWidget extends ConsumerWidget {
   final bool? isFirstScreen;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  WelcomePageWidget({this.isFirstScreen = false});
+  WelcomePageWidget({Key? key, this.isFirstScreen = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (this.isFirstScreen != null && this.isFirstScreen == true) {
+    if (isFirstScreen != null && isFirstScreen == true) {
       final AsyncValue<ConnectivityStatus> connectivityStatusProvider =
           ref.watch(provider);
       ConnectivityStatus? status;
@@ -26,8 +26,9 @@ class WelcomePageWidget extends ConsumerWidget {
           ref.read(provider.notifier).startWatchingConnectivity();
         }
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (status == null || status == ConnectivityStatus.initializing)
+          if (status == null || status == ConnectivityStatus.initializing) {
             return;
+          }
           functions.showSnackbar(context, status!);
         });
       }
@@ -40,22 +41,22 @@ class WelcomePageWidget extends ConsumerWidget {
         body: SafeArea(
           child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
-            child: Container(
+            child: SizedBox(
               width: double.infinity,
               child: Stack(
-                alignment: AlignmentDirectional(0, 0),
+                alignment: const AlignmentDirectional(0, 0),
                 children: [
                   Align(
-                    alignment: AlignmentDirectional(0, -0.4),
+                    alignment: const AlignmentDirectional(0, -0.4),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Align(
-                          alignment: AlignmentDirectional(0, -0.6),
+                          alignment: const AlignmentDirectional(0, -0.6),
                           child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(42, 42, 42, 24),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                42, 42, 42, 24),
                             child: SvgPicture.asset(
                               'assets/images/libretexts_adapt_logo.svg',
                               width: 270,
@@ -64,16 +65,17 @@ class WelcomePageWidget extends ConsumerWidget {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(32, 0, 32, 8),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              32, 0, 32, 8),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               foregroundColor:
                                   FlutterFlowTheme.of(context).primaryBtnText,
                               backgroundColor:
                                   FlutterFlowTheme.of(context).primaryColor,
-                              textStyle: TextStyle(
+                              textStyle: const TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.w600),
-                              minimumSize: Size.fromHeight(36),
+                              minimumSize: const Size.fromHeight(36),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(4),
                               ),
@@ -89,16 +91,17 @@ class WelcomePageWidget extends ConsumerWidget {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(32, 8, 32, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              32, 8, 32, 0),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               foregroundColor:
                                   FlutterFlowTheme.of(context).primaryColor,
                               backgroundColor: FlutterFlowTheme.of(context)
                                   .primaryBackground,
-                              textStyle: TextStyle(
+                              textStyle: const TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.w600),
-                              minimumSize: Size.fromHeight(36),
+                              minimumSize: const Size.fromHeight(36),
                               shape: RoundedRectangleBorder(
                                 side: BorderSide(
                                   width: 1,
@@ -122,16 +125,17 @@ class WelcomePageWidget extends ConsumerWidget {
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0, 0),
+                    alignment: const AlignmentDirectional(0, 0),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 100, 0, 91),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 100, 0, 91),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(-0.06, 1),
+                            alignment: const AlignmentDirectional(-0.06, 1),
                             child: Text(
                               'Having problems? ',
                               style: FlutterFlowTheme.of(context)
@@ -143,7 +147,7 @@ class WelcomePageWidget extends ConsumerWidget {
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(-0.06, 1),
+                            alignment: const AlignmentDirectional(-0.06, 1),
                             child: InkWell(
                               onTap: () async {
                                 context.pushRoute(

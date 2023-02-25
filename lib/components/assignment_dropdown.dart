@@ -32,7 +32,7 @@ class AssignmentDropdownState extends State<AssignmentDropdown> {
             width: 1,
             color: FlutterFlowTheme.of(context).textFieldBorder,
           ),
-          borderRadius: BorderRadius.all(Radius.circular(Constants.xxsMargin)),
+          borderRadius: const BorderRadius.all(Radius.circular(Constants.xxsMargin)),
           color: Colors.transparent,
         ),
         child: ButtonTheme(

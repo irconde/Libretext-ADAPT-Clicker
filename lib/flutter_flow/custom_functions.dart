@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 String createToken(String token) {
-  return "Bearer $token";
+  return 'Bearer $token';
 }
 
 String getTopError(List<String> errorList) {
@@ -15,9 +15,9 @@ String getTopError(List<String> errorList) {
 
 String questionSolution(bool? solution) {
   if (solution == null || !solution) {
-    return "N/A";
+    return 'N/A';
   }
-  return "Solution";
+  return 'Solution';
 }
 
 int addOne(int value) {
@@ -29,7 +29,7 @@ bool isBasic(String techIframe) {
 }
 
 bool isTextSubmission(String textSubmission) {
-  return (textSubmission == "text");
+  return (textSubmission == 'text');
 }
 
 //Timezones come in form of value: example/example, text: example
@@ -56,11 +56,11 @@ void initTimezones(dynamic timezoneAPI) {
 
   for (int i = 0; i < timezoneTexts.length; i++) {
     Timezone timezone =
-        new Timezone(timezoneValues.elementAt(i), timezoneTexts.elementAt(i));
+        Timezone(timezoneValues.elementAt(i), timezoneTexts.elementAt(i));
     timezones.add(timezone);
   }
 
-  AppState.timezoneContainer = new TimezonesContainer(timezones);
+  AppState.timezoneContainer = TimezonesContainer(timezones);
 }
 
 void showSnackbar(BuildContext context, ConnectivityStatus? status) {
@@ -79,8 +79,8 @@ void showSnackbar(BuildContext context, ConnectivityStatus? status) {
       behavior: SnackBarBehavior.floating,
       backgroundColor:
       status == ConnectivityStatus.isConnected
-          ? Color(0xFF008C3D)
-          : Color(0xFFD82828),
+          ? const Color(0xFF008C3D)
+          : const Color(0xFFD82828),
     ),
   );
 }

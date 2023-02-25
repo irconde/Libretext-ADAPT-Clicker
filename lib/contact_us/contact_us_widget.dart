@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:adapt_clicker/components/collapsing_libre_app_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
-import 'package:adapt_clicker/components/ContactUsDropDownList.dart';
+import 'package:adapt_clicker/components/contact_us_dropdown_list.dart';
 import '../components/drawer_ctn.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +10,10 @@ import '../flutter_flow/custom_functions.dart' as functions;
 import '../notifications_page/notifications_page_widget.dart';
 import '../utils/check_internet_connectivity.dart';
 
-String nameRequired = "The name field is required.";
-String emailRequired = "The email field is required.";
-String messageRequired = "The message field is required.";
-String invalidRecords = "These credentials do not match our records.";
+String nameRequired = 'The name field is required.';
+String emailRequired = 'The email field is required.';
+String messageRequired = 'The message field is required.';
+String invalidRecords = 'These credentials do not match our records.';
 
 class ContactUsWidget extends ConsumerStatefulWidget {
   final ValueChanged<String?> onSubmit;
@@ -23,7 +23,7 @@ class ContactUsWidget extends ConsumerStatefulWidget {
       : super(key: key);
 
   @override
-  _ContactUsWidgetState createState() => _ContactUsWidgetState();
+  ConsumerState<ContactUsWidget> createState() => _ContactUsWidgetState();
 }
 
 class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
@@ -102,22 +102,22 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
           ? AppBar(
               automaticallyImplyLeading: false,
               leading: IconButton(
-                icon: Icon(Icons.menu),
+                icon: const Icon(Icons.menu),
                 onPressed: () {
                   scaffoldKey.currentState!.openDrawer();
                 },
               ),
-              title: Text('Contact Us'),
+              title: const Text('Contact Us'),
               actions: [
                 IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.notifications,
                   ),
                   onPressed: () async {
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => NotificationsPageWidget(),
+                          builder: (context) => const NotificationsPageWidget(),
                         ));
                   },
                 ),
@@ -125,7 +125,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
             )
           : null,
       drawer: widget.openFromDrawer!
-          ? DrawerCtnWidget(currentSelected: DrawerItems.contact)
+          ? const DrawerCtnWidget(currentSelected: DrawerItems.contact)
           : null,
       body: widget.openFromDrawer!
           ? buildGestureDetector(context)
@@ -134,7 +134,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
                   (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
                   CollapsingLibreAppBar(
-                    title: "Contact Us",
+                    title: 'Contact Us',
                     iconPath: 'assets/images/contact_support.svg',
                     svgIconColor: FlutterFlowTheme.of(context).svgIconColor,
                   ),
@@ -153,12 +153,12 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
                     child: Text(
                       'Please use this form to contact us regarding general  questions or issues.',
                       style: FlutterFlowTheme.of(context).bodyText1.override(
@@ -168,7 +168,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                     child: TextField(
                         autofocus: true,
                         controller: contactUsNameTextFieldController,
@@ -179,7 +179,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
                         )),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                     child: TextField(
                       controller: contactUsEmailTextFieldController,
                       decoration: InputDecoration(
@@ -196,7 +196,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
                       contactUsSubjectDropDownValue:
                           contactUsSubjectDropDownValue),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                     child: TextField(
                       textAlignVertical: TextAlignVertical.top,
                       controller: contactUsMessageTextFieldController,
@@ -215,7 +215,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
                     ),
                   ),
                   Align(
-                    alignment: Alignment(1, 0),
+                    alignment: const Alignment(1, 0),
                     child: Text(
                       '*Required Fields',
                       style: FlutterFlowTheme.of(context).bodyText1.override(
@@ -226,13 +226,13 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size.fromHeight(36),
                         backgroundColor:
                             FlutterFlowTheme.of(context).primaryColor,
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w600),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4),
@@ -249,7 +249,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
                           toUserId: '0',
                           type: 'contact_us',
                         );
-                        if ((contactUs?.succeeded ?? true)) {
+                        if ((contactUs?.succeeded ?? true) && context.mounted) {
                           context.popRoute();
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -260,7 +260,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
                                       .primaryBtnText,
                                 ),
                               ),
-                              duration: Duration(milliseconds: 4000),
+                              duration: const Duration(milliseconds: 4000),
                               backgroundColor:
                                   FlutterFlowTheme.of(context).success,
                             ),

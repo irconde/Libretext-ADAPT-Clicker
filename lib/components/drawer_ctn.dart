@@ -17,7 +17,7 @@ class DrawerCtnWidget extends ConsumerStatefulWidget {
   const DrawerCtnWidget({Key? key, this.currentSelected}) : super(key: key);
 
   @override
-  _DrawerCtnWidgetState createState() => _DrawerCtnWidgetState();
+  ConsumerState<DrawerCtnWidget> createState() => _DrawerCtnWidgetState();
 }
 
 class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
@@ -35,7 +35,7 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 273,
       child: Container(
         width: double.infinity,
@@ -69,7 +69,7 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(Constants.msMargin,
+                    padding: const EdgeInsetsDirectional.fromSTEB(Constants.msMargin,
                         Constants.msMargin, Constants.msMargin, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
@@ -93,10 +93,10 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                             .secondaryColor,
                                     size: Constants.drawerIconSize,
                                   ),
-                                  label: Text('Courses'),
+                                  label: const Text('Courses'),
                                   style: TextButton.styleFrom(
-                                      fixedSize: Size(224, 48),
-                                      padding: EdgeInsets.only(left: 12),
+                                      fixedSize: const Size(224, 48),
+                                      padding: const EdgeInsets.only(left: 12),
                                       alignment: Alignment.centerLeft,
                                       foregroundColor: widget.currentSelected ==
                                               DrawerItems.courses
@@ -143,10 +143,10 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                           .secondaryColor,
                                   size: Constants.drawerIconSize,
                                 ),
-                                label: Text('My Profile'),
+                                label: const Text('My Profile'),
                                 style: TextButton.styleFrom(
-                                    fixedSize: Size(224, 48),
-                                    padding: EdgeInsets.only(left: 12),
+                                    fixedSize: const Size(224, 48),
+                                    padding: const EdgeInsets.only(left: 12),
                                     alignment: Alignment.centerLeft,
                                     backgroundColor: widget.currentSelected ==
                                             DrawerItems.profile
@@ -191,10 +191,10 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                             .secondaryColor,
                                     size: Constants.drawerIconSize,
                                   ),
-                                  label: Text('My Password'),
+                                  label: const Text('My Password'),
                                   style: TextButton.styleFrom(
-                                      fixedSize: Size(224, 48),
-                                      padding: EdgeInsets.only(left: 12),
+                                      fixedSize: const Size(224, 48),
+                                      padding: const EdgeInsets.only(left: 12),
                                       alignment: Alignment.centerLeft,
                                       backgroundColor: widget.currentSelected ==
                                               DrawerItems.password
@@ -243,10 +243,10 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                           .secondaryColor,
                                   size: Constants.drawerIconSize,
                                 ),
-                                label: Text('Contact Us'),
+                                label: const Text('Contact Us'),
                                 style: TextButton.styleFrom(
-                                    fixedSize: Size(224, 48),
-                                    padding: EdgeInsets.only(left: 12),
+                                    fixedSize: const Size(224, 48),
+                                    padding: const EdgeInsets.only(left: 12),
                                     alignment: Alignment.centerLeft,
                                     backgroundColor: widget.currentSelected ==
                                             DrawerItems.contact
@@ -294,7 +294,7 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                   padding: const EdgeInsets.all(Constants.msMargin),
                   child: OutlinedButton(
                       style: ElevatedButton.styleFrom(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w700),
                         foregroundColor:
                             FlutterFlowTheme.of(context).secondaryColor,
@@ -318,7 +318,7 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                         await context.pushRoute(WelcomeRouteWidget());
                         setState(() {});
                       },
-                      child: Text('LOGOUT')),
+                      child: const Text('LOGOUT')),
                 )),
           ],
         ),

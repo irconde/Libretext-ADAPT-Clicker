@@ -13,18 +13,15 @@ import '../flutter_flow/custom_functions.dart' as functions;
 class AssignmentCtn extends ConsumerStatefulWidget {
   const AssignmentCtn({Key? key, required this.assignmentsItem})
       : super(key: key);
-  final assignmentsItem;
+  final dynamic assignmentsItem;
 
   @override
-  AssignmentCtnState createState() => AssignmentCtnState(assignmentsItem);
+  AssignmentCtnState createState() => AssignmentCtnState();
 }
 
 class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
-  AssignmentCtnState(this.assignmentsItem);
-
   ApiCallResponse? assignmentSummary;
   ApiCallResponse? assignmentSum;
-  dynamic assignmentsItem;
 
   bool _checkConnection() {
     ConnectivityStatus? status =
@@ -39,7 +36,7 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(
+      padding: const EdgeInsetsDirectional.fromSTEB(
           Constants.mmMargin, 0, Constants.mmMargin, 0),
       child: InkWell(
         onTap: () async {
@@ -47,11 +44,11 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
           assignmentSummary = await GetAssignmentSummaryCall.call(
             token: StoredPreferences.authToken,
             assignmentNum: getJsonField(
-              assignmentsItem,
+              widget.assignmentsItem,
               r'''$.id''',
             ),
           );
-          if (!AppState().assignmentUp) {
+          if (!AppState().assignmentUp && context.mounted) {
             setState(() => AppState().assignmentUp = true);
             await showModalBottomSheet(
               useSafeArea: true,
@@ -61,7 +58,7 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
               builder: (context) {
                 return Padding(
                   padding: MediaQuery.of(context).viewInsets,
-                  child: Container(
+                  child: SizedBox(
                     height: double.infinity,
                     child: AssignmentDetailsWidget(
                       assignmentSum: GetAssignmentSummaryCall.assignment(
@@ -81,11 +78,11 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
           assignmentSum = await GetAssignmentSummaryCall.call(
             token: StoredPreferences.authToken,
             assignmentNum: getJsonField(
-              assignmentsItem,
+              widget.assignmentsItem,
               r'''$.id''',
             ),
           );
-          if (!AppState().assignmentUp) {
+          if (!AppState().assignmentUp && context.mounted) {
             setState(() => AppState().assignmentUp = true);
             await showModalBottomSheet(
               useSafeArea: true,
@@ -95,7 +92,7 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
               builder: (context) {
                 return Padding(
                   padding: MediaQuery.of(context).viewInsets,
-                  child: Container(
+                  child: SizedBox(
                     height: double.infinity,
                     child: AssignmentDetailsWidget(
                       assignmentSum: GetAssignmentSummaryCall.assignment(
@@ -115,7 +112,7 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(
+              padding: const EdgeInsetsDirectional.fromSTEB(
                   0, Constants.msMargin, 0, Constants.msMargin),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
@@ -128,10 +125,11 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                           child: AutoSizeText(
                             getJsonField(
-                              assignmentsItem,
+                              widget.assignmentsItem,
                               r'''$.name''',
                             ).toString().maybeHandleOverflow(
                                   maxChars: 14,
@@ -150,7 +148,7 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
                         ),
                         Text(
                           getJsonField(
-                            assignmentsItem,
+                            widget.assignmentsItem,
                             r'''$.assignment_group''',
                           ).toString().maybeHandleOverflow(maxChars: 20),
                           style: FlutterFlowTheme.of(context)
@@ -165,7 +163,7 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
                     child: Icon(
                       Icons.today_rounded,
                       color: FlutterFlowTheme.of(context).tertiaryText,
@@ -174,7 +172,7 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
                   ),
                   Text(
                     getJsonField(
-                      assignmentsItem,
+                      widget.assignmentsItem,
                       r'''$..due_date''',
                     ).toString(),
                     textAlign: TextAlign.end,
@@ -186,7 +184,7 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
                 ],
               ),
             ),
-            Divider(
+            const Divider(
               height: 1,
               thickness: 1,
             ),

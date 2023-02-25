@@ -59,7 +59,7 @@ abstract class FlutterFlowTheme {
   }
 
   InputDecorationTheme inputTheme() => InputDecorationTheme(
-        contentPadding: EdgeInsets.all(16),
+        contentPadding: const EdgeInsets.all(16),
         floatingLabelStyle: TextStyle(color: primaryColor),
         alignLabelWithHint: true,
         labelStyle: bodyText2,
@@ -111,20 +111,20 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color secondaryText = const Color(0xFF57636C);
   late Color tertiaryText = const Color(0xFF6A6A6A);
 
-  late Color primaryBtnText = Color(0xFFFFFFFF);
-  late Color lineColor = Color(0xFFE0E3E7);
-  late Color textFieldBackground = Color(0xFFF5FCFF);
-  late Color textFieldBorder = Color(0xFFD3D8DB);
-  late Color drawerIconColor = Color(0xFF66AADB);
-  late Color svgIconColor = Color(0xFF4F9FCF);
-  late Color svgIconColor2 = Color(0xFF4ABEE2);
-  late Color success = Color(0xFF008C3D);
-  late Color failure = Color(0xFFD82828);
+  late Color primaryBtnText = const Color(0xFFFFFFFF);
+  late Color lineColor = const Color(0xFFE0E3E7);
+  late Color textFieldBackground = const Color(0xFFF5FCFF);
+  late Color textFieldBorder = const Color(0xFFD3D8DB);
+  late Color drawerIconColor = const Color(0xFF66AADB);
+  late Color svgIconColor = const Color(0xFF4F9FCF);
+  late Color svgIconColor2 = const Color(0xFF4ABEE2);
+  late Color success = const Color(0xFF008C3D);
+  late Color failure = const Color(0xFFD82828);
 
   //Activity Colors
-  late Color activityGood = Color(0xFF008C3D);
-  late Color activityMedium = Color(0xFFFF9D00);
-  late Color activityBad = Color(0xFFEF0C12);
+  late Color activityGood = const Color(0xFF008C3D);
+  late Color activityMedium = const Color(0xFFFF9D00);
+  late Color activityBad = const Color(0xFFEF0C12);
 }
 
 abstract class Typography {

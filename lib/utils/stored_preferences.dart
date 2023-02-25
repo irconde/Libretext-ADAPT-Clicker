@@ -21,7 +21,7 @@ class StoredPreferences {
   }
 
   static String getString(String key, [String? defValue]) {
-    return _prefsInstance!.getString(key) ?? defValue ?? "";
+    return _prefsInstance!.getString(key) ?? defValue ?? '';
   }
 
   static bool getBool(String key) {

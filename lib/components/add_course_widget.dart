@@ -15,7 +15,7 @@ class AddCourseWidget extends ConsumerStatefulWidget {
   const AddCourseWidget({Key? key}) : super(key: key);
 
   @override
-  _AddCourseWidgetState createState() => _AddCourseWidgetState();
+  ConsumerState<AddCourseWidget> createState() => _AddCourseWidgetState();
 }
 
 class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
@@ -30,12 +30,12 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
       hideBeforeAnimating: true,
       fadeIn: true,
       initialState: AnimationState(
-        offset: Offset(0, 0),
+        offset: const Offset(0, 0),
         scale: 1,
         opacity: 1,
       ),
       finalState: AnimationState(
-        offset: Offset(0, 0),
+        offset: const Offset(0, 0),
         scale: 1,
         opacity: 0,
       ),
@@ -56,7 +56,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
 
   bool _checkConnection() {
     ConnectivityStatus? status =
-    ref.read(provider.notifier).getConnectionStatus();
+        ref.read(provider.notifier).getConnectionStatus();
     if (status != ConnectivityStatus.isConnected) {
       functions.showSnackbar(context, status);
       return false;
@@ -75,10 +75,10 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
         child: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Color(0x0E1862B3),
           ),
-          alignment: AlignmentDirectional(0, 1),
+          alignment: const AlignmentDirectional(0, 1),
           child: InkWell(
             onTap: () async {}, //keeps actual background not clicking
             child: Container(
@@ -87,7 +87,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                 color: FlutterFlowTheme.of(context).secondaryBackground,
               ),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(32, 32, 32, 32),
+                padding: const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 32),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -105,7 +105,8 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                             fit: BoxFit.fill,
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                8, 0, 0, 0),
                             child: Text(
                               'Course Registration',
                               textAlign: TextAlign.center,
@@ -127,7 +128,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                         thickness: 1,
                         color: FlutterFlowTheme.of(context).lineColor,
                       ),
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         child: Text(
                           'Please enter the course code used given by your instructor.',
@@ -144,14 +145,15 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
-                        child: Container(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+                        child: SizedBox(
                           width: double.infinity,
                           child: TextField(
                             controller: accessCodeACController,
                             decoration: InputDecoration(
-                              labelText: "Course Code",
-                              prefixIcon: Icon(
+                              labelText: 'Course Code',
+                              prefixIcon: const Icon(
                                 Icons.mode_edit,
                               ),
                               floatingLabelStyle: TextStyle(
@@ -166,7 +168,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size.fromHeight(36),
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w600),
                           backgroundColor:
                               FlutterFlowTheme.of(context).primaryColor,
@@ -182,7 +184,8 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                             accessCode: accessCodeACController!.text,
                             timeZone: 'America/Belize',
                           );
-                          if ((addCourse?.succeeded ?? true)) {
+                          if ((addCourse?.succeeded ?? true) &&
+                              context.mounted) {
                             context.popRoute();
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
@@ -193,7 +196,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                                         .primaryBtnText,
                                   ),
                                 ),
-                                duration: Duration(milliseconds: 4000),
+                                duration: const Duration(milliseconds: 4000),
                                 backgroundColor:
                                     FlutterFlowTheme.of(context).success,
                               ),
@@ -219,7 +222,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
 
                           setState(() {});
                         },
-                        child: const Text("JOIN COURSE"),
+                        child: const Text('JOIN COURSE'),
                       ),
                     ],
                   ),

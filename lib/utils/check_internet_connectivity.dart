@@ -50,13 +50,13 @@ class ConnectivityStatusNotifier extends AsyncNotifier<ConnectivityStatus> {
     ConnectivityStatus connectionStatus = ConnectivityStatus.notDetermined;
     final ConnectivityResult initConnection =
         await Connectivity().checkConnectivity();
-    ConnectivityStatus _auxConnectionStatus = _resultToStatus(initConnection);
-    if (_auxConnectionStatus == ConnectivityStatus.isConnected){
+    ConnectivityStatus auxConnectionStatus = _resultToStatus(initConnection);
+    if (auxConnectionStatus == ConnectivityStatus.isConnected){
       connectionStatus = ConnectivityStatus.initializing;
     } else {
-      connectionStatus = _auxConnectionStatus;
+      connectionStatus = auxConnectionStatus;
     }
-    _lastState = _auxConnectionStatus;
+    _lastState = auxConnectionStatus;
     return connectionStatus;
   }
 

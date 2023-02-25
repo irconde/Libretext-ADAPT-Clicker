@@ -8,8 +8,7 @@ class TimezoneDropdown extends StatefulWidget {
   String? timezoneDropDownValue;
 
   void initState() {
-    if (timezoneDropDownValue == null)
-      timezoneDropDownValue = AppState.timezoneContainer!.textzones.first;
+    timezoneDropDownValue ??= AppState.timezoneContainer!.textZones.first;
   }
 
   @override
@@ -34,7 +33,7 @@ class TimezoneDropdownState extends State<TimezoneDropdown> {
         child: DropdownButton<String>(
           value: timezoneDropDownValue,
           isExpanded: true,
-          items: AppState.timezoneContainer?.textzones.map((String value) {
+          items: AppState.timezoneContainer?.textZones.map((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(

@@ -5,23 +5,23 @@ class NoCoursesWidget extends StatefulWidget {
   const NoCoursesWidget({Key? key}) : super(key: key);
 
   @override
-  _NoCoursesWidgetState createState() => _NoCoursesWidgetState();
+  State<NoCoursesWidget> createState() => _NoCoursesWidgetState();
 }
 
 class _NoCoursesWidgetState extends State<NoCoursesWidget> {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: AlignmentDirectional(0, 0),
+      alignment: const AlignmentDirectional(0, 0),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(48, 112, 48, 96),
+        padding: const EdgeInsetsDirectional.fromSTEB(48, 112, 48, 96),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Align(
-              alignment: AlignmentDirectional(0, 0),
+              alignment: const AlignmentDirectional(0, 0),
               child: Text(
                 'Oops. it seems there are no classes registered yet',
                 textAlign: TextAlign.center,
@@ -34,9 +34,9 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
               ),
             ),
             Align(
-              alignment: AlignmentDirectional(0, 0),
+              alignment: const AlignmentDirectional(0, 0),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 64, 0, 32),
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 64, 0, 32),
                 child: Image.asset(
                   'assets/images/Course_placeholder_img.png',
                   width: 283,
@@ -45,7 +45,7 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
               ),
             ),
             Align(
-              alignment: AlignmentDirectional(0, 0),
+              alignment: const AlignmentDirectional(0, 0),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -72,7 +72,7 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
               ),
             ),
             Align(
-              alignment: AlignmentDirectional(0, 0),
+              alignment: const AlignmentDirectional(0, 0),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,

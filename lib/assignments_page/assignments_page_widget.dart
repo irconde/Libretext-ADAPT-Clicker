@@ -1,9 +1,9 @@
 import 'package:adapt_clicker/utils/stored_preferences.dart';
-import 'package:adapt_clicker/components/AssignmentDropdown.dart';
+import 'package:adapt_clicker/components/assignment_dropdown.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
-import '../components/Assignment_Ctn.dart';
+import '../components/assignment_ctn.dart';
 import '../components/assignment_stat_ctn_widget.dart';
 import '../components/collapsing_libre_app_bar.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -46,8 +46,8 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
   ];
   final scaffoldKey = GlobalKey<ScaffoldState>();
   var top = 0.0;
-  ScrollController _scrollController = ScrollController();
-  ScrollController _scrollController2 = ScrollController();
+  final ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController2 = ScrollController();
 
   @override
   void initState() {
@@ -105,11 +105,11 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                           TabBar(
                             labelColor:
                                 FlutterFlowTheme.of(context).primaryBackground,
-                            unselectedLabelColor: Color(0xCBFFFFFF),
+                            unselectedLabelColor: const Color(0xCBFFFFFF),
                             labelStyle: FlutterFlowTheme.of(context).bodyText1,
                             indicatorColor:
                                 FlutterFlowTheme.of(context).primaryBackground,
-                            tabs: [
+                            tabs: const [
                               Tab(
                                 text: 'HOME',
                               ),
@@ -183,7 +183,7 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                                                                             context)
                                                                         .tertiaryText),
                                                             children: [
-                                                              TextSpan(
+                                                              const TextSpan(
                                                                   text:
                                                                       'Instructor: '),
                                                               TextSpan(
@@ -226,7 +226,7 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                                                                       .tertiaryText,
                                                                 ),
                                                         children: <TextSpan>[
-                                                          TextSpan(
+                                                          const TextSpan(
                                                             text:
                                                                 'Start Date: ',
                                                           ),
@@ -299,7 +299,7 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                                                                       .tertiaryText,
                                                                 ),
                                                         children: <TextSpan>[
-                                                          TextSpan(
+                                                          const TextSpan(
                                                             text: 'End Date: ',
                                                           ),
                                                           TextSpan(
@@ -350,7 +350,7 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                                                                       .tertiaryText,
                                                                 ),
                                                         children: <TextSpan>[
-                                                          TextSpan(
+                                                          const TextSpan(
                                                             text:
                                                                 'Description: ',
                                                           ),
@@ -393,7 +393,7 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                                               collapseIcon:
                                                   Icons.keyboard_arrow_up,
                                               iconSize: Constants.llMargin,
-                                              iconPadding: EdgeInsets.fromLTRB(
+                                              iconPadding: const EdgeInsets.fromLTRB(
                                                   0, 0, 20, 0),
                                               iconColor:
                                                   FlutterFlowTheme.of(context)
@@ -432,13 +432,13 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                                               .shadowGrey,
                                           child: SingleChildScrollView(
                                             controller: _scrollController2,
-                                            padding: EdgeInsets.only(
+                                            padding: const EdgeInsets.only(
                                                 bottom: Constants.msMargin),
                                             child: Column(
                                               //TODO : Task 108 : Make this API generated
                                               children:
                                                   List.generate(10, (index) {
-                                                return AssignmentStatCtnWidget();
+                                                return const AssignmentStatCtnWidget();
                                               }),
                                             ),
                                           ),

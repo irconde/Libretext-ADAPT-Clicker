@@ -22,7 +22,7 @@ class FlutterFlowWebView extends StatefulWidget {
   final String url;
 
   @override
-  _FlutterFlowWebViewState createState() => _FlutterFlowWebViewState();
+  State<FlutterFlowWebView> createState() => _FlutterFlowWebViewState();
 }
 
 class _FlutterFlowWebViewState extends State<FlutterFlowWebView> {

@@ -15,14 +15,16 @@ import 'Firebase/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     systemNavigationBarColor: Colors.white,
     systemNavigationBarIconBrightness: Brightness.dark,
   ));
-  bool isAuthenticated = false;
+  bool isAuthenticated;
   try {
     isAuthenticated = await userIsAuthenticated();
-  } catch (e) {}
+  } catch (e) {
+    isAuthenticated = false;
+  }
   //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   //FirebaseMessaging.onMessage.listen(_firebaseMessagingBackgroundHandler);
   await StoredPreferences.init();
@@ -37,34 +39,34 @@ void main() async {
 }
 
 Future<bool> userIsAuthenticated() async {
-  bool _isSignedIn = false;
+  bool isSignedIn = false;
   await StoredPreferences.init();
-  bool _rememberMe = StoredPreferences.rememberMe;
-  String _userAccount = StoredPreferences.userAccount;
-  String _userPassword = StoredPreferences.userPassword;
-  String _currentToken = StoredPreferences.authToken;
-  if (_rememberMe) {
-    if (_userAccount.isNotEmpty && _userPassword.isNotEmpty) {
+  bool rememberMe = StoredPreferences.rememberMe;
+  String userAccount = StoredPreferences.userAccount;
+  String userPassword = StoredPreferences.userPassword;
+  String currentToken = StoredPreferences.authToken;
+  if (rememberMe) {
+    if (userAccount.isNotEmpty && userPassword.isNotEmpty) {
       ApiCallResponse loginAttempt = await LoginCall.call(
-        email: _userAccount,
-        password: _userPassword,
+        email: userAccount,
+        password: userPassword,
       );
       if ((loginAttempt.succeeded)) {
-        _isSignedIn = true;
-        String _newToken = functions.createToken(getJsonField(
+        isSignedIn = true;
+        String newToken = functions.createToken(getJsonField(
           (loginAttempt.jsonBody ?? ''),
           r'''$.token''',
         ).toString());
-        if (_newToken != _currentToken) {
-          StoredPreferences.authToken = _newToken;
+        if (newToken != currentToken) {
+          StoredPreferences.authToken = newToken;
         }
       }
     }
   }
-  if (_isSignedIn == false) {
+  if (isSignedIn == false) {
     StoredPreferences.authToken = '';
   }
-  return Future(() => _isSignedIn);
+  return Future(() => isSignedIn);
 }
 
 Future<void> fetchTimezone() async {
@@ -92,7 +94,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'LibreTexts ADAPT',
-      localizationsDelegates: [
+      localizationsDelegates: const [
         FFLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

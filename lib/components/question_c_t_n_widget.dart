@@ -13,7 +13,6 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import '../gen/assets.gen.dart';
 import 'dart:developer';
-
 import '../utils/stored_preferences.dart';
 
 class QuestionCTNWidget extends StatefulWidget {
@@ -25,7 +24,7 @@ class QuestionCTNWidget extends StatefulWidget {
   final String? assignmentName;
 
   @override
-  _QuestionCTNWidgetState createState() => _QuestionCTNWidgetState();
+  State<QuestionCTNWidget> createState() => _QuestionCTNWidgetState();
 }
 
 class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
@@ -73,7 +72,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         elevation: 0.0,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.close,
             color: Colors.grey,
           ),
@@ -122,7 +121,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                           children: [
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 16, 0, 24),
+                                  const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 24),
                               child: RichText(
                                   text: TextSpan(
                                 children: [
@@ -155,7 +154,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                             ),
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                                  const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                               child: RichText(
                                   text: TextSpan(
                                 children: [
@@ -188,7 +187,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                             ),
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                                  const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                               child: RichText(
                                   text: TextSpan(
                                 children: [
@@ -221,7 +220,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                             ),
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                                  const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                               child: RichText(
                                   text: TextSpan(
                                 children: [
@@ -254,7 +253,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                             ),
                             if (AppState().isBasic)
                               Card(
-                                child: Container(
+                                child: SizedBox(
                                   height: 256,
                                   child: WebView(
                                     initialUrl: getJsonField(
@@ -330,42 +329,42 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                   hintText: '[Some hint text...]',
                                   hintStyle:
                                       FlutterFlowTheme.of(context).bodyText2,
-                                  enabledBorder: UnderlineInputBorder(
+                                  enabledBorder: const UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
                                       width: 1,
                                     ),
-                                    borderRadius: const BorderRadius.only(
+                                    borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(4.0),
                                       topRight: Radius.circular(4.0),
                                     ),
                                   ),
-                                  focusedBorder: UnderlineInputBorder(
+                                  focusedBorder: const UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
                                       width: 1,
                                     ),
-                                    borderRadius: const BorderRadius.only(
+                                    borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(4.0),
                                       topRight: Radius.circular(4.0),
                                     ),
                                   ),
-                                  errorBorder: UnderlineInputBorder(
+                                  errorBorder: const UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
                                       width: 1,
                                     ),
-                                    borderRadius: const BorderRadius.only(
+                                    borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(4.0),
                                       topRight: Radius.circular(4.0),
                                     ),
                                   ),
-                                  focusedErrorBorder: UnderlineInputBorder(
+                                  focusedErrorBorder: const UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
                                       width: 1,
                                     ),
-                                    borderRadius: const BorderRadius.only(
+                                    borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(4.0),
                                       topRight: Radius.circular(4.0),
                                     ),
@@ -375,11 +374,12 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                 maxLines: 16,
                               ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 24, 0, 24),
                                 child: FFButtonWidget(
                                   onPressed: () {
-                                    print('Button pressed ...');
+                                    // TODO. Check this. What is this for?
+                                    //print('Button pressed ...');
                                   },
                                   text: 'Submit',
                                   options: FFButtonOptions(
@@ -393,7 +393,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                                           fontFamily: 'Open Sans',
                                           color: Colors.white,
                                         ),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                       color: Colors.transparent,
                                       width: 1,
                                     ),
@@ -425,12 +425,12 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.arrow_left,
                     color: Colors.black,
                     size: 24,
                   ),
-                  Container(
+                  SizedBox(
                     width: 240,
                     height: 48,
                     child: ListView.separated(
@@ -458,7 +458,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                               );
                               controller.loadUrl(getJsonField(questionsListItem,
                                   r'''$.technology_iframe'''));
-                              log("Setting index to $index");
+                              log('Setting index to $index');
                               StoredPreferences.selectedIndex = index;
                             });
                           },
@@ -467,7 +467,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                       },
                     ),
                   ),
-                  Icon(
+                  const Icon(
                     Icons.arrow_right,
                     color: Colors.black,
                     size: 24,
@@ -485,18 +485,20 @@ Widget containerSelection(index, context) {
   bool selected = false;
   int a = StoredPreferences.selectedIndex;
 
+  // ignore: prefer_single_quotes
   log("Index: $index, selected: $a");
 
   if (index == StoredPreferences.selectedIndex) selected = true;
 
-  if (selected)
+  if (selected) {
     return selectedQuestionCard(index, context);
-  else
+  } else {
     return unselectedQuestionCard(index, context);
+  }
 }
 
 Widget selectedQuestionCard(int index, BuildContext context) => Container(
-      alignment: AlignmentDirectional(0, 0),
+      alignment: const AlignmentDirectional(0, 0),
       width: 32,
       height: 32,
       decoration: BoxDecoration(
@@ -516,7 +518,7 @@ Widget selectedQuestionCard(int index, BuildContext context) => Container(
     );
 
 Widget unselectedQuestionCard(int index, BuildContext context) => Container(
-      alignment: AlignmentDirectional(0, 0),
+      alignment: const AlignmentDirectional(0, 0),
       width: 32,
       height: 32,
       decoration: BoxDecoration(
@@ -537,7 +539,7 @@ Widget unselectedQuestionCard(int index, BuildContext context) => Container(
     );
 
 void injectViewport(WebViewController controller) async {
-  await controller.evaluateJavascript('''
+  await controller.runJavascript('''
     var viewport = document.querySelector("meta[name=viewport]");
     if (viewport != null) {
       viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes');

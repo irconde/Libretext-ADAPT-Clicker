@@ -12,7 +12,7 @@ class NotificationsPageWidget extends StatefulWidget {
   const NotificationsPageWidget({Key? key}) : super(key: key);
 
   @override
-  _NotificationsPageWidgetState createState() =>
+  State<NotificationsPageWidget> createState() =>
       _NotificationsPageWidgetState();
 }
 
@@ -27,19 +27,19 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
           ),
           onPressed: () async {
             context.popRoute();
           },
         ),
-        title: Text('Notifications'),
+        title: const Text('Notifications'),
         actions: [
           Align(
-            alignment: AlignmentDirectional(0, 0),
+            alignment: const AlignmentDirectional(0, 0),
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
               child: Text(
                 'Clear All',
                 textAlign: TextAlign.center,
@@ -88,7 +88,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                         listViewGetEnrollmentsResponse.jsonBody,
                       ).toList();
                       if (enrollmentsList.isEmpty) {
-                        return Center(
+                        return const Center(
                           child: NoNotificationsWidget(),
                         );
                       }
@@ -106,8 +106,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                             final enrollmentsListItem =
                                 enrollmentsList[enrollmentsListIndex];
                             return Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(30, 24, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  30, 24, 0, 0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,8 +115,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                   Row(
                                     children: [
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 5, 0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 0, 5, 0),
                                         child: SvgPicture.asset(
                                           'assets/images/book_icon.svg',
                                           height: 24,
@@ -142,8 +142,9 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                     ],
                                   ),
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        30, 8, 0, 24),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            30, 8, 0, 24),
                                     child: Text(
                                       getJsonField(
                                         enrollmentsListItem,
@@ -159,7 +160,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                                           ),
                                     ),
                                   ),
-                                  Divider(
+                                  const Divider(
                                     height: 1,
                                     thickness: 1,
                                     endIndent: 30,
@@ -187,7 +188,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
   }) async {
     final stopwatch = Stopwatch()..start();
     while (true) {
-      await Future.delayed(Duration(milliseconds: 50));
+      await Future.delayed(const Duration(milliseconds: 50));
       final timeElapsed = stopwatch.elapsedMilliseconds;
       final requestComplete = _apiRequestCompleter?.isCompleted ?? false;
       if (timeElapsed > maxWait || (requestComplete && timeElapsed > minWait)) {

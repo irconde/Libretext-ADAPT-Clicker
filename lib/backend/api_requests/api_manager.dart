@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:convert';
 import 'dart:io';
 import 'dart:core';
@@ -23,7 +25,7 @@ enum BodyType {
 }
 
 class ApiCallRecord extends Equatable {
-  ApiCallRecord(this.callName, this.apiUrl, this.headers, this.params,
+  const ApiCallRecord(this.callName, this.apiUrl, this.headers, this.params,
       this.body, this.bodyType);
   final String callName;
   final String apiUrl;
@@ -53,12 +55,12 @@ class ApiCallResponse {
     bool returnBody,
     bool html,
   ) {
-    var jsonBody;
+    dynamic jsonBody;
     var document = dom.Document();
     try {
-      if (!html)
+      if (!html) {
         jsonBody = returnBody ? json.decode(response.body) : null;
-      else {
+      } else {
         document = returnBody ? parse(response.body) : dom.Document();
       }
     } catch (_) {}
@@ -81,8 +83,7 @@ class ApiManager {
   ApiManager._();
 
   // Cache that will ensure identical calls are not repeatedly made.
-  static Map<ApiCallRecord, ApiCallResponse> _apiCache = {};
-
+  static final Map<ApiCallRecord, ApiCallResponse> _apiCache = {};
   static ApiManager? _instance;
   static ApiManager get instance => _instance ??= ApiManager._();
 
@@ -101,7 +102,7 @@ class ApiManager {
       map.map((key, value) => MapEntry(key.toString(), value.toString()));
 
   static String asQueryParams(Map<String, dynamic> map) =>
-      map.entries.map((e) => "${e.key}=${e.value}").join('&');
+      map.entries.map((e) => '${e.key}=${e.value}').join('&');
 
   static Future<ApiCallResponse> urlRequest(
     ApiCallType callType,

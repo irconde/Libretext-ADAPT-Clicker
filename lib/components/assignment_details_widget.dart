@@ -11,7 +11,6 @@ import '../gen/assets.gen.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import '../utils/check_internet_connectivity.dart';
-import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 
 class AssignmentDetailsWidget extends ConsumerStatefulWidget {
   const AssignmentDetailsWidget({
@@ -22,7 +21,7 @@ class AssignmentDetailsWidget extends ConsumerStatefulWidget {
   final dynamic assignmentSum;
 
   @override
-  _AssignmentDetailsWidgetState createState() =>
+  ConsumerState<AssignmentDetailsWidget> createState() =>
       _AssignmentDetailsWidgetState();
 }
 
@@ -35,12 +34,12 @@ class _AssignmentDetailsWidgetState
       duration: 600,
       hideBeforeAnimating: false,
       initialState: AnimationState(
-        offset: Offset(0, 0),
+        offset: const Offset(0, 0),
         scale: 1,
         opacity: 0,
       ),
       finalState: AnimationState(
-        offset: Offset(0, 0),
+        offset: const Offset(0, 0),
         scale: 1,
         opacity: 1,
       ),
@@ -76,7 +75,7 @@ class _AssignmentDetailsWidgetState
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         elevation: 0.0,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.close,
             color: Colors.grey,
           ),
@@ -105,7 +104,7 @@ class _AssignmentDetailsWidgetState
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Divider(
+              const Divider(
                 indent: Constants.mmMargin,
                 endIndent: Constants.mmMargin,
                 thickness: Constants.dividerThickness,
@@ -118,7 +117,7 @@ class _AssignmentDetailsWidgetState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
                           0, 0, 0, Constants.msMargin),
                       child: RichText(
                         text: TextSpan(
@@ -128,16 +127,14 @@ class _AssignmentDetailsWidgetState
                             fontWeight: FontWeight.w600,
                           ),
                           children: <TextSpan>[
-                            TextSpan(
+                            const TextSpan(
                               text: 'Number of Points: ',
                             ),
                             TextSpan(
-                              text: "This assignment is worth a total of " +
-                                  getJsonField(
+                              text: "This assignment is worth a total of ${getJsonField(
                                     widget.assignmentSum,
                                     r'''$.total_points''',
-                                  ).toString() +
-                                  " points",
+                                  )} points",
                               style: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
@@ -150,7 +147,7 @@ class _AssignmentDetailsWidgetState
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
                           0, 0, 0, Constants.msMargin),
                       child: RichText(
                         text: TextSpan(
@@ -160,16 +157,14 @@ class _AssignmentDetailsWidgetState
                               fontWeight: FontWeight.w600,
                             ),
                             children: [
-                              TextSpan(
+                              const TextSpan(
                                 text: 'Number of Questions: ',
                               ),
                               TextSpan(
-                                text: "This assignment has " +
-                                    getJsonField(
+                                text: "This assignment has ${getJsonField(
                                       widget.assignmentSum,
                                       r'''$.number_of_questions''',
-                                    ).toString() +
-                                    " questions",
+                                    )} questions",
                                 style: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
@@ -181,7 +176,7 @@ class _AssignmentDetailsWidgetState
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
                           0, 0, 0, Constants.msMargin),
                       child: RichText(
                         text: TextSpan(
@@ -191,15 +186,14 @@ class _AssignmentDetailsWidgetState
                             fontWeight: FontWeight.w600,
                           ),
                           children: [
-                            TextSpan(
+                            const TextSpan(
                               text: 'Due Date: ',
                             ),
                             TextSpan(
-                              text: "This assignment is due by " +
-                                  getJsonField(
+                              text: "This assignment is due by ${getJsonField(
                                     widget.assignmentSum,
                                     r'''$.formatted_due''',
-                                  ).toString(),
+                                  )}",
                               style: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
@@ -211,34 +205,32 @@ class _AssignmentDetailsWidgetState
                         ),
                       ),
                     ),
-                    Container(
-                      child: RichText(
-                        text: TextSpan(
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: "Late Policy: ",
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                fontFamily: 'Open Sans',
-                                fontWeight: FontWeight.w600,
-                              ),
+                    RichText(
+                      text: TextSpan(
+                        style: FlutterFlowTheme.of(context).bodyText1,
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: 'Late Policy: ',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyText1
+                                .override(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.w600,
                             ),
-                            TextSpan(
-                              text: getJsonField(
-                                widget.assignmentSum,
-                                r'''$.formatted_late_policy''',
-                              ).toString(),
-                            ),
-                          ],
-                        ),
+                          ),
+                          TextSpan(
+                            text: getJsonField(
+                              widget.assignmentSum,
+                              r'''$.formatted_late_policy''',
+                            ).toString(),
+                          ),
+                        ],
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       height: 100,
                       child: Stack(
-                        alignment: AlignmentDirectional(0, 0),
+                        alignment: const AlignmentDirectional(0, 0),
                         children: [
                           Column(
                             mainAxisSize: MainAxisSize.max,
@@ -255,9 +247,8 @@ class _AssignmentDetailsWidgetState
                             onPressed: () async {
                               // TODO. Implement this
                             },
-                            child: Text('ACCESS QUESTIONS'),
                             style: ElevatedButton.styleFrom(
-                              textStyle: TextStyle(
+                              textStyle: const TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.bold),
                               foregroundColor:
                               FlutterFlowTheme.of(context).primaryColor,
@@ -269,6 +260,7 @@ class _AssignmentDetailsWidgetState
                                   color: FlutterFlowTheme.of(context)
                                       .primaryColor),
                             ),
+                            child: const Text('ACCESS QUESTIONS'),
                           ),
                         ],
                       ),
@@ -328,7 +320,7 @@ class _AssignmentDetailsWidgetState
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
                           0, 0, 0, Constants.msMargin),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -364,7 +356,7 @@ class _AssignmentDetailsWidgetState
                                   return ListView.builder(
                                     padding: EdgeInsets.zero,
                                     shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
+                                    physics: const NeverScrollableScrollPhysics(),
                                     itemCount: questions.length,
                                     itemBuilder: (context, questionsIndex) {
                                       final questionsItem =
@@ -399,7 +391,7 @@ class _AssignmentDetailsWidgetState
                                               return Padding(
                                                 padding: MediaQuery.of(context)
                                                     .viewInsets,
-                                                child: Container(
+                                                child: SizedBox(
                                                   height: double.infinity,
                                                   child: QuestionCTNWidget(
                                                     assignmentName:

@@ -16,17 +16,18 @@ class ResetPasswordPageWidget extends ConsumerStatefulWidget {
   final ValueChanged<String> onSubmit;
 
   @override
-  _ResetPasswordPageWidgetState createState() =>
+  ConsumerState<ResetPasswordPageWidget> createState() =>
       _ResetPasswordPageWidgetState();
 }
 
-String passwordRequired = "The password field is required.";
-String newPasswordRequired = "The new password field is required.";
-String confirmPasswordRequired = "The confirm password field is required.";
-String matchPasswords = "The new passwords must match";
-String catchAllError = "Something went wrong.";
+String passwordRequired = 'The password field is required.';
+String newPasswordRequired = 'The new password field is required.';
+String confirmPasswordRequired = 'The confirm password field is required.';
+String matchPasswords = 'The new passwords must match';
+String catchAllError = 'Something went wrong.';
 
-class _ResetPasswordPageWidgetState extends ConsumerState<ResetPasswordPageWidget> {
+class _ResetPasswordPageWidgetState
+    extends ConsumerState<ResetPasswordPageWidget> {
   TextEditingController? curPasswordTFController;
   TextEditingController? newPasswordTFController;
   TextEditingController? confirmNewPWTFController;
@@ -67,8 +68,9 @@ class _ResetPasswordPageWidgetState extends ConsumerState<ResetPasswordPageWidge
       return passwordRequired;
     } else if (text != confirmNewPWTFController!.value.text) {
       return matchPasswords;
-    } else
+    } else {
       return catchAllError;
+    }
   }
 
   String? get _confirmNewPasswordErrorText {
@@ -77,8 +79,9 @@ class _ResetPasswordPageWidgetState extends ConsumerState<ResetPasswordPageWidge
       return passwordRequired;
     } else if (text != newPasswordTFController!.value.text) {
       return matchPasswords;
-    } else
+    } else {
       return catchAllError;
+    }
   }
 
   void _submit() {
@@ -94,8 +97,9 @@ class _ResetPasswordPageWidgetState extends ConsumerState<ResetPasswordPageWidge
     }
   }
 
-  bool _checkConnection(){
-    ConnectivityStatus? status = ref.read(provider.notifier).getConnectionStatus();
+  bool _checkConnection() {
+    ConnectivityStatus? status =
+        ref.read(provider.notifier).getConnectionStatus();
     if (status != ConnectivityStatus.isConnected) {
       functions.showSnackbar(context, status);
       return false;
@@ -110,25 +114,25 @@ class _ResetPasswordPageWidgetState extends ConsumerState<ResetPasswordPageWidge
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: Icon(Icons.menu),
+          icon: const Icon(Icons.menu),
           onPressed: () {
             scaffoldKey.currentState!.openDrawer();
           },
         ),
-        title: Text('My Password'),
+        title: const Text('My Password'),
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.notifications,
             ),
             onPressed: () async {
-              context.pushRoute(NotificationsRouteWidget());
+              context.pushRoute(const NotificationsRouteWidget());
             },
           ),
         ],
       ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      drawer: DrawerCtnWidget(currentSelected: DrawerItems.password),
+      drawer: const DrawerCtnWidget(currentSelected: DrawerItems.password),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -144,7 +148,7 @@ class _ResetPasswordPageWidgetState extends ConsumerState<ResetPasswordPageWidge
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               0, 0, 0, Constants.msMargin),
                           child: TextField(
                             controller: curPasswordTFController,
@@ -153,7 +157,7 @@ class _ResetPasswordPageWidgetState extends ConsumerState<ResetPasswordPageWidge
                             decoration: InputDecoration(
                               labelText: 'Current Password',
                               errorText: _submitted ? _passwordErrorText : null,
-                              prefixIcon: Icon(
+                              prefixIcon: const Icon(
                                 Icons.lock_outline,
                               ),
                               suffixIcon: InkWell(
@@ -176,7 +180,7 @@ class _ResetPasswordPageWidgetState extends ConsumerState<ResetPasswordPageWidge
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               0, 0, 0, Constants.msMargin),
                           child: TextField(
                             controller: newPasswordTFController,
@@ -185,7 +189,7 @@ class _ResetPasswordPageWidgetState extends ConsumerState<ResetPasswordPageWidge
                               labelText: 'New Password*',
                               errorText:
                                   _submitted ? _newPasswordErrorText : null,
-                              prefixIcon: Icon(
+                              prefixIcon: const Icon(
                                 Icons.lock_outline,
                               ),
                               suffixIcon: InkWell(
@@ -206,7 +210,7 @@ class _ResetPasswordPageWidgetState extends ConsumerState<ResetPasswordPageWidge
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               0, 0, 0, Constants.msMargin),
                           child: TextField(
                             controller: confirmNewPWTFController,
@@ -216,7 +220,7 @@ class _ResetPasswordPageWidgetState extends ConsumerState<ResetPasswordPageWidge
                               errorText: _submitted
                                   ? _confirmNewPasswordErrorText
                                   : null,
-                              prefixIcon: Icon(
+                              prefixIcon: const Icon(
                                 Icons.lock_outline,
                               ),
                               suffixIcon: InkWell(
@@ -237,7 +241,7 @@ class _ResetPasswordPageWidgetState extends ConsumerState<ResetPasswordPageWidge
                           ),
                         ),
                         Align(
-                          alignment: Alignment(1, 0),
+                          alignment: const Alignment(1, 0),
                           child: Text(
                             '*Required Fields',
                             style: FlutterFlowTheme.of(context)
@@ -255,14 +259,15 @@ class _ResetPasswordPageWidgetState extends ConsumerState<ResetPasswordPageWidge
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
                       0, 0, 0, Constants.msMargin),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       textStyle: FlutterFlowTheme.of(context).title3,
                       surfaceTintColor:
                           FlutterFlowTheme.of(context).primaryBtnText,
-                      minimumSize: Size.fromHeight(Constants.buttonHeight),
+                      minimumSize:
+                          const Size.fromHeight(Constants.buttonHeight),
                       backgroundColor:
                           FlutterFlowTheme.of(context).primaryColor,
                       shape: RoundedRectangleBorder(
@@ -276,7 +281,8 @@ class _ResetPasswordPageWidgetState extends ConsumerState<ResetPasswordPageWidge
                         password: newPasswordTFController!.text,
                         passwordConfirmation: confirmNewPWTFController!.text,
                       );
-                      if ((updatePassword?.succeeded ?? true)) {
+                      if ((updatePassword?.succeeded ?? true) &&
+                          context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
@@ -286,7 +292,7 @@ class _ResetPasswordPageWidgetState extends ConsumerState<ResetPasswordPageWidge
                                     FlutterFlowTheme.of(context).primaryBtnText,
                               ),
                             ),
-                            duration: Duration(
+                            duration: const Duration(
                                 milliseconds: Constants.snackBarDurationMil),
                             backgroundColor:
                                 FlutterFlowTheme.of(context).success,
@@ -297,7 +303,7 @@ class _ResetPasswordPageWidgetState extends ConsumerState<ResetPasswordPageWidge
                       }
                       setState(() {});
                     },
-                    child: Text('CHANGE PASSWORD'),
+                    child: const Text('CHANGE PASSWORD'),
                   ),
                 ),
               ],

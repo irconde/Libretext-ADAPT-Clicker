@@ -65,9 +65,9 @@ void startPageLoadAnimations(
 
 void setupTriggerAnimations(
     Iterable<AnimationInfo> animations, TickerProvider vsync) {
-  animations.forEach((animation) {
+  for (var animation in animations) {
     createAnimation(animation, vsync);
-  });
+  }
 }
 
 extension AnimatedWidgetExtension on Widget {

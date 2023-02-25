@@ -11,8 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 
-String emailRequired = "The email field is required.";
-String emailNotFound = "We were unable to find an account with that email.";
+String emailRequired = 'The email field is required.';
+String emailNotFound = 'We were unable to find an account with that email.';
 
 TextEditingController? forgotPasswordEmailFieldController;
 bool _submitted = false;
@@ -23,7 +23,8 @@ class ResetPasswordWidget extends ConsumerStatefulWidget {
   final ValueChanged<String?> onSubmit;
 
   @override
-  _ResetPasswordWidgetState createState() => _ResetPasswordWidgetState();
+  ConsumerState<ResetPasswordWidget> createState() =>
+      _ResetPasswordWidgetState();
 }
 
 class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
@@ -54,12 +55,12 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
       hideBeforeAnimating: true,
       fadeIn: true,
       initialState: AnimationState(
-        offset: Offset(0, 0),
+        offset: const Offset(0, 0),
         scale: 1,
         opacity: 1,
       ),
       finalState: AnimationState(
-        offset: Offset(0, 0),
+        offset: const Offset(0, 0),
         scale: 1,
         opacity: 0,
       ),
@@ -78,8 +79,9 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
     forgotPasswordEmailFieldController = TextEditingController();
   }
 
-  bool _checkConnection(){
-    ConnectivityStatus? status = ref.read(provider.notifier).getConnectionStatus();
+  bool _checkConnection() {
+    ConnectivityStatus? status =
+        ref.read(provider.notifier).getConnectionStatus();
     if (status != ConnectivityStatus.isConnected) {
       functions.showSnackbar(context, status);
       return false;
@@ -98,10 +100,10 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
         child: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Color(0x0E1862B3),
           ),
-          alignment: AlignmentDirectional(0, 1),
+          alignment: const AlignmentDirectional(0, 1),
           child: InkWell(
             onTap: () async {}, //no pop back on white background
             child: Container(
@@ -110,7 +112,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                 color: FlutterFlowTheme.of(context).primaryBackground,
               ),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(32, 32, 32, 32),
+                padding: const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 32),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -128,7 +130,8 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                             fit: BoxFit.fill,
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                8, 0, 0, 0),
                             child: Text(
                               'Password Recovery',
                               textAlign: TextAlign.center,
@@ -150,7 +153,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                         thickness: 1,
                         color: FlutterFlowTheme.of(context).lineColor,
                       ),
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         child: Text(
                           'Please enter the email address used for \nregistration.',
@@ -167,14 +170,15 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
-                        child: Container(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+                        child: SizedBox(
                           width: double.infinity,
                           child: TextField(
                             controller: forgotPasswordEmailFieldController,
                             decoration: InputDecoration(
                               labelText: 'Email*',
-                              prefixIcon: Icon(
+                              prefixIcon: const Icon(
                                 Icons.email_outlined,
                               ),
                               floatingLabelStyle: TextStyle(
@@ -192,7 +196,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                           minimumSize: const Size.fromHeight(36),
                           backgroundColor:
                               FlutterFlowTheme.of(context).primaryColor,
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w600),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4),
@@ -204,16 +208,18 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                           forgotPassword = await ForgotPasswordCall.call(
                             email: forgotPasswordEmailFieldController!.text,
                           );
-                          // todo. Replace animation with CustomRoute
-                          if ((forgotPassword?.succeeded ?? true)) {
+                          // TODO. Replace animation with CustomRoute
+                          if ((forgotPassword?.succeeded ?? true) &&
+                              context.mounted) {
                             await Future.delayed(
                                 const Duration(milliseconds: 3000));
                             await Navigator.push(
                               context,
                               PageTransition(
                                 type: PageTransitionType.fade,
-                                duration: Duration(milliseconds: 300),
-                                reverseDuration: Duration(milliseconds: 300),
+                                duration: const Duration(milliseconds: 300),
+                                reverseDuration:
+                                    const Duration(milliseconds: 300),
                                 child: WelcomePageWidget(),
                               ),
                             );
@@ -226,7 +232,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                                         .primaryBtnText,
                                   ),
                                 ),
-                                duration: Duration(milliseconds: 4000),
+                                duration: const Duration(milliseconds: 4000),
                                 backgroundColor:
                                     FlutterFlowTheme.of(context).success,
                               ),
@@ -245,7 +251,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                           }
                           setState(() {});
                         },
-                        child: Text('RESET PASSWORD'),
+                        child: const Text('RESET PASSWORD'),
                       ),
                     ],
                   ),

@@ -20,7 +20,7 @@ class CollapsingLibreAppBar extends StatefulWidget {
   final Color? svgIconColor;
 
   @override
-  _CollapsingLibreAppBarState createState() => _CollapsingLibreAppBarState();
+  State<CollapsingLibreAppBar> createState() => _CollapsingLibreAppBarState();
 }
 
 class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar> {
@@ -33,15 +33,13 @@ class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar> {
   @override
   void initState() {
     super.initState();
-    iconColor = widget.svgIconColor == null
-        ? FlutterFlowTheme.of(context).svgIconColor
-        : widget.svgIconColor;
+    iconColor = widget.svgIconColor ?? FlutterFlowTheme.of(context).svgIconColor;
     top = widget.top;
     titleSpace = formatExpandedTitle(widget.title);
   }
 
   String formatExpandedTitle(String regularTitle) {
-    String expandedTitle = "";
+    String expandedTitle = '';
     int numWords = regularTitle.split(' ').length;
     switch (numWords) {
       case 1:
@@ -67,7 +65,7 @@ class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar> {
         floating: false,
         shadowColor: FlutterFlowTheme.of(context).tertiaryColor,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, size: 24),
+          icon: const Icon(Icons.arrow_back, size: 24),
           onPressed: () async {
             Navigator.of(context).pop();
           },
@@ -83,7 +81,7 @@ class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar> {
                 style: getTitleStyle()),
             background: widget.iconPath != null
                 ? Align(
-                    alignment: Alignment(0, .5),
+                    alignment: const Alignment(0, .5),
                     child: SvgPicture.asset(
                       widget.iconPath!,
                       fit: BoxFit.scaleDown,
@@ -110,19 +108,21 @@ class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar> {
 
   TextStyle getTitleStyle() {
     double transitionVal = 4;
-    if (checkTop())
+    if (checkTop()) {
       transitionVal = ((top / Constants.appBarTransitionMin) /
               (264 / Constants.appBarTransitionMin)) *
           4; //264 is max appbar size (max + 24 I believe).
+    }
 
     double result = 20 + transitionVal;
     FontWeight fw;
-    if (transitionVal < 1.25)
+    if (transitionVal < 1.25) {
       fw = FontWeight.w600;
-    else if (transitionVal < 2.5)
+    } else if (transitionVal < 2.5) {
       fw = FontWeight.w700;
-    else
+    } else {
       fw = FontWeight.bold;
+    }
 
     return FlutterFlowTheme.of(context).title3.override(
           fontFamily: 'Open Sans',
@@ -143,9 +143,10 @@ class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar> {
       double diff = getDiff();
       return EdgeInsetsDirectional.fromSTEB(getTransition(diff), 0, 0,
           Constants.smMargin + 1); // +1 made text align better with arrow.
-    } else
-      return EdgeInsetsDirectional.fromSTEB(
+    } else {
+      return const EdgeInsetsDirectional.fromSTEB(
           Constants.mmMargin, 0, 0, Constants.mmMargin);
+    }
   }
 
   double getDiff() {

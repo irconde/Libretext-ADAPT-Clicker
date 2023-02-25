@@ -13,8 +13,6 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_app_installations/firebase_app_installations.dart';
 import '../utils/check_internet_connectivity.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 
@@ -25,7 +23,7 @@ class CoursesPageWidget extends ConsumerStatefulWidget {
       : super(key: key);
 
   @override
-  _CoursesPageWidgetState createState() => _CoursesPageWidgetState();
+  ConsumerState<CoursesPageWidget> createState() => _CoursesPageWidgetState();
 }
 
 class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
@@ -63,8 +61,10 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
 
   //Permission check
   void requestPermission() async {
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-
+    // TODO. To be deleted? This is not being used.
+    // FirebaseMessaging messaging = FirebaseMessaging.instance;
+    // TODO. To be deleted? This is not being used.
+    /*
     NotificationSettings settings = await messaging.requestPermission(
       alert: true,
       announcement: false,
@@ -74,18 +74,24 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
       provisional: false,
       sound: true,
     );
+     */
 
-    if (await Permission.notification.request().isGranted)
-      print('User granted permission');
-    else if (await Permission.notification.status.isLimited)
-      print('User granted provisional permission');
-    else
-      print('User declined or has not accepted permission');
+    if (await Permission.notification.request().isGranted) {
+      // TODO. To be deleted
+      // print('User granted permission');
+    } else if (await Permission.notification.status.isLimited) {
+      // TODO. To be deleted
+      // print('User granted provisional permission');
+    } else {
+      // TODO. To be deleted
+      // print('User declined or has not accepted permission');
+    }
   }
 
   void saveToken(var token) async {
-    StoredPreferences.setString("ff_deviceIDToken", token);
-    print("My token is " + token);
+    StoredPreferences.setString('ff_deviceIDToken', token);
+    // TODO. To be deleted
+    //print("My token is " + token);
   }
 
   void getToken() async {
@@ -102,9 +108,8 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
       token: StoredPreferences.authToken,
       fcmToken: StoredPreferences.deviceIDToken,
     );
-    // print("We did it");
-    //print(StoredPreferences.deviceIDToken);
-    print(sendTokenResponse?.jsonBody.toString());
+    // TODO. To be deleted
+    // print(sendTokenResponse?.jsonBody.toString());
   }
 
   @override
@@ -119,8 +124,9 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
           ref.read(provider.notifier).startWatchingConnectivity();
         }
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (status == null || status == ConnectivityStatus.initializing)
+          if (status == null || status == ConnectivityStatus.initializing) {
             return;
+          }
           functions.showSnackbar(context, status!);
         });
       }
@@ -132,19 +138,19 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           leading: IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
             onPressed: () {
               scaffoldKey.currentState!.openDrawer();
             },
           ),
-          title: Text('Courses'),
+          title: const Text('Courses'),
           actions: [
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.notifications,
               ),
               onPressed: () async {
-                context.pushRoute(NotificationsRouteWidget());
+                context.pushRoute(const NotificationsRouteWidget());
               },
             ),
           ],
@@ -156,12 +162,12 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
             showModalBottomSheet(
               useSafeArea: true,
               isScrollControlled: true,
-              backgroundColor: Color(0x0E1862B3),
+              backgroundColor: const Color(0x0E1862B3),
               context: context,
               builder: (context) {
                 return Padding(
                   padding: MediaQuery.of(context).viewInsets,
-                  child: AddCourseWidget(),
+                  child: const AddCourseWidget(),
                 );
               },
             );
@@ -174,7 +180,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
             size: 28,
           ),
         ),
-        drawer: DrawerCtnWidget(currentSelected: DrawerItems.courses),
+        drawer: const DrawerCtnWidget(currentSelected: DrawerItems.courses),
         body: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Column(
@@ -183,14 +189,15 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
               Container(
                 width: double.infinity,
                 height: 26,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color(0xFFD4D4D4),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
                       child: Text(
                         'active ',
                         style: FlutterFlowTheme.of(context).bodyText1.override(
@@ -239,7 +246,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
                               )?.toList() ??
                               '';
                       if (enrollmentsList.isEmpty) {
-                        return Center(
+                        return const Center(
                           child: NoCoursesWidget(),
                         );
                       }
@@ -257,8 +264,8 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
                             final enrollmentsListItem =
                                 enrollmentsList[enrollmentsListIndex];
                             return Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(24, 24, 24, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  24, 24, 24, 0),
                               child: InkWell(
                                 onTap: () async {
                                   if (!_checkConnection()) return;
@@ -290,8 +297,9 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
                                           ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 8, 0, 24),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 8, 0, 24),
                                       child: Text(
                                         getJsonField(
                                           enrollmentsListItem,
@@ -310,8 +318,9 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 24),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 0, 24),
                                       child: Text(
                                         getJsonField(
                                           enrollmentsListItem,
@@ -329,7 +338,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
                                             ),
                                       ),
                                     ),
-                                    Divider(
+                                    const Divider(
                                       height: 1,
                                       thickness: 1,
                                     ),
@@ -361,7 +370,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
   }) async {
     final stopwatch = Stopwatch()..start();
     while (true) {
-      await Future.delayed(Duration(milliseconds: 50));
+      await Future.delayed(const Duration(milliseconds: 50));
       final timeElapsed = stopwatch.elapsedMilliseconds;
       final requestComplete = _apiRequestCompleter?.isCompleted ?? false;
       if (timeElapsed > maxWait || (requestComplete && timeElapsed > minWait)) {

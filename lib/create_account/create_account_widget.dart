@@ -4,7 +4,7 @@ import 'package:adapt_clicker/components/collapsing_libre_app_bar.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
-import 'package:adapt_clicker/components/TimezoneDropdown.dart';
+import 'package:adapt_clicker/components/timezone_dropdown.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
@@ -14,13 +14,13 @@ import '../flutter_flow/custom_functions.dart' as functions;
 import '../utils/check_internet_connectivity.dart';
 import '../utils/stored_preferences.dart';
 
-String firstNameRequired = "The first name field is required.";
-String lastNameRequired = "The last name field is required.";
-String idRequired = "The student ID field is required.";
-String emailRequired = "The email field is required.";
-String passwordRequired = "The password field is required.";
-String confirmPasswordRequired = "The confirm password field is required.";
-String invalidRecords = "These credentials do not match our records.";
+String firstNameRequired = 'The first name field is required.';
+String lastNameRequired = 'The last name field is required.';
+String idRequired = 'The student ID field is required.';
+String emailRequired = 'The email field is required.';
+String passwordRequired = 'The password field is required.';
+String confirmPasswordRequired = 'The confirm password field is required.';
+String invalidRecords = 'These credentials do not match our records.';
 
 class CreateAccountWidget extends ConsumerStatefulWidget {
   const CreateAccountWidget({Key? key, required this.onSubmit})
@@ -28,7 +28,7 @@ class CreateAccountWidget extends ConsumerStatefulWidget {
   final ValueChanged<String?> onSubmit;
 
   @override
-  _CreateAccountWidgetState createState() => _CreateAccountWidgetState();
+  ConsumerState<CreateAccountWidget> createState() => _CreateAccountWidgetState();
 }
 
 class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
@@ -170,7 +170,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             CollapsingLibreAppBar(
-              title: "Create Account",
+              title: 'Create Account',
               iconPath: 'assets/images/person_add1.svg',
               svgIconColor: FlutterFlowTheme.of(context).svgIconColor,
             ),
@@ -198,7 +198,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             hintText: 'First Name',
                             labelText: 'First Name',
                             errorText: _submitted ? _firstNameErrorText : null,
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.person_outline,
                             ),
                           ),
@@ -214,7 +214,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             hintText: 'Last Name',
                             labelText: 'Last Name',
                             errorText: _submitted ? _lastNameErrorText : null,
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.person_outline,
                             ),
                           ),
@@ -227,7 +227,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                         child: TextField(
                           controller: studentIDFieldController,
                           decoration: InputDecoration(
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.school_outlined,
                             ),
                             labelText: 'Student ID',
@@ -246,7 +246,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             hintText: 'Email',
                             labelText: 'Email',
                             errorText: _submitted ? _emailErrorText : null,
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.email_outlined,
                             ),
                           ),
@@ -263,7 +263,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             hintText: 'Password',
                             labelText: 'Password',
                             errorText: _submitted ? _passwordErrorText : null,
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.lock_outline,
                             ),
                             suffixIcon: InkWell(
@@ -294,7 +294,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             labelText: 'Confirm Password',
                             errorText:
                                 _submitted ? _confirmPasswordErrorText : null,
-                            prefixIcon: Icon(
+                            prefixIcon: const Icon(
                               Icons.lock_outline,
                             ),
                             suffixIcon: InkWell(
@@ -341,21 +341,20 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                                   FlutterFlowTheme.of(context).primaryBtnText,
                               backgroundColor:
                                   FlutterFlowTheme.of(context).primaryColor,
-                              textStyle: TextStyle(
+                              textStyle: const TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.w600),
-                              minimumSize: Size.fromHeight(36),
+                              minimumSize: const Size.fromHeight(36),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(4),
                               ),
                             ),
                             onPressed: () async {
                               if (!_checkConnection()) return;
-                              String _email = passwordFieldCAController!.text;
-                              String _password =
-                                  passwordFieldCAController!.text;
+                              String email = passwordFieldCAController!.text;
+                              String password = passwordFieldCAController!.text;
                               createUser = await CreateUserCall.call(
-                                email: _email,
-                                password: _password,
+                                email: email,
+                                password: password,
                                 passwordConfirmation:
                                     confirmPasswordFieldCAController!.text,
                                 firstName: firstNameFieldCAController!.text,
@@ -364,10 +363,11 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                                 studentId: studentIDFieldController!.text,
                                 timeZone: tZDropDownCAValue,
                               );
-                              if ((createUser?.succeeded ?? true)) {
+                              if ((createUser?.succeeded ?? true) &&
+                                  context.mounted) {
                                 setState(() {
-                                  StoredPreferences.userAccount = _email;
-                                  StoredPreferences.userPassword = _password;
+                                  StoredPreferences.userAccount = email;
+                                  StoredPreferences.userPassword = password;
                                 });
                                 await context.pushRoute(CoursesRouteWidget());
                               } else {
@@ -390,7 +390,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                           ),
                         ),
                         Stack(
-                          alignment: AlignmentDirectional(0, 0),
+                          alignment: const AlignmentDirectional(0, 0),
                           children: [
                             Divider(
                               height: 0,
@@ -426,9 +426,9 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                                   FlutterFlowTheme.of(context).primaryBtnText,
                               backgroundColor:
                                   FlutterFlowTheme.of(context).secondaryColor,
-                              textStyle: TextStyle(
+                              textStyle: const TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.w600),
-                              minimumSize: Size.fromHeight(36),
+                              minimumSize: const Size.fromHeight(36),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(4),
                               ),

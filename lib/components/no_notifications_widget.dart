@@ -5,19 +5,19 @@ class NoNotificationsWidget extends StatefulWidget {
   const NoNotificationsWidget({Key? key}) : super(key: key);
 
   @override
-  _NoNotificationsWidgetState createState() => _NoNotificationsWidgetState();
+  State<NoNotificationsWidget> createState() => _NoNotificationsWidgetState();
 }
 
 class _NoNotificationsWidgetState extends State<NoNotificationsWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+      padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(48, 48, 48, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(48, 48, 48, 0),
             child: Image.asset(
               'assets/images/no_notifications.png',
               width: double.infinity,

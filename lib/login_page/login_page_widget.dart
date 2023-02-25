@@ -14,23 +14,22 @@ import 'package:flutter/material.dart';
 
 import '../utils/check_internet_connectivity.dart';
 
-String passwordRequired = "The password field is required.";
-String emailRequired = "The email field is required.";
-String invalidRecords = "These credentials do not match our records.";
+String passwordRequired = 'The password field is required.';
+String emailRequired = 'The email field is required.';
+String invalidRecords = 'These credentials do not match our records.';
 
 class LoginPageWidget extends ConsumerStatefulWidget {
   const LoginPageWidget({Key? key, required this.onSubmit}) : super(key: key);
   final ValueChanged<String> onSubmit;
 
   @override
-  _LoginPageWidgetState createState() => _LoginPageWidgetState();
+  ConsumerState<LoginPageWidget> createState() => _LoginPageWidgetState();
 }
 
 class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
   //Text Controllers
   final _emailTFController = TextEditingController();
   final _passwordTFController = TextEditingController();
-
 
   bool _submitted = false;
   bool passwordVisibility = false;
@@ -42,7 +41,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
   void initState() {
     super.initState();
     passwordVisibility = false;
-  //Remember Me
+    //Remember Me
     init();
   }
 
@@ -50,18 +49,18 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
   Future<void> init() async {
     //Remember Me
     try {
-     await _rememberMeCheck();
-    } catch (e){}
+      await _rememberMeCheck();
+    } catch (e) {}
   }
 
   Future<void> _rememberMeCheck() async {
-    String _userAccount = StoredPreferences.userAccount;
-    String _userPassword = StoredPreferences.userPassword;
+    String userAccount = StoredPreferences.userAccount;
+    String userPassword = StoredPreferences.userPassword;
 
     if (StoredPreferences.rememberMe) {
-      if (_userAccount.isNotEmpty && _userPassword.isNotEmpty) {
-        _emailTFController?.text = _userAccount;
-        _passwordTFController?.text = _userPassword;
+      if (userAccount.isNotEmpty && userPassword.isNotEmpty) {
+        _emailTFController.text = userAccount;
+        _passwordTFController.text = userPassword;
       }
     }
   }
@@ -113,7 +112,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             CollapsingLibreAppBar(
-                title: "Welcome Back",
+                title: 'Welcome Back',
                 iconPath: 'assets/images/hand_wave.svg',
                 svgIconColor: FlutterFlowTheme.of(context).svgIconColor2),
           ];
@@ -137,7 +136,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
                         decoration: InputDecoration(
                           labelText: 'Email',
                           errorText: _submitted ? _emailErrorText : null,
-                          prefixIcon: Icon(
+                          prefixIcon: const Icon(
                             Icons.email_outlined,
                           ),
                         ),
@@ -149,7 +148,8 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(32, 24, 32, 24),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(32, 24, 32, 24),
                       child: TextField(
                         controller: _passwordTFController,
                         autofocus: true,
@@ -157,7 +157,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
                         decoration: InputDecoration(
                           labelText: 'Password',
                           errorText: _submitted ? _passwordErrorText : null,
-                          prefixIcon: Icon(
+                          prefixIcon: const Icon(
                             Icons.lock_outline,
                           ),
                           suffixIcon: InkWell(
@@ -251,14 +251,15 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(32, 16, 32, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(32, 16, 32, 0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w600),
                           surfaceTintColor:
                               FlutterFlowTheme.of(context).primaryBtnText,
-                          minimumSize: Size.fromHeight(36),
+                          minimumSize: const Size.fromHeight(36),
                           backgroundColor:
                               FlutterFlowTheme.of(context).primaryColor,
                           shape: RoundedRectangleBorder(
@@ -267,21 +268,22 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
                         ),
                         onPressed: () async {
                           if (!_checkConnection()) return;
-                          String _email = _emailTFController.text;
-                          String _password = _passwordTFController.text;
+                          String email = _emailTFController.text;
+                          String password = _passwordTFController.text;
                           loginAttempt = await LoginCall.call(
-                            email: _email,
-                            password: _password,
+                            email: email,
+                            password: password,
                           );
-                          if ((loginAttempt?.succeeded ?? true)) {
+                          if ((loginAttempt?.succeeded ?? true) &&
+                              context.mounted) {
                             setState(() {
                               StoredPreferences.authToken =
                                   functions.createToken(getJsonField(
                                 (loginAttempt?.jsonBody ?? ''),
                                 r'''$.token''',
                               ).toString());
-                              StoredPreferences.userAccount = _email;
-                              StoredPreferences.userPassword = _password;
+                              StoredPreferences.userAccount = email;
+                              StoredPreferences.userPassword = password;
                             });
                             await context.pushRoute(CoursesRouteWidget());
                           } else {
@@ -304,7 +306,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(32, 24, 32, 24),
                       child: Stack(
-                        alignment: AlignmentDirectional(0, 0),
+                        alignment: const AlignmentDirectional(0, 0),
                         children: [
                           Divider(
                             height: 0,
@@ -337,11 +339,11 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
                           const EdgeInsetsDirectional.fromSTEB(32, 0, 32, 0),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w600),
                           surfaceTintColor:
                               FlutterFlowTheme.of(context).primaryBtnText,
-                          minimumSize: Size.fromHeight(36),
+                          minimumSize: const Size.fromHeight(36),
                           backgroundColor:
                               FlutterFlowTheme.of(context).secondaryColor,
                           shape: RoundedRectangleBorder(
@@ -364,7 +366,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
                     text: TextSpan(
                         style: FlutterFlowTheme.of(context).bodyText1,
                         children: [
-                          TextSpan(text: 'Don\'t have an account? '),
+                          const TextSpan(text: 'Don\'t have an account? '),
                           TextSpan(
                               text: 'Sign up',
                               style: FlutterFlowTheme.of(context)

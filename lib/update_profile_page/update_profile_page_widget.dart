@@ -1,4 +1,4 @@
-import 'package:adapt_clicker/components/TimezoneDropdown.dart';
+import 'package:adapt_clicker/components/timezone_dropdown.dart';
 import 'package:adapt_clicker/components/drawer_ctn.dart';
 import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
@@ -20,16 +20,17 @@ class UpdateProfilePageWidget extends ConsumerStatefulWidget {
   final ValueChanged<String?> onSubmit;
 
   @override
-  _UpdateProfilePageWidgetState createState() =>
+  ConsumerState<UpdateProfilePageWidget> createState() =>
       _UpdateProfilePageWidgetState();
 }
 
-String firstNameRequired = "The first name field is required.";
-String lastNameRequired = "The last name field is required.";
-String idRequired = "The student ID field is required.";
-String invalidRecords = "These credentials do not match our records.";
+String firstNameRequired = 'The first name field is required.';
+String lastNameRequired = 'The last name field is required.';
+String idRequired = 'The student ID field is required.';
+String invalidRecords = 'These credentials do not match our records.';
 
-class _UpdateProfilePageWidgetState extends ConsumerState<UpdateProfilePageWidget> {
+class _UpdateProfilePageWidgetState
+    extends ConsumerState<UpdateProfilePageWidget> {
   static String? timeZoneUpdateDDValue;
   ApiCallResponse? updateProfile;
   ApiCallResponse? getUser;
@@ -153,8 +154,9 @@ class _UpdateProfilePageWidgetState extends ConsumerState<UpdateProfilePageWidge
     super.dispose();
   }
 
-  bool _checkConnection(){
-    ConnectivityStatus? status = ref.read(provider.notifier).getConnectionStatus();
+  bool _checkConnection() {
+    ConnectivityStatus? status =
+        ref.read(provider.notifier).getConnectionStatus();
     if (status != ConnectivityStatus.isConnected) {
       functions.showSnackbar(context, status);
       return false;
@@ -169,25 +171,25 @@ class _UpdateProfilePageWidgetState extends ConsumerState<UpdateProfilePageWidge
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: Icon(Icons.menu),
+          icon: const Icon(Icons.menu),
           onPressed: () {
             scaffoldKey.currentState!.openDrawer();
           },
         ),
-        title: Text('My Profile'),
+        title: const Text('My Profile'),
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.notifications,
             ),
             onPressed: () async {
-              context.pushRoute(NotificationsRouteWidget());
+              context.pushRoute(const NotificationsRouteWidget());
             },
           ),
         ],
       ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      drawer: DrawerCtnWidget(currentSelected: DrawerItems.profile),
+      drawer: const DrawerCtnWidget(currentSelected: DrawerItems.profile),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -208,7 +210,7 @@ class _UpdateProfilePageWidgetState extends ConsumerState<UpdateProfilePageWidge
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               0, 0, 0, Constants.msMargin),
                           child: TextField(
                               controller: firstNameUpdateTFController,
@@ -219,13 +221,13 @@ class _UpdateProfilePageWidgetState extends ConsumerState<UpdateProfilePageWidge
                                     _submitted ? _firstNameErrorText : null,
                                 hintText: firstName,
                                 filled: true,
-                                prefixIcon: Icon(
+                                prefixIcon: const Icon(
                                   Icons.person_outline,
                                 ),
                               )),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               0, 0, 0, Constants.msMargin),
                           child: TextField(
                               controller: lastNameUpdateTFController,
@@ -234,13 +236,13 @@ class _UpdateProfilePageWidgetState extends ConsumerState<UpdateProfilePageWidge
                                 errorText:
                                     _submitted ? _lastNameErrorText : null,
                                 hintText: 'Doe',
-                                prefixIcon: Icon(
+                                prefixIcon: const Icon(
                                   Icons.person_outline,
                                 ),
                               )),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               0, 0, 0, Constants.msMargin),
                           child: TextField(
                               controller: studentIDUpdateTFController,
@@ -248,7 +250,7 @@ class _UpdateProfilePageWidgetState extends ConsumerState<UpdateProfilePageWidge
                                 labelText: 'Student ID*',
                                 errorText: _submitted ? _idErrorText : null,
                                 hintText: 'example@gmail.com',
-                                prefixIcon: Icon(
+                                prefixIcon: const Icon(
                                   Icons.school_outlined,
                                 ),
                               )),
@@ -260,7 +262,7 @@ class _UpdateProfilePageWidgetState extends ConsumerState<UpdateProfilePageWidge
                               timezoneDropDownValue: timeZoneUpdateDDValue),
                         ),
                         Align(
-                          alignment: Alignment(1, 0),
+                          alignment: const Alignment(1, 0),
                           child: Text(
                             '*Required Fields',
                             style: FlutterFlowTheme.of(context)
@@ -282,7 +284,7 @@ class _UpdateProfilePageWidgetState extends ConsumerState<UpdateProfilePageWidge
                   ? MediaQuery.of(context).viewInsets.bottom > 0
                   : _isKeyboardVisible))
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
                       Constants.mmMargin, 0, Constants.mmMargin, 0),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -304,10 +306,11 @@ class _UpdateProfilePageWidgetState extends ConsumerState<UpdateProfilePageWidge
                         email: email,
                         timeZone: AppState.timezoneContainer
                                 ?.getValue(AppState.userTimezone.toString()) ??
-                            AppState.timezoneContainer!.timezones.first.value,
+                            AppState.timezoneContainer!.timeZones.first.value,
                         studentId: studentIDUpdateTFController!.text,
                       );
-                      if ((updateProfile?.succeeded ?? true)) {
+                      if ((updateProfile?.succeeded ?? true) &&
+                          context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
@@ -317,7 +320,7 @@ class _UpdateProfilePageWidgetState extends ConsumerState<UpdateProfilePageWidge
                                     FlutterFlowTheme.of(context).primaryBtnText,
                               ),
                             ),
-                            duration: Duration(
+                            duration: const Duration(
                                 milliseconds: Constants.snackBarDurationMil),
                             backgroundColor:
                                 FlutterFlowTheme.of(context).success,

@@ -3,48 +3,48 @@ class Timezone {
 
   Timezone(this.value, this.text);
 
-  void setText(String val) => (this.text = val);
-  void setValue(String val) => (this.value = val);
+  void setText(String val) => (text = val);
+  void setValue(String val) => (value = val);
 
   @override
   String toString() {
-    return this.text; //returns just the text
+    return text; //returns just the text
   }
 }
 
 class TimezonesContainer {
-  List<Timezone> timezones;
-  List<String> textzones = [''];
+  List<Timezone> timeZones;
+  List<String> textZones = [''];
 
-  TimezonesContainer(this.timezones) {
+  TimezonesContainer(this.timeZones) {
     setText();
   }
 
   void add(Timezone value) {
-    timezones.add(value);
+    timeZones.add(value);
   }
 
   void remove(Timezone value) {
-    timezones.remove(value);
+    timeZones.remove(value);
   }
 
   String getValue(String? val) {
     if (val == null) return '';
-
     int index = 0;
-    for (var s in textzones) {
+    for (var s in textZones) {
       if (s == val) break;
       ++index;
     }
 
-    if (index < timezones.length && index > -1)
-      return timezones.elementAt(index).value;
-    else
+    if (index < timeZones.length && index > -1) {
+      return timeZones.elementAt(index).value;
+    } else {
       return 'Invalid Index';
+    }
   }
 
   String getText(String? val) {
-    for (var s in timezones) {
+    for (var s in timeZones) {
       if (s.value == val) return s.text;
     }
 
@@ -52,13 +52,13 @@ class TimezonesContainer {
   }
 
   void setText() {
-    textzones.clear();
-    for (Timezone i in timezones) {
-      textzones.add(i.text);
+    textZones.clear();
+    for (Timezone i in timeZones) {
+      textZones.add(i.text);
     }
   }
 
   void setTimezones(List<Timezone> value) {
-    this.timezones = value;
+    timeZones = value;
   }
 }
