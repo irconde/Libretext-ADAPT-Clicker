@@ -105,8 +105,10 @@ class MyApp extends StatelessWidget {
         appBarTheme: FlutterFlowTheme.of(context).appBarTheme(),
       ),
       themeMode: _themeMode,
-      routerDelegate: _appRouter
-          .delegate(initialRoutes: [WelcomeRouteWidget(isFirstScreen: true)]),
+      routerDelegate: _appRouter.delegate(
+          initialRoutes: authenticated
+              ? [CoursesRouteWidget(isFirstScreen: true)]
+              : [WelcomeRouteWidget(isFirstScreen: true)]),
       routeInformationParser: _appRouter.defaultRouteParser(),
     );
   }

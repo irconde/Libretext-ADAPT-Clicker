@@ -42,9 +42,14 @@ class AppRouter extends _i10.RootStackRouter {
       );
     },
     CoursesRouteWidget.name: (routeData) {
+      final args = routeData.argsAs<CoursesRouteWidgetArgs>(
+          orElse: () => const CoursesRouteWidgetArgs());
       return _i10.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i2.CoursesPageWidget(),
+        child: _i2.CoursesPageWidget(
+          key: args.key,
+          isFirstScreen: args.isFirstScreen,
+        ),
       );
     },
     LoginRouteWidget.name: (routeData) {
@@ -185,14 +190,36 @@ class WelcomeRouteWidgetArgs {
 
 /// generated route for
 /// [_i2.CoursesPageWidget]
-class CoursesRouteWidget extends _i10.PageRouteInfo<void> {
-  const CoursesRouteWidget()
-      : super(
+class CoursesRouteWidget extends _i10.PageRouteInfo<CoursesRouteWidgetArgs> {
+  CoursesRouteWidget({
+    _i11.Key? key,
+    bool? isFirstScreen = false,
+  }) : super(
           CoursesRouteWidget.name,
           path: '/courses-page-widget',
+          args: CoursesRouteWidgetArgs(
+            key: key,
+            isFirstScreen: isFirstScreen,
+          ),
         );
 
   static const String name = 'CoursesRouteWidget';
+}
+
+class CoursesRouteWidgetArgs {
+  const CoursesRouteWidgetArgs({
+    this.key,
+    this.isFirstScreen = false,
+  });
+
+  final _i11.Key? key;
+
+  final bool? isFirstScreen;
+
+  @override
+  String toString() {
+    return 'CoursesRouteWidgetArgs{key: $key, isFirstScreen: $isFirstScreen}';
+  }
 }
 
 /// generated route for
