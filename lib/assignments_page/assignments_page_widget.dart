@@ -24,7 +24,8 @@ class AssignmentsPageWidget extends ConsumerStatefulWidget {
   final dynamic course;
 
   @override
-  _AssignmentsPageWidgetState createState() => _AssignmentsPageWidgetState();
+  ConsumerState<AssignmentsPageWidget> createState() =>
+      _AssignmentsPageWidgetState();
 }
 
 class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
@@ -393,8 +394,9 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                                               collapseIcon:
                                                   Icons.keyboard_arrow_up,
                                               iconSize: Constants.llMargin,
-                                              iconPadding: const EdgeInsets.fromLTRB(
-                                                  0, 0, 20, 0),
+                                              iconPadding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      0, 0, 20, 0),
                                               iconColor:
                                                   FlutterFlowTheme.of(context)
                                                       .tertiaryText,

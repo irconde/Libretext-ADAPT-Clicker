@@ -317,7 +317,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
                                             ),
                                       ),
                                     ),
-                                    Divider(
+                                    const Divider(
                                       height: 1,
                                       thickness: 1,
                                     ),
