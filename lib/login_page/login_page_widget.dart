@@ -266,7 +266,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
                           ),
                         ),
                         onPressed: () async {
-                          //if (!_checkConnection()) return;
+                          if (!_checkConnection()) return;
                           String _email = _emailTFController.text;
                           String _password = _passwordTFController.text;
                           loginAttempt = await LoginCall.call(
