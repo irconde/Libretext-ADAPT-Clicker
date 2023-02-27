@@ -72,6 +72,10 @@ class FFAppState {
     _notificationList.add(value);
   }
 
+  void removeNotification(String value) {
+    _notificationList.remove(value);
+  }
+
   dynamic view;
 
   bool assignmentUp = false;
