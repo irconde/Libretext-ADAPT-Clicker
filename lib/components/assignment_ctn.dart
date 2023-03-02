@@ -35,161 +35,164 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(
-          Constants.mmMargin, 0, Constants.mmMargin, 0),
+    return Material(
+      color: Colors.transparent,
       child: InkWell(
-        onTap: () async {
-          if (!_checkConnection()) return;
-          assignmentSummary = await GetAssignmentSummaryCall.call(
-            token: StoredPreferences.authToken,
-            assignmentNum: getJsonField(
-              widget.assignmentsItem,
-              r'''$.id''',
-            ),
-          );
-          if (!AppState().assignmentUp && context.mounted) {
-            setState(() => AppState().assignmentUp = true);
-            await showModalBottomSheet(
-              useSafeArea: true,
-              isScrollControlled: true,
-              backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-              context: context,
-              builder: (context) {
-                return Padding(
-                  padding: MediaQuery.of(context).viewInsets,
-                  child: SizedBox(
-                    height: double.infinity,
-                    child: AssignmentDetailsWidget(
-                      assignmentSum: GetAssignmentSummaryCall.assignment(
-                        (assignmentSummary?.jsonBody ?? ''),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            );
-          }
-          setState(() => AppState().assignmentUp = false);
-
-          setState(() {});
-        },
-        onDoubleTap: () async {
-          assignmentSum = await GetAssignmentSummaryCall.call(
-            token: StoredPreferences.authToken,
-            assignmentNum: getJsonField(
-              widget.assignmentsItem,
-              r'''$.id''',
-            ),
-          );
-          if (!AppState().assignmentUp && context.mounted) {
-            setState(() => AppState().assignmentUp = true);
-            await showModalBottomSheet(
-              useSafeArea: true,
-              isScrollControlled: true,
-              backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-              context: context,
-              builder: (context) {
-                return Padding(
-                  padding: MediaQuery.of(context).viewInsets,
-                  child: SizedBox(
-                    height: double.infinity,
-                    child: AssignmentDetailsWidget(
-                      assignmentSum: GetAssignmentSummaryCall.assignment(
-                        (assignmentSum?.jsonBody ?? ''),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            );
-          }
-          setState(() => AppState().assignmentUp = false);
-
-          setState(() {});
-        },
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(
-                  0, Constants.msMargin, 0, Constants.msMargin),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                          child: AutoSizeText(
-                            getJsonField(
-                              widget.assignmentsItem,
-                              r'''$.name''',
-                            ).toString().maybeHandleOverflow(
-                                  maxChars: 14,
-                                  replacement: '…',
-                                ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyText1
-                                .override(
-                                  fontFamily: 'Open Sans',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                        ),
-                        Text(
-                          getJsonField(
-                            widget.assignmentsItem,
-                            r'''$.assignment_group''',
-                          ).toString().maybeHandleOverflow(maxChars: 20),
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText1
-                              .override(
-                                fontFamily: 'Open Sans',
-                                color:
-                                    FlutterFlowTheme.of(context).tertiaryText,
-                              ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
-                    child: Icon(
-                      Icons.today_rounded,
-                      color: FlutterFlowTheme.of(context).tertiaryText,
-                      size: 20,
-                    ),
-                  ),
-                  Text(
-                    getJsonField(
-                      widget.assignmentsItem,
-                      r'''$..due_date''',
-                    ).toString(),
-                    textAlign: TextAlign.end,
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
-                          fontFamily: 'Open Sans',
-                          color: FlutterFlowTheme.of(context).tertiaryText,
-                        ),
-                  ),
-                ],
+          onTap: () async {
+            if (!_checkConnection()) return;
+            assignmentSummary = await GetAssignmentSummaryCall.call(
+              token: StoredPreferences.authToken,
+              assignmentNum: getJsonField(
+                widget.assignmentsItem,
+                r'''$.id''',
               ),
+            );
+            if (!AppState().assignmentUp && context.mounted) {
+              setState(() => AppState().assignmentUp = true);
+              await showModalBottomSheet(
+                useSafeArea: true,
+                isScrollControlled: true,
+                backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+                context: context,
+                builder: (context) {
+                  return Padding(
+                    padding: MediaQuery.of(context).viewInsets,
+                    child: SizedBox(
+                      height: double.infinity,
+                      child: AssignmentDetailsWidget(
+                        assignmentSum: GetAssignmentSummaryCall.assignment(
+                          (assignmentSummary?.jsonBody ?? ''),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            }
+            setState(() => AppState().assignmentUp = false);
+
+            setState(() {});
+          },
+          onDoubleTap: () async {
+            assignmentSum = await GetAssignmentSummaryCall.call(
+              token: StoredPreferences.authToken,
+              assignmentNum: getJsonField(
+                widget.assignmentsItem,
+                r'''$.id''',
+              ),
+            );
+            if (!AppState().assignmentUp && context.mounted) {
+              setState(() => AppState().assignmentUp = true);
+              await showModalBottomSheet(
+                useSafeArea: true,
+                isScrollControlled: true,
+                backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+                context: context,
+                builder: (context) {
+                  return Padding(
+                    padding: MediaQuery.of(context).viewInsets,
+                    child: SizedBox(
+                      height: double.infinity,
+                      child: AssignmentDetailsWidget(
+                        assignmentSum: GetAssignmentSummaryCall.assignment(
+                          (assignmentSum?.jsonBody ?? ''),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            }
+            setState(() => AppState().assignmentUp = false);
+
+            setState(() {});
+          },
+          child: Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(
+                Constants.mmMargin, 0, Constants.mmMargin, 0),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      0, Constants.msMargin, 0, Constants.msMargin),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                              child: AutoSizeText(
+                                getJsonField(
+                                  widget.assignmentsItem,
+                                  r'''$.name''',
+                                ).toString().maybeHandleOverflow(
+                                      maxChars: 14,
+                                      replacement: '…',
+                                    ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Open Sans',
+                                      color:
+                                          FlutterFlowTheme.of(context).primaryColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                            ),
+                            Text(
+                              getJsonField(
+                                widget.assignmentsItem,
+                                r'''$.assignment_group''',
+                              ).toString().maybeHandleOverflow(maxChars: 20),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Open Sans',
+                                    color:
+                                        FlutterFlowTheme.of(context).tertiaryText,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                        child: Icon(
+                          Icons.today_rounded,
+                          color: FlutterFlowTheme.of(context).tertiaryText,
+                          size: 20,
+                        ),
+                      ),
+                      Text(
+                        getJsonField(
+                          widget.assignmentsItem,
+                          r'''$..due_date''',
+                        ).toString(),
+                        textAlign: TextAlign.end,
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              color: FlutterFlowTheme.of(context).tertiaryText,
+                            ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(
+                  height: 1,
+                  thickness: 1,
+                ),
+              ],
             ),
-            const Divider(
-              height: 1,
-              thickness: 1,
-            ),
-          ],
-        ),
+          ),
       ),
     );
   }
