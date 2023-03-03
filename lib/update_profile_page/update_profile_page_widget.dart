@@ -136,7 +136,7 @@ class _UpdateProfilePageWidgetState
       ).toString());
 
       //Gets text from matching val in list
-      AppState.userTimezone!.setText(AppState.timezoneContainer!
+      AppState.userTimezone!.setValue(AppState.timezoneContainer!
           .getText(AppState.userTimezone!.value)); //set this
 
       //Sets text fields
