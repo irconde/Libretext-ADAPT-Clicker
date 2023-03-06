@@ -31,10 +31,12 @@ String invalidRecords = 'These credentials do not match our records.';
 
 class _UpdateProfilePageWidgetState
     extends ConsumerState<UpdateProfilePageWidget> {
-  static String? timeZoneUpdateDDValue;
   ApiCallResponse? updateProfile;
   ApiCallResponse? getUser;
   ApiCallResponse? logout;
+
+  var tzddv; // timezone dropdown value variable to fill dropdown menu
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late StreamSubscription<bool> _keyboardVisibilitySubscription;
   bool _isKeyboardVisible = false;
@@ -138,6 +140,15 @@ class _UpdateProfilePageWidgetState
       //Gets text from matching val in list
       AppState.userTimezone!.setValue(AppState.timezoneContainer!
           .getText(AppState.userTimezone!.value)); //set this
+
+      //var + for loop to find user timezone to set tzddv
+      var userTZ = AppState.userTimezone!.value;
+
+      for (var timezone in AppState.timezoneContainer!.textzones) {
+        if (timezone == userTZ) {
+          tzddv = timezone;
+        }
+      }
 
       //Sets text fields
       firstNameUpdateTFController?.text = firstName;
@@ -258,8 +269,7 @@ class _UpdateProfilePageWidgetState
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               0, 0, 0, Constants.smMargin),
-                          child: TimezoneDropdown(
-                              timezoneDropDownValue: timeZoneUpdateDDValue),
+                          child: TimezoneDropdown(timezoneDropDownValue: tzddv),
                         ),
                         Align(
                           alignment: const Alignment(1, 0),
