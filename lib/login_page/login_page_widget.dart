@@ -226,9 +226,11 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
                                       backgroundColor: Colors.transparent,
                                       context: context,
                                       builder: (context) {
-                                        return ResetPasswordWidget(
+                                        return Padding(
+                                            padding: MediaQuery.of(context).viewInsets,
+                                        child: ResetPasswordWidget(
                                           onSubmit: (String? value) {},
-                                        );
+                                        ));
                                       },
                                     );
                                   },
