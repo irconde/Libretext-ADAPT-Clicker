@@ -33,16 +33,16 @@ class TimezoneDropdownState extends State<TimezoneDropdown> {
 
     await fetchTimezone();
 
-    if (widget.timezoneDropDownValue == null) {
-      var userTZ = AppState.userTimezone!.value;
-
-      for (var timezone in AppState.timezoneContainer!.textzones){
-        if (timezone == userTZ){
-          widget.timezoneDropDownValue = timezone;
-        }
-      }
-      
-    }
+    // if (widget.timezoneDropDownValue == null) {
+    //   var userTZ = AppState.userTimezone!.value;
+    //
+    //   for (var timezone in AppState.timezoneContainer!.textzones){
+    //     if (timezone == userTZ){
+    //       widget.timezoneDropDownValue = timezone;
+    //     }
+    //   }
+    //
+    // }
   }
 
   @override

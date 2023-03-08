@@ -137,18 +137,9 @@ class _UpdateProfilePageWidgetState
         r'''$.time_zone''',
       ).toString());
 
-      //Gets text from matching val in list
-      AppState.userTimezone!.setValue(AppState.timezoneContainer!
-          .getText(AppState.userTimezone!.value)); //set this
-
-      //var + for loop to find user timezone to set tzddv
-      var userTZ = AppState.userTimezone!.value;
-
-      for (var timezone in AppState.timezoneContainer!.textzones) {
-        if (timezone == userTZ) {
-          tzddv = timezone;
-        }
-      }
+      tzddv = AppState.timezoneContainer!
+          .getText(AppState.userTimezone!.value)
+          .toString();
 
       //Sets text fields
       firstNameUpdateTFController?.text = firstName;
