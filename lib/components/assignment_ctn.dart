@@ -20,8 +20,6 @@ class AssignmentCtn extends ConsumerStatefulWidget {
 }
 
 class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
-  ApiCallResponse? assignmentSummary;
-  ApiCallResponse? assignmentSum;
 
   bool _checkConnection() {
     ConnectivityStatus? status =
@@ -40,13 +38,7 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
       child: InkWell(
           onTap: () async {
             if (!_checkConnection()) return;
-            assignmentSummary = await GetAssignmentSummaryCall.call(
-              token: StoredPreferences.authToken,
-              assignmentNum: getJsonField(
-                widget.assignmentsItem,
-                r'''$.id''',
-              ),
-            );
+
             if (!AppState().assignmentUp && context.mounted) {
               setState(() => AppState().assignmentUp = true);
               await showModalBottomSheet(
@@ -60,9 +52,7 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
                     child: SizedBox(
                       height: double.infinity,
                       child: AssignmentDetailsWidget(
-                        assignmentSum: GetAssignmentSummaryCall.assignment(
-                          (assignmentSummary?.jsonBody ?? ''),
-                        ),
+                        assignmentItem: widget.assignmentsItem
                       ),
                     ),
                   );
@@ -73,40 +63,7 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
 
             setState(() {});
           },
-          onDoubleTap: () async {
-            assignmentSum = await GetAssignmentSummaryCall.call(
-              token: StoredPreferences.authToken,
-              assignmentNum: getJsonField(
-                widget.assignmentsItem,
-                r'''$.id''',
-              ),
-            );
-            if (!AppState().assignmentUp && context.mounted) {
-              setState(() => AppState().assignmentUp = true);
-              await showModalBottomSheet(
-                useSafeArea: true,
-                isScrollControlled: true,
-                backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-                context: context,
-                builder: (context) {
-                  return Padding(
-                    padding: MediaQuery.of(context).viewInsets,
-                    child: SizedBox(
-                      height: double.infinity,
-                      child: AssignmentDetailsWidget(
-                        assignmentSum: GetAssignmentSummaryCall.assignment(
-                          (assignmentSum?.jsonBody ?? ''),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              );
-            }
-            setState(() => AppState().assignmentUp = false);
 
-            setState(() {});
-          },
           child: Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(
                 Constants.mmMargin, 0, Constants.mmMargin, 0),
