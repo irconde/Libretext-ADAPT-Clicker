@@ -219,32 +219,37 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
                                             .secondaryText,
                                       ),
                                 ),
-                                InkWell(
-                                  onTap: () async {
-                                    await showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      context: context,
-                                      builder: (context) {
-                                        return Padding(
-                                            padding: MediaQuery.of(context).viewInsets,
-                                        child: ResetPasswordWidget(
-                                          onSubmit: (String? value) {},
-                                        ));
-                                      },
-                                    );
-                                  },
-                                  child: Text(
-                                    'Forgot Password?',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          decoration: TextDecoration.underline,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                        ),
-                                  ),
+                                RichText(
+                                  text: TextSpan(
+                                      text: 'Forgot Password?',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                            decoration:
+                                                TextDecoration.underline,
+                                            fontFamily: 'Open Sans',
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () async {
+                                          await showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            backgroundColor: Colors.transparent,
+                                            context: context,
+                                            builder: (context) {
+                                              return Padding(
+                                                  padding:
+                                                      MediaQuery.of(context)
+                                                          .viewInsets,
+                                                  child: ResetPasswordWidget(
+                                                    onSubmit:
+                                                        (String? value) {},
+                                                  ));
+                                            },
+                                          );
+                                        }),
                                 ),
                               ],
                             ),
@@ -363,7 +368,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget> {
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 120, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 48, 0, 0),
                   child: RichText(
                     text: TextSpan(
                         style: FlutterFlowTheme.of(context).bodyText1,

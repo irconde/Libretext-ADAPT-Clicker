@@ -1,6 +1,7 @@
 import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:adapt_clicker/components/collapsing_libre_app_bar.dart';
+import 'package:flutter/gestures.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
@@ -28,7 +29,8 @@ class CreateAccountWidget extends ConsumerStatefulWidget {
   final ValueChanged<String?> onSubmit;
 
   @override
-  ConsumerState<CreateAccountWidget> createState() => _CreateAccountWidgetState();
+  ConsumerState<CreateAccountWidget> createState() =>
+      _CreateAccountWidgetState();
 }
 
 class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
@@ -441,33 +443,37 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             child: const Text('CAMPUS REGISTRATION'),
                           ),
                         ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Already have an account? ',
-                              style: FlutterFlowTheme.of(context).bodyText1,
-                            ),
-                            InkWell(
-                              onTap: () async {
-                                context.pushRoute(LoginRouteWidget(
-                                  onSubmit: (String? value) {},
-                                ));
-                              },
-                              child: Text(
-                                'Login',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Open Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                      decoration: TextDecoration.underline,
-                                    ),
-                              ),
-                            ),
-                          ],
+                        Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 56),
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                                children: [
+                                  const TextSpan(text: 'Having problems? '),
+                                  TextSpan(
+                                      text: 'Contact us',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                            decoration:
+                                                TextDecoration.underline,
+                                            fontFamily: 'Open Sans',
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () async {
+                                          context.pushRoute(
+                                            ContactUsWidget(
+                                              onSubmit: (String? value) {},
+                                            ),
+                                          );
+                                        }),
+                                ]),
+                          ),
                         ),
                       ],
                     ),

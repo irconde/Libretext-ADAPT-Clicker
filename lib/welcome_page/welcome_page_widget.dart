@@ -1,5 +1,6 @@
 import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:move_to_background/move_to_background.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -43,138 +44,106 @@ class WelcomePageWidget extends ConsumerWidget {
             onTap: () => FocusScope.of(context).unfocus(),
             child: SizedBox(
               width: double.infinity,
-              child: Stack(
-                alignment: const AlignmentDirectional(0, 0),
-                children: [
-                  Align(
-                    alignment: const AlignmentDirectional(0, -0.4),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Align(
-                          alignment: const AlignmentDirectional(0, -0.6),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                42, 42, 42, 24),
-                            child: SvgPicture.asset(
-                              'assets/images/libretexts_adapt_logo.svg',
-                              width: 270,
-                              height: 170,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              32, 0, 32, 8),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor:
-                                  FlutterFlowTheme.of(context).primaryBtnText,
-                              backgroundColor:
-                                  FlutterFlowTheme.of(context).primaryColor,
-                              textStyle: const TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w600),
-                              minimumSize: const Size.fromHeight(36),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                            ),
-                            onPressed: () async {
-                              context.pushRoute(
-                                LoginRouteWidget(
-                                  onSubmit: (String? value) {},
-                                ),
-                              );
-                            },
-                            child: const Text('LOGIN'),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              32, 8, 32, 0),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor:
-                                  FlutterFlowTheme.of(context).primaryColor,
-                              backgroundColor: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              textStyle: const TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w600),
-                              minimumSize: const Size.fromHeight(36),
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                  width: 1,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                ),
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                            ),
-                            onPressed: () async {
-                              context.pushRoute(
-                                CreateAccountWidget(
-                                  onSubmit: (String? value) {},
-                                ),
-                              );
-                            },
-                            child: const Text('CREATE ACCOUNT'),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Align(
-                    alignment: const AlignmentDirectional(0, 0),
-                    child: Padding(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 100, 0, 91),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Align(
-                            alignment: const AlignmentDirectional(-0.06, 1),
-                            child: Text(
-                              'Having problems? ',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Open Sans',
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                            ),
-                          ),
-                          Align(
-                            alignment: const AlignmentDirectional(-0.06, 1),
-                            child: InkWell(
-                              onTap: () async {
-                                context.pushRoute(
-                                  ContactUsWidget(
-                                    onSubmit: (String? value) {},
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                'Contact us',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Open Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                              ),
-                            ),
-                          ),
-                        ],
+                          const EdgeInsetsDirectional.fromSTEB(42, 42, 42, 24),
+                      child: SvgPicture.asset(
+                        'assets/images/libretexts_adapt_logo.svg',
+                        width: 270,
+                        height: 170,
                       ),
                     ),
-                  ),
-                ],
-              ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(32, 0, 32, 8),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor:
+                              FlutterFlowTheme.of(context).primaryBtnText,
+                          backgroundColor:
+                              FlutterFlowTheme.of(context).primaryColor,
+                          textStyle: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w600),
+                          minimumSize: const Size.fromHeight(36),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                        onPressed: () async {
+                          context.pushRoute(
+                            LoginRouteWidget(
+                              onSubmit: (String? value) {},
+                            ),
+                          );
+                        },
+                        child: const Text('LOGIN'),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(32, 8, 32, 0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor:
+                              FlutterFlowTheme.of(context).primaryColor,
+                          backgroundColor:
+                              FlutterFlowTheme.of(context).primaryBackground,
+                          textStyle: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w600),
+                          minimumSize: const Size.fromHeight(36),
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                              width: 1,
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                            ),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                        onPressed: () async {
+                          context.pushRoute(
+                            CreateAccountWidget(
+                              onSubmit: (String? value) {},
+                            ),
+                          );
+                        },
+                        child: const Text('CREATE ACCOUNT'),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 92, 0, 0),
+                      child: RichText(
+                        text: TextSpan(
+                            style: FlutterFlowTheme.of(context).bodyText1,
+                            children: [
+                              const TextSpan(text: 'Having problems? '),
+                              TextSpan(
+                                  text: 'Contact us',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                        decoration: TextDecoration.underline,
+                                        fontFamily: 'Open Sans',
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () async {
+                                      context.pushRoute(
+                                        ContactUsWidget(
+                                          onSubmit: (String? value) {},
+                                        ),
+                                      );
+                                    }),
+                            ]),
+                      ),
+                    ),
+                  ]),
             ),
           ),
         ),
