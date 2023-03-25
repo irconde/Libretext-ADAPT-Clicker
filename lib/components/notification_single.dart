@@ -1,56 +1,29 @@
 import 'package:flutter_svg/svg.dart';
-import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 
 class NotificationSingle extends StatefulWidget {
   const NotificationSingle({
-    Key? key, this.enrollmentsListItem}) : super(key: key);
-  final dynamic enrollmentsListItem;
+    Key? key, required this.index}) : super(key: key);
+  final int index;
 
   @override
   _NotificationSingleWidgetState createState() =>
       _NotificationSingleWidgetState();
 }
 
+
 class _NotificationSingleWidgetState extends State<NotificationSingle> {
   _NotificationSingleWidgetState();
   bool dismissed = false;
 
+  dynamic keyVal = UniqueKey();
+
+
   @override
   Widget build(BuildContext context) {
-    if (dismissed) {
-      return SizedBox.shrink();
-    }
-    return Dismissible(
-      key: UniqueKey(),
-      background: Container(
-        color: Colors.red,
-        child: Align(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 16),
-            child: Icon(Icons.delete),
-          ),
-          alignment: Alignment.centerLeft,
-        ),
-      ),
-      secondaryBackground: Container(
-        color: Colors.red,
-        child: Align(
-          child: Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: Icon(Icons.delete),
-          ),
-          alignment: Alignment.centerRight,
-        ),
-      ),
-       onDismissed: (_) {
-        setState(() {
-          dismissed = true;
-          FFAppState().removeNotification(widget.enrollmentsListItem.toString());
-         });
-       },
-      child: Padding(
+
+    return Padding(
         padding:
         EdgeInsetsDirectional.fromSTEB(30, 24, 0, 0),
         child: Column(
@@ -66,10 +39,7 @@ class _NotificationSingleWidgetState extends State<NotificationSingle> {
                     width: 24,),
                 ),
                 Text(
-                  getJsonField(
-                    widget.enrollmentsListItem,
-                    r'''$.course_section_name''',
-                  ).toString(),
+                  "Notification ${widget.index}",
                   style: FlutterFlowTheme.of(context)
                       .bodyText1
                       .override(
@@ -86,10 +56,7 @@ class _NotificationSingleWidgetState extends State<NotificationSingle> {
               padding: EdgeInsetsDirectional.fromSTEB(
                   30, 8, 0, 24),
               child: Text(
-                getJsonField(
-                  widget.enrollmentsListItem,
-                  r'''$.instructor''',
-                ).toString(),
+                "Details",
                 style: FlutterFlowTheme.of(context)
                     .bodyText1
                     .override(
@@ -107,8 +74,6 @@ class _NotificationSingleWidgetState extends State<NotificationSingle> {
             ),
           ],
         ),
-      ),
     );
-
   }
 }

@@ -1,8 +1,6 @@
 import 'package:adapt_clicker/timezone.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'components/notfication_single.dart';
 import 'flutter_flow/lat_lng.dart';
-import 'dart:convert';
 
 class FFAppState {
   static final FFAppState _instance = FFAppState._internal();
@@ -20,7 +18,7 @@ class FFAppState {
     prefs = await SharedPreferences.getInstance();
     _rememberMe = prefs.getBool('ff_rememberMe') ?? _rememberMe;
     _authToken = prefs.getString('ff_authToken') ?? _authToken;
-    _notificationList = prefs.getStringList('ff_notifcationList') ?? _notificationList;
+    _notificationList = prefs.getStringList('ff_notificationList') ?? _notificationList;
   }
 
   late SharedPreferences prefs;
@@ -52,7 +50,7 @@ class FFAppState {
 
   set notificationList(List<String> _value) {
     _notificationList = _value;
-    prefs.setStringList('ff_notifcationList', _value);
+    prefs.setStringList('ff_notificationList', _value);
   }
 
 
@@ -61,19 +59,28 @@ class FFAppState {
 
   set notificationSet(bool _value) {
     _notificationSet = _value;
-    prefs.setBool('ff_noticationSet', _value);
+    prefs.setBool('ff_notificationSet', _value);
   }
 
   static bool _notificationSet = false;
-  //TODO: This is a temp solution, when adding from push notifications is implemented, get rid of this
+
 
 
   void addNotification(String value) {
+    //TODO: This is a temp solution, when adding from push notifications is implemented, get rid of this
     _notificationList.add(value);
+    prefs.setStringList('ff_notificationList', _notificationList);
   }
 
-  void removeNotification(String value) {
-    _notificationList.remove(value);
+  void removeNotification(int index) {
+    _notificationList.removeAt(index);
+    prefs.setStringList('ff_notificationList', _notificationList);
+  }
+
+  void clearNotifications()
+  {
+    _notificationList.clear();
+    prefs.setStringList('ff_notificationList', _notificationList);
   }
 
   dynamic view;

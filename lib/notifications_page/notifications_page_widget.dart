@@ -1,15 +1,12 @@
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:adapt_clicker/components/notfication_single.dart';
+import 'package:adapt_clicker/app_state.dart';
+import 'package:adapt_clicker/components/notification_single.dart';
 import 'package:flutter/gestures.dart';
-
-import '../backend/api_requests/api_calls.dart';
 import '../components/no_notifications_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import '../gen/assets.gen.dart';
 
 class NotificationsPageWidget extends StatefulWidget {
   const NotificationsPageWidget({Key? key}) : super(key: key);
@@ -19,52 +16,19 @@ class NotificationsPageWidget extends StatefulWidget {
       _NotificationsPageWidgetState();
 }
 
-ApiCallResponse? _notificationsResponse;
-List<NotificationSingle> notificationList = [];
-
-void getEnrollments() async {
-  List<dynamic> list = [];
-
-  if (FFAppState().notificationSet) {
-    dynamic temp;
-    for (var item in FFAppState().notificationList) {
-      list.add(getJsonField(temp, item));
-    }
-    createList(list);
-    return;
-  } else {
-    //Dummy code, this is only until push notifications replace the api call. Then get enrollments will just be the if statement
-
-    _notificationsResponse ??= await GetEnrollmentsCall.call(
-      token: FFAppState().authToken,
-    );
-
-    list = getJsonField(_notificationsResponse?.jsonBody, r'''$.enrollments''');
-    for (var item in list) {
-      FFAppState().addNotification(item.toString());
-      NotificationSingle temp =
-          new NotificationSingle(enrollmentsListItem: item);
-      notificationList.add(temp);
-    }
-    FFAppState().notificationSet = true;
-  }
+void createList() {
+  if (FFAppState().notificationList.isEmpty) return;
 }
 
-void createList(List<dynamic> list) {
-  if (notificationList.isNotEmpty) notificationList.clear();
-
-  for (var item in list) {
-    NotificationSingle temp = new NotificationSingle(enrollmentsListItem: item);
-    notificationList.add(temp);
-  }
+void addNotification(String details) {
+  FFAppState().addNotification(details);
 }
 
 class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    getEnrollments();
+    //createList();
   }
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -75,9 +39,29 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
       key: scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
+        leading: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(Constants.sMargin, 0, 0, 0),
+          child: InkWell(
+            onTap: () async {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.arrow_back,
+              color: FlutterFlowTheme.of(context).primaryBackground,
+              size: 32,
+            ),
+          ),
+        ),
+        title: Align(
+          alignment: AlignmentDirectional(0, 0),
+          child: Text(
+            'Notifications',
+            style: FlutterFlowTheme.of(context).bodyText1.override(
+                  fontFamily: 'Open Sans',
+                  color: FlutterFlowTheme.of(context).primaryBackground,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                ),
           ),
           onPressed: () async {
             context.popRoute();
@@ -88,7 +72,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
           Align(
             alignment: const AlignmentDirectional(0, 0),
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
+              padding:
+                  EdgeInsetsDirectional.fromSTEB(0, 0, Constants.sMargin, 0),
               child: RichText(
                   text: TextSpan(
                 children: <TextSpan>[
@@ -98,7 +83,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                         ..onTap = () {
                           debugPrint('The button is clicked!');
                           setState(() {
-                            notificationList.clear();
+                            FFAppState().clearNotifications();
                           });
                         },
                       style: FlutterFlowTheme.of(context).bodyText1.override(
@@ -125,12 +110,39 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
             children: [
               Expanded(
                 child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: notificationList.length,
+                    itemCount: FFAppState().notificationList.length,
                     itemBuilder: (BuildContext context, int index) {
-                      // access element from list using index
-                      // you can create and return a widget of your choice
-                      return notificationList[index];
+                      return Dismissible(
+                        key: UniqueKey(),
+                        background: Container(
+                          color: Colors.red,
+                          child: Align(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 16),
+                              child: Icon(Icons.delete),
+                            ),
+                            alignment: Alignment.centerLeft,
+                          ),
+                        ),
+                        secondaryBackground: Container(
+                          color: Colors.red,
+                          child: Align(
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 16),
+                              child: Icon(Icons.delete),
+                            ),
+                            alignment: Alignment.centerRight,
+                          ),
+                        ),
+                        onDismissed: (_) {
+                          setState(() {
+                            FFAppState().removeNotification(index);
+                          });
+                        },
+                        child: NotificationSingle(
+                          index: index,
+                        ),
+                      );
                     }),
               )
             ],
