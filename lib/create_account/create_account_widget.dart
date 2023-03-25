@@ -46,7 +46,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
   late bool passwordFieldCAVisibility;
   late bool confirmPasswordFieldCAVisibility;
 
-  String tZDropDownCAValue = '';
+  String? tZDropDownCAValue;
   ApiCallResponse? createUser;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late StreamSubscription<bool> _keyboardVisibilitySubscription;

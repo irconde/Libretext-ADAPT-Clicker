@@ -10,7 +10,7 @@ class TimezoneDropdown extends StatefulWidget {
   String? timezoneDropDownValue;
 
   @override
-  State<StatefulWidget> createState() => TimezoneDropdownState();
+  State<StatefulWidget> createState() => TimezoneDropdownState(timezoneDropDownValue);
 }
 
 Future<void> fetchTimezone() async {
@@ -28,6 +28,9 @@ Future<void> fetchTimezone() async {
 }
 
 class TimezoneDropdownState extends State<TimezoneDropdown> {
+  String? timezoneDropDownValue;
+  TimezoneDropdownState(this.timezoneDropDownValue);
+
 
   Future<void> timezoneInit() async {
 
@@ -65,7 +68,7 @@ class TimezoneDropdownState extends State<TimezoneDropdown> {
           child: ButtonTheme(
             alignedDropdown: true,
             child: DropdownButton<String>(
-              value: widget.timezoneDropDownValue,
+              value: timezoneDropDownValue,
               isExpanded: true,
               items: AppState.timezoneContainer?.textzones.map((String value) {
                 return DropdownMenuItem<String>(
@@ -84,7 +87,7 @@ class TimezoneDropdownState extends State<TimezoneDropdown> {
               onChanged: (String? value) {
                 // This is called when the user selects an item.
                 setState(() {
-                  widget.timezoneDropDownValue = value;
+                  timezoneDropDownValue = value;
                   AppState.userTimezone!.setText(value.toString());
                   AppState.userTimezone!.setValue(
                       AppState.timezoneContainer!.getValue(value.toString()));

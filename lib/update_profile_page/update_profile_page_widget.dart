@@ -140,6 +140,7 @@ class _UpdateProfilePageWidgetState
       tzddv = AppState.timezoneContainer!
           .getText(AppState.userTimezone!.value)
           .toString();
+      AppState.userTimezone!.setText(tzddv);
 
       //Sets text fields
       firstNameUpdateTFController?.text = firstName;
