@@ -49,6 +49,7 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
   var top = 0.0;
   final ScrollController _scrollController = ScrollController();
   final ScrollController _scrollController2 = ScrollController();
+  final ScrollController _scrollController3 = ScrollController();
 
   @override
   void initState() {
@@ -430,20 +431,14 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                                       Flexible(
                                         child: ScrollShadow(
                                           controller: _scrollController2,
-                                          color: FlutterFlowTheme.of(context)
-                                              .shadowGrey,
-                                          child: SingleChildScrollView(
+                                          child:
+                                          ListView.builder(
                                             controller: _scrollController2,
-                                            padding: const EdgeInsets.only(
-                                                bottom: Constants.msMargin),
-                                            child: Column(
-                                              //TODO : Task 108 : Make this API generated
-                                              children:
-                                                  List.generate(10, (index) {
-                                                return const AssignmentStatCtnWidget();
-                                              }),
-                                            ),
-                                          ),
+                                            itemCount: 10,
+                                            itemBuilder: (context, index) {
+                                              return const AssignmentStatCtnWidget();
+                                            },
+                                          )
                                         ),
                                       ),
                                     ],
@@ -482,67 +477,71 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                                         ),
                                       ),
                                       Expanded(
-                                        child: SingleChildScrollView(
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              FutureBuilder<ApiCallResponse>(
-                                                future:
-                                                    GetScoresByUserCall.call(
-                                                  token: StoredPreferences
-                                                      .authToken,
-                                                  course: widget.courseNumber,
-                                                ),
-                                                builder: (context, snapshot) {
-                                                  // Customize what your widget looks like when it's loading.
-                                                  if (!snapshot.hasData) {
-                                                    return Center(
-                                                      child: SizedBox(
-                                                        width: 50,
-                                                        height: 50,
-                                                        child:
-                                                            CircularProgressIndicator(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryColor,
+                                        child: ScrollShadow(
+                                          controller: _scrollController3,
+                                          child: SingleChildScrollView(
+                                            controller: _scrollController3,
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                FutureBuilder<ApiCallResponse>(
+                                                  future:
+                                                      GetScoresByUserCall.call(
+                                                    token: StoredPreferences
+                                                        .authToken,
+                                                    course: widget.courseNumber,
+                                                  ),
+                                                  builder: (context, snapshot) {
+                                                    // Customize what your widget looks like when it's loading.
+                                                    if (!snapshot.hasData) {
+                                                      return Center(
+                                                        child: SizedBox(
+                                                          width: 50,
+                                                          height: 50,
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryColor,
+                                                          ),
                                                         ),
-                                                      ),
-                                                    );
-                                                  }
-                                                  final listViewGetScoresByUserResponse =
-                                                      snapshot.data!;
-                                                  return Builder(
-                                                    builder: (context) {
-                                                      final assignments =
-                                                          GetScoresByUserCall
-                                                              .assignments(
-                                                        listViewGetScoresByUserResponse
-                                                            .jsonBody,
-                                                      ).toList();
-                                                      return ListView.builder(
-                                                        padding:
-                                                            EdgeInsets.zero,
-                                                        shrinkWrap: true,
-                                                        scrollDirection:
-                                                            Axis.vertical,
-                                                        itemCount:
-                                                            assignments.length,
-                                                        itemBuilder: (context,
-                                                            assignmentsIndex) {
-                                                          final assignmentsItem =
-                                                              assignments[
-                                                                  assignmentsIndex];
-
-                                                          return AssignmentCtn(
-                                                              assignmentsItem:
-                                                                  (assignmentsItem));
-                                                        },
                                                       );
-                                                    },
-                                                  );
-                                                },
-                                              ),
-                                            ],
+                                                    }
+                                                    final listViewGetScoresByUserResponse =
+                                                        snapshot.data!;
+                                                    return Builder(
+                                                      builder: (context) {
+                                                        final assignments =
+                                                            GetScoresByUserCall
+                                                                .assignments(
+                                                          listViewGetScoresByUserResponse
+                                                              .jsonBody,
+                                                        ).toList();
+                                                        return ListView.builder(
+                                                          padding:
+                                                              EdgeInsets.zero,
+                                                          shrinkWrap: true,
+                                                          scrollDirection:
+                                                              Axis.vertical,
+                                                          itemCount:
+                                                              assignments.length,
+                                                          itemBuilder: (context,
+                                                              assignmentsIndex) {
+                                                            final assignmentsItem =
+                                                                assignments[
+                                                                    assignmentsIndex];
+
+                                                            return AssignmentCtn(
+                                                                assignmentsItem:
+                                                                    (assignmentsItem));
+                                                          },
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
