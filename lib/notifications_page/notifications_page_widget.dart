@@ -1,9 +1,6 @@
-import 'package:adapt_clicker/utils/stored_preferences.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:adapt_clicker/app_state.dart';
 import 'package:adapt_clicker/components/notification_single.dart';
 import 'package:flutter/gestures.dart';
-import '../components/no_notifications_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import '../gen/assets.gen.dart';
@@ -40,7 +37,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(Constants.sMargin, 0, 0, 0),
+          padding: const EdgeInsetsDirectional.fromSTEB(Constants.sMargin, 0, 0, 0),
           child: InkWell(
             onTap: () async {
               Navigator.pop(context);
@@ -53,7 +50,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
           ),
         ),
         title: Align(
-          alignment: AlignmentDirectional(0, 0),
+          alignment: const AlignmentDirectional(0, 0),
           child: Text(
             'Notifications',
             style: FlutterFlowTheme.of(context).bodyText1.override(
@@ -63,11 +60,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                   fontWeight: FontWeight.w600,
                 ),
           ),
-          onPressed: () async {
-            context.popRoute();
-          },
         ),
-        title: const Text('Notifications'),
         actions: [
           Align(
             alignment: const AlignmentDirectional(0, 0),
@@ -116,22 +109,22 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                         key: UniqueKey(),
                         background: Container(
                           color: Colors.red,
-                          child: Align(
+                          child: const Align(
+                            alignment: Alignment.centerLeft,
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 16),
+                              padding: EdgeInsets.only(left: 16),
                               child: Icon(Icons.delete, color: Colors.white,),
                             ),
-                            alignment: Alignment.centerLeft,
                           ),
                         ),
                         secondaryBackground: Container(
                           color: Colors.red,
-                          child: Align(
+                          child: const Align(
+                            alignment: Alignment.centerRight,
                             child: Padding(
-                              padding: const EdgeInsets.only(right: 16),
+                              padding: EdgeInsets.only(right: 16),
                               child: Icon(Icons.delete),
                             ),
-                            alignment: Alignment.centerRight,
                           ),
                         ),
                         onDismissed: (_) {

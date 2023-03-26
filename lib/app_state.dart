@@ -1,4 +1,4 @@
-import 'package:adapt_clicker/timezone.dart';
+import 'package:adapt_clicker/utils/timezone.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/lat_lng.dart';
 
