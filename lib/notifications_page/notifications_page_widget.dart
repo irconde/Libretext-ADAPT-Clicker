@@ -119,7 +119,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                           child: Align(
                             child: Padding(
                               padding: const EdgeInsets.only(left: 16),
-                              child: Icon(Icons.delete),
+                              child: Icon(Icons.delete, color: Colors.white,),
                             ),
                             alignment: Alignment.centerLeft,
                           ),
