@@ -57,7 +57,7 @@ class TimezoneDropdownState extends State<TimezoneDropdown> {
             child: DropdownButton<String>(
               value: timezoneDropDownValue,
               isExpanded: true,
-              items: AppState.timezoneContainer?.textzones.map((String value) {
+              items: AppState.timezoneContainer?.textZones.map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(
