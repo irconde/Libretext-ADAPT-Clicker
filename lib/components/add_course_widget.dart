@@ -3,7 +3,6 @@ import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
-import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -13,45 +12,20 @@ import '../utils/check_internet_connectivity.dart';
 
 class AddCourseWidget extends ConsumerStatefulWidget {
   const AddCourseWidget({Key? key}) : super(key: key);
-
   @override
   ConsumerState<AddCourseWidget> createState() => _AddCourseWidgetState();
 }
 
 class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
     with TickerProviderStateMixin {
-  TextEditingController? accessCodeACController;
-
+  final TextEditingController _accessCodeACController = TextEditingController();
   ApiCallResponse? addCourse;
-  final animationsMap = {
-    'textOnActionTriggerAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onActionTrigger,
-      duration: 2400,
-      hideBeforeAnimating: true,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: const Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
-      finalState: AnimationState(
-        offset: const Offset(0, 0),
-        scale: 1,
-        opacity: 0,
-      ),
-    ),
-  };
+  bool _submitted = false;
+  String? _errorText;
 
   @override
   void initState() {
     super.initState();
-    setupTriggerAnimations(
-      animationsMap.values
-          .where((anim) => anim.trigger == AnimationTrigger.onActionTrigger),
-      this,
-    );
-
-    accessCodeACController = TextEditingController();
   }
 
   bool _checkConnection() {
@@ -62,6 +36,63 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
       return false;
     }
     return true;
+  }
+
+  void _submit() async {
+    const String toyTimeZone = 'America/Belize';
+    setState(() => _submitted = true);
+    if (!_checkConnection()) return;
+    addCourse = await AddCourseCall.call(
+      token: StoredPreferences.authToken,
+      accessCode: _accessCodeACController.text,
+      studentID: StoredPreferences.userAccount,
+      timeZone: toyTimeZone,
+    );
+    if ((addCourse?.succeeded ?? true) && context.mounted) {
+      String type = getJsonField((addCourse?.jsonBody ?? ''), r'''$.type''')
+          .toString();
+      if (type == 'error') {
+        setState(() {
+          _errorText = getJsonField((addCourse?.jsonBody ?? ''), r'''$.message''')
+              .toString();
+        });
+      } else {
+        context.popRoute();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'You have successfully joined the course',
+              style: TextStyle(
+                color: FlutterFlowTheme.of(context)
+                    .primaryBtnText,
+              ),
+            ),
+            duration: const Duration(milliseconds: 4000),
+            backgroundColor:
+            FlutterFlowTheme.of(context).success,
+          ),
+        );
+      }
+    } else {
+      setState(() {
+        _errorText = getJsonField((addCourse?.jsonBody ?? ''), r'''$.message''')
+            .toString();
+      });
+    }
+  }
+
+  void _onTextChanged(String text) {
+    if (text.isNotEmpty) {
+      setState(() {
+        _errorText = null;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _accessCodeACController.dispose();
+    super.dispose();
   }
 
   @override
@@ -144,86 +175,65 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                               ),
                         ),
                       ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: TextField(
-                            controller: accessCodeACController,
-                            decoration: InputDecoration(
-                              labelText: 'Course Code',
-                              prefixIcon: const Icon(
-                                Icons.mode_edit,
-                              ),
-                              floatingLabelStyle: TextStyle(
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryColor),
-                              hintText: 'Course Code',
-                            ),
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                          ),
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size.fromHeight(36),
-                          textStyle: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w600),
-                          backgroundColor:
-                              FlutterFlowTheme.of(context).primaryColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          elevation: 4,
-                        ),
-                        onPressed: () async {
-                          if (!_checkConnection()) return;
-                          addCourse = await AddCourseCall.call(
-                            token: StoredPreferences.authToken,
-                            accessCode: accessCodeACController!.text,
-                            timeZone: 'America/Belize',
-                          );
-                          if ((addCourse?.succeeded ?? true) &&
-                              context.mounted) {
-                            context.popRoute();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Password Updated Successfully',
-                                  style: TextStyle(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBtnText,
+                      ValueListenableBuilder(
+                          valueListenable: _accessCodeACController,
+                          builder: (context, TextEditingValue value, __) {
+                            return Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 24, 0, 0),
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: TextField(
+                                      controller: _accessCodeACController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Course Code',
+                                        prefixIcon: const Icon(
+                                          Icons.mode_edit,
+                                        ),
+                                        floatingLabelStyle: TextStyle(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor),
+                                        hintText: 'Course Code',
+                                        errorText:
+                                            _submitted ? _errorText : null,
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1,
+                                      onChanged: _onTextChanged,
+                                    ),
                                   ),
-                                ),
-                                duration: const Duration(milliseconds: 4000),
-                                backgroundColor:
-                                    FlutterFlowTheme.of(context).success,
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 24, 0, 0),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        minimumSize: const Size.fromHeight(36),
+                                        textStyle: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600),
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                        ),
+                                        elevation: 4,
+                                      ),
+                                      onPressed: _accessCodeACController
+                                              .value.text.isNotEmpty
+                                          ? _submit
+                                          : null,
+                                      child: const Text('JOIN COURSE'),
+                                    ),
+                                  ),
+                                ],
                               ),
                             );
-                          } else {
-                            setState(
-                                () => AppState().errorsList = (getJsonField(
-                                      (addCourse?.jsonBody ?? ''),
-                                      r'''$.errors..*''',
-                                    ) as List)
-                                        .map<String>((s) => s.toString())
-                                        .toList());
-                            if (animationsMap['textOnActionTriggerAnimation'] ==
-                                null) {
-                              return;
-                            }
-                            await (animationsMap[
-                                        'textOnActionTriggerAnimation']!
-                                    .curvedAnimation
-                                    .parent as AnimationController)
-                                .forward(from: 0.0);
-                          }
-
-                          setState(() {});
-                        },
-                        child: const Text('JOIN COURSE'),
-                      ),
+                          }),
                     ],
                   ),
                 ),

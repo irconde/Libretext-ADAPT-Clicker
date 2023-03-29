@@ -220,12 +220,14 @@ class AddCourseCall {
   static Future<ApiCallResponse> call({
     String? token = '',
     String? accessCode = '',
+    String? studentID = '',
     bool? isLms,
     String? timeZone = '',
   }) {
     final body = '''
 {
   "access_code": "$accessCode",
+  "student_id": "$studentID",
   "is_lms": "$isLms",
   "time_zone": "$timeZone"
 }''';
