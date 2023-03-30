@@ -26,6 +26,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
   void initState() {
     super.initState();
     //createList();
+    addNotification('details');
   }
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -40,7 +41,10 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
           padding: const EdgeInsetsDirectional.fromSTEB(Constants.sMargin, 0, 0, 0),
           child: InkWell(
             onTap: () async {
-              Navigator.pop(context);
+              Navigator.pop(context, true);
+              setState(() {
+                // Call setState to refresh the page.
+              });
             },
             child: Icon(
               Icons.arrow_back,

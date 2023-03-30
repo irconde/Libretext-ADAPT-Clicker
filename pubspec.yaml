@@ -26,6 +26,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   auto_size_text: 3.0.0
+
   cached_network_image: 3.2.3
   equatable: 2.0.5
   expandable: 5.0.1
@@ -62,6 +63,7 @@ dependencies:
   permission_handler: ^10.2.0
   flutter_riverpod: ^2.2.0
   connectivity_plus: ^3.0.3
+  badges: ^3.0.3
 
 dependency_overrides:
   # Uncomment this to update the launcher icon

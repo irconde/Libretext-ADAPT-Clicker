@@ -4,6 +4,7 @@ import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
+import '../components/MainAppBar.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../gen/assets.gen.dart';
@@ -171,26 +172,7 @@ class _UpdateProfilePageWidgetState
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            scaffoldKey.currentState!.openDrawer();
-          },
-        ),
-        title: const Text('My Profile'),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.notifications,
-            ),
-            onPressed: () async {
-              context.pushRoute(const NotificationsRouteWidget());
-            },
-          ),
-        ],
-      ),
+      appBar: MainAppBar(title: 'My Profile',scaffoldKey: scaffoldKey, setState: () {setState(() {});} ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       drawer: const DrawerCtnWidget(currentSelected: DrawerItems.profile),
       body: SafeArea(

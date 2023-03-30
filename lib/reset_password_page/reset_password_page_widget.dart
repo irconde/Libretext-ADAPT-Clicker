@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/components/MainAppBar.dart';
 import 'package:adapt_clicker/components/drawer_ctn.dart';
 import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
@@ -111,26 +112,7 @@ class _ResetPasswordPageWidgetState
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            scaffoldKey.currentState!.openDrawer();
-          },
-        ),
-        title: const Text('My Password'),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.notifications,
-            ),
-            onPressed: () async {
-              context.pushRoute(const NotificationsRouteWidget());
-            },
-          ),
-        ],
-      ),
+      appBar: MainAppBar(title: 'My Password',scaffoldKey: scaffoldKey,setState: () {setState(() {});} ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       drawer: const DrawerCtnWidget(currentSelected: DrawerItems.password),
       body: SafeArea(

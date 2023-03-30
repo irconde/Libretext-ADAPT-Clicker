@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/components/MainAppBar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:adapt_clicker/components/collapsing_libre_app_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -99,30 +100,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
     return Scaffold(
       key: scaffoldKey,
       appBar: widget.openFromDrawer!
-          ? AppBar(
-              automaticallyImplyLeading: false,
-              leading: IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () {
-                  scaffoldKey.currentState!.openDrawer();
-                },
-              ),
-              title: const Text('Contact Us'),
-              actions: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.notifications,
-                  ),
-                  onPressed: () async {
-                    await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const NotificationsPageWidget(),
-                        ));
-                  },
-                ),
-              ],
-            )
+          ? MainAppBar(title: 'Contact Us', scaffoldKey: scaffoldKey, setState: () {setState(() {});} )
           : null,
       drawer: widget.openFromDrawer!
           ? const DrawerCtnWidget(currentSelected: DrawerItems.contact)

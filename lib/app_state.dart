@@ -83,6 +83,14 @@ class FFAppState {
     prefs.setStringList('ff_notificationList', _notificationList);
   }
 
+  int notificationCount()
+  {
+    if(_notificationList.isEmpty)
+      return 0;
+
+    return _notificationList.length;
+  }
+
   dynamic view;
 
   bool assignmentUp = false;
