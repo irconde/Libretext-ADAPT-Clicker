@@ -4,21 +4,28 @@ import '../gen/assets.gen.dart';
 
 class AssignmentDropdown extends StatefulWidget {
   const AssignmentDropdown(
-      {Key? key, required this.dropDownValue, required this.dropDownList})
-      : super(key: key);
-  final String? dropDownValue;
-  final List<String>? dropDownList;
+      {Key? key,
+      required String? dropDownValue,
+      required this.itemList,
+      required this.onItemSelectedCallback})
+      : selectedItem = dropDownValue,
+        super(key: key);
+  final String? selectedItem;
+  final List<String>? itemList;
+  final Function(String) onItemSelectedCallback;
 
   @override
-  State<StatefulWidget> createState() =>
-      AssignmentDropdownState(dropDownValue, dropDownList);
+  State<StatefulWidget> createState() => AssignmentDropdownState();
 }
 
 class AssignmentDropdownState extends State<AssignmentDropdown> {
-  AssignmentDropdownState(this.dropDownValue, this.dropDownList);
+  String? _value;
 
-  String? dropDownValue;
-  List<String>? dropDownList;
+  @override
+  void initState() {
+    super.initState();
+    _value = widget.selectedItem;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +39,16 @@ class AssignmentDropdownState extends State<AssignmentDropdown> {
             width: 1,
             color: FlutterFlowTheme.of(context).textFieldBorder,
           ),
-          borderRadius: const BorderRadius.all(Radius.circular(Constants.xxsMargin)),
+          borderRadius:
+              const BorderRadius.all(Radius.circular(Constants.xxsMargin)),
           color: Colors.transparent,
         ),
         child: ButtonTheme(
             alignedDropdown: false,
             child: DropdownButton<String>(
-              value: dropDownValue ?? dropDownList?.first,
+              value: _value ?? widget.itemList?.first,
               isExpanded: true,
-              items: dropDownList?.map((String value) {
+              items: widget.itemList?.map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Padding(
@@ -58,14 +66,15 @@ class AssignmentDropdownState extends State<AssignmentDropdown> {
               dropdownColor: FlutterFlowTheme.of(context).textFieldBackground,
               onChanged: (String? value) {
                 // This is called when the user selects an item.
+                widget.onItemSelectedCallback(value!);
                 setState(() {
-                  dropDownValue = value!;
+                  _value = value!;
                 });
               },
               style: FlutterFlowTheme.of(context).bodyText1,
               underline: Container(),
               hint: Text(
-                dropDownList?.first ?? '',
+                widget.itemList?.first ?? '',
                 style: FlutterFlowTheme.of(context).bodyText1,
               ),
             )),

@@ -29,27 +29,25 @@ class AssignmentsPageWidget extends ConsumerStatefulWidget {
 }
 
 class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
-  ApiCallResponse? assignmentSum;
-  ApiCallResponse? assignmentSummary;
-  String? dropDownValue1;
-  String? dropDownValue2;
-  List<String> dropDownList1 = [
+  final ScrollController _mainController = ScrollController();
+  final ScrollController _learningTabController = ScrollController();
+  final ScrollController _assignmentsTabController = ScrollController();
+  String? _currentFilterOption;
+  String? _currentOrderOption;
+  final List<String> _filterOptions = [
     'ALL ASSIGNMENTS',
     'EXAM',
     'EXTRA CREDIT',
     'HOMEWORK',
     'LAB'
   ];
-  List<String> dropDownList2 = [
+  final List<String> _orderOptions = [
     'ORDER BY: NAME',
     'ORDER BY: START DATE',
     'ORDER BY: DUE DATE'
   ];
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-  var top = 0.0;
-  final ScrollController _scrollController = ScrollController();
-  final ScrollController _scrollController2 = ScrollController();
-  final ScrollController _scrollController3 = ScrollController();
+
+  List _assignmentList = [];
 
   @override
   void initState() {
@@ -60,11 +58,15 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
     });
   }
 
+  void onFilterOptionSelected(filterOption) {}
+
+  void onOrderOptionSelected(orderOption) {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
-        controller: _scrollController,
+        controller: _mainController,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             CollapsingLibreAppBar(
@@ -430,16 +432,15 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                                       ),
                                       Flexible(
                                         child: ScrollShadow(
-                                          controller: _scrollController2,
-                                          child:
-                                          ListView.builder(
-                                            controller: _scrollController2,
-                                            itemCount: 10,
-                                            itemBuilder: (context, index) {
-                                              return const AssignmentStatCtnWidget();
-                                            },
-                                          )
-                                        ),
+                                            controller: _learningTabController,
+                                            child: ListView.builder(
+                                              controller:
+                                                  _learningTabController,
+                                              itemCount: 10,
+                                              itemBuilder: (context, index) {
+                                                return const AssignmentStatCtnWidget();
+                                              },
+                                            )),
                                       ),
                                     ],
                                   ),
@@ -468,19 +469,28 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                                               MainAxisAlignment.spaceEvenly,
                                           children: [
                                             AssignmentDropdown(
-                                                dropDownValue: dropDownValue1,
-                                                dropDownList: dropDownList1),
+                                              dropDownValue:
+                                                  _currentFilterOption,
+                                              itemList: _filterOptions,
+                                              onItemSelectedCallback:
+                                                  onFilterOptionSelected,
+                                            ),
                                             AssignmentDropdown(
-                                                dropDownValue: dropDownValue2,
-                                                dropDownList: dropDownList2),
+                                              dropDownValue:
+                                                  _currentOrderOption,
+                                              itemList: _orderOptions,
+                                              onItemSelectedCallback:
+                                                  onOrderOptionSelected,
+                                            ),
                                           ],
                                         ),
                                       ),
                                       Expanded(
                                         child: ScrollShadow(
-                                          controller: _scrollController3,
+                                          controller: _assignmentsTabController,
                                           child: SingleChildScrollView(
-                                            controller: _scrollController3,
+                                            controller:
+                                                _assignmentsTabController,
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
@@ -523,8 +533,8 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                                                           shrinkWrap: true,
                                                           scrollDirection:
                                                               Axis.vertical,
-                                                          itemCount:
-                                                              assignments.length,
+                                                          itemCount: assignments
+                                                              .length,
                                                           itemBuilder: (context,
                                                               assignmentsIndex) {
                                                             final assignmentsItem =
