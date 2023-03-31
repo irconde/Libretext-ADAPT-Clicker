@@ -12,6 +12,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import '../gen/assets.gen.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 
 class AssignmentsPageWidget extends ConsumerStatefulWidget {
   const AssignmentsPageWidget({
@@ -41,26 +42,71 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
     'HOMEWORK',
     'LAB'
   ];
-  final List<String> _orderOptions = [
-    'ORDER BY: NAME',
-    'ORDER BY: START DATE',
-    'ORDER BY: DUE DATE'
-  ];
-
-  List _assignmentList = [];
+  final _orderOptions = {
+    'ORDER BY: NAME': 'name',
+    'ORDER BY: START DATE': 'available_from',
+    'ORDER BY: DUE DATE': 'due'
+  };
 
   @override
   void initState() {
     super.initState();
     // On page load action.
+    _currentFilterOption = _filterOptions[0];
+    _currentOrderOption = _orderOptions.keys.toList()[0];
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       setState(() => AppState().assignmentUp = false);
     });
   }
 
-  void onFilterOptionSelected(filterOption) {}
+  List jsonToAssignmentList(ApiCallResponse snapshot) =>
+      GetScoresByUserCall.assignments(
+        snapshot.jsonBody,
+      ).toList();
 
-  void onOrderOptionSelected(orderOption) {}
+  List<dynamic> filterAssignmentList(List<dynamic> list, String filter) {
+    if (filter == _filterOptions[0]) return list;
+    List outputList = list
+        .where((o) => functions.equalsIgnoreCase(o['assignment_group'], filter))
+        .toList();
+    return outputList;
+  }
+
+  List<dynamic> orderAssignmentList(List<dynamic> list, String orderFactor) {
+    String? refProperty = _orderOptions[orderFactor];
+    list.sort((a, b) {
+      dynamic c1;
+      dynamic c2;
+      switch (refProperty) {
+        case 'name':
+          c1 = a[refProperty];
+          c2 = b[refProperty];
+          break;
+        case 'due':
+          c1 = DateTime.parse(a[refProperty]['due_date']);
+          c2 = DateTime.parse(b[refProperty]['due_date']);
+          break;
+        case 'available_from':
+          c1 = DateTime.parse(a[refProperty]);
+          c2 = DateTime.parse(b[refProperty]);
+          break;
+      }
+      return c1.compareTo(c2);
+    });
+    return list;
+  }
+
+  void onFilterOptionSelected(filterOption) {
+    setState(() {
+      _currentFilterOption = filterOption;
+    });
+  }
+
+  void onOrderOptionSelected(orderOption) {
+    setState(() {
+      _currentOrderOption = orderOption;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -478,7 +524,8 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                                             AssignmentDropdown(
                                               dropDownValue:
                                                   _currentOrderOption,
-                                              itemList: _orderOptions,
+                                              itemList:
+                                                  _orderOptions.keys.toList(),
                                               onItemSelectedCallback:
                                                   onOrderOptionSelected,
                                             ),
@@ -517,28 +564,29 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                                                         ),
                                                       );
                                                     }
-                                                    final listViewGetScoresByUserResponse =
-                                                        snapshot.data!;
                                                     return Builder(
                                                       builder: (context) {
-                                                        final assignments =
-                                                            GetScoresByUserCall
-                                                                .assignments(
-                                                          listViewGetScoresByUserResponse
-                                                              .jsonBody,
-                                                        ).toList();
+                                                        final filteredAssignmentList =
+                                                            orderAssignmentList(
+                                                                filterAssignmentList(
+                                                                    jsonToAssignmentList(
+                                                                        snapshot
+                                                                            .data!),
+                                                                    _currentFilterOption!),
+                                                                _currentOrderOption!);
                                                         return ListView.builder(
                                                           padding:
                                                               EdgeInsets.zero,
                                                           shrinkWrap: true,
                                                           scrollDirection:
                                                               Axis.vertical,
-                                                          itemCount: assignments
-                                                              .length,
+                                                          itemCount:
+                                                              filteredAssignmentList
+                                                                  .length,
                                                           itemBuilder: (context,
                                                               assignmentsIndex) {
                                                             final assignmentsItem =
-                                                                assignments[
+                                                                filteredAssignmentList[
                                                                     assignmentsIndex];
 
                                                             return AssignmentCtn(

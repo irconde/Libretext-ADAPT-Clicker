@@ -65,6 +65,10 @@ void initTimezones(dynamic timezoneAPI) {
   AppState.timezoneContainer = new TimezonesContainer(timezones);
 }
 
+bool equalsIgnoreCase(String? string1, String? string2) {
+  return string1?.toLowerCase() == string2?.toLowerCase();
+}
+
 void showSnackbar(BuildContext context, ConnectivityStatus? status) {
   ScaffoldMessenger.of(context).hideCurrentSnackBar();
   ScaffoldMessenger.of(context).showSnackBar(
