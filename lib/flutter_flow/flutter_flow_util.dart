@@ -34,10 +34,11 @@ String dateTimeFormat(String format, DateTime? dateTime) {
   return DateFormat(format).format(dateTime);
 }
 
-Future launchURL(String url) async {
-  var uri = Uri.parse(url).toString();
+Future mLaunchUrl(String url) async {
+  var uri = Uri.parse(url);
   try {
-    await launchURL(uri);
+      await canLaunchUrl(uri);
+      await launchUrl(uri);
   } catch (e) {
     throw 'Could not launch $uri: $e';
   }

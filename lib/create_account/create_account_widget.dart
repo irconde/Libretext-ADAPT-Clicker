@@ -437,7 +437,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             ),
                             onPressed: () async {
                               if (!_checkConnection()) return;
-                              await launchURL(
+                              await mLaunchUrl(
                                   'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
                             },
                             child: const Text('CAMPUS REGISTRATION'),
