@@ -112,9 +112,12 @@ class _ResetPasswordPageWidgetState
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      appBar: MainAppBar(title: 'My Password',scaffoldKey: scaffoldKey,setState:(VoidCallback fn) {
-        setState(fn);
-      }  ),
+      appBar: MainAppBar(
+          title: 'My Password',
+          scaffoldKey: scaffoldKey,
+          setState: (VoidCallback fn) {
+            setState(fn);
+          }),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       drawer: const DrawerCtnWidget(currentSelected: DrawerItems.password),
       body: SafeArea(

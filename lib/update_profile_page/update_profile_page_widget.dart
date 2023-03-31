@@ -168,14 +168,16 @@ class _UpdateProfilePageWidgetState
     return true;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      appBar: MainAppBar(title: 'My Profile',scaffoldKey: scaffoldKey, setState: (VoidCallback fn) {
-        setState(fn);
-      } ),
+      appBar: MainAppBar(
+          title: 'My Profile',
+          scaffoldKey: scaffoldKey,
+          setState: (VoidCallback fn) {
+            setState(fn);
+          }),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       drawer: const DrawerCtnWidget(currentSelected: DrawerItems.profile),
       body: SafeArea(

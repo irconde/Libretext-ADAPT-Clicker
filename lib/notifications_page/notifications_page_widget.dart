@@ -38,7 +38,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(Constants.sMargin, 0, 0, 0),
+          padding:
+              const EdgeInsetsDirectional.fromSTEB(Constants.sMargin, 0, 0, 0),
           child: InkWell(
             onTap: () async {
               Navigator.pop(context, '/');
@@ -114,7 +115,10 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                             alignment: Alignment.centerLeft,
                             child: Padding(
                               padding: EdgeInsets.only(left: 16),
-                              child: Icon(Icons.delete, color: Colors.white,),
+                              child: Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),

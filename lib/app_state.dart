@@ -13,12 +13,12 @@ class FFAppState {
     initializePersistedState();
   }
 
-
   Future initializePersistedState() async {
     prefs = await SharedPreferences.getInstance();
     _rememberMe = prefs.getBool('ff_rememberMe') ?? _rememberMe;
     _authToken = prefs.getString('ff_authToken') ?? _authToken;
-    _notificationList = prefs.getStringList('ff_notificationList') ?? _notificationList;
+    _notificationList =
+        prefs.getStringList('ff_notificationList') ?? _notificationList;
   }
 
   late SharedPreferences prefs;
@@ -41,8 +41,6 @@ class FFAppState {
     prefs.setString('ff_authToken', _value);
   }
 
-
-
   static List<String> _notificationList = [];
   List<String> errorsList = [];
 
@@ -53,7 +51,6 @@ class FFAppState {
     prefs.setStringList('ff_notificationList', _value);
   }
 
-
   //TODO: This is a temp solution, when adding from push notifications is implemented, get rid of this
   bool get notificationSet => _notificationSet;
 
@@ -63,8 +60,6 @@ class FFAppState {
   }
 
   static bool _notificationSet = false;
-
-
 
   void addNotification(String value) {
     //TODO: This is a temp solution, when adding from push notifications is implemented, get rid of this
@@ -77,16 +72,13 @@ class FFAppState {
     prefs.setStringList('ff_notificationList', _notificationList);
   }
 
-  void clearNotifications()
-  {
+  void clearNotifications() {
     _notificationList.clear();
     prefs.setStringList('ff_notificationList', _notificationList);
   }
 
-  int notificationCount()
-  {
-    if(_notificationList.isEmpty)
-      return 0;
+  int notificationCount() {
+    if (_notificationList.isEmpty) return 0;
 
     return _notificationList.length;
   }
@@ -102,8 +94,6 @@ class FFAppState {
   bool hasSubmission = false;
 
   static TimezonesContainer? timezoneContainer;
-
-
 
   LatLng? _latLngFromString(String? val) {
     if (val == null) {

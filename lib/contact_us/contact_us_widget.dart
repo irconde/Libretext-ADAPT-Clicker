@@ -19,6 +19,7 @@ String invalidRecords = 'These credentials do not match our records.';
 class ContactUsWidget extends ConsumerStatefulWidget {
   final ValueChanged<String?> onSubmit;
   final bool? openFromDrawer;
+
   const ContactUsWidget(
       {Key? key, required this.onSubmit, this.openFromDrawer = false})
       : super(key: key);
@@ -100,7 +101,12 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
     return Scaffold(
       key: scaffoldKey,
       appBar: widget.openFromDrawer!
-          ? MainAppBar(title: 'Contact Us', scaffoldKey: scaffoldKey, setState: (VoidCallback fn) {setState(fn);} )
+          ? MainAppBar(
+              title: 'Contact Us',
+              scaffoldKey: scaffoldKey,
+              setState: (VoidCallback fn) {
+                setState(fn);
+              })
           : null,
       drawer: widget.openFromDrawer!
           ? const DrawerCtnWidget(currentSelected: DrawerItems.contact)
