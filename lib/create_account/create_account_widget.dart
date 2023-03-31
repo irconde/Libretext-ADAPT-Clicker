@@ -352,7 +352,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             ),
                             onPressed: () async {
                               if (!_checkConnection()) return;
-                              String email = passwordFieldCAController!.text;
+                              String email = emailFieldCAController!.text;
                               String password = passwordFieldCAController!.text;
                               createUser = await CreateUserCall.call(
                                 email: email,
