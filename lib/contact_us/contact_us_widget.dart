@@ -100,7 +100,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
     return Scaffold(
       key: scaffoldKey,
       appBar: widget.openFromDrawer!
-          ? MainAppBar(title: 'Contact Us', scaffoldKey: scaffoldKey, setState: () {setState(() {});} )
+          ? MainAppBar(title: 'Contact Us', scaffoldKey: scaffoldKey, setState: (VoidCallback fn) {setState(fn);} )
           : null,
       drawer: widget.openFromDrawer!
           ? const DrawerCtnWidget(currentSelected: DrawerItems.contact)

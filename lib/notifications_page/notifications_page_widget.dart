@@ -41,10 +41,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
           padding: const EdgeInsetsDirectional.fromSTEB(Constants.sMargin, 0, 0, 0),
           child: InkWell(
             onTap: () async {
-              Navigator.pop(context, true);
-              setState(() {
-                // Call setState to refresh the page.
-              });
+              Navigator.pop(context, '/');
             },
             child: Icon(
               Icons.arrow_back,

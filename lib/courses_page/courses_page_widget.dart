@@ -137,7 +137,8 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
     return WillPopScope(
       child: Scaffold(
         key: scaffoldKey,
-        appBar: MainAppBar(title: 'Courses', scaffoldKey: scaffoldKey,setState: () {setState(() {});} ),
+        appBar: MainAppBar(title: 'Courses', scaffoldKey: scaffoldKey,setState: (VoidCallback fn) {
+        setState(fn); }  ),
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         floatingActionButton: FloatingActionButton(
           onPressed: () async {

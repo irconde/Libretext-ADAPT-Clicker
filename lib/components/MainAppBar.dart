@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import '../flutter_flow/app_router.gr.dart';
+import '../flutter_flow/flutter_flow_theme.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MainAppBar({Key? key, required this.title, required this.scaffoldKey, required this.setState})
@@ -13,7 +14,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Size preferredSize; // default is 56.0
 
   //Imported Variables
-  final Function setState;
+  final StateSetter setState;
   final String title;
   final dynamic scaffoldKey;
 
@@ -43,15 +44,18 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           Icons.notifications,
         ),
         onPressed: () async {
-          context.pushRoute(const NotificationsRouteWidget());
+          context.pushRoute(const NotificationsRouteWidget()).then((_) =>
+              setState(() {}));
         },
       );
     } else {
       return Align(
         alignment: Alignment.bottomCenter,
         child: badges.Badge(
+
           position: badges.BadgePosition.topEnd(top: 0, end: 6),
-          badgeContent: Text('$val'),
+          badgeContent: Text('$val', style: TextStyle(color: FlutterFlowTheme.of(context).primaryBackground),),
+
           child: IconButton(
             icon: const Icon(
               Icons.notifications,
