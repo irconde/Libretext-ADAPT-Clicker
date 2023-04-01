@@ -3,9 +3,10 @@ import '../flutter_flow/flutter_flow_theme.dart';
 
 class ContactUsDropDownList extends StatefulWidget {
   const ContactUsDropDownList(
-      {Key? key, required this.contactUsSubjectDropDownValue})
+      {Key? key, required this.contactUsSubjectDropDownValue, required this.onItemSelected})
       : super(key: key);
   final String? contactUsSubjectDropDownValue;
+  final Function onItemSelected;
   @override
   State<StatefulWidget> createState() => ContactUsDropDownListState();
 }
@@ -53,6 +54,7 @@ class ContactUsDropDownListState extends State<ContactUsDropDownList> {
               setState(() {
                 contactUsSubjectDropDownValue = value!;
               });
+              widget.onItemSelected(value!);
             },
             style: FlutterFlowTheme.of(context).bodyText1,
             underline: Container(),

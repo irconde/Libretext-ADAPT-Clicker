@@ -31,7 +31,7 @@ class ContactUsWidget extends ConsumerStatefulWidget {
 class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
   TextEditingController? contactUsEmailTextFieldController;
   TextEditingController? contactUsNameTextFieldController;
-  String? contactUsSubjectDropDownValue;
+  String? _msgSubject;
   TextEditingController? contactUsMessageTextFieldController;
   bool _submitted = false;
 
@@ -94,6 +94,12 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
       return false;
     }
     return true;
+  }
+
+  void _onSubjectSelected(subject) {
+    setState(() {
+      _msgSubject = subject;
+    });
   }
 
   @override
@@ -177,8 +183,9 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
                     ),
                   ),
                   ContactUsDropDownList(
-                      contactUsSubjectDropDownValue:
-                          contactUsSubjectDropDownValue),
+                    contactUsSubjectDropDownValue: _msgSubject,
+                    onItemSelected: _onSubjectSelected,
+                  ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                     child: TextField(
@@ -227,7 +234,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
                         contactUs = await ContactUsCall.call(
                           email: contactUsEmailTextFieldController!.text,
                           name: contactUsNameTextFieldController!.text,
-                          subject: contactUsSubjectDropDownValue,
+                          subject: _msgSubject,
                           text: contactUsMessageTextFieldController!.text,
                           school: '\"\"',
                           toUserId: '0',

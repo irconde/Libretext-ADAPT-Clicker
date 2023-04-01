@@ -355,22 +355,27 @@ class GetAssignmentSummaryCall {
         response,
         r'''$.assignment.id''',
       );
+
   static dynamic name(dynamic response) => getJsonField(
         response,
         r'''$.assignment.name''',
       );
+
   static dynamic latePolicy(dynamic response) => getJsonField(
         response,
         r'''$.assignment.formatted_late_policy''',
       );
+
   static dynamic points(dynamic response) => getJsonField(
         response,
         r'''$.assignment.total_points''',
       );
+
   static dynamic dueDate(dynamic response) => getJsonField(
         response,
         r'''$.assignment.formatted_due''',
       );
+
   static dynamic assignment(dynamic response) => getJsonField(
         response,
         r'''$.assignment''',
