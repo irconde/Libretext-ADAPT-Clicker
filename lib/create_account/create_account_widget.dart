@@ -46,7 +46,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
   late bool passwordFieldCAVisibility;
   late bool confirmPasswordFieldCAVisibility;
 
-  String? tZDropDownCAValue;
+  String? _timeZone;
   ApiCallResponse? createUser;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late StreamSubscription<bool> _keyboardVisibilitySubscription;
@@ -161,6 +161,12 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
       return false;
     }
     return true;
+  }
+
+  void onTimezoneSelected(timezone) {
+    setState(() {
+      _timeZone = timezone;
+    });
   }
 
   @override
@@ -320,7 +326,9 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                         child: TimezoneDropdown(
-                            timezoneDropDownValue: tZDropDownCAValue),
+                          timezoneDropDownValue: _timeZone,
+                          onItemSelectedCallback: onTimezoneSelected,
+                        ),
                       ),
                     ],
                   ),
@@ -363,7 +371,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                                 lastName: lastNameFieldCAController!.text,
                                 registrationType: '3',
                                 studentId: studentIDFieldController!.text,
-                                timeZone: tZDropDownCAValue,
+                                timeZone: _timeZone,
                               );
                               if ((createUser?.succeeded ?? true) &&
                                   context.mounted) {
