@@ -31,8 +31,28 @@ class CoursesPageWidget extends ConsumerStatefulWidget {
 class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
   ApiCallResponse? logout;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  Completer<ApiCallResponse>? _apiRequestCompleter;
+  Future<ApiCallResponse>? _apiRequestCompleter;
   ApiCallResponse? sendTokenResponse;
+
+  Future<bool> refreshPage() async
+  {
+    try {
+      setState(() {
+        _apiRequestCompleter = updateAndGetResponse();
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
+
+
+  }
+
+  Future<ApiCallResponse> updateAndGetResponse(){
+    return GetEnrollmentsCall.call(
+        token: StoredPreferences.authToken,
+      );
+  }
 
   bool _checkConnection() {
     ConnectivityStatus? status =
@@ -52,6 +72,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
     requestPermission(); //gets push notification permission
     getToken();
     sendToken();
+    _apiRequestCompleter = updateAndGetResponse();
     super.initState();
   }
 
@@ -148,6 +169,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             if (!_checkConnection()) return;
+
             showModalBottomSheet(
               useSafeArea: true,
               isScrollControlled: true,
@@ -159,7 +181,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
                   child: const AddCourseWidget(),
                 );
               },
-            );
+            ).then((value) => {refreshPage()});
           },
           backgroundColor: FlutterFlowTheme.of(context).primaryColor,
           elevation: 8,
@@ -208,11 +230,8 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
                 ),
               ),
               FutureBuilder<ApiCallResponse>(
-                future: (_apiRequestCompleter ??= Completer<ApiCallResponse>()
-                      ..complete(GetEnrollmentsCall.call(
-                        token: StoredPreferences.authToken,
-                      )))
-                    .future,
+                key: const Key('Course List'),
+                future: _apiRequestCompleter,
                 builder: (context, snapshot) {
                   // Customize what your widget looks like when it's loading.
                   if (!snapshot.hasData) {
@@ -242,7 +261,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
                       return RefreshIndicator(
                         onRefresh: () async {
                           setState(() => _apiRequestCompleter = null);
-                          await waitForApiRequestCompleter();
+                          await refreshPage();
                         },
                         child: ListView.builder(
                           padding: EdgeInsets.zero,
@@ -332,18 +351,5 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
     );
   }
 
-  Future waitForApiRequestCompleter({
-    double minWait = 0,
-    double maxWait = double.infinity,
-  }) async {
-    final stopwatch = Stopwatch()..start();
-    while (true) {
-      await Future.delayed(const Duration(milliseconds: 50));
-      final timeElapsed = stopwatch.elapsedMilliseconds;
-      final requestComplete = _apiRequestCompleter?.isCompleted ?? false;
-      if (timeElapsed > maxWait || (requestComplete && timeElapsed > minWait)) {
-        break;
-      }
-    }
-  }
+
 }
