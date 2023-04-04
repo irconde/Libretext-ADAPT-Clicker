@@ -362,6 +362,10 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                               if (!_checkConnection()) return;
                               String email = emailFieldCAController!.text;
                               String password = passwordFieldCAController!.text;
+                              final timezoneValue = AppState.timezoneContainer
+                                      ?.getValue(_timeZone) ??
+                                  AppState
+                                      .timezoneContainer!.timeZones.first.value;
                               createUser = await CreateUserCall.call(
                                 email: email,
                                 password: password,
@@ -371,7 +375,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                                 lastName: lastNameFieldCAController!.text,
                                 registrationType: '3',
                                 studentId: studentIDFieldController!.text,
-                                timeZone: _timeZone,
+                                timeZone: timezoneValue,
                               );
                               if ((createUser?.succeeded ?? true) &&
                                   context.mounted) {
