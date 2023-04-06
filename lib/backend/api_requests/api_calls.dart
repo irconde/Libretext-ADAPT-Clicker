@@ -273,6 +273,7 @@ class ContactUsCall {
       callType: ApiCallType.POST,
       headers: {
         'accept': 'application/json',
+        'Content-Type': 'application/json',
       },
       params: {},
       body: body,

@@ -236,7 +236,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
                           name: contactUsNameTextFieldController!.text,
                           subject: _msgSubject,
                           text: contactUsMessageTextFieldController!.text,
-                          school: '\"\"',
+                          school: 'unknown',
                           toUserId: '0',
                           type: 'contact_us',
                         );
@@ -245,7 +245,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                'Inquiry Sent',
+                                contactUs!.jsonBody['message'],
                                 style: TextStyle(
                                   color: FlutterFlowTheme.of(context)
                                       .primaryBtnText,
@@ -259,7 +259,6 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
                         } else {
                           _submit();
                         }
-
                         setState(() {});
                       },
                       child: const Text('SUBMIT'),
