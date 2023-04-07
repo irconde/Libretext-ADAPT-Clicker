@@ -2,7 +2,6 @@ import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:adapt_clicker/components/collapsing_libre_app_bar.dart';
 import 'package:flutter/gestures.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/components/timezone_dropdown.dart';
@@ -26,30 +25,21 @@ class CreateAccountWidget extends ConsumerStatefulWidget {
 }
 
 class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
-
+  final int dataIndex = 0;
+  final int errorIndex = 1;
   bool _submitted = false;
   final _formKey = GlobalKey<FormState>();
-  final Map<String, String?> _formErrors = {
-    'first_name' : null,
-    'last_name' : null,
-    'student_id' : null,
-    'email' : null,
-    'password' : null,
-    'confirm_password' : null,
-  };
-  final Map<String, String?> _formData = {
-    'first_name' : null,
-    'last_name' : null,
-    'student_id' : null,
-    'email' : null,
-    'password' : null,
-    'confirm_password' : null,
+  final Map<String, dynamic> _formValues = {
+    'first_name': [null, null],
+    'last_name': [null, null],
+    'student_id': [null, null],
+    'email': [null, null],
+    'password': [null, null],
+    'confirm_password': [null, null],
   };
   bool _allFieldsFilled = false;
-
   bool passwordFieldCAVisibility = false;
   bool confirmPasswordFieldCAVisibility = false;
-
   String? _timeZone;
   ApiCallResponse? createUser;
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -75,9 +65,9 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
     }*/
   }
 
-  bool allFieldsFilled(Map<String, String?> formData) {
-    for (String? value in formData.values) {
-      if (value == null || value.isEmpty) {
+  bool allFieldsFilled(Map<String, dynamic> formData) {
+    for (dynamic value in formData.values) {
+      if (value[dataIndex] == null || value[dataIndex].isEmpty) {
         return false;
       }
     }
@@ -87,7 +77,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
   @override
   void initState() {
     super.initState();
-    _allFieldsFilled = allFieldsFilled(_formData);
+    _allFieldsFilled = allFieldsFilled(_formValues);
     if (!isWeb) {
       _keyboardVisibilitySubscription =
           KeyboardVisibilityController().onChange.listen((bool visible) {
@@ -190,17 +180,17 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             decoration: InputDecoration(
                               hintText: 'First Name',
                               labelText: 'First Name',
-                              errorText:
-                                  _submitted ? _formErrors['first_name'] : null,
+                              errorText: _submitted
+                                  ? _formValues['first_name'][errorIndex]
+                                  : null,
                               prefixIcon: const Icon(
                                 Icons.person_outline,
                               ),
                             ),
                             onChanged: (value) {
                               setState(() {
-                                _formData['first_name'] = value;
-                                _formErrors['first_name'] = null;
-                                _allFieldsFilled = allFieldsFilled(_formData);
+                                _formValues['first_name'] = [value, null];
+                                _allFieldsFilled = allFieldsFilled(_formValues);
                               });
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
@@ -213,17 +203,17 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             decoration: InputDecoration(
                               hintText: 'Last Name',
                               labelText: 'Last Name',
-                              errorText:
-                                  _submitted ? _formErrors['last_name'] : null,
+                              errorText: _submitted
+                                  ? _formValues['last_name'][errorIndex]
+                                  : null,
                               prefixIcon: const Icon(
                                 Icons.person_outline,
                               ),
                             ),
                             onChanged: (value) {
                               setState(() {
-                                _formData['last_name'] = value;
-                                _formErrors['last_name'] = null;
-                                _allFieldsFilled = allFieldsFilled(_formData);
+                                _formValues['last_name'] = [value, null];
+                                _allFieldsFilled = allFieldsFilled(_formValues);
                               });
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
@@ -238,15 +228,15 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                                 Icons.school_outlined,
                               ),
                               labelText: 'Student ID',
-                              errorText:
-                                  _submitted ? _formErrors['student_id'] : null,
+                              errorText: _submitted
+                                  ? _formValues['student_id'][errorIndex]
+                                  : null,
                               hintText: 'Student ID',
                             ),
                             onChanged: (value) {
                               setState(() {
-                                _formData['student_id'] = value;
-                                _formErrors['student_id'] = null;
-                                _allFieldsFilled = allFieldsFilled(_formData);
+                                _formValues['student_id'] = [value, null];
+                                _allFieldsFilled = allFieldsFilled(_formValues);
                               });
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
@@ -259,17 +249,17 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             decoration: InputDecoration(
                               hintText: 'Email',
                               labelText: 'Email',
-                              errorText:
-                                  _submitted ? _formErrors['email'] : null,
+                              errorText: _submitted
+                                  ? _formValues['email'][errorIndex]
+                                  : null,
                               prefixIcon: const Icon(
                                 Icons.email_outlined,
                               ),
                             ),
                             onChanged: (value) {
                               setState(() {
-                                _formData['email'] = value;
-                                _formErrors['email'] = null;
-                                _allFieldsFilled = allFieldsFilled(_formData);
+                                _formValues['email'] = [value, null];
+                                _allFieldsFilled = allFieldsFilled(_formValues);
                               });
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
@@ -283,8 +273,9 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             decoration: InputDecoration(
                               hintText: 'Password',
                               labelText: 'Password',
-                              errorText:
-                                  _submitted ? _formErrors['password'] : null,
+                              errorText: _submitted
+                                  ? _formValues['password'][errorIndex]
+                                  : null,
                               prefixIcon: const Icon(
                                 Icons.lock_outline,
                               ),
@@ -304,9 +295,8 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             ),
                             onChanged: (value) {
                               setState(() {
-                                _formData['password'] = value;
-                                _formErrors['password'] = null;
-                                _allFieldsFilled = allFieldsFilled(_formData);
+                                _formValues['password'] = [value, null];
+                                _allFieldsFilled = allFieldsFilled(_formValues);
                               });
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
@@ -321,7 +311,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                               hintText: 'Confirm Password',
                               labelText: 'Confirm Password',
                               errorText: _submitted
-                                  ? _formErrors['confirm_password']
+                                  ? _formValues['confirm_password'][errorIndex]
                                   : null,
                               prefixIcon: const Icon(
                                 Icons.lock_outline,
@@ -342,9 +332,8 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             ),
                             onChanged: (value) {
                               setState(() {
-                                _formData['confirm_password'] = value;
-                                _formErrors['confirm_password'] = null;
-                                _allFieldsFilled = allFieldsFilled(_formData);
+                                _formValues['confirm_password'] = [value, null];
+                                _allFieldsFilled = allFieldsFilled(_formValues);
                               });
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
