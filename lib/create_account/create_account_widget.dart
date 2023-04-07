@@ -15,14 +15,6 @@ import '../flutter_flow/custom_functions.dart' as functions;
 import '../utils/check_internet_connectivity.dart';
 import '../utils/stored_preferences.dart';
 
-String firstNameRequired = 'The first name field is required.';
-String lastNameRequired = 'The last name field is required.';
-String idRequired = 'The student ID field is required.';
-String emailRequired = 'The email field is required.';
-String passwordRequired = 'The password field is required.';
-String confirmPasswordRequired = 'The confirm password field is required.';
-String invalidRecords = 'These credentials do not match our records.';
-
 class CreateAccountWidget extends ConsumerStatefulWidget {
   const CreateAccountWidget({Key? key, required this.onSubmit})
       : super(key: key);
@@ -34,17 +26,29 @@ class CreateAccountWidget extends ConsumerStatefulWidget {
 }
 
 class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
+
   bool _submitted = false;
+  final _formKey = GlobalKey<FormState>();
+  final Map<String, String?> _formErrors = {
+    'first_name' : null,
+    'last_name' : null,
+    'student_id' : null,
+    'email' : null,
+    'password' : null,
+    'confirm_password' : null,
+  };
+  final Map<String, String?> _formData = {
+    'first_name' : null,
+    'last_name' : null,
+    'student_id' : null,
+    'email' : null,
+    'password' : null,
+    'confirm_password' : null,
+  };
+  bool _allFieldsFilled = false;
 
-  TextEditingController? firstNameFieldCAController;
-  TextEditingController? lastNameFieldCAController;
-  TextEditingController? studentIDFieldController;
-  TextEditingController? emailFieldCAController;
-  TextEditingController? passwordFieldCAController;
-  TextEditingController? confirmPasswordFieldCAController;
-
-  late bool passwordFieldCAVisibility;
-  late bool confirmPasswordFieldCAVisibility;
+  bool passwordFieldCAVisibility = false;
+  bool confirmPasswordFieldCAVisibility = false;
 
   String? _timeZone;
   ApiCallResponse? createUser;
@@ -52,61 +56,9 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
   late StreamSubscription<bool> _keyboardVisibilitySubscription;
   bool _isKeyboardVisible = false;
 
-  String? get _firstNameErrorText {
-    final text = firstNameFieldCAController?.value.text;
-    if (text != null && text.isEmpty) {
-      return firstNameRequired;
-    } else {
-      return invalidRecords;
-    }
-  }
-
-  String? get _lastNameErrorText {
-    final text = lastNameFieldCAController?.value.text;
-    if (text != null && text.isEmpty) {
-      return lastNameRequired;
-    } else {
-      return invalidRecords;
-    }
-  }
-
-  String? get _idErrorText {
-    final text = studentIDFieldController?.value.text;
-    if (text != null && text.isEmpty) {
-      return idRequired;
-    } else {
-      return invalidRecords;
-    }
-  }
-
-  String? get _emailErrorText {
-    final text = emailFieldCAController?.value.text;
-    if (text != null && text.isEmpty) {
-      return emailRequired;
-    } else {
-      return invalidRecords;
-    }
-  }
-
-  String? get _passwordErrorText {
-    final text = passwordFieldCAController?.value.text;
-    if (text != null && text.isEmpty) {
-      return passwordRequired;
-    } else {
-      return invalidRecords;
-    }
-  }
-
-  String? get _confirmPasswordErrorText {
-    final text = confirmPasswordFieldCAController?.value.text;
-    if (text != null && text.isEmpty) {
-      return confirmPasswordRequired;
-    } else {
-      return invalidRecords;
-    }
-  }
-
-  void _submit() {
+  void _old_submit() {
+    // TODO irconde. To be fixed
+    /*
     setState(() => _submitted = true);
     if (_firstNameErrorText == null) {
       widget.onSubmit(firstNameFieldCAController?.value.text);
@@ -120,12 +72,22 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
       widget.onSubmit(passwordFieldCAController?.value.text);
     } else if (_confirmPasswordErrorText == null) {
       widget.onSubmit(confirmPasswordFieldCAController?.value.text);
+    }*/
+  }
+
+  bool allFieldsFilled(Map<String, String?> formData) {
+    for (String? value in formData.values) {
+      if (value == null || value.isEmpty) {
+        return false;
+      }
     }
+    return true;
   }
 
   @override
   void initState() {
     super.initState();
+    _allFieldsFilled = allFieldsFilled(_formData);
     if (!isWeb) {
       _keyboardVisibilitySubscription =
           KeyboardVisibilityController().onChange.listen((bool visible) {
@@ -134,15 +96,6 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
         });
       });
     }
-
-    confirmPasswordFieldCAController = TextEditingController();
-    confirmPasswordFieldCAVisibility = false;
-    emailFieldCAController = TextEditingController();
-    firstNameFieldCAController = TextEditingController();
-    lastNameFieldCAController = TextEditingController();
-    studentIDFieldController = TextEditingController();
-    passwordFieldCAController = TextEditingController();
-    passwordFieldCAVisibility = false;
   }
 
   @override
@@ -169,6 +122,36 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
     });
   }
 
+  void _submit() async {
+    // TODO. irconde fix this
+    /*
+    if (!_checkConnection()) return;
+    String email = emailFieldCAController!.text;
+    String password = passwordFieldCAController!.text;
+    final timezoneValue = AppState.timezoneContainer?.getValue(_timeZone) ??
+        AppState.timezoneContainer!.timeZones.first.value;
+    createUser = await CreateUserCall.call(
+      email: email,
+      password: password,
+      passwordConfirmation: confirmPasswordFieldCAController!.text,
+      firstName: firstNameFieldCAController!.text,
+      lastName: lastNameFieldCAController!.text,
+      registrationType: '3',
+      studentId: studentIDFieldController!.text,
+      timeZone: timezoneValue,
+    );
+    if ((createUser?.succeeded ?? true) && context.mounted) {
+      setState(() {
+        StoredPreferences.userAccount = email;
+        StoredPreferences.userPassword = password;
+      });
+      await context.pushRoute(CoursesRouteWidget());
+    } else {
+      _old_submit();
+    }
+    setState(() {});*/
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -187,310 +170,328 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
         body: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                        child: TextField(
-                          controller: firstNameFieldCAController,
-                          autofocus: true,
-                          decoration: InputDecoration(
-                            hintText: 'First Name',
-                            labelText: 'First Name',
-                            errorText: _submitted ? _firstNameErrorText : null,
-                            prefixIcon: const Icon(
-                              Icons.person_outline,
-                            ),
-                          ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                        child: TextField(
-                          controller: lastNameFieldCAController,
-                          decoration: InputDecoration(
-                            hintText: 'Last Name',
-                            labelText: 'Last Name',
-                            errorText: _submitted ? _lastNameErrorText : null,
-                            prefixIcon: const Icon(
-                              Icons.person_outline,
-                            ),
-                          ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                        child: TextField(
-                          controller: studentIDFieldController,
-                          decoration: InputDecoration(
-                            prefixIcon: const Icon(
-                              Icons.school_outlined,
-                            ),
-                            labelText: 'Student ID',
-                            errorText: _submitted ? _idErrorText : null,
-                            hintText: 'Student ID',
-                          ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                        child: TextField(
-                          controller: emailFieldCAController,
-                          decoration: InputDecoration(
-                            hintText: 'Email',
-                            labelText: 'Email',
-                            errorText: _submitted ? _emailErrorText : null,
-                            prefixIcon: const Icon(
-                              Icons.email_outlined,
-                            ),
-                          ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                        child: TextField(
-                          controller: passwordFieldCAController,
-                          obscureText: !passwordFieldCAVisibility,
-                          decoration: InputDecoration(
-                            hintText: 'Password',
-                            labelText: 'Password',
-                            errorText: _submitted ? _passwordErrorText : null,
-                            prefixIcon: const Icon(
-                              Icons.lock_outline,
-                            ),
-                            suffixIcon: InkWell(
-                              onTap: () => setState(
-                                () => passwordFieldCAVisibility =
-                                    !passwordFieldCAVisibility,
-                              ),
-                              focusNode: FocusNode(skipTraversal: true),
-                              child: Icon(
-                                passwordFieldCAVisibility
-                                    ? Icons.visibility_outlined
-                                    : Icons.visibility_off_outlined,
-                                size: 20,
-                              ),
-                            ),
-                          ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                        child: TextField(
-                          controller: confirmPasswordFieldCAController,
-                          obscureText: !confirmPasswordFieldCAVisibility,
-                          decoration: InputDecoration(
-                            hintText: 'Confirm Password',
-                            labelText: 'Confirm Password',
-                            errorText:
-                                _submitted ? _confirmPasswordErrorText : null,
-                            prefixIcon: const Icon(
-                              Icons.lock_outline,
-                            ),
-                            suffixIcon: InkWell(
-                              onTap: () => setState(
-                                () => confirmPasswordFieldCAVisibility =
-                                    !confirmPasswordFieldCAVisibility,
-                              ),
-                              focusNode: FocusNode(skipTraversal: true),
-                              child: Icon(
-                                confirmPasswordFieldCAVisibility
-                                    ? Icons.visibility_outlined
-                                    : Icons.visibility_off_outlined,
-                                size: 20,
-                              ),
-                            ),
-                          ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                        child: TimezoneDropdown(
-                          timezoneDropDownValue: _timeZone,
-                          onItemSelectedCallback: onTimezoneSelected,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                if (!(isWeb
-                    ? MediaQuery.of(context).viewInsets.bottom > 0
-                    : _isKeyboardVisible))
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(32, 0, 32, 0),
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
                     child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor:
-                                  FlutterFlowTheme.of(context).primaryBtnText,
-                              backgroundColor:
-                                  FlutterFlowTheme.of(context).primaryColor,
-                              textStyle: const TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w600),
-                              minimumSize: const Size.fromHeight(36),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4),
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                          child: TextFormField(
+                            autofocus: true,
+                            decoration: InputDecoration(
+                              hintText: 'First Name',
+                              labelText: 'First Name',
+                              errorText:
+                                  _submitted ? _formErrors['first_name'] : null,
+                              prefixIcon: const Icon(
+                                Icons.person_outline,
                               ),
                             ),
-                            onPressed: () async {
-                              if (!_checkConnection()) return;
-                              String email = emailFieldCAController!.text;
-                              String password = passwordFieldCAController!.text;
-                              final timezoneValue = AppState.timezoneContainer
-                                      ?.getValue(_timeZone) ??
-                                  AppState
-                                      .timezoneContainer!.timeZones.first.value;
-                              createUser = await CreateUserCall.call(
-                                email: email,
-                                password: password,
-                                passwordConfirmation:
-                                    confirmPasswordFieldCAController!.text,
-                                firstName: firstNameFieldCAController!.text,
-                                lastName: lastNameFieldCAController!.text,
-                                registrationType: '3',
-                                studentId: studentIDFieldController!.text,
-                                timeZone: timezoneValue,
-                              );
-                              if ((createUser?.succeeded ?? true) &&
-                                  context.mounted) {
-                                setState(() {
-                                  StoredPreferences.userAccount = email;
-                                  StoredPreferences.userPassword = password;
-                                });
-                                await context.pushRoute(CoursesRouteWidget());
-                              } else {
-                                _submit();
-                              }
-                              setState(() {});
+                            onChanged: (value) {
+                              setState(() {
+                                _formData['first_name'] = value;
+                                _formErrors['first_name'] = null;
+                                _allFieldsFilled = allFieldsFilled(_formData);
+                              });
                             },
-                            child: Text(
-                              'REGISTER',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Open Sans',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBtnText,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 20,
-                                  ),
-                            ),
-                          ),
-                        ),
-                        Stack(
-                          alignment: const AlignmentDirectional(0, 0),
-                          children: [
-                            Divider(
-                              height: 0,
-                              thickness: 1,
-                              color: FlutterFlowTheme.of(context).lineColor,
-                            ),
-                            Container(
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              child: Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Text(
-                                  'OR',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 20,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0, 20, 0, 32),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor:
-                                  FlutterFlowTheme.of(context).primaryBtnText,
-                              backgroundColor:
-                                  FlutterFlowTheme.of(context).secondaryColor,
-                              textStyle: const TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w600),
-                              minimumSize: const Size.fromHeight(36),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                            ),
-                            onPressed: () async {
-                              if (!_checkConnection()) return;
-                              await mLaunchUrl(
-                                  'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
-                            },
-                            child: const Text('CAMPUS REGISTRATION'),
+                            style: FlutterFlowTheme.of(context).bodyText1,
                           ),
                         ),
                         Padding(
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 56),
-                          child: RichText(
-                            textAlign: TextAlign.center,
-                            text: TextSpan(
-                                style: FlutterFlowTheme.of(context).bodyText1,
-                                children: [
-                                  const TextSpan(text: 'Having problems? '),
-                                  TextSpan(
-                                      text: 'Contact us',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            decoration:
-                                                TextDecoration.underline,
-                                            fontFamily: 'Open Sans',
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () async {
-                                          context.pushRoute(
-                                            ContactUsWidget(
-                                              onSubmit: (String? value) {},
-                                            ),
-                                          );
-                                        }),
-                                ]),
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: 'Last Name',
+                              labelText: 'Last Name',
+                              errorText:
+                                  _submitted ? _formErrors['last_name'] : null,
+                              prefixIcon: const Icon(
+                                Icons.person_outline,
+                              ),
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                _formData['last_name'] = value;
+                                _formErrors['last_name'] = null;
+                                _allFieldsFilled = allFieldsFilled(_formData);
+                              });
+                            },
+                            style: FlutterFlowTheme.of(context).bodyText1,
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(
+                                Icons.school_outlined,
+                              ),
+                              labelText: 'Student ID',
+                              errorText:
+                                  _submitted ? _formErrors['student_id'] : null,
+                              hintText: 'Student ID',
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                _formData['student_id'] = value;
+                                _formErrors['student_id'] = null;
+                                _allFieldsFilled = allFieldsFilled(_formData);
+                              });
+                            },
+                            style: FlutterFlowTheme.of(context).bodyText1,
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              hintText: 'Email',
+                              labelText: 'Email',
+                              errorText:
+                                  _submitted ? _formErrors['email'] : null,
+                              prefixIcon: const Icon(
+                                Icons.email_outlined,
+                              ),
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                _formData['email'] = value;
+                                _formErrors['email'] = null;
+                                _allFieldsFilled = allFieldsFilled(_formData);
+                              });
+                            },
+                            style: FlutterFlowTheme.of(context).bodyText1,
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                          child: TextFormField(
+                            obscureText: !passwordFieldCAVisibility,
+                            decoration: InputDecoration(
+                              hintText: 'Password',
+                              labelText: 'Password',
+                              errorText:
+                                  _submitted ? _formErrors['password'] : null,
+                              prefixIcon: const Icon(
+                                Icons.lock_outline,
+                              ),
+                              suffixIcon: InkWell(
+                                onTap: () => setState(
+                                  () => passwordFieldCAVisibility =
+                                      !passwordFieldCAVisibility,
+                                ),
+                                focusNode: FocusNode(skipTraversal: true),
+                                child: Icon(
+                                  passwordFieldCAVisibility
+                                      ? Icons.visibility_outlined
+                                      : Icons.visibility_off_outlined,
+                                  size: 20,
+                                ),
+                              ),
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                _formData['password'] = value;
+                                _formErrors['password'] = null;
+                                _allFieldsFilled = allFieldsFilled(_formData);
+                              });
+                            },
+                            style: FlutterFlowTheme.of(context).bodyText1,
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                          child: TextFormField(
+                            obscureText: !confirmPasswordFieldCAVisibility,
+                            decoration: InputDecoration(
+                              hintText: 'Confirm Password',
+                              labelText: 'Confirm Password',
+                              errorText: _submitted
+                                  ? _formErrors['confirm_password']
+                                  : null,
+                              prefixIcon: const Icon(
+                                Icons.lock_outline,
+                              ),
+                              suffixIcon: InkWell(
+                                onTap: () => setState(
+                                  () => confirmPasswordFieldCAVisibility =
+                                      !confirmPasswordFieldCAVisibility,
+                                ),
+                                focusNode: FocusNode(skipTraversal: true),
+                                child: Icon(
+                                  confirmPasswordFieldCAVisibility
+                                      ? Icons.visibility_outlined
+                                      : Icons.visibility_off_outlined,
+                                  size: 20,
+                                ),
+                              ),
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                _formData['confirm_password'] = value;
+                                _formErrors['confirm_password'] = null;
+                                _allFieldsFilled = allFieldsFilled(_formData);
+                              });
+                            },
+                            style: FlutterFlowTheme.of(context).bodyText1,
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                          child: TimezoneDropdown(
+                            timezoneDropDownValue: _timeZone,
+                            onItemSelectedCallback: onTimezoneSelected,
                           ),
                         ),
                       ],
                     ),
                   ),
-              ],
+                  if (!(isWeb
+                      ? MediaQuery.of(context).viewInsets.bottom > 0
+                      : _isKeyboardVisible))
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(32, 0, 32, 0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 0, 0, 20),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                                textStyle: const TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w600),
+                                minimumSize: const Size.fromHeight(36),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                              ),
+                              onPressed: _allFieldsFilled ? _submit : null,
+                              child: Text(
+                                'REGISTER',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Open Sans',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryBtnText,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 20,
+                                    ),
+                              ),
+                            ),
+                          ),
+                          Stack(
+                            alignment: const AlignmentDirectional(0, 0),
+                            children: [
+                              Divider(
+                                height: 0,
+                                thickness: 1,
+                                color: FlutterFlowTheme.of(context).lineColor,
+                              ),
+                              Container(
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(
+                                    'OR',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          fontSize: 20,
+                                        ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 20, 0, 32),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).secondaryColor,
+                                textStyle: const TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w600),
+                                minimumSize: const Size.fromHeight(36),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                              ),
+                              onPressed: () async {
+                                if (!_checkConnection()) return;
+                                await mLaunchUrl(
+                                    'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
+                              },
+                              child: const Text('CAMPUS REGISTRATION'),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 0, 0, 56),
+                            child: RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                  children: [
+                                    const TextSpan(text: 'Having problems? '),
+                                    TextSpan(
+                                        text: 'Contact us',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              fontFamily: 'Open Sans',
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () async {
+                                            context.pushRoute(
+                                              ContactUsWidget(
+                                                onSubmit: (String? value) {},
+                                              ),
+                                            );
+                                          }),
+                                  ]),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
             ),
           ),
         ),
