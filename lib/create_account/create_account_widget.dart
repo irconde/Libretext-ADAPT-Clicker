@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/components/form_state_mixin.dart';
 import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:adapt_clicker/components/collapsing_libre_app_bar.dart';
@@ -10,8 +11,6 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
-import '../utils/check_internet_connectivity.dart';
 import '../utils/stored_preferences.dart';
 
 class CreateAccountWidget extends ConsumerStatefulWidget {
@@ -24,10 +23,8 @@ class CreateAccountWidget extends ConsumerStatefulWidget {
       _CreateAccountWidgetState();
 }
 
-class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
-  final int dataIndex = 0;
-  final int errorIndex = 1;
-  bool _submitted = false;
+class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> with FormStateMixin{
+
   final _formKey = GlobalKey<FormState>();
   static const String firstName = 'first_name';
   static const String lastName = 'last_name';
@@ -36,36 +33,33 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
   static const String password = 'password';
   static const String passwordConfirmation = 'password_confirmation';
   static const String timeZone = 'time_zone';
-  final Map<String, dynamic> _formValues = {
-    firstName: [null, null],
-    lastName: [null, null],
-    studentId: [null, null],
-    email: [null, null],
-    password: [null, null],
-    passwordConfirmation: [null, null],
-    timeZone: [null, null]
-  };
-  bool _allFieldsFilled = false;
   bool passwordFieldCAVisibility = false;
   bool confirmPasswordFieldCAVisibility = false;
-  ApiCallResponse? createUser;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late StreamSubscription<bool> _keyboardVisibilitySubscription;
   bool _isKeyboardVisible = false;
 
-  bool allFieldsFilled(Map<String, dynamic> formData) {
-    for (dynamic value in formData.values) {
-      if (value[dataIndex] == null || value[dataIndex].isEmpty) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   @override
   void initState() {
     super.initState();
-    _allFieldsFilled = allFieldsFilled(_formValues);
+    setState(() {
+      requiredFields = [
+        firstName,
+        lastName,
+        studentId,
+        email,
+        password,
+        passwordConfirmation,
+        timeZone
+      ];
+      formValues[firstName] = [null, null];
+      formValues[lastName] = [null, null];
+      formValues[studentId] = [null, null];
+      formValues[email] = [null, null];
+      formValues[password] = [null, null];
+      formValues[passwordConfirmation] = [null, null];
+      formValues[timeZone] = [null, null];
+    });
     if (!isWeb) {
       _keyboardVisibilitySubscription =
           KeyboardVisibilityController().onChange.listen((bool visible) {
@@ -84,51 +78,42 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
     super.dispose();
   }
 
-  bool _checkConnection() {
-    ConnectivityStatus? status =
-        ref.read(provider.notifier).getConnectionStatus();
-    if (status != ConnectivityStatus.isConnected) {
-      functions.showSnackbar(context, status);
-      return false;
-    }
-    return true;
-  }
-
   void onTimezoneSelected(timezone) {
     setState(() {
-      _formValues[timeZone] = [timezone, null];
-      _allFieldsFilled = allFieldsFilled(_formValues);
+      formValues[timeZone] = [timezone, null];
+      requiredFieldsFilled =
+          checkRequiredFieldsFilled(formValues, requiredFields);
     });
   }
 
   void _onReceivedErrorsFromServer(dynamic errors) {
-    setState(() => _submitted = true);
+    setState(() => submitted = true);
     Map<String, dynamic> errorData = Map<String, dynamic>.from(errors);
     for (String key in errorData.keys) {
       setState(() {
-        _formValues[key][errorIndex] = errorData[key][0];
+        formValues[key][errorIndex] = errorData[key][0];
       });
     }
   }
 
   void _submit() async {
-    if (!_checkConnection()) return;
-    final String currentEmail = _formValues[email][dataIndex];
-    final String currentPassword = _formValues[password][dataIndex];
+    if (!checkConnection()) return;
+    final String currentEmail = formValues[email][dataIndex];
+    final String currentPassword = formValues[password][dataIndex];
     final timezoneValue = AppState.timezoneContainer
-            ?.getValue(_formValues[timeZone][dataIndex]) ??
+            ?.getValue(formValues[timeZone][dataIndex]) ??
         AppState.timezoneContainer!.timeZones.first.value;
-    createUser = await CreateUserCall.call(
+    serverRequest = await CreateUserCall.call(
       email: currentEmail,
       password: currentPassword,
-      passwordConfirmation: _formValues[passwordConfirmation][dataIndex],
-      firstName: _formValues[firstName][dataIndex],
-      lastName: _formValues[lastName][dataIndex],
+      passwordConfirmation: formValues[passwordConfirmation][dataIndex],
+      firstName: formValues[firstName][dataIndex],
+      lastName: formValues[lastName][dataIndex],
       registrationType: '3',
-      studentId: _formValues[studentId][dataIndex],
+      studentId: formValues[studentId][dataIndex],
       timeZone: timezoneValue,
     );
-    if ((createUser?.succeeded ?? true) && context.mounted) {
+    if ((serverRequest?.succeeded ?? true) && context.mounted) {
       setState(() {
         StoredPreferences.userAccount = currentEmail;
         StoredPreferences.userPassword = currentPassword;
@@ -136,7 +121,8 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
       await context.pushRoute(CoursesRouteWidget());
       setState(() {});
     } else {
-      final errors = getJsonField((createUser?.jsonBody ?? ''), r'''$.errors''');
+      final errors =
+          getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
       _onReceivedErrorsFromServer(errors);
     }
   }
@@ -179,8 +165,8 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             decoration: InputDecoration(
                               hintText: 'First Name',
                               labelText: 'First Name',
-                              errorText: _submitted
-                                  ? _formValues[firstName][errorIndex]
+                              errorText: submitted
+                                  ? formValues[firstName][errorIndex]
                                   : null,
                               prefixIcon: const Icon(
                                 Icons.person_outline,
@@ -188,8 +174,9 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             ),
                             onChanged: (value) {
                               setState(() {
-                                _formValues[firstName] = [value, null];
-                                _allFieldsFilled = allFieldsFilled(_formValues);
+                                formValues[firstName] = [value, null];
+                                requiredFieldsFilled = checkRequiredFieldsFilled(
+                                    formValues, requiredFields);
                               });
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
@@ -202,8 +189,8 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             decoration: InputDecoration(
                               hintText: 'Last Name',
                               labelText: 'Last Name',
-                              errorText: _submitted
-                                  ? _formValues[lastName][errorIndex]
+                              errorText: submitted
+                                  ? formValues[lastName][errorIndex]
                                   : null,
                               prefixIcon: const Icon(
                                 Icons.person_outline,
@@ -211,8 +198,9 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             ),
                             onChanged: (value) {
                               setState(() {
-                                _formValues[lastName] = [value, null];
-                                _allFieldsFilled = allFieldsFilled(_formValues);
+                                formValues[lastName] = [value, null];
+                                requiredFieldsFilled = checkRequiredFieldsFilled(
+                                    formValues, requiredFields);
                               });
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
@@ -227,15 +215,16 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                                 Icons.school_outlined,
                               ),
                               labelText: 'Student ID',
-                              errorText: _submitted
-                                  ? _formValues[studentId][errorIndex]
+                              errorText: submitted
+                                  ? formValues[studentId][errorIndex]
                                   : null,
                               hintText: 'Student ID',
                             ),
                             onChanged: (value) {
                               setState(() {
-                                _formValues[studentId] = [value, null];
-                                _allFieldsFilled = allFieldsFilled(_formValues);
+                                formValues[studentId] = [value, null];
+                                requiredFieldsFilled = checkRequiredFieldsFilled(
+                                    formValues, requiredFields);
                               });
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
@@ -248,8 +237,8 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             decoration: InputDecoration(
                               hintText: 'Email',
                               labelText: 'Email',
-                              errorText: _submitted
-                                  ? _formValues[email][errorIndex]
+                              errorText: submitted
+                                  ? formValues[email][errorIndex]
                                   : null,
                               prefixIcon: const Icon(
                                 Icons.email_outlined,
@@ -257,8 +246,9 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             ),
                             onChanged: (value) {
                               setState(() {
-                                _formValues[email] = [value, null];
-                                _allFieldsFilled = allFieldsFilled(_formValues);
+                                formValues[email] = [value, null];
+                                requiredFieldsFilled = checkRequiredFieldsFilled(
+                                    formValues, requiredFields);
                               });
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
@@ -272,8 +262,8 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             decoration: InputDecoration(
                               hintText: 'Password',
                               labelText: 'Password',
-                              errorText: _submitted
-                                  ? _formValues[password][errorIndex]
+                              errorText: submitted
+                                  ? formValues[password][errorIndex]
                                   : null,
                               prefixIcon: const Icon(
                                 Icons.lock_outline,
@@ -294,8 +284,9 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             ),
                             onChanged: (value) {
                               setState(() {
-                                _formValues[password] = [value, null];
-                                _allFieldsFilled = allFieldsFilled(_formValues);
+                                formValues[password] = [value, null];
+                                requiredFieldsFilled = checkRequiredFieldsFilled(
+                                    formValues, requiredFields);
                               });
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
@@ -309,8 +300,9 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             decoration: InputDecoration(
                               hintText: 'Confirm Password',
                               labelText: 'Confirm Password',
-                              errorText: _submitted
-                                  ? _formValues[passwordConfirmation][errorIndex]
+                              errorText: submitted
+                                  ? formValues[passwordConfirmation]
+                                      [errorIndex]
                                   : null,
                               prefixIcon: const Icon(
                                 Icons.lock_outline,
@@ -331,8 +323,12 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             ),
                             onChanged: (value) {
                               setState(() {
-                                _formValues[passwordConfirmation] = [value, null];
-                                _allFieldsFilled = allFieldsFilled(_formValues);
+                                formValues[passwordConfirmation] = [
+                                  value,
+                                  null
+                                ];
+                                requiredFieldsFilled = checkRequiredFieldsFilled(
+                                    formValues, requiredFields);
                               });
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
@@ -342,7 +338,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                           child: TimezoneDropdown(
-                            timezoneDropDownValue: _formValues[timeZone]
+                            timezoneDropDownValue: formValues[timeZone]
                                 [dataIndex],
                             onItemSelectedCallback: onTimezoneSelected,
                           ),
@@ -376,7 +372,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                                   borderRadius: BorderRadius.circular(4),
                                 ),
                               ),
-                              onPressed: _allFieldsFilled ? _submit : null,
+                              onPressed: requiredFieldsFilled ? _submit : null,
                               child: Text(
                                 'REGISTER',
                                 style: FlutterFlowTheme.of(context)
@@ -436,7 +432,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                                 ),
                               ),
                               onPressed: () async {
-                                if (!_checkConnection()) return;
+                                if (!checkConnection()) return;
                                 await mLaunchUrl(
                                     'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
                               },
