@@ -254,9 +254,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
                               )?.toList() ??
                               '';
                       if (enrollmentsList.isEmpty) {
-                        return const Center(
-                          child: NoCoursesWidget(),
-                        );
+                        return const  NoCoursesWidget();
                       }
                       return RefreshIndicator(
                         onRefresh: () async {

@@ -1,4 +1,5 @@
 import 'package:adapt_clicker/app_state.dart';
+import 'package:adapt_clicker/components/no_notifications_widget.dart';
 import 'package:adapt_clicker/components/notification_single.dart';
 import 'package:flutter/gestures.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -26,7 +27,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
   void initState() {
     super.initState();
     //createList();
-    addNotification('details');
+    //addNotification('details');
   }
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -101,12 +102,15 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Column(
-            mainAxisSize: MainAxisSize.max,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Expanded(
-                child: ListView.builder(
+                child:  FFAppState().notificationList.isEmpty ? const Align(alignment: Alignment.bottomCenter, child: NoNotificationsWidget()) : ListView.builder(
                     itemCount: FFAppState().notificationList.length,
+
                     itemBuilder: (BuildContext context, int index) {
+
+
                       return Dismissible(
                         key: UniqueKey(),
                         background: Container(
@@ -141,12 +145,18 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                           index: index,
                         ),
                       );
-                    }),
+                    }
+                    ),
               )
             ],
           ),
         ),
       ),
     );
+  }
+
+  bool notificationEmpty()
+  {
+    return true;
   }
 }
