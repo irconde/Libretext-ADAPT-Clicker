@@ -86,16 +86,6 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> with 
     });
   }
 
-  void _onReceivedErrorsFromServer(dynamic errors) {
-    setState(() => submitted = true);
-    Map<String, dynamic> errorData = Map<String, dynamic>.from(errors);
-    for (String key in errorData.keys) {
-      setState(() {
-        formValues[key][errorIndex] = errorData[key][0];
-      });
-    }
-  }
-
   void _submit() async {
     if (!checkConnection()) return;
     final String currentEmail = formValues[email][dataIndex];
@@ -123,7 +113,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> with 
     } else {
       final errors =
           getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
-      _onReceivedErrorsFromServer(errors);
+      onReceivedErrorsFromServer(errors);
     }
   }
 
