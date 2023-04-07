@@ -29,41 +29,29 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
   final int errorIndex = 1;
   bool _submitted = false;
   final _formKey = GlobalKey<FormState>();
+  static const String firstName = 'first_name';
+  static const String lastName = 'last_name';
+  static const String studentId = 'student_id';
+  static const String email = 'email';
+  static const String password = 'password';
+  static const String passwordConfirmation = 'password_confirmation';
+  static const String timeZone = 'time_zone';
   final Map<String, dynamic> _formValues = {
-    'first_name': [null, null],
-    'last_name': [null, null],
-    'student_id': [null, null],
-    'email': [null, null],
-    'password': [null, null],
-    'confirm_password': [null, null],
+    firstName: [null, null],
+    lastName: [null, null],
+    studentId: [null, null],
+    email: [null, null],
+    password: [null, null],
+    passwordConfirmation: [null, null],
+    timeZone: [null, null]
   };
   bool _allFieldsFilled = false;
   bool passwordFieldCAVisibility = false;
   bool confirmPasswordFieldCAVisibility = false;
-  String? _timeZone;
   ApiCallResponse? createUser;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late StreamSubscription<bool> _keyboardVisibilitySubscription;
   bool _isKeyboardVisible = false;
-
-  void _old_submit() {
-    // TODO irconde. To be fixed
-    /*
-    setState(() => _submitted = true);
-    if (_firstNameErrorText == null) {
-      widget.onSubmit(firstNameFieldCAController?.value.text);
-    } else if (_lastNameErrorText == null) {
-      widget.onSubmit(lastNameFieldCAController?.value.text);
-    } else if (_idErrorText == null) {
-      widget.onSubmit(studentIDFieldController?.value.text);
-    } else if (_emailErrorText == null) {
-      widget.onSubmit(emailFieldCAController?.value.text);
-    } else if (_passwordErrorText == null) {
-      widget.onSubmit(passwordFieldCAController?.value.text);
-    } else if (_confirmPasswordErrorText == null) {
-      widget.onSubmit(confirmPasswordFieldCAController?.value.text);
-    }*/
-  }
 
   bool allFieldsFilled(Map<String, dynamic> formData) {
     for (dynamic value in formData.values) {
@@ -108,38 +96,49 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
 
   void onTimezoneSelected(timezone) {
     setState(() {
-      _timeZone = timezone;
+      _formValues[timeZone] = [timezone, null];
+      _allFieldsFilled = allFieldsFilled(_formValues);
     });
   }
 
+  void _onReceivedErrorsFromServer(dynamic errors) {
+    setState(() => _submitted = true);
+    Map<String, dynamic> errorData = Map<String, dynamic>.from(errors);
+    for (String key in errorData.keys) {
+      setState(() {
+        _formValues[key][errorIndex] = errorData[key][0];
+      });
+    }
+  }
+
   void _submit() async {
-    // TODO. irconde fix this
-    /*
     if (!_checkConnection()) return;
-    String email = emailFieldCAController!.text;
-    String password = passwordFieldCAController!.text;
-    final timezoneValue = AppState.timezoneContainer?.getValue(_timeZone) ??
+    final String currentEmail = _formValues[email][dataIndex];
+    final String currentPassword = _formValues[password][dataIndex];
+    final timezoneValue = AppState.timezoneContainer
+            ?.getValue(_formValues[timeZone][dataIndex]) ??
         AppState.timezoneContainer!.timeZones.first.value;
     createUser = await CreateUserCall.call(
-      email: email,
-      password: password,
-      passwordConfirmation: confirmPasswordFieldCAController!.text,
-      firstName: firstNameFieldCAController!.text,
-      lastName: lastNameFieldCAController!.text,
+      email: currentEmail,
+      password: currentPassword,
+      passwordConfirmation: _formValues[passwordConfirmation][dataIndex],
+      firstName: _formValues[firstName][dataIndex],
+      lastName: _formValues[lastName][dataIndex],
       registrationType: '3',
-      studentId: studentIDFieldController!.text,
+      studentId: _formValues[studentId][dataIndex],
       timeZone: timezoneValue,
     );
     if ((createUser?.succeeded ?? true) && context.mounted) {
       setState(() {
-        StoredPreferences.userAccount = email;
-        StoredPreferences.userPassword = password;
+        StoredPreferences.userAccount = currentEmail;
+        StoredPreferences.userPassword = currentPassword;
       });
       await context.pushRoute(CoursesRouteWidget());
+      setState(() {});
     } else {
-      _old_submit();
+      final errors = getJsonField((createUser?.jsonBody ?? ''), r'''$.errors''');
+      _onReceivedErrorsFromServer(errors);
     }
-    setState(() {});*/
   }
 
   @override
@@ -181,7 +180,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                               hintText: 'First Name',
                               labelText: 'First Name',
                               errorText: _submitted
-                                  ? _formValues['first_name'][errorIndex]
+                                  ? _formValues[firstName][errorIndex]
                                   : null,
                               prefixIcon: const Icon(
                                 Icons.person_outline,
@@ -189,7 +188,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             ),
                             onChanged: (value) {
                               setState(() {
-                                _formValues['first_name'] = [value, null];
+                                _formValues[firstName] = [value, null];
                                 _allFieldsFilled = allFieldsFilled(_formValues);
                               });
                             },
@@ -204,7 +203,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                               hintText: 'Last Name',
                               labelText: 'Last Name',
                               errorText: _submitted
-                                  ? _formValues['last_name'][errorIndex]
+                                  ? _formValues[lastName][errorIndex]
                                   : null,
                               prefixIcon: const Icon(
                                 Icons.person_outline,
@@ -212,7 +211,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             ),
                             onChanged: (value) {
                               setState(() {
-                                _formValues['last_name'] = [value, null];
+                                _formValues[lastName] = [value, null];
                                 _allFieldsFilled = allFieldsFilled(_formValues);
                               });
                             },
@@ -229,13 +228,13 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                               ),
                               labelText: 'Student ID',
                               errorText: _submitted
-                                  ? _formValues['student_id'][errorIndex]
+                                  ? _formValues[studentId][errorIndex]
                                   : null,
                               hintText: 'Student ID',
                             ),
                             onChanged: (value) {
                               setState(() {
-                                _formValues['student_id'] = [value, null];
+                                _formValues[studentId] = [value, null];
                                 _allFieldsFilled = allFieldsFilled(_formValues);
                               });
                             },
@@ -250,7 +249,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                               hintText: 'Email',
                               labelText: 'Email',
                               errorText: _submitted
-                                  ? _formValues['email'][errorIndex]
+                                  ? _formValues[email][errorIndex]
                                   : null,
                               prefixIcon: const Icon(
                                 Icons.email_outlined,
@@ -258,7 +257,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             ),
                             onChanged: (value) {
                               setState(() {
-                                _formValues['email'] = [value, null];
+                                _formValues[email] = [value, null];
                                 _allFieldsFilled = allFieldsFilled(_formValues);
                               });
                             },
@@ -274,7 +273,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                               hintText: 'Password',
                               labelText: 'Password',
                               errorText: _submitted
-                                  ? _formValues['password'][errorIndex]
+                                  ? _formValues[password][errorIndex]
                                   : null,
                               prefixIcon: const Icon(
                                 Icons.lock_outline,
@@ -295,7 +294,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             ),
                             onChanged: (value) {
                               setState(() {
-                                _formValues['password'] = [value, null];
+                                _formValues[password] = [value, null];
                                 _allFieldsFilled = allFieldsFilled(_formValues);
                               });
                             },
@@ -311,7 +310,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                               hintText: 'Confirm Password',
                               labelText: 'Confirm Password',
                               errorText: _submitted
-                                  ? _formValues['confirm_password'][errorIndex]
+                                  ? _formValues[passwordConfirmation][errorIndex]
                                   : null,
                               prefixIcon: const Icon(
                                 Icons.lock_outline,
@@ -332,7 +331,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                             ),
                             onChanged: (value) {
                               setState(() {
-                                _formValues['confirm_password'] = [value, null];
+                                _formValues[passwordConfirmation] = [value, null];
                                 _allFieldsFilled = allFieldsFilled(_formValues);
                               });
                             },
@@ -343,7 +342,8 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> {
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                           child: TimezoneDropdown(
-                            timezoneDropDownValue: _timeZone,
+                            timezoneDropDownValue: _formValues[timeZone]
+                                [dataIndex],
                             onItemSelectedCallback: onTimezoneSelected,
                           ),
                         ),
