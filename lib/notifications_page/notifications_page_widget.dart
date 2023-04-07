@@ -30,6 +30,12 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
     //addNotification('details');
   }
 
+  void clearNotifications() {
+    setState(() {
+      FFAppState().clearNotifications();
+    });
+  }
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -38,64 +44,26 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
       key: scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        leading: Padding(
-          padding:
-              const EdgeInsetsDirectional.fromSTEB(Constants.sMargin, 0, 0, 0),
-          child: InkWell(
-            onTap: () async {
-              Navigator.pop(context, '/');
-            },
-            child: Icon(
+        leading: IconButton(
+            icon: Icon(
               Icons.arrow_back,
               color: FlutterFlowTheme.of(context).primaryBackground,
-              size: 32,
+              size: 24,
             ),
+          onPressed: () async {
+            Navigator.pop(context, '/');
+          },
           ),
-        ),
-        title: Align(
-          alignment: const AlignmentDirectional(0, 0),
-          child: Text(
-            'Notifications',
-            style: FlutterFlowTheme.of(context).bodyText1.override(
-                  fontFamily: 'Open Sans',
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                ),
-          ),
-        ),
+        title: const Text('Notifications'),
         actions: [
           Align(
             alignment: const AlignmentDirectional(0, 0),
             child: Padding(
-              padding:
-                  EdgeInsetsDirectional.fromSTEB(0, 0, Constants.sMargin, 0),
-              child: RichText(
-                  text: TextSpan(
-                children: <TextSpan>[
-                  TextSpan(
-                      text: 'Clear All ',
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          debugPrint('The button is clicked!');
-                          setState(() {
-                            FFAppState().clearNotifications();
-                          });
-                        },
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Open Sans',
-                            color:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          )),
-                ],
-              )),
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 0, Constants.sMargin, 0),
+              child: ClearAllWidget(isActive: FFAppState().notificationList.isNotEmpty, onTap: clearNotifications),
             ),
           ),
         ],
-        centerTitle: true,
-        elevation: 2,
       ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
@@ -160,3 +128,43 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
     return true;
   }
 }
+
+// Clear All
+class ClearAllWidget extends StatelessWidget {
+  final bool isActive;
+  final VoidCallback onTap;
+  const ClearAllWidget({Key? key, required this.isActive, required this.onTap}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final color = isActive
+        ? FlutterFlowTheme.of(context).primaryBackground
+        : FlutterFlowTheme.of(context).clearAllColor;
+
+    return RichText(
+      text: TextSpan(
+        children: <TextSpan>[
+          TextSpan(
+            text: 'Clear All ',
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+
+                if(isActive) {
+                  onTap();
+                }
+              },
+            style: FlutterFlowTheme.of(context).bodyText1.override(
+              fontFamily: 'Open Sans',
+              color: color,
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
