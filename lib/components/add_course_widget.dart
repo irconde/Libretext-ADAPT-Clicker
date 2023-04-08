@@ -7,55 +7,43 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
-import '../utils/check_internet_connectivity.dart';
+import 'form_state_mixin.dart';
 
 class AddCourseWidget extends ConsumerStatefulWidget {
   const AddCourseWidget({Key? key}) : super(key: key);
+
   @override
   ConsumerState<AddCourseWidget> createState() => _AddCourseWidgetState();
 }
 
 class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
-    with TickerProviderStateMixin {
-  final TextEditingController _accessCodeACController = TextEditingController();
-  ApiCallResponse? addCourse;
-  bool _submitted = false;
-  String? _errorText;
+    with TickerProviderStateMixin, FormStateMixin {
+  static const String code = 'access_code';
 
   @override
   void initState() {
     super.initState();
-  }
-
-  bool _checkConnection() {
-    ConnectivityStatus? status =
-        ref.read(provider.notifier).getConnectionStatus();
-    if (status != ConnectivityStatus.isConnected) {
-      functions.showSnackbar(context, status);
-      return false;
-    }
-    return true;
+    requiredFields = [code];
+    formValues[code] = [null, null];
   }
 
   void _submit() async {
     const String toyTimeZone = 'America/Belize';
-    setState(() => _submitted = true);
-    if (!_checkConnection()) return;
-    addCourse = await AddCourseCall.call(
+    setState(() => submitted = true);
+    if (!checkConnection()) return;
+    serverRequest = await AddCourseCall.call(
       token: StoredPreferences.authToken,
-      accessCode: _accessCodeACController.text,
+      accessCode: formValues[code][dataIndex],
       studentID: StoredPreferences.userAccount,
       timeZone: toyTimeZone,
     );
-    if ((addCourse?.succeeded ?? true) && context.mounted) {
-      String type = getJsonField((addCourse?.jsonBody ?? ''), r'''$.type''')
+    if ((serverRequest?.succeeded ?? true) && context.mounted) {
+      String type = getJsonField((serverRequest?.jsonBody ?? ''), r'''$.type''')
           .toString();
       if (type == 'error') {
-        setState(() {
-          _errorText = getJsonField((addCourse?.jsonBody ?? ''), r'''$.message''')
-              .toString();
-        });
+        final errors =
+            getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
+        onReceivedErrorsFromServer(errors);
       } else {
         context.popRoute();
         ScaffoldMessenger.of(context).showSnackBar(
@@ -63,36 +51,28 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
             content: Text(
               'You have successfully joined the course',
               style: TextStyle(
-                color: FlutterFlowTheme.of(context)
-                    .primaryBtnText,
+                color: FlutterFlowTheme.of(context).primaryBtnText,
               ),
             ),
             duration: const Duration(milliseconds: 4000),
-            backgroundColor:
-            FlutterFlowTheme.of(context).success,
+            backgroundColor: FlutterFlowTheme.of(context).success,
           ),
         );
       }
     } else {
-      setState(() {
-        _errorText = getJsonField((addCourse?.jsonBody ?? ''), r'''$.message''')
-            .toString();
-      });
+      final errors =
+          getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
+      onReceivedErrorsFromServer(errors);
     }
   }
 
   void _onTextChanged(String text) {
-    if (text.isNotEmpty) {
-      setState(() {
-        _errorText = null;
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    _accessCodeACController.dispose();
-    super.dispose();
+    setState(() {
+      formValues[code] = [text, null];
+      requiredFieldsFilled =
+          checkRequiredFieldsFilled(
+              formValues, requiredFields);
+    });
   }
 
   @override
@@ -175,65 +155,58 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                               ),
                         ),
                       ),
-                      ValueListenableBuilder(
-                          valueListenable: _accessCodeACController,
-                          builder: (context, TextEditingValue value, __) {
-                            return Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 24, 0, 0),
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    width: double.infinity,
-                                    child: TextField(
-                                      controller: _accessCodeACController,
-                                      decoration: InputDecoration(
-                                        labelText: 'Course Code',
-                                        prefixIcon: const Icon(
-                                          Icons.mode_edit,
-                                        ),
-                                        floatingLabelStyle: TextStyle(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor),
-                                        hintText: 'Course Code',
-                                        errorText:
-                                            _submitted ? _errorText : null,
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1,
-                                      onChanged: _onTextChanged,
+                      Form(
+                        child: Padding(
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                width: double.infinity,
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                    labelText: 'Course Code',
+                                    prefixIcon: const Icon(
+                                      Icons.mode_edit,
                                     ),
+                                    floatingLabelStyle: TextStyle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor),
+                                    hintText: 'Course Code',
+                                    errorText: submitted
+                                        ? formValues[code][errorIndex]
+                                        : null,
                                   ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 24, 0, 0),
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        minimumSize: const Size.fromHeight(36),
-                                        textStyle: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600),
-                                        backgroundColor:
-                                            FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                        ),
-                                        elevation: 4,
-                                      ),
-                                      onPressed: _accessCodeACController
-                                              .value.text.isNotEmpty
-                                          ? _submit
-                                          : null,
-                                      child: const Text('JOIN COURSE'),
-                                    ),
-                                  ),
-                                ],
+                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                  onChanged: _onTextChanged,
+                                ),
                               ),
-                            );
-                          }),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 24, 0, 0),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: const Size.fromHeight(36),
+                                    textStyle: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600),
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    elevation: 4,
+                                  ),
+                                  onPressed:
+                                      requiredFieldsFilled ? _submit : null,
+                                  child: const Text('JOIN COURSE'),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
