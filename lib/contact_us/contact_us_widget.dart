@@ -5,16 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/components/contact_us_dropdown_list.dart';
 import '../components/drawer_ctn.dart';
+import '../components/form_state_mixin.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
-import '../notifications_page/notifications_page_widget.dart';
-import '../utils/check_internet_connectivity.dart';
-
-String nameRequired = 'The name field is required.';
-String emailRequired = 'The email field is required.';
-String messageRequired = 'The message field is required.';
-String invalidRecords = 'These credentials do not match our records.';
+import '../flutter_flow/flutter_flow_util.dart';
 
 class ContactUsWidget extends ConsumerStatefulWidget {
   final ValueChanged<String?> onSubmit;
@@ -28,78 +22,61 @@ class ContactUsWidget extends ConsumerStatefulWidget {
   ConsumerState<ContactUsWidget> createState() => _ContactUsWidgetState();
 }
 
-class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
-  TextEditingController? contactUsEmailTextFieldController;
-  TextEditingController? contactUsNameTextFieldController;
-  String? _msgSubject;
-  TextEditingController? contactUsMessageTextFieldController;
-  bool _submitted = false;
-
-  ApiCallResponse? contactUs;
+class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
+    with FormStateMixin {
+  static const String name = 'name';
+  static const String email = 'email';
+  static const String subject = 'subject';
+  static const String text = 'text';
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    contactUsEmailTextFieldController = TextEditingController();
-    contactUsNameTextFieldController = TextEditingController();
-    contactUsMessageTextFieldController = TextEditingController();
+    requiredFields = [name, email];
+    formValues[name] = [null, null];
+    formValues[email] = [null, null];
+    formValues[subject] = [null, null];
+    formValues[text] = [null, null];
   }
 
-  String? get _emailErrorText {
-    final text = contactUsEmailTextFieldController?.value.text;
-    if (text != null && text.isEmpty) {
-      return emailRequired;
-    } else {
-      return invalidRecords;
-    }
-  }
-
-  String? get _nameErrorText {
-    final text = contactUsNameTextFieldController?.value.text;
-    if (text != null && text.isEmpty) {
-      return nameRequired;
-    } else {
-      return invalidRecords;
-    }
-  }
-
-  String? get _messageErrorText {
-    final text = contactUsMessageTextFieldController?.value.text;
-    if (text != null && text.isEmpty) {
-      return messageRequired;
-    } else {
-      return invalidRecords;
-    }
-  }
-
-  void _submit() {
-    setState(() => _submitted = true);
-    if (_emailErrorText == null) {
-      widget.onSubmit(contactUsEmailTextFieldController?.value.text);
-    }
-    if (_nameErrorText == null) {
-      widget.onSubmit(contactUsNameTextFieldController?.value.text);
-    }
-    if (_messageErrorText == null) {
-      widget.onSubmit(contactUsMessageTextFieldController?.value.text);
-    }
-  }
-
-  bool _checkConnection() {
-    ConnectivityStatus? status =
-        ref.read(provider.notifier).getConnectionStatus();
-    if (status != ConnectivityStatus.isConnected) {
-      functions.showSnackbar(context, status);
-      return false;
-    }
-    return true;
-  }
-
-  void _onSubjectSelected(subject) {
+  void _onSubjectSelected(subjectValue) {
     setState(() {
-      _msgSubject = subject;
+      formValues[subject] = [subjectValue, null];
     });
+  }
+
+  void _submit() async {
+    if (!checkConnection()) return;
+    serverRequest = await ContactUsCall.call(
+      email: formValues[email][dataIndex],
+      name: formValues[name][dataIndex],
+      subject: formValues[subject][dataIndex],
+      text: formValues[text][dataIndex],
+      school: 'unknown',
+      toUserId: '0',
+      type: 'contact_us',
+    );
+    if ((serverRequest?.succeeded ?? true) && context.mounted) {
+      setState(() {});
+      context.popRoute();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            serverRequest!.jsonBody['message'],
+            style: TextStyle(
+              color: FlutterFlowTheme.of(context).primaryBtnText,
+            ),
+          ),
+          duration: const Duration(milliseconds: 4000),
+          backgroundColor: FlutterFlowTheme.of(context).success,
+        ),
+      );
+    } else {
+      final errors =
+          getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
+      onReceivedErrorsFromServer(errors);
+    }
   }
 
   @override
@@ -139,135 +116,132 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                    child: Text(
-                      'Please use this form to contact us regarding general  questions or issues.',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                          fontFamily: 'Open Sans',
-                          lineHeight: 1.5,
-                          fontWeight: FontWeight.normal),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                    child: TextField(
-                        autofocus: true,
-                        controller: contactUsNameTextFieldController,
-                        decoration: InputDecoration(
-                          labelText: 'Name*',
-                          errorText: _submitted ? _nameErrorText : null,
-                          hintText: 'FirstName LastName',
-                        )),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                    child: TextField(
-                      controller: contactUsEmailTextFieldController,
-                      decoration: InputDecoration(
-                        labelText: 'Email*',
-                        floatingLabelStyle: TextStyle(
-                            color: FlutterFlowTheme.of(context).primaryColor),
-                        errorText: _submitted ? _emailErrorText : null,
-                        hintText: 'example@email.com',
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyText1,
-                    ),
-                  ),
-                  ContactUsDropDownList(
-                    contactUsSubjectDropDownValue: _msgSubject,
-                    onItemSelected: _onSubjectSelected,
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                    child: TextField(
-                      textAlignVertical: TextAlignVertical.top,
-                      controller: contactUsMessageTextFieldController,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        labelText: 'Message',
-                        errorText: _submitted ? _messageErrorText : null,
-                        hintText: 'Enter Message',
-                        alignLabelWithHint: true,
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
+        child: Form(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                      child: Text(
+                        'Please use this form to contact us regarding general questions or issues.',
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
                             fontFamily: 'Open Sans',
-                            fontSize: 14,
-                          ),
-                      maxLines: 8,
-                    ),
-                  ),
-                  Align(
-                    alignment: const Alignment(1, 0),
-                    child: Text(
-                      '*Required Fields',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Open Sans',
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            fontSize: 12,
-                          ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(36),
-                        backgroundColor:
-                            FlutterFlowTheme.of(context).primaryColor,
-                        textStyle: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w600),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4),
-                        ),
+                            lineHeight: 1.5,
+                            fontWeight: FontWeight.normal),
                       ),
-                      onPressed: () async {
-                        if (!_checkConnection()) return;
-                        contactUs = await ContactUsCall.call(
-                          email: contactUsEmailTextFieldController!.text,
-                          name: contactUsNameTextFieldController!.text,
-                          subject: _msgSubject,
-                          text: contactUsMessageTextFieldController!.text,
-                          school: 'unknown',
-                          toUserId: '0',
-                          type: 'contact_us',
-                        );
-                        if ((contactUs?.succeeded ?? true) && context.mounted) {
-                          context.popRoute();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                contactUs!.jsonBody['message'],
-                                style: TextStyle(
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBtnText,
-                                ),
-                              ),
-                              duration: const Duration(milliseconds: 4000),
-                              backgroundColor:
-                                  FlutterFlowTheme.of(context).success,
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                      child: TextFormField(
+                          autofocus: true,
+                          decoration: InputDecoration(
+                            labelText: 'Name*',
+                            errorText:
+                                submitted ? formValues[name][errorIndex] : null,
+                            hintText: 'FirstName LastName',
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                              formValues[name] = [value, null];
+                              requiredFieldsFilled = checkRequiredFieldsFilled(
+                                  formValues, requiredFields);
+                            });
+                          }),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                      child: TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Email*',
+                            floatingLabelStyle: TextStyle(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor),
+                            errorText: submitted
+                                ? formValues[email][errorIndex]
+                                : null,
+                            hintText: 'example@email.com',
+                          ),
+                          style: FlutterFlowTheme.of(context).bodyText1,
+                          onChanged: (value) {
+                            setState(() {
+                              formValues[email] = [value, null];
+                              requiredFieldsFilled = checkRequiredFieldsFilled(
+                                  formValues, requiredFields);
+                            });
+                          }),
+                    ),
+                    ContactUsDropDownList(
+                      contactUsSubjectDropDownValue: formValues[subject]
+                          [dataIndex],
+                      onItemSelected: _onSubjectSelected,
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                      child: TextFormField(
+                          textAlignVertical: TextAlignVertical.top,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            labelText: 'Message',
+                            errorText:
+                                submitted ? formValues[text][errorIndex] : null,
+                            hintText: 'Enter Message',
+                            alignLabelWithHint: true,
+                          ),
+                          style:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Open Sans',
+                                    fontSize: 14,
+                                  ),
+                          maxLines: 8,
+                          onChanged: (value) {
+                            setState(() {
+                              formValues[text] = [value, null];
+                            });
+                          }),
+                    ),
+                    Align(
+                      alignment: const Alignment(1, 0),
+                      child: Text(
+                        '*Required Fields',
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              fontSize: 12,
                             ),
-                          );
-                        } else {
-                          _submit();
-                        }
-                        setState(() {});
-                      },
-                      child: const Text('SUBMIT'),
+                      ),
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size.fromHeight(36),
+                          backgroundColor:
+                              FlutterFlowTheme.of(context).primaryColor,
+                          textStyle: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w600),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                        onPressed: requiredFieldsFilled ? _submit : null,
+                        child: const Text('SUBMIT'),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
