@@ -58,7 +58,6 @@ class _UpdateProfilePageWidgetState
     );
     final timezoneListRequest =
         await AppState.timezoneContainer.fetchTimezones();
-    //await Future.wait([userInfoRequest]);
 
     if ((userInfoRequest?.succeeded ?? true)) {
       currentUserInfo[firstName] =
