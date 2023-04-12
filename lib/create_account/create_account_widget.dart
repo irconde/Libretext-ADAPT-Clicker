@@ -23,8 +23,8 @@ class CreateAccountWidget extends ConsumerStatefulWidget {
       _CreateAccountWidgetState();
 }
 
-class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> with FormStateMixin{
-
+class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
+    with FormStateMixin {
   final _formKey = GlobalKey<FormState>();
   static const String firstName = 'first_name';
   static const String lastName = 'last_name';
@@ -39,9 +39,16 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> with 
   late StreamSubscription<bool> _keyboardVisibilitySubscription;
   bool _isKeyboardVisible = false;
 
+  Future<void> _loadTimeZones() async {
+    final timezoneListRequest =
+        await AppState.timezoneContainer.initTimezones();
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
+    _loadTimeZones();
     setState(() {
       requiredFields = [
         firstName,
@@ -90,9 +97,9 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> with 
     if (!checkConnection()) return;
     final String currentEmail = formValues[email][dataIndex];
     final String currentPassword = formValues[password][dataIndex];
-    final timezoneValue = AppState.timezoneContainer
-            ?.getValue(formValues[timeZone][dataIndex]) ??
-        AppState.timezoneContainer!.timeZones.first.value;
+    final timezoneValue =
+        AppState.timezoneContainer?.getValue(formValues[timeZone][dataIndex]) ??
+            AppState.timezoneContainer!.timeZones.first.value;
     serverRequest = await CreateUserCall.call(
       email: currentEmail,
       password: currentPassword,
@@ -165,8 +172,9 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> with 
                             onChanged: (value) {
                               setState(() {
                                 formValues[firstName] = [value, null];
-                                requiredFieldsFilled = checkRequiredFieldsFilled(
-                                    formValues, requiredFields);
+                                requiredFieldsFilled =
+                                    checkRequiredFieldsFilled(
+                                        formValues, requiredFields);
                               });
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
@@ -189,8 +197,9 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> with 
                             onChanged: (value) {
                               setState(() {
                                 formValues[lastName] = [value, null];
-                                requiredFieldsFilled = checkRequiredFieldsFilled(
-                                    formValues, requiredFields);
+                                requiredFieldsFilled =
+                                    checkRequiredFieldsFilled(
+                                        formValues, requiredFields);
                               });
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
@@ -213,8 +222,9 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> with 
                             onChanged: (value) {
                               setState(() {
                                 formValues[studentId] = [value, null];
-                                requiredFieldsFilled = checkRequiredFieldsFilled(
-                                    formValues, requiredFields);
+                                requiredFieldsFilled =
+                                    checkRequiredFieldsFilled(
+                                        formValues, requiredFields);
                               });
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
@@ -237,8 +247,9 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> with 
                             onChanged: (value) {
                               setState(() {
                                 formValues[email] = [value, null];
-                                requiredFieldsFilled = checkRequiredFieldsFilled(
-                                    formValues, requiredFields);
+                                requiredFieldsFilled =
+                                    checkRequiredFieldsFilled(
+                                        formValues, requiredFields);
                               });
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
@@ -275,8 +286,9 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> with 
                             onChanged: (value) {
                               setState(() {
                                 formValues[password] = [value, null];
-                                requiredFieldsFilled = checkRequiredFieldsFilled(
-                                    formValues, requiredFields);
+                                requiredFieldsFilled =
+                                    checkRequiredFieldsFilled(
+                                        formValues, requiredFields);
                               });
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
@@ -291,8 +303,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> with 
                               hintText: 'Confirm Password',
                               labelText: 'Confirm Password',
                               errorText: submitted
-                                  ? formValues[passwordConfirmation]
-                                      [errorIndex]
+                                  ? formValues[passwordConfirmation][errorIndex]
                                   : null,
                               prefixIcon: const Icon(
                                 Icons.lock_outline,
@@ -317,8 +328,9 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget> with 
                                   value,
                                   null
                                 ];
-                                requiredFieldsFilled = checkRequiredFieldsFilled(
-                                    formValues, requiredFields);
+                                requiredFieldsFilled =
+                                    checkRequiredFieldsFilled(
+                                        formValues, requiredFields);
                               });
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,

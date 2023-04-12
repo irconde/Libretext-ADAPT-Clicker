@@ -23,10 +23,12 @@ class TimezoneDropdownState extends State<TimezoneDropdown> {
   @override
   void initState() {
     super.initState();
-    _timezoneDropDownValue = widget.timezoneDropDownValue;
-    AppState.userTimezone!.setValue(_timezoneDropDownValue!);
-    AppState.userTimezone!.setText(
-        AppState.timezoneContainer!.getText(_timezoneDropDownValue).toString());
+    if (widget.timezoneDropDownValue != null) {
+      _timezoneDropDownValue = widget.timezoneDropDownValue;
+      AppState.userTimezone!.setValue(_timezoneDropDownValue!);
+      AppState.userTimezone!.setText(
+          AppState.timezoneContainer!.getText(_timezoneDropDownValue).toString());
+    }
   }
 
   @override

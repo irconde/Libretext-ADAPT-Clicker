@@ -61,15 +61,17 @@ class TimezonesContainer {
     timeZones = value;
   }
 
-  Future<void> fetchTimezones() async {
-    final response = await GetTimezonesCall.call(); //contact server
-    if (response.succeeded) {
-      // If the call to the server was successful, init timezones
-      initTimezones(response.jsonBody);
+  Future<void> initTimezones() async {
+    if (timeZones.isEmpty) {
+      final response = await GetTimezonesCall.call(); //contact server
+      if (response.succeeded) {
+        // If the call to the server was successful, init timezones
+        fetchTimezones(response.jsonBody);
+      }
     }
   }
 
-  void initTimezones(dynamic timezoneAPI) {
+  void fetchTimezones(dynamic timezoneAPI) {
     //gets official values
     List<String> timezoneValues = (getJsonField(
       timezoneAPI,

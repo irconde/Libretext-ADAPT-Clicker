@@ -57,7 +57,7 @@ class _UpdateProfilePageWidgetState
       token: StoredPreferences.authToken,
     );
     final timezoneListRequest =
-        await AppState.timezoneContainer.fetchTimezones();
+        await AppState.timezoneContainer.initTimezones();
 
     if ((userInfoRequest?.succeeded ?? true)) {
       currentUserInfo[firstName] =
