@@ -30,7 +30,6 @@ class _UpdateProfilePageWidgetState
   static const String studentId = 'student_id';
   static const String timeZone = 'time_zone';
 
-  ApiCallResponse? _userInfoRequest;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late StreamSubscription<bool> _keyboardVisibilitySubscription;
   bool _isKeyboardVisible = false;
@@ -53,31 +52,30 @@ class _UpdateProfilePageWidgetState
 
   Future<Map<String, String>> _loadInitialUserInfo() async {
     Map<String, String> currentUserInfo = {};
-    _userInfoRequest = await GetUserCall.call(
+
+    final userInfoRequest = await GetUserCall.call(
       token: StoredPreferences.authToken,
     );
-    if ((_userInfoRequest?.succeeded ?? true)) {
+    final timezoneListRequest =
+        await AppState.timezoneContainer.fetchTimezones();
+    //await Future.wait([userInfoRequest]);
+
+    if ((userInfoRequest?.succeeded ?? true)) {
       currentUserInfo[firstName] =
-          getJsonField(_userInfoRequest!.jsonBody, r'''$.first_name''')
+          getJsonField(userInfoRequest!.jsonBody, r'''$.first_name''')
               .toString();
       currentUserInfo[lastName] =
-          getJsonField(_userInfoRequest!.jsonBody, r'''$.last_name''')
+          getJsonField(userInfoRequest!.jsonBody, r'''$.last_name''')
               .toString();
       currentUserInfo[email] =
-          getJsonField(_userInfoRequest!.jsonBody, r'''$.email''').toString();
+          getJsonField(userInfoRequest!.jsonBody, r'''$.email''').toString();
       currentUserInfo[studentId] =
-          getJsonField(_userInfoRequest!.jsonBody, r'''$.student_id''')
+          getJsonField(userInfoRequest!.jsonBody, r'''$.student_id''')
               .toString();
-      // TODO. Fix this. The way we deal with the timezone is messy. We need to fix that
-      /*
-      AppState.userTimezone!.setValue(
-          getJsonField(_userInfoRequest!.jsonBody, r'''$.time_zone''')
-              .toString());
-      AppState.userTimezone!.setText(timeZone);
       currentUserInfo[timeZone] = AppState.timezoneContainer!
-          .getText(AppState.userTimezone!.value)
+          .getText(getJsonField(userInfoRequest!.jsonBody, r'''$.time_zone''')
+              .toString())
           .toString();
-       */
     }
     _initFormData(currentUserInfo);
     return currentUserInfo;
@@ -89,11 +87,15 @@ class _UpdateProfilePageWidgetState
       formValues[lastName] = [inputValues[lastName], null];
       formValues[studentId] = [inputValues[studentId], null];
       formValues[email] = [inputValues[email], null];
-      formValues[timeZone] = [null, null];
-      // TODO Fix this.
-      //formValues[timeZone] = [inputValues[timeZone],null];
+      formValues[timeZone] = [inputValues[timeZone], null];
       requiredFieldsFilled =
           checkRequiredFieldsFilled(formValues, requiredFields);
+    });
+  }
+
+  void onTimezoneSelected(timezone) {
+    setState(() {
+      formValues[timeZone] = [timezone, null];
     });
   }
 
@@ -104,11 +106,9 @@ class _UpdateProfilePageWidgetState
         firstName: formValues[firstName][dataIndex],
         lastName: formValues[lastName][dataIndex],
         email: formValues[email][dataIndex],
-        /* TODO. Fix this */
-        timeZone: '',
-        /*timeZone: AppState.timezoneContainer
-                ?.getValue(AppState.userTimezone.toString()) ??
-            AppState.timezoneContainer!.timeZones.first.value, */
+        timeZone: AppState.timezoneContainer
+                ?.getValue(formValues[timeZone][dataIndex]) ??
+            AppState.timezoneContainer!.timeZones.first.value,
         studentId: formValues[studentId][dataIndex]);
     if ((serverRequest?.succeeded ?? true) && context.mounted) {
       setState(() {});
@@ -268,9 +268,10 @@ class _UpdateProfilePageWidgetState
                                         const EdgeInsetsDirectional.fromSTEB(
                                             0, 0, 0, Constants.smMargin),
                                     child: TimezoneDropdown(
-                                        /** TODO. Fix this **/
                                         timezoneDropDownValue:
-                                            snapshot.data?[timeZone]),
+                                            formValues[timeZone][dataIndex],
+                                        onItemSelectedCallback:
+                                            onTimezoneSelected),
                                   ),
                                   Align(
                                     alignment: const Alignment(1, 0),

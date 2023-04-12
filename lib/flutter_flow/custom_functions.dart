@@ -1,6 +1,4 @@
-import 'package:adapt_clicker/flutter_flow/flutter_flow_util.dart';
 import 'package:adapt_clicker/utils/check_internet_connectivity.dart';
-import 'package:adapt_clicker/utils/timezone.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -30,39 +28,6 @@ bool isBasic(String techIframe) {
 
 bool isTextSubmission(String textSubmission) {
   return (textSubmission == 'text');
-}
-
-//Timezones come in form of value: example/example, text: example
-void initTimezones(dynamic timezoneAPI) {
-  //gets official values
-  List<String> timezoneValues = (getJsonField(
-    timezoneAPI,
-    r'''$.time_zones..value''',
-  ) as List)
-      .map<String>((s) => s.toString())
-      .toList()
-      .toList();
-
-  //Gets texts
-  List<String> timezoneTexts = (getJsonField(
-    timezoneAPI,
-    r'''$.time_zones..text''',
-  ) as List)
-      .map<String>((s) => s.toString())
-      .toList()
-      .toList();
-
-  List<Timezone> timezones = <Timezone>[];
-
-  for (int i = 0; i < timezoneTexts.length; i++) {
-    Timezone timezone =
-        Timezone(timezoneValues.elementAt(i), timezoneTexts.elementAt(i));
-    timezones.add(timezone);
-  }
-
-  timezones.toSet().toList();
-
-  AppState.timezoneContainer = new TimezonesContainer(timezones);
 }
 
 bool equalsIgnoreCase(String? string1, String? string2) {

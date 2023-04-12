@@ -1,3 +1,6 @@
+import '../backend/api_requests/api_calls.dart';
+import 'package:adapt_clicker/flutter_flow/flutter_flow_util.dart';
+
 class Timezone {
   String value, text;
 
@@ -13,12 +16,9 @@ class Timezone {
 }
 
 class TimezonesContainer {
-  List<Timezone> timeZones;
+  List<Timezone> timeZones = [];
   List<String> textZones = [''];
 
-  TimezonesContainer(this.timeZones) {
-    setText();
-  }
 
   void add(Timezone value) {
     timeZones.add(value);
@@ -47,11 +47,10 @@ class TimezonesContainer {
     for (var s in timeZones) {
       if (s.value == val) return s.text;
     }
-
     return 'Invalid Value';
   }
 
-  void setText() {
+  void generateTextZones() {
     textZones.clear();
     for (Timezone i in timeZones) {
       textZones.add(i.text);
@@ -61,4 +60,42 @@ class TimezonesContainer {
   void setTimezones(List<Timezone> value) {
     timeZones = value;
   }
+
+  Future<void> fetchTimezones() async {
+    final response = await GetTimezonesCall.call(); //contact server
+    if (response.succeeded) {
+      // If the call to the server was successful, init timezones
+      initTimezones(response.jsonBody);
+    }
+  }
+
+  void initTimezones(dynamic timezoneAPI) {
+    //gets official values
+    List<String> timezoneValues = (getJsonField(
+      timezoneAPI,
+      r'''$.time_zones..value''',
+    ) as List)
+        .map<String>((s) => s.toString())
+        .toList()
+        .toList();
+
+    //Gets texts
+    List<String> timezoneTexts = (getJsonField(
+      timezoneAPI,
+      r'''$.time_zones..text''',
+    ) as List)
+        .map<String>((s) => s.toString())
+        .toList()
+        .toList();
+
+    timeZones.clear();
+    for (int i = 0; i < timezoneTexts.length; i++) {
+      Timezone timezone =
+      Timezone(timezoneValues.elementAt(i), timezoneTexts.elementAt(i));
+      timeZones.add(timezone);
+    }
+    timeZones.toSet().toList();
+    generateTextZones();
+  }
+
 }
