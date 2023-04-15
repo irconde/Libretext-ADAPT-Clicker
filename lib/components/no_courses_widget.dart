@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -37,8 +38,8 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
               alignment: const AlignmentDirectional(0, 0),
               child: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 64, 0, 32),
-                child: Image.asset(
-                  'assets/images/Course_placeholder_img.png',
+                child: SvgPicture.asset(
+                  'assets/images/no_courses.svg',
                   width: 283,
                   fit: BoxFit.none,
                 ),

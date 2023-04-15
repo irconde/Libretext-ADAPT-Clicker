@@ -100,5 +100,17 @@ void preloadSVGs() async {
           'assets/images/libretexts_logo.svg'),
       null,
     ),
+    // No notifications placeholder image
+    precachePicture(
+      ExactAssetPicture(SvgPicture.svgStringDecoderOutsideViewBoxBuilder,
+          'assets/images/no_notifications.svg'),
+      null,
+    ),
+    // No courses placeholder image
+    precachePicture(
+      ExactAssetPicture(SvgPicture.svgStringDecoderOutsideViewBoxBuilder,
+          'assets/images/no_courses.svg'),
+      null,
+    ),
   ]);
 }

@@ -26,39 +26,9 @@ class $AssetsFontsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
-  /// File path: assets/images/Course_placeholder_img.png
-  AssetGenImage get coursePlaceholderImg =>
-      const AssetGenImage('assets/images/Course_placeholder_img.png');
-
   /// File path: assets/images/favicon.png
   AssetGenImage get favicon => const AssetGenImage('assets/images/favicon.png');
 
-  /// File path: assets/images/libreAddPerson.png
-  AssetGenImage get libreAddPerson =>
-      const AssetGenImage('assets/images/libreAddPerson.png');
-
-  /// File path: assets/images/libreHand.png
-  AssetGenImage get libreHand =>
-      const AssetGenImage('assets/images/libreHand.png');
-
-  /// File path: assets/images/libreQuestion.png
-  AssetGenImage get libreQuestion =>
-      const AssetGenImage('assets/images/libreQuestion.png');
-
-  /// File path: assets/images/libretexts_logo_main_white.png
-  AssetGenImage get libretextsLogoMainWhite =>
-      const AssetGenImage('assets/images/libretexts_logo_main_white.png');
-
-  /// File path: assets/images/libretexts_logo_stacked_blue.png
-  AssetGenImage get libretextsLogoStackedBlue =>
-      const AssetGenImage('assets/images/libretexts_logo_stacked_blue.png');
-
-  /// File path: assets/images/lock.png
-  AssetGenImage get lock => const AssetGenImage('assets/images/lock.png');
-
-  /// File path: assets/images/no_notifications.png
-  AssetGenImage get noNotifications =>
-      const AssetGenImage('assets/images/no_notifications.png');
 }
 
 class $AssetsLottieAnimationsGen {

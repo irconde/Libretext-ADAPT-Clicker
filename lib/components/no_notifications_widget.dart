@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +18,8 @@ class _NoNotificationsWidgetState extends State<NoNotificationsWidget> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-           Image.asset(
-              'assets/images/no_notifications.png',
+           SvgPicture.asset(
+              'assets/images/no_notifications.svg',
               width: double.infinity,
               height: 300,
               fit: BoxFit.none,

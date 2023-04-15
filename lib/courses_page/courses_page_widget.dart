@@ -34,8 +34,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
   Future<ApiCallResponse>? _apiRequestCompleter;
   ApiCallResponse? sendTokenResponse;
 
-  Future<bool> refreshPage() async
-  {
+  Future<bool> refreshPage() async {
     try {
       setState(() {
         _apiRequestCompleter = updateAndGetResponse();
@@ -44,14 +43,12 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
     } catch (e) {
       return false;
     }
-
-
   }
 
-  Future<ApiCallResponse> updateAndGetResponse(){
+  Future<ApiCallResponse> updateAndGetResponse() {
     return GetEnrollmentsCall.call(
-        token: StoredPreferences.authToken,
-      );
+      token: StoredPreferences.authToken,
+    );
   }
 
   bool _checkConnection() {
@@ -66,8 +63,6 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
-
     initFirebase();
     requestPermission(); //gets push notification permission
     getToken();
@@ -197,38 +192,6 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Container(
-                width: double.infinity,
-                height: 26,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFD4D4D4),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          Constants.msMargin, 0, 0, 0),
-                      child: Text(
-                        'active ',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Open Sans',
-                              fontSize: 12,
-                              fontWeight: FontWeight.normal,
-                            ),
-                      ),
-                    ),
-                    Text(
-                      '(0)',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Open Sans',
-                            fontSize: 12,
-                            fontWeight: FontWeight.normal,
-                          ),
-                    ),
-                  ],
-                ),
-              ),
               FutureBuilder<ApiCallResponse>(
                 key: const Key('Course List'),
                 future: _apiRequestCompleter,
@@ -254,7 +217,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
                               )?.toList() ??
                               '';
                       if (enrollmentsList.isEmpty) {
-                        return const  NoCoursesWidget();
+                        return const NoCoursesWidget();
                       }
                       return RefreshIndicator(
                         onRefresh: () async {
@@ -348,6 +311,4 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
       },
     );
   }
-
-
 }
