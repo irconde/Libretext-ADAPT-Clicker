@@ -2,7 +2,7 @@ import 'package:adapt_clicker/components/timezone_dropdown.dart';
 import 'package:adapt_clicker/components/drawer_ctn.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
-import '../components/MainAppBar.dart';
+import '../components/main_app_bar.dart';
 import '../components/form_state_mixin.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -56,23 +56,21 @@ class _UpdateProfilePageWidgetState
     final userInfoRequest = await GetUserCall.call(
       token: StoredPreferences.authToken,
     );
-    final timezoneListRequest =
-        await AppState.timezoneContainer.initTimezones();
+    await AppState.timezoneContainer.initTimezones();
 
-    if ((userInfoRequest?.succeeded ?? true)) {
+    if (userInfoRequest.succeeded) {
       currentUserInfo[firstName] =
-          getJsonField(userInfoRequest!.jsonBody, r'''$.first_name''')
+          getJsonField(userInfoRequest.jsonBody, r'''$.first_name''')
               .toString();
       currentUserInfo[lastName] =
-          getJsonField(userInfoRequest!.jsonBody, r'''$.last_name''')
-              .toString();
+          getJsonField(userInfoRequest.jsonBody, r'''$.last_name''').toString();
       currentUserInfo[email] =
-          getJsonField(userInfoRequest!.jsonBody, r'''$.email''').toString();
+          getJsonField(userInfoRequest.jsonBody, r'''$.email''').toString();
       currentUserInfo[studentId] =
-          getJsonField(userInfoRequest!.jsonBody, r'''$.student_id''')
+          getJsonField(userInfoRequest.jsonBody, r'''$.student_id''')
               .toString();
-      currentUserInfo[timeZone] = AppState.timezoneContainer!
-          .getText(getJsonField(userInfoRequest!.jsonBody, r'''$.time_zone''')
+      currentUserInfo[timeZone] = AppState.timezoneContainer
+          .getText(getJsonField(userInfoRequest.jsonBody, r'''$.time_zone''')
               .toString())
           .toString();
     }
@@ -106,8 +104,7 @@ class _UpdateProfilePageWidgetState
         lastName: formValues[lastName][dataIndex],
         email: formValues[email][dataIndex],
         timeZone: AppState.timezoneContainer
-                ?.getValue(formValues[timeZone][dataIndex]) ??
-            AppState.timezoneContainer!.timeZones.first.value,
+            .getValue(formValues[timeZone][dataIndex]),
         studentId: formValues[studentId][dataIndex]);
     if ((serverRequest?.succeeded ?? true) && context.mounted) {
       setState(() {});

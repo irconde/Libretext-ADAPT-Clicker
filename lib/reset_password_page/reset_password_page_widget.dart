@@ -1,4 +1,4 @@
-import 'package:adapt_clicker/components/MainAppBar.dart';
+import 'package:adapt_clicker/components/main_app_bar.dart';
 import 'package:adapt_clicker/components/drawer_ctn.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';

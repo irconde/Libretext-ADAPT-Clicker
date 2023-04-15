@@ -41,7 +41,9 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
   Future<void> recoverSavedAuthData() async {
     try {
       await _rememberMeCheck();
-    } catch (e) {}
+    } catch (e) {
+      // TODO. User logger here
+    }
   }
 
   Future<void> _rememberMeCheck() async {

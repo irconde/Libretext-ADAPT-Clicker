@@ -40,8 +40,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
   bool _isKeyboardVisible = false;
 
   Future<void> _loadTimeZones() async {
-    final timezoneListRequest =
-        await AppState.timezoneContainer.initTimezones();
+    await AppState.timezoneContainer.initTimezones();
     setState(() {});
   }
 
@@ -98,8 +97,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
     final String currentEmail = formValues[email][dataIndex];
     final String currentPassword = formValues[password][dataIndex];
     final timezoneValue =
-        AppState.timezoneContainer?.getValue(formValues[timeZone][dataIndex]) ??
-            AppState.timezoneContainer!.timeZones.first.value;
+        AppState.timezoneContainer.getValue(formValues[timeZone][dataIndex]);
     serverRequest = await CreateUserCall.call(
       email: currentEmail,
       password: currentPassword,

@@ -315,7 +315,9 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                           StoredPreferences.userAccount = '';
                           StoredPreferences.userPassword = '';
                         });
-                        await context.pushRoute(WelcomeRouteWidget());
+                        if (context.mounted) {
+                          await context.pushRoute(WelcomeRouteWidget());
+                        }
                         setState(() {});
                       },
                       child: const Text('LOGOUT')),

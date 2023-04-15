@@ -9,70 +9,8 @@
 
 import 'package:flutter/widgets.dart';
 
-class $AssetsAudiosGen {
-  const $AssetsAudiosGen();
-
-  /// File path: assets/audios/favicon.png
-  AssetGenImage get favicon => const AssetGenImage('assets/audios/favicon.png');
-}
-
-class $AssetsFontsGen {
-  const $AssetsFontsGen();
-
-  /// File path: assets/fonts/favicon.png
-  AssetGenImage get favicon => const AssetGenImage('assets/fonts/favicon.png');
-}
-
-class $AssetsImagesGen {
-  const $AssetsImagesGen();
-
-  /// File path: assets/images/favicon.png
-  AssetGenImage get favicon => const AssetGenImage('assets/images/favicon.png');
-
-}
-
-class $AssetsLottieAnimationsGen {
-  const $AssetsLottieAnimationsGen();
-
-  /// File path: assets/lottie_animations/favicon.png
-  AssetGenImage get favicon =>
-      const AssetGenImage('assets/lottie_animations/favicon.png');
-}
-
-class $AssetsPdfsGen {
-  const $AssetsPdfsGen();
-
-  /// File path: assets/pdfs/favicon.png
-  AssetGenImage get favicon => const AssetGenImage('assets/pdfs/favicon.png');
-}
-
-class $AssetsRiveAnimationsGen {
-  const $AssetsRiveAnimationsGen();
-
-  /// File path: assets/rive_animations/favicon.png
-  AssetGenImage get favicon =>
-      const AssetGenImage('assets/rive_animations/favicon.png');
-}
-
-class $AssetsVideosGen {
-  const $AssetsVideosGen();
-
-  /// File path: assets/videos/favicon.png
-  AssetGenImage get favicon => const AssetGenImage('assets/videos/favicon.png');
-}
-
 class Assets {
   Assets._();
-
-  static const $AssetsAudiosGen audios = $AssetsAudiosGen();
-  static const $AssetsFontsGen fonts = $AssetsFontsGen();
-  static const $AssetsImagesGen images = $AssetsImagesGen();
-  static const $AssetsLottieAnimationsGen lottieAnimations =
-      $AssetsLottieAnimationsGen();
-  static const $AssetsPdfsGen pdfs = $AssetsPdfsGen();
-  static const $AssetsRiveAnimationsGen riveAnimations =
-      $AssetsRiveAnimationsGen();
-  static const $AssetsVideosGen videos = $AssetsVideosGen();
 }
 
 class AssetGenImage {

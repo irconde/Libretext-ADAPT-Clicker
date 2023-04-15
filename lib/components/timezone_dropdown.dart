@@ -25,9 +25,9 @@ class TimezoneDropdownState extends State<TimezoneDropdown> {
     super.initState();
     if (widget.timezoneDropDownValue != null) {
       _timezoneDropDownValue = widget.timezoneDropDownValue;
-      AppState.userTimezone!.setValue(_timezoneDropDownValue!);
-      AppState.userTimezone!.setText(
-          AppState.timezoneContainer!.getText(_timezoneDropDownValue).toString());
+      AppState.userTimezone.setValue(_timezoneDropDownValue!);
+      AppState.userTimezone.setText(
+          AppState.timezoneContainer.getText(_timezoneDropDownValue).toString());
     }
   }
 
@@ -46,7 +46,7 @@ class TimezoneDropdownState extends State<TimezoneDropdown> {
         child: DropdownButton<String>(
           value: _timezoneDropDownValue,
           isExpanded: true,
-          items: AppState.timezoneContainer?.textZones.map((String value) {
+          items: AppState.timezoneContainer.textZones.map((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(
@@ -60,9 +60,9 @@ class TimezoneDropdownState extends State<TimezoneDropdown> {
             // This is called when the user selects an item.
             setState(() {
               _timezoneDropDownValue = value;
-              AppState.userTimezone!.setText(value.toString());
-              AppState.userTimezone!.setValue(
-                  AppState.timezoneContainer!.getValue(value.toString()));
+              AppState.userTimezone.setText(value.toString());
+              AppState.userTimezone.setValue(
+                  AppState.timezoneContainer.getValue(value.toString()));
             });
             if (widget.onItemSelectedCallback != null) {
               widget.onItemSelectedCallback!(_timezoneDropDownValue);
@@ -71,7 +71,7 @@ class TimezoneDropdownState extends State<TimezoneDropdown> {
           style: FlutterFlowTheme.of(context).bodyText1,
           underline: Container(),
           hint: Text(
-            AppState.userTimezone!.text,
+            AppState.userTimezone.text,
             style: FlutterFlowTheme.of(context).bodyText1,
           ),
         ),

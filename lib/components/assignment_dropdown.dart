@@ -68,7 +68,7 @@ class AssignmentDropdownState extends State<AssignmentDropdown> {
                 // This is called when the user selects an item.
                 widget.onItemSelectedCallback(value!);
                 setState(() {
-                  _value = value!;
+                  _value = value;
                 });
               },
               style: FlutterFlowTheme.of(context).bodyText1,

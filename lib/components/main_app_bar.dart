@@ -37,7 +37,6 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget notificationIcon(BuildContext context) {
     int val = FFAppState().notificationCount();
-    StatefulWidget page;
     if (val == 0) {
       return IconButton(
         icon: const Icon(

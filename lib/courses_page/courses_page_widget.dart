@@ -1,4 +1,4 @@
-import 'package:adapt_clicker/components/MainAppBar.dart';
+import 'package:adapt_clicker/components/main_app_bar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:move_to_background/move_to_background.dart';
 import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
@@ -14,7 +14,6 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../gen/assets.gen.dart';
 import '../utils/check_internet_connectivity.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 

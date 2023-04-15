@@ -1,6 +1,5 @@
 import 'package:adapt_clicker/utils/timezone.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'flutter_flow/lat_lng.dart';
 
 class FFAppState {
   static final FFAppState _instance = FFAppState._internal();
@@ -27,18 +26,18 @@ class FFAppState {
 
   bool get rememberMe => _rememberMe;
 
-  set rememberMe(bool _value) {
-    _rememberMe = _value;
-    prefs.setBool('ff_rememberMe', _value);
+  set rememberMe(bool value) {
+    _rememberMe = value;
+    prefs.setBool('ff_rememberMe', value);
   }
 
   String _authToken = '';
 
   String get authToken => _authToken;
 
-  set authToken(String _value) {
-    _authToken = _value;
-    prefs.setString('ff_authToken', _value);
+  set authToken(String value) {
+    _authToken = value;
+    prefs.setString('ff_authToken', value);
   }
 
   static List<String> _notificationList = [];
@@ -46,17 +45,17 @@ class FFAppState {
 
   List<String> get notificationList => _notificationList;
 
-  set notificationList(List<String> _value) {
-    _notificationList = _value;
-    prefs.setStringList('ff_notificationList', _value);
+  set notificationList(List<String> value) {
+    _notificationList = value;
+    prefs.setStringList('ff_notificationList', value);
   }
 
   //TODO: This is a temp solution, when adding from push notifications is implemented, get rid of this
   bool get notificationSet => _notificationSet;
 
-  set notificationSet(bool _value) {
-    _notificationSet = _value;
-    prefs.setBool('ff_notificationSet', _value);
+  set notificationSet(bool value) {
+    _notificationSet = value;
+    prefs.setBool('ff_notificationSet', value);
   }
 
   static bool _notificationSet = false;
@@ -95,13 +94,4 @@ class FFAppState {
 
   static TimezonesContainer? timezoneContainer;
 
-  LatLng? _latLngFromString(String? val) {
-    if (val == null) {
-      return null;
-    }
-    final split = val.split(',');
-    final lat = double.parse(split.first);
-    final lng = double.parse(split.last);
-    return LatLng(lat, lng);
-  }
 }
