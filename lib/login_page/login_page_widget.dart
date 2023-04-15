@@ -113,6 +113,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
                         child: TextFormField(
                             autofocus: true,
                             obscureText: false,
+                            initialValue: formValues[email][dataIndex],
                             decoration: InputDecoration(
                               labelText: 'Email',
                               errorText: submitted
@@ -142,6 +143,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
                         child: TextFormField(
                             autofocus: true,
                             obscureText: !passwordVisibility,
+                            initialValue: formValues[password][dataIndex],
                             decoration: InputDecoration(
                               labelText: 'Password',
                               errorText: submitted
