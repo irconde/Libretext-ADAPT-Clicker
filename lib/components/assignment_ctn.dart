@@ -4,10 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../components/assignment_details_widget.dart';
-import '../backend/api_requests/api_calls.dart';
 import '../gen/assets.gen.dart';
 import '../utils/check_internet_connectivity.dart';
-import '../utils/stored_preferences.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 
 class AssignmentCtn extends ConsumerStatefulWidget {

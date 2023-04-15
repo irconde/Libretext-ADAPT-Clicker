@@ -2,7 +2,6 @@ import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../backend/api_requests/api_calls.dart';
-import 'package:adapt_clicker/flutter_flow/custom_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
