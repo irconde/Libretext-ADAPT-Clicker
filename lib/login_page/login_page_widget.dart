@@ -53,6 +53,8 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
         setState(() {
           formValues[email] = [userAccount, null];
           formValues[password] = [userPassword, null];
+          requiredFieldsFilled =
+              checkRequiredFieldsFilled(formValues, requiredFields);
         });
       }
     }
