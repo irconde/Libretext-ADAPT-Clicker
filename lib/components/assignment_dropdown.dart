@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../gen/assets.gen.dart';
+import '../utils/constants.dart';
 
 class AssignmentDropdown extends StatefulWidget {
   const AssignmentDropdown(

@@ -5,10 +5,11 @@ import '../backend/api_requests/api_calls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'backend/Router/app_router.gr.dart';
+import 'backend/router/app_router.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
-import 'flutter_flow/app_router.gr.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'Firebase/firebase_options.dart';
 
@@ -91,10 +92,11 @@ class MyApp extends StatelessWidget {
         appBarTheme: FlutterFlowTheme.of(context).appBarTheme(),
       ),
       themeMode: _themeMode,
+      routeInformationProvider: _appRouter.routeInfoProvider(),
       routerDelegate: _appRouter.delegate(
           initialRoutes: authenticated
-              ? [CoursesRouteWidget(isFirstScreen: true)]
-              : [WelcomeRouteWidget(isFirstScreen: true)]),
+              ? [const CoursesPageWidget()]
+              : [WelcomePageWidget()]),
       routeInformationParser: _appRouter.defaultRouteParser(),
     );
   }

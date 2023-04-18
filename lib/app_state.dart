@@ -93,5 +93,4 @@ class FFAppState {
   bool hasSubmission = false;
 
   static TimezonesContainer? timezoneContainer;
-
 }

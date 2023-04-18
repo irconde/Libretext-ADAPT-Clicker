@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
+import '../flutter_flow/custom_functions.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -18,9 +19,9 @@ TextEditingController? forgotPasswordEmailFieldController;
 bool _submitted = false;
 
 class ResetPasswordWidget extends ConsumerStatefulWidget {
-  const ResetPasswordWidget({Key? key, required this.onSubmit})
+  const ResetPasswordWidget({Key? key})
       : super(key: key);
-  final ValueChanged<String?> onSubmit;
+
 
   @override
   ConsumerState<ResetPasswordWidget> createState() =>
@@ -43,7 +44,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
   void _submit() {
     setState(() => _submitted = true);
     if (_emailErrorText == null) {
-      widget.onSubmit(forgotPasswordEmailFieldController?.value.text);
+      onSubmit(forgotPasswordEmailFieldController?.value.text);
     }
   }
 

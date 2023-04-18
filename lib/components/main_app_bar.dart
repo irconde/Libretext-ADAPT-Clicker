@@ -2,7 +2,7 @@ import 'package:adapt_clicker/app_state.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
-import '../flutter_flow/app_router.gr.dart';
+import '../backend/router/app_router.gr.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -43,7 +43,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           Icons.notifications,
         ),
         onPressed: () async {
-          context.pushRoute(const NotificationsRouteWidget()).then((_) =>
+          context.pushRoute(const NotificationsPageWidget()).then((_) =>
               setState(() {}));
         },
       );
@@ -60,7 +60,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
               Icons.notifications,
             ),
             onPressed: () async {
-              context.pushRoute(const NotificationsRouteWidget()).then((_) =>
+              context.pushRoute(const NotificationsPageWidget()).then((_) =>
                   setState(() {}));
             },
           ),

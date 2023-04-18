@@ -307,6 +307,26 @@ class GetScoresByUserCall {
       );
 }
 
+class GetCourse {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    int? course,
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'getScoresByUser',
+      apiUrl:
+      'https://adapt.libretexts.org/api/courses/$course/',
+      callType: ApiCallType.GET,
+      headers: {
+        'accept': 'application/json',
+        'authorization': '$token',
+      },
+      params: {},
+      returnBody: true,
+    );
+  }
+}
+
 class ViewCall {
   static Future<ApiCallResponse> call({
     int? assignmentID,

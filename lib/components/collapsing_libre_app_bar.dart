@@ -3,7 +3,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../gen/assets.gen.dart';
+import '../utils/constants.dart';
 
 class CollapsingLibreAppBar extends StatefulWidget {
   const CollapsingLibreAppBar(

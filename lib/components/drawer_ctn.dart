@@ -1,4 +1,4 @@
-import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
+import '../backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,7 +6,7 @@ import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../gen/assets.gen.dart';
+import '../utils/constants.dart';
 import '../utils/check_internet_connectivity.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 
@@ -69,8 +69,11 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(Constants.msMargin,
-                        Constants.msMargin, Constants.msMargin, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        Constants.msMargin,
+                        Constants.msMargin,
+                        Constants.msMargin,
+                        0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -124,7 +127,8 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                     Navigator.pop(context);
                                     if (widget.currentSelected ==
                                         DrawerItems.courses) return;
-                                    context.pushRoute(CoursesRouteWidget());
+                                    context
+                                        .pushRoute(const CoursesPageWidget());
                                   }),
                             ),
                             Divider(
@@ -173,9 +177,8 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                   Navigator.pop(context);
                                   if (widget.currentSelected ==
                                       DrawerItems.profile) return;
-                                  context.pushRoute(UpdateProfileRouteWidget(
-                                    onSubmit: (String? value) {},
-                                  ));
+                                  context.pushRoute(
+                                      const UpdateProfilePageWidget());
                                 }),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
@@ -222,9 +225,8 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                     Navigator.pop(context);
                                     if (widget.currentSelected ==
                                         DrawerItems.password) return;
-                                    context.pushRoute(ResetPasswordRouteWidget(
-                                      onSubmit: (String value) {},
-                                    ));
+                                    context.pushRoute(
+                                        const ResetPasswordPageWidget());
                                   }),
                             ),
                             Divider(
@@ -275,7 +277,6 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                       DrawerItems.contact) return;
                                   context.pushRoute(
                                     ContactUsWidget(
-                                      onSubmit: (String? value) {},
                                       openFromDrawer: true,
                                     ),
                                   );
@@ -316,7 +317,7 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                           StoredPreferences.userPassword = '';
                         });
                         if (context.mounted) {
-                          await context.pushRoute(WelcomeRouteWidget());
+                          await context.pushRoute(WelcomePageWidget());
                         }
                         setState(() {});
                       },

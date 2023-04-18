@@ -10,14 +10,12 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 
+@RoutePage()
 class ContactUsWidget extends ConsumerStatefulWidget {
-  final ValueChanged<String?> onSubmit;
   final bool? openFromDrawer;
-
   const ContactUsWidget(
-      {Key? key, required this.onSubmit, this.openFromDrawer = false})
+      {Key? key, this.openFromDrawer = false})
       : super(key: key);
-
   @override
   ConsumerState<ContactUsWidget> createState() => _ContactUsWidgetState();
 }

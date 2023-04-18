@@ -5,9 +5,77 @@
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
-// ignore_for_file: directives_ordering,unnecessary_import
+// ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
 import 'package:flutter/widgets.dart';
+
+class $AssetsImagesGen {
+  const $AssetsImagesGen();
+
+  /// File path: assets/images/already_checked_in.svg
+  String get alreadyCheckedIn => 'assets/images/already_checked_in.svg';
+
+  /// File path: assets/images/book_icon.svg
+  String get bookIconSvg => 'assets/images/book_icon.svg';
+
+  /// File path: assets/images/calendar_icon.svg
+  String get calendarIcon => 'assets/images/calendar_icon.svg';
+
+  /// File path: assets/images/checked_in.svg
+  String get checkedIn => 'assets/images/checked_in.svg';
+
+  /// File path: assets/images/code_to_join.svg
+  String get codeToJoin => 'assets/images/code_to_join.svg';
+
+  /// File path: assets/images/contact_support.svg
+  String get contactSupport => 'assets/images/contact_support.svg';
+
+  /// File path: assets/images/event_expired.svg
+  String get eventExpired => 'assets/images/event_expired.svg';
+
+  /// File path: assets/images/event_not_active.svg
+  String get eventNotActive => 'assets/images/event_not_active.svg';
+
+  /// File path: assets/images/hand_wave.svg
+  String get handWave => 'assets/images/hand_wave.svg';
+
+  /// File path: assets/images/home_artboard.svg
+  String get homeArtboard => 'assets/images/home_artboard.svg';
+
+  /// File path: assets/images/libretexts_adapt_logo.svg
+  String get libretextsAdaptLogo => 'assets/images/libretexts_adapt_logo.svg';
+
+  /// File path: assets/images/libretexts_logo.svg
+  String get libretextsLogo => 'assets/images/libretexts_logo.svg';
+
+  /// File path: assets/images/lock.svg
+  String get lock => 'assets/images/lock.svg';
+
+  /// File path: assets/images/no-notifications-image.svg
+  String get noNotificationsImage => 'assets/images/no-notifications-image.svg';
+
+  /// File path: assets/images/person_add1.svg
+  String get personAdd1 => 'assets/images/person_add1.svg';
+
+  /// List of all assets
+  List<dynamic> get values => [
+        alreadyCheckedIn,
+        bookIconSvg,
+        calendarIcon,
+        checkedIn,
+        codeToJoin,
+        contactSupport,
+        eventExpired,
+        eventNotActive,
+        handWave,
+        homeArtboard,
+        libretextsAdaptLogo,
+        libretextsLogo,
+        lock,
+        noNotificationsImage,
+        personAdd1
+      ];
+}
 
 class Assets {
   Assets._();
@@ -71,43 +139,9 @@ class AssetGenImage {
     );
   }
 
+  ImageProvider provider() => AssetImage(_assetName);
+
   String get path => _assetName;
 
   String get keyName => _assetName;
-}
-
-class Constants {
-  //FontSizes
-  static const double drawerIconSize = 28;
-  static const double defaultTextSize = 14;
-  static const double requiredTextSize = 12;
-
-  //Widgets
-  static const double buttonHeight = 36;
-  static const int snackBarDurationMil = 4000; //milliseconds
-  static const int snackBarDurationSec = 4; //seconds
-  static const double TFIconSize = 21; //seconds
-
-  //Intro pages AppBar
-  static const double appBarHeight = 240.0;
-  static const double appBarTransitionMin = 80;
-  static const double appBarTitleOffset = 32; //higher means closer to top
-  static const double appBarTitleSpeed = 2; //higher means slower
-
-  static const double xlMargin = 68;
-  static const double llMargin = 48; //Double spaced
-  static const double lmMargin = 44; //
-  static const double lsMargin = 40; //
-  static const double mlMargin = 36; //margin with a little extra
-  static const double mmMargin =
-      32; //margin around edge of the pages mainly in intro
-  static const double msMargin = 24; // 2/3 page margin, used in a few widgets
-  static const double sMargin =
-      16; //half page margin and used in several widgets
-  static const double smMargin = 12; // 1/3 page margin, used in a few widgets
-  static const double xsMargin =
-      8; //quarter page margin used in between widgets
-  static const double xxsMargin = 4; //smallest margin used to offset text
-  static const double dividerThickness =
-      1; //smallest margin used to offset text
 }

@@ -1,21 +1,21 @@
 import 'package:adapt_clicker/components/timezone_dropdown.dart';
 import 'package:adapt_clicker/components/drawer_ctn.dart';
+import 'package:auto_route/annotations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/main_app_bar.dart';
 import '../components/form_state_mixin.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../gen/assets.gen.dart';
+import '../utils/constants.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import '../utils/stored_preferences.dart';
 
+@RoutePage()
 class UpdateProfilePageWidget extends ConsumerStatefulWidget {
-  const UpdateProfilePageWidget({Key? key, required this.onSubmit})
-      : super(key: key);
-  final ValueChanged<String?> onSubmit;
+  const UpdateProfilePageWidget({Key? key}) : super(key: key);
 
   @override
   ConsumerState<UpdateProfilePageWidget> createState() =>

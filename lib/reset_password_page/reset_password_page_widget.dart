@@ -1,18 +1,19 @@
 import 'package:adapt_clicker/components/main_app_bar.dart';
 import 'package:adapt_clicker/components/drawer_ctn.dart';
+import 'package:auto_route/annotations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/form_state_mixin.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../gen/assets.gen.dart';
+import '../utils/constants.dart';
 import 'package:flutter/material.dart';
 import '../utils/stored_preferences.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 
+@RoutePage()
 class ResetPasswordPageWidget extends ConsumerStatefulWidget {
-  const ResetPasswordPageWidget({Key? key, required this.onSubmit})
+  const ResetPasswordPageWidget({Key? key})
       : super(key: key);
-  final ValueChanged<String> onSubmit;
 
   @override
   ConsumerState<ResetPasswordPageWidget> createState() =>
@@ -122,7 +123,7 @@ class _ResetPasswordPageWidgetState
                                           : Icons.visibility_off_outlined,
                                       color: FlutterFlowTheme.of(context)
                                           .tertiaryColor,
-                                      size: Constants.TFIconSize,
+                                      size: Constants.tfIconSize,
                                     ),
                                   ),
                                 ),
@@ -159,7 +160,7 @@ class _ResetPasswordPageWidgetState
                                       _fieldsVisibility[password]!
                                           ? Icons.visibility_outlined
                                           : Icons.visibility_off_outlined,
-                                      size: Constants.TFIconSize,
+                                      size: Constants.tfIconSize,
                                     ),
                                   ),
                                 ),
@@ -200,7 +201,7 @@ class _ResetPasswordPageWidgetState
                                       _fieldsVisibility[passwordConfirmation]!
                                           ? Icons.visibility_outlined
                                           : Icons.visibility_off_outlined,
-                                      size: Constants.TFIconSize,
+                                      size: Constants.tfIconSize,
                                     ),
                                   ),
                                 ),

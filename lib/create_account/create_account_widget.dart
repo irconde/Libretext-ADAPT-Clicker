@@ -1,5 +1,5 @@
 import 'package:adapt_clicker/components/form_state_mixin.dart';
-import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
+import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:adapt_clicker/components/collapsing_libre_app_bar.dart';
 import 'package:flutter/gestures.dart';
@@ -13,10 +13,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import '../utils/stored_preferences.dart';
 
+@RoutePage()
 class CreateAccountWidget extends ConsumerStatefulWidget {
-  const CreateAccountWidget({Key? key, required this.onSubmit})
+  const CreateAccountWidget({Key? key})
       : super(key: key);
-  final ValueChanged<String?> onSubmit;
+
 
   @override
   ConsumerState<CreateAccountWidget> createState() =>
@@ -113,7 +114,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
         StoredPreferences.userAccount = currentEmail;
         StoredPreferences.userPassword = currentPassword;
       });
-      await context.pushRoute(CoursesRouteWidget());
+      await context.pushRoute(const CoursesPageWidget());
       setState(() {});
     } else {
       final errors =
@@ -464,9 +465,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                                         recognizer: TapGestureRecognizer()
                                           ..onTap = () async {
                                             context.pushRoute(
-                                              ContactUsWidget(
-                                                onSubmit: (String? value) {},
-                                              ),
+                                              ContactUsWidget(),
                                             );
                                           }),
                                   ]),

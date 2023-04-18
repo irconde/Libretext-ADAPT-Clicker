@@ -1,11 +1,12 @@
 import 'package:adapt_clicker/components/main_app_bar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:move_to_background/move_to_background.dart';
-import 'package:adapt_clicker/flutter_flow/app_router.gr.dart';
+import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../backend/Router/app_router.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/add_course_widget.dart';
 import '../components/no_courses_widget.dart';
@@ -13,15 +14,14 @@ import '../components/drawer_ctn.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Router;
+import '../utils/constants.dart';
 import '../utils/check_internet_connectivity.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 
+@RoutePage()
 class CoursesPageWidget extends ConsumerStatefulWidget {
-  final bool? isFirstScreen;
-
-  const CoursesPageWidget({Key? key, this.isFirstScreen = false})
-      : super(key: key);
+  const CoursesPageWidget({Key? key}) : super(key: key);
 
   @override
   ConsumerState<CoursesPageWidget> createState() => _CoursesPageWidgetState();
@@ -66,6 +66,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
     requestPermission(); //gets push notification permission
     getToken();
     sendToken();
+    handleRoutes();
     _apiRequestCompleter = updateAndGetResponse();
     super.initState();
   }
@@ -106,6 +107,33 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
     }
   }
 
+  void handleRoutes() {
+    RouteHandler rh = RouteHandler();
+    // Handle incoming push notifications when the app is in the foreground
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
+      // Extract the route parameter from the message
+      String path = message.data['path'];
+      String id = message.data['id'];
+      List<String> data = [id];
+      String args = await rh.getArgs(path, data);
+      // If the message contains a route parameter, navigate to the corresponding route
+      rh.navigateTo(context, path, args);
+    });
+    // Handle push notification when opening it
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+      print('A new onMessageOpenedApp event was published!');
+      print('Message data: ${message.data}');
+      // Extract the route parameter from the message
+      String path = message.data['path'];
+      List<String> data = [message.data['id']];
+      String args = await rh.getArgs(path, data);
+      // If the message contains a route parameter, navigate to the corresponding route
+      rh.navigateTo(context, path, args);
+    });
+  }
+
   void saveToken(var token) async {
     StoredPreferences.setString('ff_deviceIDToken', token);
     // TODO. To be deleted
@@ -132,22 +160,20 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.isFirstScreen != null && widget.isFirstScreen == true) {
-      final AsyncValue<ConnectivityStatus> connectivityStatusProvider =
-          ref.watch(provider);
-      ConnectivityStatus? status;
-      connectivityStatusProvider.whenData((value) => {status = value});
-      if (status != null) {
-        if (status != ConnectivityStatus.isConnected) {
-          ref.read(provider.notifier).startWatchingConnectivity();
-        }
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (status == null || status == ConnectivityStatus.initializing) {
-            return;
-          }
-          functions.showSnackbar(context, status!);
-        });
+    final AsyncValue<ConnectivityStatus> connectivityStatusProvider =
+        ref.watch(provider);
+    ConnectivityStatus? status;
+    connectivityStatusProvider.whenData((value) => {status = value});
+    if (status != null) {
+      if (status != ConnectivityStatus.isConnected) {
+        ref.read(provider.notifier).startWatchingConnectivity();
       }
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (status == null || status == ConnectivityStatus.initializing) {
+          return;
+        }
+        functions.showSnackbar(context, status!);
+      });
     }
 
     return WillPopScope(
@@ -234,11 +260,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
                             return InkWell(
                               onTap: () async {
                                 if (!_checkConnection()) return;
-                                context.pushRoute(AssignmentsRouteWidget(
-                                  courseNumber: getJsonField(
-                                    enrollmentsListItem,
-                                    r'''$.id''',
-                                  ),
+                                context.pushRoute(AssignmentsPageWidget(
                                   course: enrollmentsListItem,
                                 ));
                               },

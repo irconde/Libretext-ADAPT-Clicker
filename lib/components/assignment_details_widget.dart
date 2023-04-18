@@ -7,18 +7,19 @@ import '../components/question_c_t_n_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../gen/assets.gen.dart';
+import '../utils/constants.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import '../utils/check_internet_connectivity.dart';
 
+@RoutePage()
 class AssignmentDetailsWidget extends ConsumerStatefulWidget {
   const AssignmentDetailsWidget({
     Key? key,
-    this.assignmentItem,
+    @PathParam('summary') required this.assignmentSum,
   }) : super(key: key);
 
-  final dynamic assignmentItem;
+  final dynamic assignmentSum;
 
   @override
   ConsumerState<AssignmentDetailsWidget> createState() =>
@@ -28,6 +29,8 @@ class AssignmentDetailsWidget extends ConsumerStatefulWidget {
 class _AssignmentDetailsWidgetState
     extends ConsumerState<AssignmentDetailsWidget>
     with TickerProviderStateMixin {
+
+  late Map<String, dynamic> assignmentSummary;
   final animationsMap = {
     'textOnActionTriggerAnimation': AnimationInfo(
       trigger: AnimationTrigger.onActionTrigger,
@@ -67,21 +70,14 @@ class _AssignmentDetailsWidgetState
     );
   }
 
-  ApiCallResponse? assignmentSummary;
-  dynamic assignmentSum;
-
-  Future<void> init()
-  async {
-    assignmentSummary = await GetAssignmentSummaryCall.call(
-      token: StoredPreferences.authToken,
-      assignmentNum: getJsonField(
-        widget.assignmentItem,
-        r'''$.id''',
-      ),
-    );
-
-   assignmentSum = GetAssignmentSummaryCall.assignment(
-        (assignmentSummary?.jsonBody ?? ''));
+  Future<void> getSummary() async {
+    if(widget.assignmentSum.runtimeType == String) {
+      String decodedString = Uri.decodeComponent(widget.assignmentSum);
+      assignmentSummary = jsonDecode(decodedString);
+      //print('Assignment Summary : $assignmentSummary');
+    }else {
+      assignmentSummary = widget.assignmentSum;
+    }
   }
 
 
@@ -89,7 +85,7 @@ class _AssignmentDetailsWidgetState
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: init(),
+        future: getSummary(),
         builder: (context, snapshot) {
           return Scaffold(
             backgroundColor: FlutterFlowTheme
@@ -111,10 +107,7 @@ class _AssignmentDetailsWidgetState
                 },
               ),
               title: Text(
-                getJsonField(
-                  assignmentSum,
-                  r'''$.name''',
-                ).toString(),
+                assignmentSummary['name'],
                 maxLines: 1,
                 overflow: TextOverflow.fade,
                 style: FlutterFlowTheme
@@ -167,10 +160,7 @@ class _AssignmentDetailsWidgetState
                                     text: 'Number of Points: ',
                                   ),
                                   TextSpan(
-                                    text: "This assignment is worth a total of ${getJsonField(
-                                      assignmentSum,
-                                      r'''$.total_points''',
-                                    )} points",
+                                    text: "This assignment is worth a total of ${assignmentSummary['total_points']} points",
                                     style: FlutterFlowTheme
                                         .of(context)
                                         .bodyText1
@@ -201,10 +191,7 @@ class _AssignmentDetailsWidgetState
                                       text: 'Number of Questions: ',
                                     ),
                                     TextSpan(
-                                      text: "This assignment has ${getJsonField(
-                                        assignmentSum,
-                                        r'''$.number_of_questions''',
-                                      )} questions",
+                                      text: "This assignment has ${assignmentSummary['.number_of_questions']} questions",
                                       style: FlutterFlowTheme
                                           .of(context)
                                           .bodyText1
@@ -234,10 +221,7 @@ class _AssignmentDetailsWidgetState
                                     text: 'Due Date: ',
                                   ),
                                   TextSpan(
-                                    text: "This assignment is due by ${getJsonField(
-                                      assignmentSum,
-                                      r'''$.formatted_due''',
-                                    )}",
+                                    text: "This assignment is due by ${assignmentSummary['formatted_due']}",
                                     style: FlutterFlowTheme
                                         .of(context)
                                         .bodyText1
@@ -267,10 +251,7 @@ class _AssignmentDetailsWidgetState
                                   ),
                                 ),
                                 TextSpan(
-                                  text: getJsonField(
-                                    assignmentSum,
-                                    r'''$.formatted_late_policy''',
-                                  ).toString(),
+                                  text: assignmentSummary['formatted_late_policy'].toString(),
                                 ),
                               ],
                             ),
@@ -395,10 +376,7 @@ class _AssignmentDetailsWidgetState
                               children: [
                                 FutureBuilder<ApiCallResponse>(
                                   future: ViewCall.call(
-                                    assignmentID: getJsonField(
-                                      assignmentSum,
-                                      r'''$.id''',
-                                    ),
+                                    assignmentID:  assignmentSummary['id'],
                                     token: StoredPreferences.authToken,
                                   ),
                                   builder: (context, snapshot) {
@@ -472,11 +450,7 @@ class _AssignmentDetailsWidgetState
                                                       child: SizedBox(
                                                         height: double.infinity,
                                                         child: QuestionCTNWidget(
-                                                          assignmentName:
-                                                          getJsonField(
-                                                            assignmentSum,
-                                                            r'''$.name''',
-                                                          ).toString(),
+                                                          assignmentName: assignmentSummary['name'],
                                                         ),
                                                       ),
                                                     );
@@ -562,11 +536,7 @@ class _AssignmentDetailsWidgetState
                                                       flex: 1,
                                                       child: Text(
                                                         functions
-                                                            .questionSolution(
-                                                            getJsonField(
-                                                              assignmentSum,
-                                                              r'''$.solution_exists''',
-                                                            )),
+                                                            .questionSolution(assignmentSummary['solution_exist']),
                                                         textAlign: TextAlign
                                                             .center,
                                                         style: FlutterFlowTheme

@@ -11,17 +11,20 @@ import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import '../gen/assets.gen.dart';
+import '../utils/constants.dart';
 import 'dart:developer';
 import '../utils/stored_preferences.dart';
 
+@RoutePage()
 class QuestionCTNWidget extends StatefulWidget {
   const QuestionCTNWidget({
     Key? key,
-    this.assignmentName,
+    @PathParam('name') this.assignmentName,
+    @PathParam('view') this.view,
   }) : super(key: key);
 
   final String? assignmentName;
+  final String? view;
 
   @override
   State<QuestionCTNWidget> createState() => _QuestionCTNWidgetState();
