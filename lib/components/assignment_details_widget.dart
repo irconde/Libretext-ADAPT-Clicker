@@ -77,14 +77,15 @@ class _AssignmentDetailsWidgetState
 
   @override
   Widget build(BuildContext context) {
+    var theme = FlutterFlowTheme.of(context);
     return FutureBuilder(
         future: getSummary(),
         builder: (context, snapshot) {
           return Scaffold(
-            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            backgroundColor: theme.primaryBackground,
             appBar: AppBar(
               centerTitle: true,
-              backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+              backgroundColor: theme.primaryBackground,
               elevation: 0.0,
               leading: IconButton(
                 icon: const Icon(
@@ -99,9 +100,9 @@ class _AssignmentDetailsWidgetState
                 assignmentSummary['name'],
                 maxLines: 1,
                 overflow: TextOverflow.fade,
-                style: FlutterFlowTheme.of(context).bodyText1.override(
+                style: theme.bodyText1.override(
                     fontFamily: 'Open Sans',
-                    color: FlutterFlowTheme.of(context).primaryColor,
+                    color: theme.primaryColor,
                     fontSize: 20,
                     fontWeight: FontWeight.w700),
               ),
@@ -115,12 +116,12 @@ class _AssignmentDetailsWidgetState
                     },
                     icon: Icon(
                       Icons.info,
-                      color: FlutterFlowTheme.of(context).primaryColor,
+                      color: theme.primaryColor,
                     )),
               ],
             ),
             body: ScrollShadow(
-              color: FlutterFlowTheme.of(context).shadowGrey,
+              color: theme.shadowGrey,
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -140,9 +141,8 @@ class _AssignmentDetailsWidgetState
                       header: Container(
                         alignment: Alignment.centerLeft,
                         width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .coursePagePullDown),
+                        decoration:
+                            BoxDecoration(color: theme.coursePagePullDown),
                         child: Padding(
                             padding: const EdgeInsets.all(8),
                             child: Align(
@@ -152,17 +152,44 @@ class _AssignmentDetailsWidgetState
                                 alignment: WrapAlignment.start,
                                 children: [
                                   Chip(
+                                    backgroundColor: theme.secondaryColor,
                                     label: Text(
-                                        " ${assignmentSummary['total_points']} points"),
+                                      " ${assignmentSummary['total_points']} points",
+                                      style: theme.bodyText1.override(
+                                        fontFamily: 'Open Sans',
+                                        color: theme.primaryBackground,
+                                      ),
+                                    ),
                                   ),
                                   Chip(
+                                    backgroundColor: theme.secondaryColor,
                                     label: Text(
-                                        " ${assignmentSummary['number_of_allowed_attempts']} allowed attempts"),
+                                      " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} allowed attempts",
+                                      style: theme.bodyText1.override(
+                                        fontFamily: 'Open Sans',
+                                        color: theme.primaryBackground,
+                                      ),
+                                    ),
                                   ),
                                   Chip(
-                                    avatar: const Icon(Icons.date_range),
+                                    backgroundColor: theme.secondaryColor,
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            8, 0, 8, 0),
+                                    labelPadding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 4, 0),
+                                    avatar: Icon(
+                                      Icons.date_range,
+                                      color: theme.primaryBackground,
+                                    ),
                                     label: Text(
-                                        " ${formatDate(assignmentSummary['formatted_due'] ?? assignmentSummary['due']['due_date'])}"),
+                                      " ${formatDate(assignmentSummary['formatted_due'] ?? assignmentSummary['due']['due_date'])}",
+                                      style: theme.bodyText1.override(
+                                        fontFamily: 'Open Sans',
+                                        color: theme.primaryBackground,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -171,26 +198,46 @@ class _AssignmentDetailsWidgetState
                       expanded: Container(
                         alignment: Alignment.topLeft,
                         width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .coursePagePullDown),
+                        decoration:
+                            BoxDecoration(color: theme.coursePagePullDown),
                         child: Padding(
                           padding: const EdgeInsets.all(24),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 0, 0, Constants.msMargin),
+                                child: RichText(
+                                  text: TextSpan(
+                                    style: theme.bodyText3,
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: 'Public Description:  ',
+                                        style: theme.bodyText3.override(
+                                          fontFamily: 'Open Sans',
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: assignmentSummary[
+                                                'public_description'] ??
+                                            'There is no description',
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                               RichText(
                                 text: TextSpan(
-                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                  style: theme.bodyText3,
                                   children: <TextSpan>[
                                     TextSpan(
                                       text: 'Late Policy: ',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                      style: theme.bodyText3.override(
+                                        fontFamily: 'Open Sans',
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                     TextSpan(
                                       text: assignmentSummary[
@@ -221,12 +268,10 @@ class _AssignmentDetailsWidgetState
                                 child: Text(
                                   'Question',
                                   textAlign: TextAlign.center,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                  style: theme.bodyText1.override(
+                                    fontFamily: 'Open Sans',
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
                               Expanded(
@@ -234,12 +279,10 @@ class _AssignmentDetailsWidgetState
                                 child: Text(
                                   'Points',
                                   textAlign: TextAlign.center,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                  style: theme.bodyText1.override(
+                                    fontFamily: 'Open Sans',
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
                               Expanded(
@@ -247,12 +290,10 @@ class _AssignmentDetailsWidgetState
                                 child: Text(
                                   'Score',
                                   textAlign: TextAlign.center,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                  style: theme.bodyText1.override(
+                                    fontFamily: 'Open Sans',
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
                               Expanded(
@@ -260,12 +301,10 @@ class _AssignmentDetailsWidgetState
                                 child: Text(
                                   'Solution',
                                   textAlign: TextAlign.center,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                  style: theme.bodyText1.override(
+                                    fontFamily: 'Open Sans',
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
                             ],
@@ -289,8 +328,7 @@ class _AssignmentDetailsWidgetState
                                           width: 48,
                                           height: 48,
                                           child: CircularProgressIndicator(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
+                                            color: theme.primaryColor,
                                           ),
                                         ),
                                       );

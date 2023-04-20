@@ -51,6 +51,8 @@ abstract class FlutterFlowTheme {
   TextStyle get bodyText1 => typography.bodyText1;
   String get bodyText2Family => typography.bodyText2Family;
   TextStyle get bodyText2 => typography.bodyText2;
+  String get bodyText3Family => typography.bodyText2Family;
+  TextStyle get bodyText3 => typography.bodyText2;
 
   Typography get typography => ThemeTypography(this);
 
@@ -147,6 +149,8 @@ abstract class Typography {
   TextStyle get bodyText1;
   String get bodyText2Family;
   TextStyle get bodyText2;
+  String get bodyText3Family;
+  TextStyle get bodyText3;
 }
 
 class ThemeTypography extends Typography {
@@ -203,6 +207,13 @@ class ThemeTypography extends Typography {
         fontWeight: FontWeight.normal,
         fontSize: 14,
       );
+  String get bodyText3Family => 'Open Sans';
+  TextStyle get bodyText3 => GoogleFonts.getFont(
+    'Open Sans',
+    color: theme.tertiaryText,
+    fontWeight: FontWeight.normal,
+    fontSize: 14,
+  );
 }
 
 extension TextStyleHelper on TextStyle {
