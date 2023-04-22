@@ -1,4 +1,4 @@
-import 'package:adapt_clicker/components/submit_button.dart';
+import 'package:adapt_clicker/components/custom_elevated_button.dart';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
@@ -296,7 +296,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   32, 16, 32, 0),
-                              child: SubmitButton(
+                              child: CustomElevatedButton(
                                 formState: formState,
                                 normalText: 'SIGN IN WITH ADAPT',
                                 errorText: 'TRY IT AGAIN',
@@ -341,29 +341,15 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   32, 0, 32, 0),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  textStyle: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600),
-                                  surfaceTintColor: FlutterFlowTheme.of(context)
-                                      .primaryBtnText,
-                                  minimumSize: const Size.fromHeight(48),
-                                  backgroundColor: FlutterFlowTheme.of(context)
-                                      .secondaryColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                ),
-                                onPressed:
-                                    formState != FormStateValue.processing
-                                        ? () async {
-                                            if (!checkConnection()) return;
-                                            await mLaunchUrl(
-                                                'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
-                                          }
-                                        : null,
-                                child: const Text('CAMPUS LOGIN'),
+                              child: CustomElevatedButton(
+                                type: ButtonType.external,
+                                normalText: 'CAMPUS LOGIN',
+                                onPressed: () async {
+                                  if (!checkConnection()) return;
+                                  await mLaunchUrl(
+                                      'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
+
+                                },
                               ),
                             ),
                           ],

@@ -1,4 +1,4 @@
-import 'package:adapt_clicker/components/submit_button.dart';
+import 'package:adapt_clicker/components/custom_elevated_button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_manager.dart';
 import '../utils/check_internet_connectivity.dart';
