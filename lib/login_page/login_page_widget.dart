@@ -126,6 +126,8 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
                                   32, 32, 32, 0),
                               child: TextFormField(
                                   autofocus: true,
+                                  enabled:
+                                      formState != FormStateValue.processing,
                                   initialValue: formValues[email][dataIndex],
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -160,6 +162,8 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
                                   32, 24, 32, 24),
                               child: TextFormField(
                                   autofocus: true,
+                                  enabled:
+                                      formState != FormStateValue.processing,
                                   initialValue: formValues[password][dataIndex],
                                   obscureText: !passwordVisibility,
                                   decoration: InputDecoration(
@@ -351,11 +355,14 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
                                     borderRadius: BorderRadius.circular(4),
                                   ),
                                 ),
-                                onPressed: () async {
-                                  if (!checkConnection()) return;
-                                  await mLaunchUrl(
-                                      'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
-                                },
+                                onPressed:
+                                    formState != FormStateValue.processing
+                                        ? () async {
+                                            if (!checkConnection()) return;
+                                            await mLaunchUrl(
+                                                'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
+                                          }
+                                        : null,
                                 child: const Text('CAMPUS LOGIN'),
                               ),
                             ),
