@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/components/submit_button.dart';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
@@ -55,6 +56,9 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
           formValues[password] = [userPassword, null];
           requiredFieldsFilled =
               checkRequiredFieldsFilled(formValues, requiredFields);
+          formState = requiredFieldsFilled
+              ? FormStateValue.normal
+              : FormStateValue.unfilled;
         });
       }
     }
@@ -62,6 +66,9 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
 
   void _submit() async {
     if (!checkConnection()) return;
+    setState(() {
+      formState = FormStateValue.processing;
+    });
     serverRequest = await LoginCall.call(
       email: formValues[email][dataIndex],
       password: formValues[password][dataIndex],
@@ -78,6 +85,9 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
       await context.pushRoute(const CoursesPageWidget());
       setState(() {});
     } else {
+      setState(() {
+        formState = FormStateValue.error;
+      });
       final errors =
           getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
       onReceivedErrorsFromServer(errors);
@@ -139,6 +149,9 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
                                       requiredFieldsFilled =
                                           checkRequiredFieldsFilled(
                                               formValues, requiredFields);
+                                      formState = requiredFieldsFilled
+                                          ? FormStateValue.normal
+                                          : FormStateValue.unfilled;
                                     });
                                   }),
                             ),
@@ -185,6 +198,9 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
                                       requiredFieldsFilled =
                                           checkRequiredFieldsFilled(
                                               formValues, requiredFields);
+                                      formState = requiredFieldsFilled
+                                          ? FormStateValue.normal
+                                          : FormStateValue.unfilled;
                                     });
                                   }),
                             ),
@@ -276,23 +292,12 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   32, 16, 32, 0),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  textStyle: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600),
-                                  surfaceTintColor: FlutterFlowTheme.of(context)
-                                      .primaryBtnText,
-                                  minimumSize: const Size.fromHeight(36),
-                                  backgroundColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                ),
-                                onPressed:
-                                    requiredFieldsFilled ? _submit : null,
-                                child: const Text('SIGN IN WITH ADAPT'),
+                              child: SubmitButton(
+                                formState: formState,
+                                normalText: 'SIGN IN WITH ADAPT',
+                                errorText: 'TRY IT AGAIN',
+                                processingText: 'SIGNING UP',
+                                onPressed: _submit,
                               ),
                             ),
                             Padding(
@@ -339,7 +344,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
                                       fontWeight: FontWeight.w600),
                                   surfaceTintColor: FlutterFlowTheme.of(context)
                                       .primaryBtnText,
-                                  minimumSize: const Size.fromHeight(36),
+                                  minimumSize: const Size.fromHeight(48),
                                   backgroundColor: FlutterFlowTheme.of(context)
                                       .secondaryColor,
                                   shape: RoundedRectangleBorder(

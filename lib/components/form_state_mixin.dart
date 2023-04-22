@@ -1,7 +1,10 @@
+import 'package:adapt_clicker/components/submit_button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_manager.dart';
 import '../utils/check_internet_connectivity.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
+
+enum FormStateValue { unfilled, normal, processing, error }
 
 mixin FormStateMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
   final int dataIndex = 0;
@@ -9,6 +12,7 @@ mixin FormStateMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
   final Map<String, dynamic> formValues = {};
   bool submitted = false;
   bool requiredFieldsFilled = false;
+  FormStateValue formState = FormStateValue.unfilled;
   List<String> requiredFields = [];
   ApiCallResponse? serverRequest;
 
