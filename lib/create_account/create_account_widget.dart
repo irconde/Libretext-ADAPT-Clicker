@@ -6,6 +6,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/components/timezone_dropdown.dart';
+import '../components/custom_elevated_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
@@ -15,9 +16,7 @@ import '../utils/stored_preferences.dart';
 
 @RoutePage()
 class CreateAccountWidget extends ConsumerStatefulWidget {
-  const CreateAccountWidget({Key? key})
-      : super(key: key);
-
+  const CreateAccountWidget({Key? key}) : super(key: key);
 
   @override
   ConsumerState<CreateAccountWidget> createState() =>
@@ -88,9 +87,8 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
   void onTimezoneSelected(timezone) {
     setState(() {
       formValues[timeZone] = [timezone, null];
-      requiredFieldsFilled =
-          checkRequiredFieldsFilled(formValues, requiredFields);
     });
+    checkFormIsReadyToSubmit();
   }
 
   void _submit() async {
@@ -171,10 +169,8 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                             onChanged: (value) {
                               setState(() {
                                 formValues[firstName] = [value, null];
-                                requiredFieldsFilled =
-                                    checkRequiredFieldsFilled(
-                                        formValues, requiredFields);
                               });
+                              checkFormIsReadyToSubmit();
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
                           ),
@@ -196,10 +192,8 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                             onChanged: (value) {
                               setState(() {
                                 formValues[lastName] = [value, null];
-                                requiredFieldsFilled =
-                                    checkRequiredFieldsFilled(
-                                        formValues, requiredFields);
                               });
+                              checkFormIsReadyToSubmit();
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
                           ),
@@ -221,10 +215,8 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                             onChanged: (value) {
                               setState(() {
                                 formValues[studentId] = [value, null];
-                                requiredFieldsFilled =
-                                    checkRequiredFieldsFilled(
-                                        formValues, requiredFields);
                               });
+                              checkFormIsReadyToSubmit();
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
                           ),
@@ -246,10 +238,8 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                             onChanged: (value) {
                               setState(() {
                                 formValues[email] = [value, null];
-                                requiredFieldsFilled =
-                                    checkRequiredFieldsFilled(
-                                        formValues, requiredFields);
                               });
+                              checkFormIsReadyToSubmit();
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
                           ),
@@ -285,10 +275,8 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                             onChanged: (value) {
                               setState(() {
                                 formValues[password] = [value, null];
-                                requiredFieldsFilled =
-                                    checkRequiredFieldsFilled(
-                                        formValues, requiredFields);
                               });
+                              checkFormIsReadyToSubmit();
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
                           ),
@@ -327,10 +315,8 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                                   value,
                                   null
                                 ];
-                                requiredFieldsFilled =
-                                    checkRequiredFieldsFilled(
-                                        formValues, requiredFields);
                               });
+                              checkFormIsReadyToSubmit();
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
                           ),
@@ -360,32 +346,12 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 0, 0, 20),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor:
-                                    FlutterFlowTheme.of(context).primaryBtnText,
-                                backgroundColor:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                textStyle: const TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w600),
-                                minimumSize: const Size.fromHeight(36),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                              ),
-                              onPressed: requiredFieldsFilled ? _submit : null,
-                              child: Text(
-                                'REGISTER',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Open Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryBtnText,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 20,
-                                    ),
-                              ),
+                            child: CustomElevatedButton(
+                              formState: formState,
+                              normalText: 'REGISTER',
+                              errorText: 'TRY IT AGAIN',
+                              processingText: 'CREATING ACCOUNT',
+                              onPressed: _submit,
                             ),
                           ),
                           Stack(
@@ -419,25 +385,14 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 20, 0, 32),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                foregroundColor:
-                                    FlutterFlowTheme.of(context).primaryBtnText,
-                                backgroundColor:
-                                    FlutterFlowTheme.of(context).secondaryColor,
-                                textStyle: const TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w600),
-                                minimumSize: const Size.fromHeight(36),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                              ),
+                            child: CustomElevatedButton(
+                              type: ButtonType.external,
+                              normalText: 'CAMPUS REGISTRATION',
                               onPressed: () async {
                                 if (!checkConnection()) return;
                                 await mLaunchUrl(
                                     'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
                               },
-                              child: const Text('CAMPUS REGISTRATION'),
                             ),
                           ),
                           Padding(

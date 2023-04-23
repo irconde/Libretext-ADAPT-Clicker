@@ -82,7 +82,7 @@ class _WelcomePageWidgetState extends ConsumerState<WelcomePageWidget> {
                           normalText: 'CREATE ACCOUNT',
                           onPressed: () async {
                             context.pushRoute(
-                              const LoginPageWidget(),
+                              const CreateAccountWidget(),
                             );
                           },
                         ),

@@ -7,6 +7,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'custom_elevated_button.dart';
 import 'form_state_mixin.dart';
 
 class AddCourseWidget extends ConsumerStatefulWidget {
@@ -69,10 +70,8 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
   void _onTextChanged(String text) {
     setState(() {
       formValues[code] = [text, null];
-      requiredFieldsFilled =
-          checkRequiredFieldsFilled(
-              formValues, requiredFields);
     });
+    checkFormIsReadyToSubmit();
   }
 
   @override
@@ -184,23 +183,12 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 24, 0, 0),
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    minimumSize: const Size.fromHeight(36),
-                                    textStyle: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600),
-                                    backgroundColor:
-                                        FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                    elevation: 4,
-                                  ),
-                                  onPressed:
-                                      requiredFieldsFilled ? _submit : null,
-                                  child: const Text('JOIN COURSE'),
+                                child: CustomElevatedButton(
+                                  formState: formState,
+                                  normalText: 'JOIN COURSE',
+                                  errorText: 'TRY IT AGAIN',
+                                  processingText: 'JOINING COURSE',
+                                  onPressed: _submit,
                                 ),
                               ),
                             ],

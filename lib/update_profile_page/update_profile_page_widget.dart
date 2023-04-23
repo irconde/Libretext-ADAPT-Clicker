@@ -86,7 +86,7 @@ class _UpdateProfilePageWidgetState
       formValues[email] = [inputValues[email], null];
       formValues[timeZone] = [inputValues[timeZone], null];
       requiredFieldsFilled =
-          checkRequiredFieldsFilled(formValues, requiredFields);
+          areRequiredFieldsFilled(formValues, requiredFields);
     });
   }
 
@@ -197,7 +197,7 @@ class _UpdateProfilePageWidgetState
                                               null
                                             ];
                                             requiredFieldsFilled =
-                                                checkRequiredFieldsFilled(
+                                                areRequiredFieldsFilled(
                                                     formValues, requiredFields);
                                           });
                                         }),
@@ -225,7 +225,7 @@ class _UpdateProfilePageWidgetState
                                               null
                                             ];
                                             requiredFieldsFilled =
-                                                checkRequiredFieldsFilled(
+                                                areRequiredFieldsFilled(
                                                     formValues, requiredFields);
                                           });
                                         }),
@@ -254,7 +254,7 @@ class _UpdateProfilePageWidgetState
                                               null
                                             ];
                                             requiredFieldsFilled =
-                                                checkRequiredFieldsFilled(
+                                                areRequiredFieldsFilled(
                                                     formValues, requiredFields);
                                           });
                                         }),

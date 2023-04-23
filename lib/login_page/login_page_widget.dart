@@ -54,12 +54,8 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
         setState(() {
           formValues[email] = [userAccount, null];
           formValues[password] = [userPassword, null];
-          requiredFieldsFilled =
-              checkRequiredFieldsFilled(formValues, requiredFields);
-          formState = requiredFieldsFilled
-              ? FormStateValue.normal
-              : FormStateValue.unfilled;
         });
+        checkFormIsReadyToSubmit();
       }
     }
   }
@@ -148,13 +144,8 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
                                   onChanged: (value) {
                                     setState(() {
                                       formValues[email] = [value, null];
-                                      requiredFieldsFilled =
-                                          checkRequiredFieldsFilled(
-                                              formValues, requiredFields);
-                                      formState = requiredFieldsFilled
-                                          ? FormStateValue.normal
-                                          : FormStateValue.unfilled;
                                     });
+                                    checkFormIsReadyToSubmit();
                                   }),
                             ),
                             Padding(
@@ -199,13 +190,8 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
                                   onChanged: (value) {
                                     setState(() {
                                       formValues[password] = [value, null];
-                                      requiredFieldsFilled =
-                                          checkRequiredFieldsFilled(
-                                              formValues, requiredFields);
-                                      formState = requiredFieldsFilled
-                                          ? FormStateValue.normal
-                                          : FormStateValue.unfilled;
                                     });
+                                    checkFormIsReadyToSubmit();
                                   }),
                             ),
                             Padding(

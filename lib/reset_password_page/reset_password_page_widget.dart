@@ -3,6 +3,7 @@ import 'package:adapt_clicker/components/drawer_ctn.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
+import '../components/custom_elevated_button.dart';
 import '../components/form_state_mixin.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../utils/constants.dart';
@@ -131,10 +132,8 @@ class _ResetPasswordPageWidgetState
                                 onChanged: (value) {
                                   setState(() {
                                     formValues[currentPassword] = [value, null];
-                                    requiredFieldsFilled =
-                                        checkRequiredFieldsFilled(
-                                            formValues, requiredFields);
                                   });
+                                  checkFormIsReadyToSubmit();
                                 }),
                           ),
                           Padding(
@@ -168,10 +167,8 @@ class _ResetPasswordPageWidgetState
                                 onChanged: (value) {
                                   setState(() {
                                     formValues[password] = [value, null];
-                                    requiredFieldsFilled =
-                                        checkRequiredFieldsFilled(
-                                            formValues, requiredFields);
                                   });
+                                  checkFormIsReadyToSubmit();
                                 }),
                           ),
                           Padding(
@@ -212,10 +209,8 @@ class _ResetPasswordPageWidgetState
                                       value,
                                       null
                                     ];
-                                    requiredFieldsFilled =
-                                        checkRequiredFieldsFilled(
-                                            formValues, requiredFields);
                                   });
+                                  checkFormIsReadyToSubmit();
                                 }),
                           ),
                           Align(
@@ -240,21 +235,12 @@ class _ResetPasswordPageWidgetState
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(
                       0, 0, 0, Constants.msMargin),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      textStyle: FlutterFlowTheme.of(context).title3,
-                      surfaceTintColor:
-                          FlutterFlowTheme.of(context).primaryBtnText,
-                      minimumSize:
-                          const Size.fromHeight(Constants.buttonHeight),
-                      backgroundColor:
-                          FlutterFlowTheme.of(context).primaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                    onPressed: requiredFieldsFilled ? _submit : null,
-                    child: const Text('CHANGE PASSWORD'),
+                  child: CustomElevatedButton(
+                    formState: formState,
+                    normalText: 'CHANGE PASSWORD',
+                    errorText: 'TRY IT AGAIN',
+                    processingText: 'CHANGING PASSWORD',
+                    onPressed: _submit,
                   ),
                 ),
               ],

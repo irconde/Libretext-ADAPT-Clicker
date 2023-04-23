@@ -4,6 +4,7 @@ import 'package:adapt_clicker/components/collapsing_libre_app_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/components/contact_us_dropdown_list.dart';
+import '../components/custom_elevated_button.dart';
 import '../components/drawer_ctn.dart';
 import '../components/form_state_mixin.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -148,9 +149,8 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
                           onChanged: (value) {
                             setState(() {
                               formValues[name] = [value, null];
-                              requiredFieldsFilled = checkRequiredFieldsFilled(
-                                  formValues, requiredFields);
                             });
+                            checkFormIsReadyToSubmit();
                           }),
                     ),
                     Padding(
@@ -171,9 +171,8 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
                           onChanged: (value) {
                             setState(() {
                               formValues[email] = [value, null];
-                              requiredFieldsFilled = checkRequiredFieldsFilled(
-                                  formValues, requiredFields);
                             });
+                            checkFormIsReadyToSubmit();
                           }),
                     ),
                     ContactUsDropDownList(
@@ -220,19 +219,12 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
                     Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size.fromHeight(36),
-                          backgroundColor:
-                              FlutterFlowTheme.of(context).primaryColor,
-                          textStyle: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w600),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                        ),
-                        onPressed: requiredFieldsFilled ? _submit : null,
-                        child: const Text('SUBMIT'),
+                      child: CustomElevatedButton(
+                        formState: formState,
+                        normalText: 'SEND MESSAGE',
+                        errorText: 'TRY IT AGAIN',
+                        processingText: 'SENDING MESSAGE',
+                        onPressed: _submit,
                       ),
                     ),
                   ],

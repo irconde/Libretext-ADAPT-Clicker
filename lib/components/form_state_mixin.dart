@@ -16,7 +16,7 @@ mixin FormStateMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
   List<String> requiredFields = [];
   ApiCallResponse? serverRequest;
 
-  bool checkRequiredFieldsFilled(
+  bool areRequiredFieldsFilled(
       Map<String, dynamic> formData, List<String> requiredFields) {
     for (String field in requiredFields) {
       if (formData[field][dataIndex] == null ||
@@ -25,6 +25,16 @@ mixin FormStateMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
       }
     }
     return true;
+  }
+
+  void checkFormIsReadyToSubmit() {
+    setState(() {
+      requiredFieldsFilled =
+          areRequiredFieldsFilled(formValues, requiredFields);
+      formState = requiredFieldsFilled
+          ? FormStateValue.normal
+          : FormStateValue.unfilled;
+    });
   }
 
   bool checkConnection() {
