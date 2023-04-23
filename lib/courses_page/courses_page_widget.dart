@@ -9,14 +9,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/Router/app_router.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/add_course_widget.dart';
+import '../components/connection_state_mixin.dart';
 import '../components/no_courses_widget.dart';
 import '../components/drawer_ctn.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import 'package:flutter/material.dart' hide Router;
-import '../utils/check_internet_connectivity.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
 
 @RoutePage()
 class CoursesPageWidget extends ConsumerStatefulWidget {
@@ -29,7 +28,8 @@ class CoursesPageWidget extends ConsumerStatefulWidget {
   ConsumerState<CoursesPageWidget> createState() => _CoursesPageWidgetState();
 }
 
-class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
+class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget>
+    with ConnectionStateMixin {
   ApiCallResponse? logout;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   Future<ApiCallResponse>? _apiRequestCompleter;
@@ -52,16 +52,6 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
     );
   }
 
-  bool _checkConnection() {
-    ConnectivityStatus? status =
-        ref.read(provider.notifier).getConnectionStatus();
-    if (status != ConnectivityStatus.isConnected) {
-      functions.showSnackbar(context, status);
-      return false;
-    }
-    return true;
-  }
-
   @override
   void initState() {
     super.initState();
@@ -72,34 +62,34 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
     handleRoutes();
     _apiRequestCompleter = updateAndGetResponse();
     if (widget.isFirstScreen!) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _showSignInSnackbar();
-      });
+      _showSignInSnackbar();
     }
   }
 
   void _showSignInSnackbar() {
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content: RichText(
-            text: TextSpan(
-              text: 'Signed in as ',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-              ),
-              children: <TextSpan>[
-                TextSpan(
-                  text: StoredPreferences.userAccount,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: RichText(
+              text: TextSpan(
+                text: 'Signed in as ',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
                 ),
-                const TextSpan(text: '.'),
-              ],
+                children: <TextSpan>[
+                  TextSpan(
+                    text: StoredPreferences.userAccount,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const TextSpan(text: '.'),
+                ],
+              ),
             ),
-          ),
-          backgroundColor: FlutterFlowTheme.of(context).secondaryText),
-    );
+            backgroundColor: FlutterFlowTheme.of(context).secondaryText),
+      );
+    });
   }
 
   //Creating Firebase
@@ -191,25 +181,9 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-
-    if (widget.isFirstScreen != null && widget.isFirstScreen == true) {
-      final AsyncValue<ConnectivityStatus> connectivityStatusProvider =
-          ref.watch(provider);
-      ConnectivityStatus? status;
-      connectivityStatusProvider.whenData((value) => {status = value});
-      if (status != null) {
-        if (status != ConnectivityStatus.isConnected) {
-          ref.read(provider.notifier).startWatchingConnectivity();
-        }
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (status == null || status == ConnectivityStatus.initializing) {
-            return;
-          }
-          functions.showSnackbar(context, status!);
-        });
-      }
+    if (widget.isFirstScreen!) {
+      startWatchingConnection();
     }
-
     return WillPopScope(
       child: Scaffold(
         key: scaffoldKey,
@@ -222,7 +196,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            if (!_checkConnection()) return;
+            if (!checkConnection()) return;
             showModalBottomSheet(
               useSafeArea: true,
               isScrollControlled: true,
@@ -292,7 +266,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
                                 enrollmentsList[enrollmentsListIndex];
                             return InkWell(
                               onTap: () async {
-                                if (!_checkConnection()) return;
+                                if (!checkConnection()) return;
                                 context.pushRoute(AssignmentsRouteWidget(
                                   course: enrollmentsListItem,
                                 ));

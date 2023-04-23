@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/components/connection_state_mixin.dart';
 import 'package:adapt_clicker/components/timezone_dropdown.dart';
 import 'package:adapt_clicker/components/drawer_ctn.dart';
 import 'package:auto_route/auto_route.dart';
@@ -24,7 +25,8 @@ class UpdateProfilePageWidget extends ConsumerStatefulWidget {
 }
 
 class _UpdateProfilePageWidgetState
-    extends ConsumerState<UpdateProfilePageWidget> with FormStateMixin {
+    extends ConsumerState<UpdateProfilePageWidget>
+    with FormStateMixin, ConnectionStateMixin {
   static const String firstName = 'first_name';
   static const String lastName = 'last_name';
   static const String email = 'email';
@@ -289,7 +291,10 @@ class _UpdateProfilePageWidgetState
                           : _isKeyboardVisible))
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              Constants.mmMargin, 0, Constants.mmMargin, Constants.msMargin),
+                              Constants.mmMargin,
+                              0,
+                              Constants.mmMargin,
+                              Constants.msMargin),
                           child: CustomElevatedButton(
                             formState: formState,
                             normalText: 'UPDATE PROFILE',

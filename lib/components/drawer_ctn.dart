@@ -1,3 +1,5 @@
+import 'package:adapt_clicker/components/connection_state_mixin.dart';
+
 import '../backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
@@ -14,24 +16,16 @@ enum DrawerItems { courses, profile, password, contact }
 
 class DrawerCtnWidget extends ConsumerStatefulWidget {
   final DrawerItems? currentSelected;
+
   const DrawerCtnWidget({Key? key, this.currentSelected}) : super(key: key);
 
   @override
   ConsumerState<DrawerCtnWidget> createState() => _DrawerCtnWidgetState();
 }
 
-class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
+class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget>
+    with ConnectionStateMixin {
   ApiCallResponse? logout;
-
-  bool _checkConnection() {
-    ConnectivityStatus? status =
-        ref.read(provider.notifier).getConnectionStatus();
-    if (status != ConnectivityStatus.isConnected) {
-      functions.showSnackbar(context, status);
-      return false;
-    }
-    return true;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,8 +121,7 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                     Navigator.pop(context);
                                     if (widget.currentSelected ==
                                         DrawerItems.courses) return;
-                                    context
-                                        .pushRoute(CoursesRouteWidget());
+                                    context.pushRoute(CoursesRouteWidget());
                                   }),
                             ),
                             Divider(
@@ -307,7 +300,7 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                         ),
                       ),
                       onPressed: () async {
-                        if (!_checkConnection()) return;
+                        if (!checkConnection()) return;
                         logout = await LogoutCall.call(
                           token: StoredPreferences.authToken,
                         );

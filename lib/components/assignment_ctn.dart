@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/components/connection_state_mixin.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,25 +18,15 @@ class AssignmentCtn extends ConsumerStatefulWidget {
   AssignmentCtnState createState() => AssignmentCtnState();
 }
 
-class AssignmentCtnState extends ConsumerState<AssignmentCtn> {
-  bool _checkConnection() {
-    ConnectivityStatus? status =
-        ref.read(provider.notifier).getConnectionStatus();
-    if (status != ConnectivityStatus.isConnected) {
-      functions.showSnackbar(context, status);
-      return false;
-    }
-    return true;
-  }
-
+class AssignmentCtnState extends ConsumerState<AssignmentCtn>
+    with ConnectionStateMixin {
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: () async {
-          if (!_checkConnection()) return;
-
+          if (!checkConnection()) return;
           if (!AppState().assignmentUp && context.mounted) {
             setState(() => AppState().assignmentUp = true);
             await showModalBottomSheet(

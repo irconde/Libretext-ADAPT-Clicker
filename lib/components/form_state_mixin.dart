@@ -37,16 +37,6 @@ mixin FormStateMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
     });
   }
 
-  bool checkConnection() {
-    ConnectivityStatus? status =
-        ref.read(provider.notifier).getConnectionStatus();
-    if (status != ConnectivityStatus.isConnected) {
-      functions.showSnackbar(context, status);
-      return false;
-    }
-    return true;
-  }
-
   void onReceivedErrorsFromServer(dynamic errors) {
     setState(() => submitted = true);
     Map<String, dynamic> errorData = Map<String, dynamic>.from(errors);

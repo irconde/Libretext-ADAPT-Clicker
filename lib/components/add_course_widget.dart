@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:adapt_clicker/components/connection_state_mixin.dart';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,7 +19,7 @@ class AddCourseWidget extends ConsumerStatefulWidget {
 }
 
 class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
-    with TickerProviderStateMixin, FormStateMixin {
+    with TickerProviderStateMixin, FormStateMixin, ConnectionStateMixin {
   static const String code = 'access_code';
 
   @override

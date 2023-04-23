@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/components/connection_state_mixin.dart';
 import 'package:adapt_clicker/components/main_app_bar.dart';
 import 'package:adapt_clicker/components/drawer_ctn.dart';
 import 'package:auto_route/auto_route.dart';
@@ -13,8 +14,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 
 @RoutePage()
 class ResetPasswordPageWidget extends ConsumerStatefulWidget {
-  const ResetPasswordPageWidget({Key? key})
-      : super(key: key);
+  const ResetPasswordPageWidget({Key? key}) : super(key: key);
 
   @override
   ConsumerState<ResetPasswordPageWidget> createState() =>
@@ -22,7 +22,8 @@ class ResetPasswordPageWidget extends ConsumerStatefulWidget {
 }
 
 class _ResetPasswordPageWidgetState
-    extends ConsumerState<ResetPasswordPageWidget> with FormStateMixin {
+    extends ConsumerState<ResetPasswordPageWidget>
+    with FormStateMixin, ConnectionStateMixin {
   static const String currentPassword = 'current_password';
   static const String password = 'password';
   static const String passwordConfirmation = 'password_confirmation';

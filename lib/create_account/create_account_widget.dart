@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/components/connection_state_mixin.dart';
 import 'package:adapt_clicker/components/form_state_mixin.dart';
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
@@ -24,7 +25,7 @@ class CreateAccountWidget extends ConsumerStatefulWidget {
 }
 
 class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
-    with FormStateMixin {
+    with FormStateMixin, ConnectionStateMixin {
   final _formKey = GlobalKey<FormState>();
   static const String firstName = 'first_name';
   static const String lastName = 'last_name';

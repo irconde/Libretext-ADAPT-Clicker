@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/components/connection_state_mixin.dart';
 import 'package:adapt_clicker/components/main_app_bar.dart';
 import 'package:adapt_clicker/components/collapsing_libre_app_bar.dart';
 import 'package:auto_route/auto_route.dart';
@@ -23,7 +24,7 @@ class ContactUsWidget extends ConsumerStatefulWidget {
 }
 
 class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
-    with FormStateMixin {
+    with FormStateMixin, ConnectionStateMixin {
   static const String name = 'name';
   static const String email = 'email';
   static const String subject = 'subject';

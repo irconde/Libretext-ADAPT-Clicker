@@ -35,26 +35,6 @@ bool equalsIgnoreCase(String? string1, String? string2) {
   return string1?.toLowerCase() == string2?.toLowerCase();
 }
 
-void showSnackbar(BuildContext context, ConnectivityStatus? status) {
-  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(
-        status == ConnectivityStatus.isConnected
-            ? 'Connected to Internet'
-            : 'No Internet connection',
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 14,
-        ),
-      ),
-      backgroundColor: status == ConnectivityStatus.isConnected
-          ? FlutterFlowTheme.of(context).success
-          : FlutterFlowTheme.of(context).failure,
-    ),
-  );
-}
-
 void preloadSVGs() async {
   // Preload SVG used in the next screen to avoid rendering delays
   Future.wait([

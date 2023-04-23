@@ -1,4 +1,5 @@
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
+import 'package:adapt_clicker/components/connection_state_mixin.dart';
 import 'package:adapt_clicker/components/custom_elevated_button.dart';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
@@ -23,7 +24,7 @@ class LoginPageWidget extends ConsumerStatefulWidget {
 }
 
 class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
-    with FormStateMixin {
+    with FormStateMixin, ConnectionStateMixin {
   static const String email = 'email';
   static const String password = 'password';
   bool passwordVisibility = false;

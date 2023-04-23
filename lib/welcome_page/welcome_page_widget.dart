@@ -3,40 +3,32 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:move_to_background/move_to_background.dart';
+import '../components/connection_state_mixin.dart';
 import '../components/custom_elevated_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../utils/check_internet_connectivity.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
 
 @RoutePage()
-class WelcomePageWidget extends ConsumerWidget {
+class WelcomePageWidget extends ConsumerStatefulWidget {
   final bool? isFirstScreen;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  WelcomePageWidget({Key? key, this.isFirstScreen = false}) : super(key: key);
+  const WelcomePageWidget({Key? key, this.isFirstScreen = false})
+      : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    if (isFirstScreen != null && isFirstScreen == true) {
-      final AsyncValue<ConnectivityStatus> connectivityStatusProvider =
-          ref.watch(provider);
-      ConnectivityStatus? status;
-      connectivityStatusProvider.whenData((value) => {status = value});
-      if (status != null) {
-        if (status != ConnectivityStatus.isConnected) {
-          ref.read(provider.notifier).startWatchingConnectivity();
-        }
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (status == null || status == ConnectivityStatus.initializing) {
-            return;
-          }
-          functions.showSnackbar(context, status!);
-        });
-      }
-    }
+  ConsumerState<WelcomePageWidget> createState() => _WelcomePageWidgetState();
+}
 
+class _WelcomePageWidgetState extends ConsumerState<WelcomePageWidget>
+    with ConnectionStateMixin {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.isFirstScreen!) {
+      startWatchingConnection();
+    }
     return WillPopScope(
       child: Scaffold(
         key: scaffoldKey,

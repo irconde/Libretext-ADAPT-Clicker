@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/components/connection_state_mixin.dart';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,19 +28,9 @@ class AssignmentDetailsWidget extends ConsumerStatefulWidget {
 
 class _AssignmentDetailsWidgetState
     extends ConsumerState<AssignmentDetailsWidget>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, ConnectionStateMixin {
 
   late Map<String, dynamic> assignmentSummary;
-
-  bool _checkConnection() {
-    ConnectivityStatus? status =
-        ref.read(provider.notifier).getConnectionStatus();
-    if (status != ConnectivityStatus.isConnected) {
-      functions.showSnackbar(context, status);
-      return false;
-    }
-    return true;
-  }
 
   @override
   void initState() {
@@ -386,7 +377,7 @@ class _AssignmentDetailsWidgetState
                                             return InkWell(
                                               splashColor: Colors.transparent,
                                               onTap: () async {
-                                                if (!_checkConnection()) return;
+                                                if (!checkConnection()) return;
                                                 setState(() =>
                                                 AppState().view =
                                                     listViewViewResponse

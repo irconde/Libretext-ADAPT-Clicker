@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:adapt_clicker/components/connection_state_mixin.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
@@ -19,7 +20,7 @@ class ResetPasswordWidget extends ConsumerStatefulWidget {
 }
 
 class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
-    with TickerProviderStateMixin, FormStateMixin {
+    with TickerProviderStateMixin, FormStateMixin, ConnectionStateMixin {
   static const String email = 'email';
 
   void _submit() async {
