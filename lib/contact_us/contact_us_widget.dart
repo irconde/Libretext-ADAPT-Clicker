@@ -29,6 +29,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
   static const String subject = 'subject';
   static const String text = 'text';
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -83,7 +84,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
         Future.delayed(const Duration(seconds: 1), () {
           setState(() {
             formState = FormStateValue.unfilled;
-            // TODO. Reset fields
+            _formKey.currentState!.reset();
           });
         });
       }
@@ -135,6 +136,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
       onTap: () => FocusScope.of(context).unfocus(),
       child: SingleChildScrollView(
         child: Form(
+          key: _formKey,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [

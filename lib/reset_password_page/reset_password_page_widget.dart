@@ -32,6 +32,7 @@ class _ResetPasswordPageWidgetState
     passwordConfirmation: false
   };
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -60,8 +61,8 @@ class _ResetPasswordPageWidgetState
       Future.delayed(const Duration(seconds: 1), () {
         setState(() {
           formState = FormStateValue.unfilled;
-          // TODO. reset fields
         });
+        _formKey.currentState!.reset();
       });
     } else {
       setState(() {
@@ -97,6 +98,7 @@ class _ResetPasswordPageWidgetState
                 Expanded(
                   child: SingleChildScrollView(
                     child: Form(
+                      key: _formKey,
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
