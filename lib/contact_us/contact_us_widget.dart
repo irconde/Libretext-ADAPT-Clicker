@@ -14,9 +14,10 @@ import '../flutter_flow/flutter_flow_util.dart';
 @RoutePage()
 class ContactUsWidget extends ConsumerStatefulWidget {
   final bool? openFromDrawer;
-  const ContactUsWidget(
-      {Key? key, this.openFromDrawer = false})
+
+  const ContactUsWidget({Key? key, this.openFromDrawer = false})
       : super(key: key);
+
   @override
   ConsumerState<ContactUsWidget> createState() => _ContactUsWidgetState();
 }
@@ -60,20 +61,32 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
       type: 'contact_us',
     );
     if ((serverRequest?.succeeded ?? true) && context.mounted) {
-      setState(() {});
-      context.popRoute();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            serverRequest!.jsonBody['message'],
-            style: TextStyle(
-              color: FlutterFlowTheme.of(context).primaryBtnText,
+      if (widget.openFromDrawer == false) {
+        setState(() {});
+        context.popRoute();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              serverRequest!.jsonBody['message'],
+              style: TextStyle(
+                color: FlutterFlowTheme.of(context).primaryBtnText,
+              ),
             ),
+            duration: const Duration(milliseconds: 4000),
+            backgroundColor: FlutterFlowTheme.of(context).success,
           ),
-          duration: const Duration(milliseconds: 4000),
-          backgroundColor: FlutterFlowTheme.of(context).success,
-        ),
-      );
+        );
+      } else {
+        setState(() {
+          formState = FormStateValue.success;
+        });
+        Future.delayed(const Duration(seconds: 1), () {
+          setState(() {
+            formState = FormStateValue.unfilled;
+            // TODO. Reset fields
+          });
+        });
+      }
     } else {
       setState(() {
         formState = FormStateValue.error;
@@ -229,6 +242,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
                         formState: formState,
                         normalText: 'SEND MESSAGE',
                         errorText: 'TRY IT AGAIN',
+                        successText: 'MESSAGE SENT',
                         processingText: 'SENDING MESSAGE',
                         onPressed: _submit,
                       ),

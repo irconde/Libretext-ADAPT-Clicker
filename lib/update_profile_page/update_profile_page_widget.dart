@@ -3,6 +3,7 @@ import 'package:adapt_clicker/components/drawer_ctn.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
+import '../components/custom_elevated_button.dart';
 import '../components/main_app_bar.dart';
 import '../components/form_state_mixin.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -52,12 +53,10 @@ class _UpdateProfilePageWidgetState
 
   Future<Map<String, String>> _loadInitialUserInfo() async {
     Map<String, String> currentUserInfo = {};
-
     final userInfoRequest = await GetUserCall.call(
       token: StoredPreferences.authToken,
     );
     await AppState.timezoneContainer.initTimezones();
-
     if (userInfoRequest.succeeded) {
       currentUserInfo[firstName] =
           getJsonField(userInfoRequest.jsonBody, r'''$.first_name''')
@@ -85,9 +84,8 @@ class _UpdateProfilePageWidgetState
       formValues[studentId] = [inputValues[studentId], null];
       formValues[email] = [inputValues[email], null];
       formValues[timeZone] = [inputValues[timeZone], null];
-      requiredFieldsFilled =
-          areRequiredFieldsFilled(formValues, requiredFields);
     });
+    checkFormIsReadyToSubmit();
   }
 
   void onTimezoneSelected(timezone) {
@@ -98,6 +96,9 @@ class _UpdateProfilePageWidgetState
 
   void _submit() async {
     if (!checkConnection()) return;
+    setState(() {
+      formState = FormStateValue.processing;
+    });
     serverRequest = await UpdateProfileCall.call(
         token: StoredPreferences.authToken,
         firstName: formValues[firstName][dataIndex],
@@ -108,19 +109,18 @@ class _UpdateProfilePageWidgetState
         studentId: formValues[studentId][dataIndex]);
     if ((serverRequest?.succeeded ?? true) && context.mounted) {
       setState(() {});
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Profile Updated Successfully',
-            style: TextStyle(
-              color: FlutterFlowTheme.of(context).primaryBtnText,
-            ),
-          ),
-          duration: const Duration(milliseconds: Constants.snackBarDurationMil),
-          backgroundColor: FlutterFlowTheme.of(context).success,
-        ),
-      );
+      setState(() {
+        formState = FormStateValue.success;
+      });
+      Future.delayed(const Duration(seconds: 1), () {
+        setState(() {
+          formState = FormStateValue.normal;
+        });
+      });
     } else {
+      setState(() {
+        formState = FormStateValue.error;
+      });
       final errors =
           getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
       onReceivedErrorsFromServer(errors);
@@ -196,10 +196,8 @@ class _UpdateProfilePageWidgetState
                                               value,
                                               null
                                             ];
-                                            requiredFieldsFilled =
-                                                areRequiredFieldsFilled(
-                                                    formValues, requiredFields);
                                           });
+                                          checkFormIsReadyToSubmit();
                                         }),
                                   ),
                                   Padding(
@@ -224,10 +222,8 @@ class _UpdateProfilePageWidgetState
                                               value,
                                               null
                                             ];
-                                            requiredFieldsFilled =
-                                                areRequiredFieldsFilled(
-                                                    formValues, requiredFields);
                                           });
+                                          checkFormIsReadyToSubmit();
                                         }),
                                   ),
                                   Padding(
@@ -253,10 +249,8 @@ class _UpdateProfilePageWidgetState
                                               value,
                                               null
                                             ];
-                                            requiredFieldsFilled =
-                                                areRequiredFieldsFilled(
-                                                    formValues, requiredFields);
                                           });
+                                          checkFormIsReadyToSubmit();
                                         }),
                                   ),
                                   Padding(
@@ -295,20 +289,14 @@ class _UpdateProfilePageWidgetState
                           : _isKeyboardVisible))
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              Constants.mmMargin, 0, Constants.mmMargin, 0),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              minimumSize:
-                                  const Size.fromHeight(Constants.buttonHeight),
-                              backgroundColor:
-                                  FlutterFlowTheme.of(context).primaryColor,
-                              textStyle: FlutterFlowTheme.of(context).title3,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                            ),
-                            onPressed: requiredFieldsFilled ? _submit : null,
-                            child: const Text('UPDATE PROFILE'),
+                              Constants.mmMargin, 0, Constants.mmMargin, Constants.msMargin),
+                          child: CustomElevatedButton(
+                            formState: formState,
+                            normalText: 'UPDATE PROFILE',
+                            errorText: 'TRY IT AGAIN',
+                            successText: 'PROFILE UPDATED',
+                            processingText: 'UPDATING',
+                            onPressed: _submit,
                           ),
                         ),
                     ],

@@ -44,6 +44,9 @@ class _ResetPasswordPageWidgetState
 
   void _submit() async {
     if (!checkConnection()) return;
+    setState(() {
+      formState = FormStateValue.processing;
+    });
     serverRequest = await UpdatePasswordCall.call(
       token: StoredPreferences.authToken,
       password: formValues[password][dataIndex],
@@ -51,19 +54,19 @@ class _ResetPasswordPageWidgetState
     );
     if ((serverRequest?.succeeded ?? true) && context.mounted) {
       setState(() {});
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Password Updated Successfully',
-            style: TextStyle(
-              color: FlutterFlowTheme.of(context).primaryBtnText,
-            ),
-          ),
-          duration: const Duration(milliseconds: Constants.snackBarDurationMil),
-          backgroundColor: FlutterFlowTheme.of(context).success,
-        ),
-      );
+      setState(() {
+        formState = FormStateValue.success;
+      });
+      Future.delayed(const Duration(seconds: 1), () {
+        setState(() {
+          formState = FormStateValue.unfilled;
+          // TODO. reset fields
+        });
+      });
     } else {
+      setState(() {
+        formState = FormStateValue.error;
+      });
       final errors =
           getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
       onReceivedErrorsFromServer(errors);
@@ -239,6 +242,7 @@ class _ResetPasswordPageWidgetState
                     formState: formState,
                     normalText: 'CHANGE PASSWORD',
                     errorText: 'TRY IT AGAIN',
+                    successText: 'PASSWORD UPDATED',
                     processingText: 'CHANGING PASSWORD',
                     onPressed: _submit,
                   ),
