@@ -4,7 +4,7 @@ import '../backend/api_requests/api_manager.dart';
 import '../utils/check_internet_connectivity.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 
-enum FormStateValue { unfilled, normal, processing, error }
+enum FormStateValue { unfilled, normal, processing, error, success }
 
 mixin FormStateMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
   final int dataIndex = 0;

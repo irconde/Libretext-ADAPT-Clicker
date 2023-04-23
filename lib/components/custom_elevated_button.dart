@@ -9,6 +9,7 @@ class CustomElevatedButton extends StatelessWidget {
   final FormStateValue? formState;
   final String normalText;
   String? errorText;
+  String? successText;
   String? processingText;
   final Function onPressed;
 
@@ -18,6 +19,7 @@ class CustomElevatedButton extends StatelessWidget {
     this.formState,
     required this.normalText,
     this.errorText,
+    this.successText,
     this.processingText,
     required this.onPressed,
   }) : super(key: key);
@@ -45,7 +47,9 @@ class CustomElevatedButton extends StatelessWidget {
     if (type == ButtonType.secondary) {
       return formState == FormStateValue.error
           ? FlutterFlowTheme.of(context).failure
-          : FlutterFlowTheme.of(context).primaryColor;
+          : formState == FormStateValue.success
+              ? FlutterFlowTheme.of(context).success
+              : FlutterFlowTheme.of(context).primaryColor;
     } else {
       return Colors.white;
     }
@@ -54,7 +58,9 @@ class CustomElevatedButton extends StatelessWidget {
   RoundedRectangleBorder _borderSideButton(BuildContext context) {
     Color borderColor = formState == FormStateValue.error
         ? FlutterFlowTheme.of(context).failure
-        : FlutterFlowTheme.of(context).primaryColor;
+        : formState == FormStateValue.success
+            ? FlutterFlowTheme.of(context).success
+            : FlutterFlowTheme.of(context).primaryColor;
     if (type == ButtonType.secondary) {
       return RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4),
@@ -74,6 +80,8 @@ class CustomElevatedButton extends StatelessWidget {
         btnMainColor = FlutterFlowTheme.of(context).primaryColor;
         if (formState == FormStateValue.error) {
           btnMainColor = FlutterFlowTheme.of(context).failure;
+        } else if (formState == FormStateValue.success) {
+          btnMainColor = FlutterFlowTheme.of(context).success;
         }
         break;
       case ButtonType.secondary:
@@ -104,13 +112,17 @@ class CustomElevatedButton extends StatelessWidget {
           ),
         ],
       );
-    } else if (formState == FormStateValue.error) {
-      Widget icon =
-          const Icon(Icons.error_outline_outlined, color: Colors.white);
+    } else if (formState == FormStateValue.error ||
+        formState == FormStateValue.success) {
+      Widget icon = formState == FormStateValue.error
+          ? const Icon(Icons.error_outline_outlined, color: Colors.white)
+          : const Icon(Icons.check_circle_outline, color: Colors.white);
+      String text =
+          formState == FormStateValue.error ? errorText! : successText!;
       return Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text(errorText!),
+          Text(text),
           const SizedBox(width: 12.0),
           icon,
         ],
