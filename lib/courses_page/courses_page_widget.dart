@@ -64,13 +64,42 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
 
   @override
   void initState() {
+    super.initState();
     initFirebase();
     requestPermission(); //gets push notification permission
     getToken();
     sendToken();
     handleRoutes();
     _apiRequestCompleter = updateAndGetResponse();
-    super.initState();
+    if (widget.isFirstScreen!) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showSignInSnackbar();
+      });
+    }
+  }
+
+  void _showSignInSnackbar() {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+          content: RichText(
+            text: TextSpan(
+              text: 'Signed in as ',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+              ),
+              children: <TextSpan>[
+                TextSpan(
+                  text: StoredPreferences.userAccount,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const TextSpan(text: '.'),
+              ],
+            ),
+          ),
+          backgroundColor: FlutterFlowTheme.of(context).secondaryText),
+    );
   }
 
   //Creating Firebase
@@ -162,6 +191,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+
     if (widget.isFirstScreen != null && widget.isFirstScreen == true) {
       final AsyncValue<ConnectivityStatus> connectivityStatusProvider =
           ref.watch(provider);
@@ -176,31 +206,6 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
             return;
           }
           functions.showSnackbar(context, status!);
-        });
-      } else {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-                content: RichText(
-                  text: TextSpan(
-                    text: 'Signed in as ',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: StoredPreferences.userAccount,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      const TextSpan(text: '.'),
-                    ],
-                  ),
-                ),
-                behavior: SnackBarBehavior.floating,
-                backgroundColor: FlutterFlowTheme.of(context).secondaryText),
-          );
         });
       }
     }
