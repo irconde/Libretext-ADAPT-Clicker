@@ -11,19 +11,15 @@ import '../utils/check_internet_connectivity.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 
 @RoutePage()
-class WelcomePageWidget extends ConsumerStatefulWidget {
-  const WelcomePageWidget({Key? key}) : super(key: key);
-
-  @override
-  ConsumerState<WelcomePageWidget> createState() => _WelcomePageWidgetState();
-}
-
-class _WelcomePageWidgetState extends ConsumerState<WelcomePageWidget> {
+class WelcomePageWidget extends ConsumerWidget {
+  final bool? isFirstScreen;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  WelcomePageWidget({Key? key, this.isFirstScreen = false}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    {
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (isFirstScreen != null && isFirstScreen == true) {
       final AsyncValue<ConnectivityStatus> connectivityStatusProvider =
           ref.watch(provider);
       ConnectivityStatus? status;
@@ -39,92 +35,92 @@ class _WelcomePageWidgetState extends ConsumerState<WelcomePageWidget> {
           functions.showSnackbar(context, status!);
         });
       }
+    }
 
-      return WillPopScope(
-        child: Scaffold(
-          key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-          body: SafeArea(
-            child: GestureDetector(
-              onTap: () => FocusScope.of(context).unfocus(),
-              child: SizedBox(
-                width: double.infinity,
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            42, 42, 42, 24),
-                        child: SvgPicture.asset(
-                          'assets/images/libretexts_adapt_logo.svg',
-                          width: 270,
-                          height: 170,
-                        ),
+    return WillPopScope(
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        body: SafeArea(
+          child: GestureDetector(
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: SizedBox(
+              width: double.infinity,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(42, 42, 42, 24),
+                      child: SvgPicture.asset(
+                        'assets/images/libretexts_adapt_logo.svg',
+                        width: 270,
+                        height: 170,
                       ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(32, 0, 32, 8),
-                        child: CustomElevatedButton(
-                          normalText: 'LOGIN',
-                          onPressed: () async {
-                            context.pushRoute(
-                              const LoginPageWidget(),
-                            );
-                          },
-                        ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(32, 0, 32, 8),
+                      child: CustomElevatedButton(
+                        normalText: 'LOGIN',
+                        onPressed: () async {
+                          context.pushRoute(
+                            const LoginRouteWidget(),
+                          );
+                        },
                       ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(32, 8, 32, 0),
-                        child: CustomElevatedButton(
-                          type: ButtonType.secondary,
-                          normalText: 'CREATE ACCOUNT',
-                          onPressed: () async {
-                            context.pushRoute(
-                              const CreateAccountWidget(),
-                            );
-                          },
-                        ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(32, 8, 32, 0),
+                      child: CustomElevatedButton(
+                        type: ButtonType.secondary,
+                        normalText: 'CREATE ACCOUNT',
+                        onPressed: () async {
+                          context.pushRoute(
+                            const CreateAccountWidget(),
+                          );
+                        },
                       ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 92, 0, 0),
-                        child: RichText(
-                          text: TextSpan(
-                              style: FlutterFlowTheme.of(context).bodyText1,
-                              children: [
-                                const TextSpan(text: 'Having problems? '),
-                                TextSpan(
-                                    text: 'Contact us',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          decoration: TextDecoration.underline,
-                                          fontFamily: 'Open Sans',
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () async {
-                                        context.pushRoute(
-                                          ContactUsWidget(),
-                                        );
-                                      }),
-                              ]),
-                        ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 92, 0, 0),
+                      child: RichText(
+                        text: TextSpan(
+                            style: FlutterFlowTheme.of(context).bodyText1,
+                            children: [
+                              const TextSpan(text: 'Having problems? '),
+                              TextSpan(
+                                  text: 'Contact us',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                        decoration: TextDecoration.underline,
+                                        fontFamily: 'Open Sans',
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () async {
+                                      context.pushRoute(
+                                        ContactUsWidget(),
+                                      );
+                                    }),
+                            ]),
                       ),
-                    ]),
-              ),
+                    ),
+                  ]),
             ),
           ),
         ),
-        onWillPop: () async {
-          MoveToBackground.moveTaskToBack();
-          return false;
-        },
-      );
-    }
+      ),
+      onWillPop: () async {
+        MoveToBackground.moveTaskToBack();
+        return false;
+      },
+    );
   }
 }

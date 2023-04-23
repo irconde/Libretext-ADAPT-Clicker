@@ -1,7 +1,7 @@
+import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/components/main_app_bar.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:move_to_background/move_to_background.dart';
-import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -15,13 +15,15 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import 'package:flutter/material.dart' hide Router;
-import '../utils/constants.dart';
 import '../utils/check_internet_connectivity.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 
 @RoutePage()
 class CoursesPageWidget extends ConsumerStatefulWidget {
-  const CoursesPageWidget({Key? key}) : super(key: key);
+  final bool? isFirstScreen;
+
+  const CoursesPageWidget({Key? key, this.isFirstScreen = false})
+      : super(key: key);
 
   @override
   ConsumerState<CoursesPageWidget> createState() => _CoursesPageWidgetState();
@@ -160,20 +162,22 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final AsyncValue<ConnectivityStatus> connectivityStatusProvider =
-        ref.watch(provider);
-    ConnectivityStatus? status;
-    connectivityStatusProvider.whenData((value) => {status = value});
-    if (status != null) {
-      if (status != ConnectivityStatus.isConnected) {
-        ref.read(provider.notifier).startWatchingConnectivity();
-      }
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (status == null || status == ConnectivityStatus.initializing) {
-          return;
+    if (widget.isFirstScreen != null && widget.isFirstScreen == true) {
+      final AsyncValue<ConnectivityStatus> connectivityStatusProvider =
+          ref.watch(provider);
+      ConnectivityStatus? status;
+      connectivityStatusProvider.whenData((value) => {status = value});
+      if (status != null) {
+        if (status != ConnectivityStatus.isConnected) {
+          ref.read(provider.notifier).startWatchingConnectivity();
         }
-        functions.showSnackbar(context, status!);
-      });
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (status == null || status == ConnectivityStatus.initializing) {
+            return;
+          }
+          functions.showSnackbar(context, status!);
+        });
+      }
     }
 
     return WillPopScope(
@@ -260,7 +264,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
                             return InkWell(
                               onTap: () async {
                                 if (!_checkConnection()) return;
-                                context.pushRoute(AssignmentsPageWidget(
+                                context.pushRoute(AssignmentsRouteWidget(
                                   course: enrollmentsListItem,
                                 ));
                               },

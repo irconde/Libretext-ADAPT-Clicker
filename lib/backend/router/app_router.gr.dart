@@ -9,20 +9,21 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:adapt_clicker/assignments_page/assignments_page_widget.dart'
-    as _i1;
-import 'package:adapt_clicker/components/assignment_details_widget.dart' as _i2;
-import 'package:adapt_clicker/components/question_c_t_n_widget.dart' as _i3;
-import 'package:adapt_clicker/contact_us/contact_us_widget.dart' as _i4;
-import 'package:adapt_clicker/courses_page/courses_page_widget.dart' as _i5;
-import 'package:adapt_clicker/create_account/create_account_widget.dart' as _i6;
-import 'package:adapt_clicker/login_page/login_page_widget.dart' as _i7;
-import 'package:adapt_clicker/notifications_page/notifications_page_widget.dart'
-    as _i8;
-import 'package:adapt_clicker/reset_password_page/reset_password_page_widget.dart'
-    as _i9;
-import 'package:adapt_clicker/update_profile_page/update_profile_page_widget.dart'
+    as _i11;
+import 'package:adapt_clicker/components/assignment_details_widget.dart' as _i7;
+import 'package:adapt_clicker/components/question_c_t_n_widget.dart' as _i8;
+import 'package:adapt_clicker/contact_us/contact_us_widget.dart' as _i2;
+import 'package:adapt_clicker/courses_page/courses_page_widget.dart' as _i6;
+import 'package:adapt_clicker/create_account/create_account_widget.dart'
     as _i10;
-import 'package:adapt_clicker/welcome_page/welcome_page_widget.dart' as _i11;
+import 'package:adapt_clicker/login_page/login_page_widget.dart' as _i5;
+import 'package:adapt_clicker/notifications_page/notifications_page_widget.dart'
+    as _i3;
+import 'package:adapt_clicker/reset_password_page/reset_password_page_widget.dart'
+    as _i4;
+import 'package:adapt_clicker/update_profile_page/update_profile_page_widget.dart'
+    as _i1;
+import 'package:adapt_clicker/welcome_page/welcome_page_widget.dart' as _i9;
 import 'package:auto_route/auto_route.dart' as _i12;
 import 'package:flutter/foundation.dart' as _i14;
 import 'package:flutter/material.dart' as _i13;
@@ -32,16 +33,49 @@ abstract class $AppRouter extends _i12.RootStackRouter {
 
   @override
   final Map<String, _i12.PageFactory> pagesMap = {
-    AssignmentsPageWidget.name: (routeData) {
-      final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<AssignmentsPageWidgetArgs>(
-          orElse: () =>
-              AssignmentsPageWidgetArgs(course: pathParams.get('course')));
+    UpdateProfileRouteWidget.name: (routeData) {
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i1.AssignmentsPageWidget(
+        child: const _i1.UpdateProfilePageWidget(),
+      );
+    },
+    ContactUsWidget.name: (routeData) {
+      final args = routeData.argsAs<ContactUsWidgetArgs>(
+          orElse: () => const ContactUsWidgetArgs());
+      return _i12.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i2.ContactUsWidget(
           key: args.key,
-          course: args.course,
+          openFromDrawer: args.openFromDrawer,
+        ),
+      );
+    },
+    NotificationsRouteWidget.name: (routeData) {
+      return _i12.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i3.NotificationsPageWidget(),
+      );
+    },
+    ResetPasswordRouteWidget.name: (routeData) {
+      return _i12.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i4.ResetPasswordPageWidget(),
+      );
+    },
+    LoginRouteWidget.name: (routeData) {
+      return _i12.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i5.LoginPageWidget(),
+      );
+    },
+    CoursesRouteWidget.name: (routeData) {
+      final args = routeData.argsAs<CoursesRouteWidgetArgs>(
+          orElse: () => const CoursesRouteWidgetArgs());
+      return _i12.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i6.CoursesPageWidget(
+          key: args.key,
+          isFirstScreen: args.isFirstScreen,
         ),
       );
     },
@@ -52,7 +86,7 @@ abstract class $AppRouter extends _i12.RootStackRouter {
               assignmentSum: pathParams.get('summary')));
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i2.AssignmentDetailsWidget(
+        child: _i7.AssignmentDetailsWidget(
           key: args.key,
           assignmentSum: args.assignmentSum,
         ),
@@ -67,111 +101,180 @@ abstract class $AppRouter extends _i12.RootStackRouter {
               ));
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i3.QuestionCTNWidget(
+        child: _i8.QuestionCTNWidget(
           key: args.key,
           assignmentName: args.assignmentName,
           view: args.view,
         ),
       );
     },
-    ContactUsWidget.name: (routeData) {
-      final args = routeData.argsAs<ContactUsWidgetArgs>(
-          orElse: () => const ContactUsWidgetArgs());
+    WelcomeRouteWidget.name: (routeData) {
+      final args = routeData.argsAs<WelcomeRouteWidgetArgs>(
+          orElse: () => const WelcomeRouteWidgetArgs());
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i4.ContactUsWidget(
+        child: _i9.WelcomePageWidget(
           key: args.key,
-          openFromDrawer: args.openFromDrawer,
+          isFirstScreen: args.isFirstScreen,
         ),
-      );
-    },
-    CoursesPageWidget.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i5.CoursesPageWidget(),
       );
     },
     CreateAccountWidget.name: (routeData) {
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i6.CreateAccountWidget(),
+        child: const _i10.CreateAccountWidget(),
       );
     },
-    LoginPageWidget.name: (routeData) {
+    AssignmentsRouteWidget.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<AssignmentsRouteWidgetArgs>(
+          orElse: () =>
+              AssignmentsRouteWidgetArgs(course: pathParams.get('course')));
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i7.LoginPageWidget(),
-      );
-    },
-    NotificationsPageWidget.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i8.NotificationsPageWidget(),
-      );
-    },
-    ResetPasswordPageWidget.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i9.ResetPasswordPageWidget(),
-      );
-    },
-    UpdateProfilePageWidget.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i10.UpdateProfilePageWidget(),
-      );
-    },
-    WelcomePageWidget.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i11.WelcomePageWidget(),
+        child: _i11.AssignmentsPageWidget(
+          key: args.key,
+          course: args.course,
+        ),
       );
     },
   };
 }
 
 /// generated route for
-/// [_i1.AssignmentsPageWidget]
-class AssignmentsPageWidget
-    extends _i12.PageRouteInfo<AssignmentsPageWidgetArgs> {
-  AssignmentsPageWidget({
-    _i13.Key? key,
-    required dynamic course,
-    List<_i12.PageRouteInfo>? children,
-  }) : super(
-          AssignmentsPageWidget.name,
-          args: AssignmentsPageWidgetArgs(
-            key: key,
-            course: course,
-          ),
-          rawPathParams: {'course': course},
+/// [_i1.UpdateProfilePageWidget]
+class UpdateProfileRouteWidget extends _i12.PageRouteInfo<void> {
+  const UpdateProfileRouteWidget({List<_i12.PageRouteInfo>? children})
+      : super(
+          UpdateProfileRouteWidget.name,
           initialChildren: children,
         );
 
-  static const String name = 'AssignmentsPageWidget';
+  static const String name = 'UpdateProfileRouteWidget';
 
-  static const _i12.PageInfo<AssignmentsPageWidgetArgs> page =
-      _i12.PageInfo<AssignmentsPageWidgetArgs>(name);
+  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
 }
 
-class AssignmentsPageWidgetArgs {
-  const AssignmentsPageWidgetArgs({
+/// generated route for
+/// [_i2.ContactUsWidget]
+class ContactUsWidget extends _i12.PageRouteInfo<ContactUsWidgetArgs> {
+  ContactUsWidget({
+    _i13.Key? key,
+    bool? openFromDrawer = false,
+    List<_i12.PageRouteInfo>? children,
+  }) : super(
+          ContactUsWidget.name,
+          args: ContactUsWidgetArgs(
+            key: key,
+            openFromDrawer: openFromDrawer,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ContactUsWidget';
+
+  static const _i12.PageInfo<ContactUsWidgetArgs> page =
+      _i12.PageInfo<ContactUsWidgetArgs>(name);
+}
+
+class ContactUsWidgetArgs {
+  const ContactUsWidgetArgs({
     this.key,
-    required this.course,
+    this.openFromDrawer = false,
   });
 
   final _i13.Key? key;
 
-  final dynamic course;
+  final bool? openFromDrawer;
 
   @override
   String toString() {
-    return 'AssignmentsPageWidgetArgs{key: $key, course: $course}';
+    return 'ContactUsWidgetArgs{key: $key, openFromDrawer: $openFromDrawer}';
   }
 }
 
 /// generated route for
-/// [_i2.AssignmentDetailsWidget]
+/// [_i3.NotificationsPageWidget]
+class NotificationsRouteWidget extends _i12.PageRouteInfo<void> {
+  const NotificationsRouteWidget({List<_i12.PageRouteInfo>? children})
+      : super(
+          NotificationsRouteWidget.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'NotificationsRouteWidget';
+
+  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i4.ResetPasswordPageWidget]
+class ResetPasswordRouteWidget extends _i12.PageRouteInfo<void> {
+  const ResetPasswordRouteWidget({List<_i12.PageRouteInfo>? children})
+      : super(
+          ResetPasswordRouteWidget.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ResetPasswordRouteWidget';
+
+  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i5.LoginPageWidget]
+class LoginRouteWidget extends _i12.PageRouteInfo<void> {
+  const LoginRouteWidget({List<_i12.PageRouteInfo>? children})
+      : super(
+          LoginRouteWidget.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LoginRouteWidget';
+
+  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i6.CoursesPageWidget]
+class CoursesRouteWidget extends _i12.PageRouteInfo<CoursesRouteWidgetArgs> {
+  CoursesRouteWidget({
+    _i13.Key? key,
+    bool? isFirstScreen = false,
+    List<_i12.PageRouteInfo>? children,
+  }) : super(
+          CoursesRouteWidget.name,
+          args: CoursesRouteWidgetArgs(
+            key: key,
+            isFirstScreen: isFirstScreen,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'CoursesRouteWidget';
+
+  static const _i12.PageInfo<CoursesRouteWidgetArgs> page =
+      _i12.PageInfo<CoursesRouteWidgetArgs>(name);
+}
+
+class CoursesRouteWidgetArgs {
+  const CoursesRouteWidgetArgs({
+    this.key,
+    this.isFirstScreen = false,
+  });
+
+  final _i13.Key? key;
+
+  final bool? isFirstScreen;
+
+  @override
+  String toString() {
+    return 'CoursesRouteWidgetArgs{key: $key, isFirstScreen: $isFirstScreen}';
+  }
+}
+
+/// generated route for
+/// [_i7.AssignmentDetailsWidget]
 class AssignmentDetailsWidget
     extends _i12.PageRouteInfo<AssignmentDetailsWidgetArgs> {
   AssignmentDetailsWidget({
@@ -211,7 +314,7 @@ class AssignmentDetailsWidgetArgs {
 }
 
 /// generated route for
-/// [_i3.QuestionCTNWidget]
+/// [_i8.QuestionCTNWidget]
 class QuestionCTNWidget extends _i12.PageRouteInfo<QuestionCTNWidgetArgs> {
   QuestionCTNWidget({
     _i14.Key? key,
@@ -258,59 +361,45 @@ class QuestionCTNWidgetArgs {
 }
 
 /// generated route for
-/// [_i4.ContactUsWidget]
-class ContactUsWidget extends _i12.PageRouteInfo<ContactUsWidgetArgs> {
-  ContactUsWidget({
+/// [_i9.WelcomePageWidget]
+class WelcomeRouteWidget extends _i12.PageRouteInfo<WelcomeRouteWidgetArgs> {
+  WelcomeRouteWidget({
     _i13.Key? key,
-    bool? openFromDrawer = false,
+    bool? isFirstScreen = false,
     List<_i12.PageRouteInfo>? children,
   }) : super(
-          ContactUsWidget.name,
-          args: ContactUsWidgetArgs(
+          WelcomeRouteWidget.name,
+          args: WelcomeRouteWidgetArgs(
             key: key,
-            openFromDrawer: openFromDrawer,
+            isFirstScreen: isFirstScreen,
           ),
           initialChildren: children,
         );
 
-  static const String name = 'ContactUsWidget';
+  static const String name = 'WelcomeRouteWidget';
 
-  static const _i12.PageInfo<ContactUsWidgetArgs> page =
-      _i12.PageInfo<ContactUsWidgetArgs>(name);
+  static const _i12.PageInfo<WelcomeRouteWidgetArgs> page =
+      _i12.PageInfo<WelcomeRouteWidgetArgs>(name);
 }
 
-class ContactUsWidgetArgs {
-  const ContactUsWidgetArgs({
+class WelcomeRouteWidgetArgs {
+  const WelcomeRouteWidgetArgs({
     this.key,
-    this.openFromDrawer = false,
+    this.isFirstScreen = false,
   });
 
   final _i13.Key? key;
 
-  final bool? openFromDrawer;
+  final bool? isFirstScreen;
 
   @override
   String toString() {
-    return 'ContactUsWidgetArgs{key: $key, openFromDrawer: $openFromDrawer}';
+    return 'WelcomeRouteWidgetArgs{key: $key, isFirstScreen: $isFirstScreen}';
   }
 }
 
 /// generated route for
-/// [_i5.CoursesPageWidget]
-class CoursesPageWidget extends _i12.PageRouteInfo<void> {
-  const CoursesPageWidget({List<_i12.PageRouteInfo>? children})
-      : super(
-          CoursesPageWidget.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'CoursesPageWidget';
-
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i6.CreateAccountWidget]
+/// [_i10.CreateAccountWidget]
 class CreateAccountWidget extends _i12.PageRouteInfo<void> {
   const CreateAccountWidget({List<_i12.PageRouteInfo>? children})
       : super(
@@ -324,71 +413,41 @@ class CreateAccountWidget extends _i12.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i7.LoginPageWidget]
-class LoginPageWidget extends _i12.PageRouteInfo<void> {
-  const LoginPageWidget({List<_i12.PageRouteInfo>? children})
-      : super(
-          LoginPageWidget.name,
+/// [_i11.AssignmentsPageWidget]
+class AssignmentsRouteWidget
+    extends _i12.PageRouteInfo<AssignmentsRouteWidgetArgs> {
+  AssignmentsRouteWidget({
+    _i13.Key? key,
+    required dynamic course,
+    List<_i12.PageRouteInfo>? children,
+  }) : super(
+          AssignmentsRouteWidget.name,
+          args: AssignmentsRouteWidgetArgs(
+            key: key,
+            course: course,
+          ),
+          rawPathParams: {'course': course},
           initialChildren: children,
         );
 
-  static const String name = 'LoginPageWidget';
+  static const String name = 'AssignmentsRouteWidget';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i12.PageInfo<AssignmentsRouteWidgetArgs> page =
+      _i12.PageInfo<AssignmentsRouteWidgetArgs>(name);
 }
 
-/// generated route for
-/// [_i8.NotificationsPageWidget]
-class NotificationsPageWidget extends _i12.PageRouteInfo<void> {
-  const NotificationsPageWidget({List<_i12.PageRouteInfo>? children})
-      : super(
-          NotificationsPageWidget.name,
-          initialChildren: children,
-        );
+class AssignmentsRouteWidgetArgs {
+  const AssignmentsRouteWidgetArgs({
+    this.key,
+    required this.course,
+  });
 
-  static const String name = 'NotificationsPageWidget';
+  final _i13.Key? key;
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
-}
+  final dynamic course;
 
-/// generated route for
-/// [_i9.ResetPasswordPageWidget]
-class ResetPasswordPageWidget extends _i12.PageRouteInfo<void> {
-  const ResetPasswordPageWidget({List<_i12.PageRouteInfo>? children})
-      : super(
-          ResetPasswordPageWidget.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'ResetPasswordPageWidget';
-
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i10.UpdateProfilePageWidget]
-class UpdateProfilePageWidget extends _i12.PageRouteInfo<void> {
-  const UpdateProfilePageWidget({List<_i12.PageRouteInfo>? children})
-      : super(
-          UpdateProfilePageWidget.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'UpdateProfilePageWidget';
-
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i11.WelcomePageWidget]
-class WelcomePageWidget extends _i12.PageRouteInfo<void> {
-  const WelcomePageWidget({List<_i12.PageRouteInfo>? children})
-      : super(
-          WelcomePageWidget.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'WelcomePageWidget';
-
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  @override
+  String toString() {
+    return 'AssignmentsRouteWidgetArgs{key: $key, course: $course}';
+  }
 }

@@ -1,9 +1,9 @@
+import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/components/custom_elevated_button.dart';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../backend/Router/app_router.gr.dart';
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/components/reset_password_widget.dart';
 import '../components/collapsing_libre_app_bar.dart';
@@ -78,7 +78,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
         StoredPreferences.userAccount = formValues[email][dataIndex];
         StoredPreferences.userPassword = formValues[password][dataIndex];
       });
-      await context.pushRoute(const CoursesPageWidget());
+      await context.pushRoute(CoursesRouteWidget());
       setState(() {});
     } else {
       setState(() {

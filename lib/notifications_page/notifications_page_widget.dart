@@ -1,7 +1,7 @@
 import 'package:adapt_clicker/app_state.dart';
 import 'package:adapt_clicker/components/no_notifications_widget.dart';
 import 'package:adapt_clicker/components/notification_single.dart';
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';

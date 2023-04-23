@@ -1,6 +1,6 @@
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:adapt_clicker/components/assignment_dropdown.dart';
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';

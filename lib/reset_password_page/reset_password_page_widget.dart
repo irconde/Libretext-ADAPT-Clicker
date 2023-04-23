@@ -1,6 +1,6 @@
 import 'package:adapt_clicker/components/main_app_bar.dart';
 import 'package:adapt_clicker/components/drawer_ctn.dart';
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/custom_elevated_button.dart';

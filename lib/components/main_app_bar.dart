@@ -43,7 +43,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           Icons.notifications,
         ),
         onPressed: () async {
-          context.pushRoute(const NotificationsPageWidget()).then((_) =>
+          context.pushRoute(const NotificationsRouteWidget()).then((_) =>
               setState(() {}));
         },
       );
@@ -60,7 +60,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
               Icons.notifications,
             ),
             onPressed: () async {
-              context.pushRoute(const NotificationsPageWidget()).then((_) =>
+              context.pushRoute(const NotificationsRouteWidget()).then((_) =>
                   setState(() {}));
             },
           ),

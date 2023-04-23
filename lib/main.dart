@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
@@ -5,7 +6,6 @@ import '../backend/api_requests/api_calls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'backend/Router/app_router.gr.dart';
 import 'backend/router/app_router.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
@@ -95,8 +95,8 @@ class MyApp extends StatelessWidget {
       routeInformationProvider: _appRouter.routeInfoProvider(),
       routerDelegate: _appRouter.delegate(
           initialRoutes: authenticated
-              ? [const CoursesPageWidget()]
-              : [const WelcomePageWidget()]),
+              ? [CoursesRouteWidget(isFirstScreen: true)]
+              : [WelcomeRouteWidget(isFirstScreen: true)]),
       routeInformationParser: _appRouter.defaultRouteParser(),
     );
   }

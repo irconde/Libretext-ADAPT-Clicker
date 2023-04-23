@@ -128,7 +128,7 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                     if (widget.currentSelected ==
                                         DrawerItems.courses) return;
                                     context
-                                        .pushRoute(const CoursesPageWidget());
+                                        .pushRoute(CoursesRouteWidget());
                                   }),
                             ),
                             Divider(
@@ -178,7 +178,7 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                   if (widget.currentSelected ==
                                       DrawerItems.profile) return;
                                   context.pushRoute(
-                                      const UpdateProfilePageWidget());
+                                      const UpdateProfileRouteWidget());
                                 }),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
@@ -226,7 +226,7 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                                     if (widget.currentSelected ==
                                         DrawerItems.password) return;
                                     context.pushRoute(
-                                        const ResetPasswordPageWidget());
+                                        const ResetPasswordRouteWidget());
                                   }),
                             ),
                             Divider(
@@ -317,7 +317,7 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget> {
                           StoredPreferences.userPassword = '';
                         });
                         if (context.mounted) {
-                          await context.pushRoute(WelcomePageWidget());
+                          await context.pushRoute(WelcomeRouteWidget());
                         }
                         setState(() {});
                       },

@@ -115,7 +115,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
         StoredPreferences.userAccount = currentEmail;
         StoredPreferences.userPassword = currentPassword;
       });
-      await context.pushRoute(const CoursesPageWidget());
+      await context.pushRoute(CoursesRouteWidget());
       setState(() {});
     } else {
       setState(() {

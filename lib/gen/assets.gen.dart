@@ -16,7 +16,7 @@ class $AssetsImagesGen {
   String get alreadyCheckedIn => 'assets/images/already_checked_in.svg';
 
   /// File path: assets/images/book_icon.svg
-  String get bookIconSvg => 'assets/images/book_icon.svg';
+  String get bookIcon => 'assets/images/book_icon.svg';
 
   /// File path: assets/images/calendar_icon.svg
   String get calendarIcon => 'assets/images/calendar_icon.svg';
@@ -42,6 +42,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/home_artboard.svg
   String get homeArtboard => 'assets/images/home_artboard.svg';
 
+  /// File path: assets/images/launch_image.png
+  AssetGenImage get launchImage =>
+      const AssetGenImage('assets/images/launch_image.png');
+
   /// File path: assets/images/libretexts_adapt_logo.svg
   String get libretextsAdaptLogo => 'assets/images/libretexts_adapt_logo.svg';
 
@@ -51,8 +55,11 @@ class $AssetsImagesGen {
   /// File path: assets/images/lock.svg
   String get lock => 'assets/images/lock.svg';
 
-  /// File path: assets/images/no-notifications-image.svg
-  String get noNotificationsImage => 'assets/images/no-notifications-image.svg';
+  /// File path: assets/images/no_courses.svg
+  String get noCourses => 'assets/images/no_courses.svg';
+
+  /// File path: assets/images/no_notifications.svg
+  String get noNotifications => 'assets/images/no_notifications.svg';
 
   /// File path: assets/images/person_add1.svg
   String get personAdd1 => 'assets/images/person_add1.svg';
@@ -60,7 +67,7 @@ class $AssetsImagesGen {
   /// List of all assets
   List<dynamic> get values => [
         alreadyCheckedIn,
-        bookIconSvg,
+        bookIcon,
         calendarIcon,
         checkedIn,
         codeToJoin,
@@ -69,16 +76,20 @@ class $AssetsImagesGen {
         eventNotActive,
         handWave,
         homeArtboard,
+        launchImage,
         libretextsAdaptLogo,
         libretextsLogo,
         lock,
-        noNotificationsImage,
+        noCourses,
+        noNotifications,
         personAdd1
       ];
 }
 
 class Assets {
   Assets._();
+
+  static const $AssetsImagesGen images = $AssetsImagesGen();
 }
 
 class AssetGenImage {
@@ -139,7 +150,16 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider() => AssetImage(_assetName);
+  ImageProvider provider({
+    AssetBundle? bundle,
+    String? package,
+  }) {
+    return AssetImage(
+      _assetName,
+      bundle: bundle,
+      package: package,
+    );
+  }
 
   String get path => _assetName;
 
