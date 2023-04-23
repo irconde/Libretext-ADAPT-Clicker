@@ -96,7 +96,7 @@ class MyApp extends StatelessWidget {
       routerDelegate: _appRouter.delegate(
           initialRoutes: authenticated
               ? [const CoursesPageWidget()]
-              : [WelcomePageWidget()]),
+              : [const WelcomePageWidget()]),
       routeInformationParser: _appRouter.defaultRouteParser(),
     );
   }
