@@ -177,6 +177,31 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
           }
           functions.showSnackbar(context, status!);
         });
+      } else {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: RichText(
+                  text: TextSpan(
+                    text: 'Signed in as ',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: StoredPreferences.userAccount,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      const TextSpan(text: '.'),
+                    ],
+                  ),
+                ),
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: FlutterFlowTheme.of(context).secondaryText),
+          );
+        });
       }
     }
 
@@ -193,7 +218,6 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget> {
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             if (!_checkConnection()) return;
-
             showModalBottomSheet(
               useSafeArea: true,
               isScrollControlled: true,
