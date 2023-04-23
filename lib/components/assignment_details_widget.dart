@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../components/question_c_t_n_widget.dart';
-import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../utils/constants.dart';
@@ -31,23 +30,6 @@ class _AssignmentDetailsWidgetState
     with TickerProviderStateMixin {
 
   late Map<String, dynamic> assignmentSummary;
-  final animationsMap = {
-    'textOnActionTriggerAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onActionTrigger,
-      duration: 600,
-      hideBeforeAnimating: false,
-      initialState: AnimationState(
-        offset: const Offset(0, 0),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: const Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
-    ),
-  };
 
   bool _checkConnection() {
     ConnectivityStatus? status =
@@ -62,12 +44,6 @@ class _AssignmentDetailsWidgetState
   @override
   void initState() {
     super.initState();
-
-    setupTriggerAnimations(
-      animationsMap.values
-          .where((anim) => anim.trigger == AnimationTrigger.onActionTrigger),
-      this,
-    );
   }
 
   Future<void> getSummary() async {
@@ -79,8 +55,6 @@ class _AssignmentDetailsWidgetState
       assignmentSummary = widget.assignmentSum;
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {

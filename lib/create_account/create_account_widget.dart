@@ -93,6 +93,9 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
 
   void _submit() async {
     if (!checkConnection()) return;
+    setState(() {
+      formState = FormStateValue.processing;
+    });
     final String currentEmail = formValues[email][dataIndex];
     final String currentPassword = formValues[password][dataIndex];
     final timezoneValue =
@@ -115,6 +118,9 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
       await context.pushRoute(const CoursesPageWidget());
       setState(() {});
     } else {
+      setState(() {
+        formState = FormStateValue.error;
+      });
       final errors =
           getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
       onReceivedErrorsFromServer(errors);
