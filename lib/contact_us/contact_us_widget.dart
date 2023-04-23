@@ -47,6 +47,9 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
 
   void _submit() async {
     if (!checkConnection()) return;
+    setState(() {
+      formState = FormStateValue.processing;
+    });
     serverRequest = await ContactUsCall.call(
       email: formValues[email][dataIndex],
       name: formValues[name][dataIndex],
@@ -72,6 +75,9 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
         ),
       );
     } else {
+      setState(() {
+        formState = FormStateValue.error;
+      });
       final errors =
           getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
       onReceivedErrorsFromServer(errors);

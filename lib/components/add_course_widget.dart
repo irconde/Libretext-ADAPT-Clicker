@@ -32,6 +32,9 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
     const String toyTimeZone = 'America/Belize';
     setState(() => submitted = true);
     if (!checkConnection()) return;
+    setState(() {
+      formState = FormStateValue.processing;
+    });
     serverRequest = await AddCourseCall.call(
       token: StoredPreferences.authToken,
       accessCode: formValues[code][dataIndex],
@@ -61,6 +64,9 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
         );
       }
     } else {
+      setState(() {
+        formState = FormStateValue.error;
+      });
       final errors =
           getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
       onReceivedErrorsFromServer(errors);
