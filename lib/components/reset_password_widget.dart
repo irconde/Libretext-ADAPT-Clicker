@@ -45,21 +45,18 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
       );
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
-            'Email Sent',
-            style: TextStyle(
-              color: FlutterFlowTheme.of(context).primaryBtnText,
-            ),
+          content: const Text(
+            'Password reset requested. Check your inbox.',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+              ),
           ),
-          duration: const Duration(milliseconds: 4000),
-          backgroundColor: FlutterFlowTheme.of(context).success,
+          backgroundColor: FlutterFlowTheme.of(context).secondaryText,
         ),
       );
       setState(() {});
     } else {
-      setState(() {
-        formState = FormStateValue.error;
-      });
       final errors =
           getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
       onReceivedErrorsFromServer(errors);

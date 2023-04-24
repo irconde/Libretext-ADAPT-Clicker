@@ -82,9 +82,6 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
       await context.pushRoute(CoursesRouteWidget());
       setState(() {});
     } else {
-      setState(() {
-        formState = FormStateValue.error;
-      });
       final errors =
           getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
       onReceivedErrorsFromServer(errors);

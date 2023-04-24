@@ -38,7 +38,10 @@ mixin FormStateMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
   }
 
   void onReceivedErrorsFromServer(dynamic errors) {
-    setState(() => submitted = true);
+    setState(() {
+      submitted = true;
+      formState = FormStateValue.error;
+    });
     Map<String, dynamic> errorData = Map<String, dynamic>.from(errors);
     for (String key in errorData.keys) {
       setState(() {

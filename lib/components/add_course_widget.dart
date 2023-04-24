@@ -53,21 +53,18 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
         context.popRoute();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(
-              'You have successfully joined the course',
-              style: TextStyle(
-                color: FlutterFlowTheme.of(context).primaryBtnText,
-              ),
+            content: const Text(
+              'You have successfully joined the course.',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
             ),
-            duration: const Duration(milliseconds: 4000),
-            backgroundColor: FlutterFlowTheme.of(context).success,
+            backgroundColor: FlutterFlowTheme.of(context).secondaryText,
           ),
         );
       }
     } else {
-      setState(() {
-        formState = FormStateValue.error;
-      });
       final errors =
           getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
       onReceivedErrorsFromServer(errors);

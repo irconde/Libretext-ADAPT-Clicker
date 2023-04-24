@@ -120,9 +120,6 @@ class _UpdateProfilePageWidgetState
         });
       });
     } else {
-      setState(() {
-        formState = FormStateValue.error;
-      });
       final errors =
           getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
       onReceivedErrorsFromServer(errors);

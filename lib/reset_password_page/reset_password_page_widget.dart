@@ -66,9 +66,6 @@ class _ResetPasswordPageWidgetState
         _formKey.currentState!.reset();
       });
     } else {
-      setState(() {
-        formState = FormStateValue.error;
-      });
       final errors =
           getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
       onReceivedErrorsFromServer(errors);

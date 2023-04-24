@@ -70,12 +70,12 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
           SnackBar(
             content: Text(
               serverRequest!.jsonBody['message'],
-              style: TextStyle(
-                color: FlutterFlowTheme.of(context).primaryBtnText,
-              ),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
             ),
-            duration: const Duration(milliseconds: 4000),
-            backgroundColor: FlutterFlowTheme.of(context).success,
+            backgroundColor: FlutterFlowTheme.of(context).secondaryText,
           ),
         );
       } else {
@@ -90,9 +90,6 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
         });
       }
     } else {
-      setState(() {
-        formState = FormStateValue.error;
-      });
       final errors =
           getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
       onReceivedErrorsFromServer(errors);
