@@ -1,4 +1,5 @@
 import 'package:adapt_clicker/components/connection_state_mixin.dart';
+import 'package:adapt_clicker/components/assignment_grid_widget.dart';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:expandable/expandable.dart';
@@ -259,260 +260,74 @@ class _AssignmentDetailsWidgetState
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: Text(
-                                  'Question',
-                                  textAlign: TextAlign.center,
-                                  style: theme.bodyText1.override(
-                                    fontFamily: 'Open Sans',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Text(
-                                  'Points',
-                                  textAlign: TextAlign.center,
-                                  style: theme.bodyText1.override(
-                                    fontFamily: 'Open Sans',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Text(
-                                  'Score',
-                                  textAlign: TextAlign.center,
-                                  style: theme.bodyText1.override(
-                                    fontFamily: 'Open Sans',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: Text(
-                                  'Solution',
-                                  textAlign: TextAlign.center,
-                                  style: theme.bodyText1.override(
-                                    fontFamily: 'Open Sans',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 0, 0, Constants.msMargin),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                FutureBuilder<ApiCallResponse>(
-                                  future: ViewCall.call(
-                                    assignmentID: assignmentSummary['id'],
-                                    token: StoredPreferences.authToken,
-                                  ),
-                                  builder: (context, snapshot) {
-                                    // Customize what your widget looks like when it's loading.
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: 48,
-                                          height: 48,
-                                          child: CircularProgressIndicator(
-                                            color: theme.primaryColor,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                    final listViewViewResponse = snapshot.data!;
-                                    return Builder(
-                                      builder: (context) {
-                                        final questions = ViewCall.questions(
-                                          listViewViewResponse.jsonBody,
-                                        ).toList();
-                                        return ListView.builder(
-                                          padding: EdgeInsets.zero,
-                                          shrinkWrap: true,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount: questions.length,
-                                          itemBuilder:
-                                              (context, questionsIndex) {
-                                            final questionsItem =
-                                                questions[questionsIndex];
-                                            return InkWell(
-                                              splashColor: Colors.transparent,
-                                              onTap: () async {
-                                                if (!checkConnection()) return;
-                                                setState(() => AppState().view =
-                                                    listViewViewResponse
-                                                        .jsonBody);
-                                                setState(() => AppState()
-                                                    .question = questionsItem);
-                                                setState(() =>
-                                                    AppState().isBasic =
-                                                        functions.isBasic(
-                                                            getJsonField(
-                                                      questionsItem,
-                                                      r'''$.technology_iframe''',
-                                                    ).toString()));
-                                                setState(() =>
-                                                    AppState().hasSubmission =
-                                                        getJsonField(
-                                                      questionsItem,
-                                                      r'''$.has_at_least_one_submission''',
-                                                    ));
-                                                await showModalBottomSheet(
-                                                  useSafeArea: true,
-                                                  isScrollControlled: true,
-                                                  backgroundColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .primaryBackground,
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return Padding(
-                                                      padding:
-                                                          MediaQuery.of(context)
-                                                              .viewInsets,
-                                                      child: SizedBox(
-                                                        height: double.infinity,
-                                                        child:
-                                                            QuestionCTNWidget(
-                                                          assignmentName:
-                                                              assignmentSummary[
-                                                                  'name'],
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                );
-                                              },
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                        0,
-                                                        Constants.sMargin,
-                                                        0,
-                                                        0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Text(
-                                                        functions
-                                                            .addOne(
-                                                                questionsIndex)
-                                                            .toString(),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Open Sans',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryColor,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Text(
-                                                        getJsonField(
-                                                          questionsItem,
-                                                          r'''$.points''',
-                                                        ).toString(),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Open Sans',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Text(
-                                                        getJsonField(
-                                                          questionsItem,
-                                                          r'''$.total_score''',
-                                                        ).toString(),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Open Sans',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Text(
-                                                        functions.questionSolution(
-                                                            assignmentSummary[
-                                                                'solution_exist']),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Open Sans',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
-                              ],
+                          FutureBuilder<ApiCallResponse>(
+                            future: ViewCall.call(
+                              assignmentID: assignmentSummary['id'],
+                              token: StoredPreferences.authToken,
                             ),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 48,
+                                    height: 48,
+                                    child: CircularProgressIndicator(
+                                      color: theme.primaryColor,
+                                    ),
+                                  ),
+                                );
+                              }
+                              final builderResponse = snapshot.data!;
+                              return Builder(
+                                builder: (context) {
+                                  int gridViewCrossAxisCount = 3;
+                                  final questions = ViewCall.questions(
+                                    builderResponse.jsonBody,
+                                  ).toList();
+                                  return Container(
+                                    color: Colors.black12,
+                                    child: GridView.builder(
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: gridViewCrossAxisCount,
+                                        childAspectRatio: 1,
+                                        mainAxisSpacing:
+                                            2.0, // add this to add horizontal divider
+                                        crossAxisSpacing:
+                                            2.0, // add this to add vertical divider
+                                      ),
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount: itemCount(questions.length,
+                                          gridViewCrossAxisCount), // add one more item to fill the space
+                                      clipBehavior: Clip
+                                          .none, // add this to prevent clipping of divider
+                                      itemBuilder: (context, questionsIndex) {
+                                        return questionsIndex ==
+                                                questions
+                                                    .length // check if the index is equal to the length of the list
+                                            ? Container(
+                                                color: theme.primaryBackground,
+                                              ) // return an empty container
+                                            : AssignmentGridWidget(
+                                                questionsItem:
+                                                    questions[questionsIndex],
+                                                assignmentSummary:
+                                                    assignmentSummary,
+                                                ref: ref,
+                                                builderResponse:
+                                                    builderResponse,
+                                                questionsIndex: questionsIndex,
+                                              ); // otherwise return your widget
+                                      },
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                           ),
                         ],
                       ),
@@ -523,5 +338,33 @@ class _AssignmentDetailsWidgetState
             ),
           );
         });
+  }
+
+  BoxDecoration myBoxDecoration(int index, int gridViewCrossAxisCount) {
+    index++;
+    return BoxDecoration(
+      color: FlutterFlowTheme.of(context).primaryBackground,
+      border: Border(
+        right: BorderSide(
+          //                   <--- left side
+          color: index % gridViewCrossAxisCount != 0
+              ? Colors.black12
+              : Colors.transparent,
+          width: 1.5,
+        ),
+        top: BorderSide(
+          //                   <--- left side
+          color: index > gridViewCrossAxisCount
+              ? Colors.black12
+              : Colors.transparent,
+          width: 1.5,
+        ),
+      ),
+    );
+  }
+
+  itemCount(length, int gridViewCrossAxisCount) {
+    return length +
+        (gridViewCrossAxisCount - (length % gridViewCrossAxisCount));
   }
 }
