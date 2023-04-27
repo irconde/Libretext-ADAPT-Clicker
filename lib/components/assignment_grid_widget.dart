@@ -6,6 +6,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../utils/check_internet_connectivity.dart';
+import '../utils/constants.dart';
 
 class AssignmentGridWidget extends StatefulWidget {
   const AssignmentGridWidget({Key? key, this.questionsItem, required this.assignmentSummary, required this.ref, this.builderResponse, required this.questionsIndex}) : super(key: key);
@@ -39,6 +40,20 @@ class AssignmentGridWidgetState extends State<AssignmentGridWidget> {
       return false;
     }
     return true;
+  }
+
+  // Define a function that takes a date string and returns a formatted string
+  String formatDate(String date) {
+
+    if(date == 'N/A') {
+      return '';
+    }
+    // Parse the date string using the given format
+    DateTime parsedDate = DateFormat('MMM dd, yyyy HH:mm:ss').parse(date);
+    // Format the date using the desired format
+    String formattedDate = DateFormat('MMMM d').format(parsedDate);
+    // Return the formatted date
+    return formattedDate;
   }
 
   @override
@@ -95,10 +110,7 @@ class AssignmentGridWidgetState extends State<AssignmentGridWidget> {
           );
         },
         child: Column(
-          mainAxisSize:
-          MainAxisSize.max,
-          mainAxisAlignment:
-          MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               functions
@@ -125,26 +137,40 @@ class AssignmentGridWidgetState extends State<AssignmentGridWidget> {
             ),
             Visibility(
               visible: questionsItem['last_submitted'] != 'N/A',
-              child: Text(
-                  questionsItem['last_submitted'] ?? '',
-                  textAlign:
-                  TextAlign.center,
-                  style:
-                  FlutterFlowTheme.of(
-                      context)
-                      .bodyText1
-                      .override(
-                    fontFamily:
-                    'Open Sans',
-                    fontWeight:
-                    FontWeight
-                        .normal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.check_circle_outline,
+                    color: theme.success,
+                    size: 20,
                   ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(Constants.xxsMargin, 0, 0, Constants.xxsMargin),
+                    child: Text(
+                        formatDate(questionsItem['last_submitted']),
+                        textAlign:
+                        TextAlign.center,
+                        style:
+                        FlutterFlowTheme.of(
+                            context)
+                            .bodyText1
+                            .override(
+                          fontFamily:
+                          'Open Sans',
+                          fontWeight:
+                          FontWeight.normal,
+                          color: theme.success,
+                        ),
 
-                ),
+                      ),
+                  ),
+                ],
+              ),
             ),
             Text(
-                '${questionsItem['submission_score']}/${questionsItem['points']} Points' ?? 'points/total',
+                '${questionsItem['total_score'] ?? '0'}/${questionsItem['points']} Points' ?? 'points/total',
                 textAlign:
                 TextAlign.center,
                 style:

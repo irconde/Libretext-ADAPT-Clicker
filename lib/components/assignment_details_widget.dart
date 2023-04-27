@@ -6,11 +6,10 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import '../backend/api_requests/api_calls.dart';
-import '../components/question_c_t_n_widget.dart';
+import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../utils/constants.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -145,22 +144,22 @@ class _AssignmentDetailsWidgetState
                         decoration:
                             BoxDecoration(color: theme.coursePagePullDown),
                         child: Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: Align(
-                              child: Wrap(
-                                direction: Axis.horizontal,
-                                spacing: 4,
-                                alignment: WrapAlignment.start,
-                                children: [
-                                  Chip(
-                                    backgroundColor: theme.secondaryColor,
-                                    label: Text(
-                                      " ${assignmentSummary['total_points']} points",
-                                      style: theme.bodyText1.override(
-                                        fontFamily: 'Open Sans',
-                                        color: theme.primaryBackground,
-                                      ),
-                                    ),
+                            padding: const EdgeInsetsDirectional.fromSTEB(Constants.xsMargin, Constants.sMargin, Constants.xsMargin, Constants.sMargin),
+                        child: Align(
+                          child: Wrap(
+                            direction: Axis.horizontal,
+                            spacing: 4,
+                            alignment: WrapAlignment.start,
+                            children: [
+                              Chip(
+                                backgroundColor: theme.secondaryColor,
+                                label: Text(
+                                    " ${assignmentSummary['total_points']} points",
+                                  style: theme
+                                      .bodyText1
+                                      .override(
+                                    fontFamily: 'Open Sans',
+                                    color: theme.primaryBackground,
                                   ),
                                   Chip(
                                     backgroundColor: theme.secondaryColor,
@@ -206,47 +205,54 @@ class _AssignmentDetailsWidgetState
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 0, 0, Constants.msMargin),
-                                child: RichText(
-                                  text: TextSpan(
-                                    style: theme.bodyText3,
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        text: 'Public Description:  ',
-                                        style: theme.bodyText3.override(
-                                          fontFamily: 'Open Sans',
-                                          fontWeight: FontWeight.bold,
+                              Visibility(
+                                visible: assignmentSummary['public_description'] != null,
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.msMargin),
+                                  child: RichText(
+                                    text: TextSpan(
+                                      style: theme.bodyText3,
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: 'Description:  ',
+                                          style: theme
+                                              .bodyText3
+                                              .override(
+                                            fontFamily: 'Open Sans',
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      ),
-                                      TextSpan(
-                                        text: assignmentSummary[
-                                                'public_description'] ??
-                                            'There is no description',
-                                      ),
-                                    ],
+                                        TextSpan(
+                                          text: assignmentSummary['public_description'] ?? 'There is no description',
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                              RichText(
-                                text: TextSpan(
-                                  style: theme.bodyText3,
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: 'Late Policy: ',
-                                      style: theme.bodyText3.override(
-                                        fontFamily: 'Open Sans',
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                              Visibility(
+                                visible: (assignmentSummary['formatted_late_policy'] != null || assignmentSummary['late_policy'] != null),
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.smMargin),
+                                  child: RichText(
+                                    text: TextSpan(
+                                      style: theme.bodyText3,
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: 'Late Policy: ',
+                                          style: theme
+                                              .bodyText3
+                                              .override(
+                                            fontFamily: 'Open Sans',
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: assignmentSummary['formatted_late_policy'] ?? assignmentSummary['late_policy'].toString(),
+                                        ),
+                                      ],
                                     ),
-                                    TextSpan(
-                                      text: assignmentSummary[
-                                              'formatted_late_policy'] ??
-                                          assignmentSummary['late_policy']
-                                              .toString(),
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -255,7 +261,7 @@ class _AssignmentDetailsWidgetState
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(Constants.mmMargin),
+                      padding: const EdgeInsets.all(Constants.sMargin),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -340,31 +346,10 @@ class _AssignmentDetailsWidgetState
         });
   }
 
-  BoxDecoration myBoxDecoration(int index, int gridViewCrossAxisCount) {
-    index++;
-    return BoxDecoration(
-      color: FlutterFlowTheme.of(context).primaryBackground,
-      border: Border(
-        right: BorderSide(
-          //                   <--- left side
-          color: index % gridViewCrossAxisCount != 0
-              ? Colors.black12
-              : Colors.transparent,
-          width: 1.5,
-        ),
-        top: BorderSide(
-          //                   <--- left side
-          color: index > gridViewCrossAxisCount
-              ? Colors.black12
-              : Colors.transparent,
-          width: 1.5,
-        ),
-      ),
-    );
-  }
-
   itemCount(length, int gridViewCrossAxisCount) {
-    return length +
-        (gridViewCrossAxisCount - (length % gridViewCrossAxisCount));
+    if(length % gridViewCrossAxisCount == 0)
+      return length;
+
+    return length + (gridViewCrossAxisCount - (length % gridViewCrossAxisCount));
   }
 }
