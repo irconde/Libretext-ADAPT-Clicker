@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
+import 'package:number_paginator/number_paginator.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -17,34 +18,41 @@ import '../utils/stored_preferences.dart';
 
 @RoutePage()
 class QuestionCTNWidget extends StatefulWidget {
-  const QuestionCTNWidget({
-    Key? key,
-    @PathParam('name') this.assignmentName,
-    @PathParam('view') this.view,
-  }) : super(key: key);
+  const QuestionCTNWidget(
+      {Key? key,
+      @PathParam('name') this.assignmentName,
+      @PathParam('view') this.view,
+      this.index = 0,})
+      : super(key: key);
 
   final String? assignmentName;
-  final String? view;
+  final dynamic view;
+  final int index;
 
   @override
-  State<QuestionCTNWidget> createState() => _QuestionCTNWidgetState();
+  State<QuestionCTNWidget> createState() => _QuestionCTNWidgetState(index);
 }
 
 class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
+  _QuestionCTNWidgetState(this._currentPage);
+
   TextEditingController? textController;
 
   late StreamSubscription<bool> _keyboardVisibilitySubscription;
   bool _isKeyboardVisible = false;
-  late WebViewController controller;
+
+  int _currentPage;
+
+  NumberPaginatorController paginatorController = NumberPaginatorController();
 
   @override
   void initState() {
     super.initState();
-
+    paginatorController.currentPage = _currentPage;
     if (kIsWeb) {
       _keyboardVisibilitySubscription =
           KeyboardVisibilityController().onChange.listen((bool visible) {
-        setState(() {
+        setState!(() {
           _isKeyboardVisible = visible;
         });
       });
@@ -60,429 +68,227 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
     }
     super.dispose();
   }
+  late WebViewController controller;
 
   @override
   Widget build(BuildContext context) {
-    final questionsList = getJsonField(
-      AppState().view,
-      r'''$.questions''',
-    ).toList();
-
-    return Scaffold(
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        elevation: 0.0,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.close,
-            color: Colors.grey,
-          ),
-          onPressed: () {
-            context.popRoute();
-          },
-        ),
-        title: Text(
-          widget.assignmentName!,
-          maxLines: 1,
-          overflow: TextOverflow.fade,
-          style: FlutterFlowTheme.of(context).bodyText1.override(
-              fontFamily: 'Open Sans',
-              color: FlutterFlowTheme.of(context).primaryColor,
-              fontSize: 20,
-              fontWeight: FontWeight.w700),
-        ),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
+    final questionsList = widget.view['questions'];
+    final int numPages = questionsList.length;
+    var pages = List.generate(
+        numPages,
+        (index) => Center(
+          child: SingleChildScrollView(
               child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Divider(
-                    indent: Constants.mmMargin,
-                    endIndent: Constants.mmMargin,
-                    thickness: Constants.dividerThickness,
-                    height: 1,
-                    color: FlutterFlowTheme.of(context).lineColor,
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        Constants.mmMargin,
-                        Constants.msMargin,
-                        Constants.mmMargin,
-                        Constants.sMargin),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 24),
-                              child: RichText(
-                                  text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'Points: ',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                  ),
-                                  TextSpan(
-                                    text: getJsonField(
-                                      AppState().question,
-                                      r'''$.points''',
-                                    ).toString().maybeHandleOverflow(
-                                          maxChars: 32,
-                                          replacement: '…',
-                                        ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                  ),
-                                ],
-                              )),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                              child: RichText(
-                                  text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'Attempts: ',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                  ),
-                                  TextSpan(
-                                    text: getJsonField(
-                                      AppState().question,
-                                      r'''$.submission_count''',
-                                    ).toString().maybeHandleOverflow(
-                                          maxChars: 32,
-                                          replacement: '…',
-                                        ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                  ),
-                                ],
-                              )),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                              child: RichText(
-                                  text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'Submission: ',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                  ),
-                                  TextSpan(
-                                    text: getJsonField(
-                                      AppState().question,
-                                      r'''$.student_response''',
-                                    ).toString().maybeHandleOverflow(
-                                          maxChars: 32,
-                                          replacement: '…',
-                                        ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                  ),
-                                ],
-                              )),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                              child: RichText(
-                                  text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'Submitted: ',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                  ),
-                                  TextSpan(
-                                    text: getJsonField(
-                                      AppState().question,
-                                      r'''$.last_submitted''',
-                                    ).toString().maybeHandleOverflow(
-                                          maxChars: 32,
-                                          replacement: '…',
-                                        ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                  ),
-                                ],
-                              )),
-                            ),
-                            if (AppState().isBasic)
-                              Card(
-                                child: SizedBox(
-                                  height: 256,
-                                  child: WebView(
-                                    initialUrl: getJsonField(
-                                      AppState().question,
-                                      r'''$.technology_iframe''',
-                                    ),
-                                    onWebViewCreated:
-                                        (WebViewController webViewController) {
-                                      controller = webViewController;
-                                      injectViewport(controller);
-                                    },
-                                    onPageFinished: (url) {
-                                      injectViewport(controller);
-                                    },
-                                    javascriptMode: JavascriptMode.unrestricted,
-                                    gestureNavigationEnabled: true,
-                                    gestureRecognizers: Set()
-                                      ..add(Factory(
-                                          () => EagerGestureRecognizer()))
-                                      ..add(Factory<
-                                              VerticalDragGestureRecognizer>(
-                                          () =>
-                                              VerticalDragGestureRecognizer())),
-                                    zoomEnabled: true,
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
-                        if (!AppState().isBasic)
-                          FutureBuilder<ApiCallResponse>(
-                            future: GetNonTechnologyIframeCall.call(
-                              pageId: getJsonField(
-                                AppState().question,
-                                r'''$.page_id''',
-                              ),
-                              token: StoredPreferences.authToken,
-                            ),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: CircularProgressIndicator(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                    ),
-                                  ),
-                                );
-                              }
-                              final htmlViewGetNonTechnologyIframeResponse =
-                                  snapshot.data!;
-                              return Html(
-                                data: htmlViewGetNonTechnologyIframeResponse
-                                    .elements.outerHtml,
-                              );
-                            },
-                          ),
-                        if (functions.isTextSubmission(getJsonField(
-                          AppState().question,
-                          r'''$.open_ended_submission_type''',
-                        ).toString()))
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              TextFormField(
-                                controller: textController,
-                                autofocus: true,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  hintText: '[Some hint text...]',
-                                  hintStyle:
-                                      FlutterFlowTheme.of(context).bodyText2,
-                                  enabledBorder: const UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
-                                  ),
-                                  focusedBorder: const UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
-                                  ),
-                                  errorBorder: const UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
-                                  ),
-                                  focusedErrorBorder: const UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
-                                  ),
-                                ),
-                                style: FlutterFlowTheme.of(context).bodyText1,
-                                maxLines: 16,
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 24, 0, 24),
-                                child: FFButtonWidget(
-                                  onPressed: () {
-                                    // TODO. Check this. What is this for?
-                                    //print('Button pressed ...');
-                                  },
-                                  text: 'Submit',
-                                  options: FFButtonOptions(
-                                    width: 130,
-                                    height: 40,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          color: Colors.white,
-                                        ),
-                                    borderSide: const BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Divider(
-            indent: Constants.mmMargin,
-            endIndent: Constants.mmMargin,
-            thickness: Constants.dividerThickness,
-            color: FlutterFlowTheme.of(context).lineColor,
-          ),
-          if (!(kIsWeb
-              ? MediaQuery.of(context).viewInsets.bottom > 0
-              : _isKeyboardVisible))
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.only(left: 24, right: 24, bottom: 24),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.arrow_left,
-                    color: Colors.black,
-                    size: 24,
-                  ),
-                  SizedBox(
-                    width: 240,
-                    height: 48,
-                    child: ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: questionsList.length,
-                      scrollDirection: Axis.horizontal,
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(width: 12);
-                      },
-                      itemBuilder: (BuildContext context, int index) {
-                        final questionsListItem = questionsList[index];
-                        return InkWell(
-                          splashColor: Colors.transparent,
-                          onTap: () async {
-                            setState(() {
-                              AppState().question = questionsListItem;
-                              AppState().isBasic =
-                                  functions.isBasic(getJsonField(
-                                questionsListItem,
-                                r'''$.technology_iframe''',
-                              ).toString());
-                              AppState().hasSubmission = getJsonField(
-                                questionsListItem,
-                                r'''$.has_at_least_one_submission''',
-                              );
-                              controller.loadUrl(getJsonField(questionsListItem,
-                                  r'''$.technology_iframe'''));
-                              log('Setting index to $index');
-                              StoredPreferences.selectedIndex = index;
-                            });
+                  children: [
+                    AppState().isBasic
+                        ? Card(
+                      child: SizedBox(
+                        height: 400,
+                        child: WebView(
+                          initialUrl: AppState().question['technology_iframe'],
+                          onWebViewCreated: (WebViewController webViewController) {
+                            controller = webViewController;
+                            injectViewport(controller);
                           },
-                          child: containerSelection(++index, context),
+                          onPageFinished: (url) {
+                            injectViewport(controller);
+                          },
+                          javascriptMode: JavascriptMode.unrestricted,
+                          gestureNavigationEnabled: true,
+                          gestureRecognizers: Set()
+                            ..add(Factory(() => EagerGestureRecognizer()))
+                            ..add(Factory<VerticalDragGestureRecognizer>(
+                                    () => VerticalDragGestureRecognizer())),
+                          zoomEnabled: true,
+                        ),
+                      ),
+                    )
+                        : FutureBuilder<ApiCallResponse>(
+                      future: GetNonTechnologyIframeCall.call(
+                        pageId: getJsonField(
+                          AppState().question,
+                          r'''$.page_id''',
+                        ),
+                        token: StoredPreferences.authToken,
+                      ),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: CircularProgressIndicator(
+                                color: FlutterFlowTheme.of(context).primaryColor,
+                              ),
+                            ),
+                          );
+                        }
+                        final htmlViewGetNonTechnologyIframeResponse =
+                        snapshot.data!;
+                        return Html(
+                          data: htmlViewGetNonTechnologyIframeResponse
+                              .elements.outerHtml,
                         );
                       },
                     ),
-                  ),
-                  const Icon(
-                    Icons.arrow_right,
-                    color: Colors.black,
-                    size: 24,
-                  ),
-                ],
-              ),
-            ),
-        ],
-      ),
+                    if (functions.isTextSubmission(getJsonField(
+                      AppState().question,
+                      r'''$.open_ended_submission_type''',
+                    ).toString()))
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          TextFormField(
+                            controller: textController,
+                            autofocus: true,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              hintText: '[Some hint text...]',
+                              hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                              enabledBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
+                              focusedBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
+                              errorBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
+                              focusedErrorBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
+                            ),
+                            style: FlutterFlowTheme.of(context).bodyText1,
+                            maxLines: 16,
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+                            child: FFButtonWidget(
+                              onPressed: () {
+                                // TODO. Check this. What is this for?
+                                //print('Button pressed ...');
+                              },
+                              text: 'Submit',
+                              options: FFButtonOptions(
+                                width: 130,
+                                height: 40,
+                                color: FlutterFlowTheme.of(context).primaryColor,
+                                textStyle:
+                                FlutterFlowTheme.of(context).subtitle2.override(
+                                  fontFamily: 'Open Sans',
+                                  color: Colors.white,
+                                ),
+                                borderSide: const BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                  ],
+                ),
+              )
+          ),
     );
+
+    /*-----------------Building Page-----------------------*/
+    return Scaffold(
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+
+              color: FlutterFlowTheme.of(context).primaryBackground,
+            ),
+            onPressed: () {
+              context.popRoute();
+            },
+          ),
+          title: Text(
+            widget.assignmentName!,
+            maxLines: 1,
+            overflow: TextOverflow.fade,
+            style: FlutterFlowTheme.of(context).bodyText1.override(
+                fontFamily: 'Open Sans',
+                color: FlutterFlowTheme.of(context).primaryBackground,
+                fontSize: 20,
+                fontWeight: FontWeight.w700),
+          ),
+        ),
+        body: pages[_currentPage],
+        bottomNavigationBar: Card(
+            margin: EdgeInsets.zero,
+            elevation: 8,
+            child: NumberPaginator(
+              config: NumberPaginatorUIConfig(
+                buttonShape: ContinuousRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                buttonSelectedForegroundColor: FlutterFlowTheme.of(context).primaryBackground,
+                buttonUnselectedForegroundColor:  FlutterFlowTheme.of(context).primaryColor,
+                buttonUnselectedBackgroundColor:  FlutterFlowTheme.of(context).primaryBackground,
+                buttonSelectedBackgroundColor: FlutterFlowTheme.of(context).primaryColor,
+              ),
+
+              initialPage: _currentPage,
+              // by default, the paginator shows numbers as center content
+              numberPages: numPages,
+              onPageChange: (index) async {
+                final questionsListItem = questionsList[index];
+                setState(() {
+                  AppState().question = questionsListItem;
+                  AppState().isBasic = functions.isBasic(getJsonField(
+                    questionsListItem,
+                    r'''$.technology_iframe''',
+                  ).toString());
+                  AppState().hasSubmission = getJsonField(
+                    questionsListItem,
+                    r'''$.has_at_least_one_submission''',
+                  );
+                  controller.loadUrl(getJsonField(
+                      questionsListItem, r'''$.technology_iframe'''));
+                  log('Setting index to $index');
+                  StoredPreferences.selectedIndex = index;
+                });
+              },
+            )));
   }
 }
+
 
 Widget containerSelection(index, context) {
   bool selected = false;
