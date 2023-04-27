@@ -72,6 +72,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
 
   @override
   Widget build(BuildContext context) {
+    var theme = FlutterFlowTheme.of(context);
     return InkWell(
       onTap: () async {
         context.popRoute(); //pop back on blur
@@ -81,8 +82,8 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
         child: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: const BoxDecoration(
-            color: Color(0x0E1862B3),
+          decoration: BoxDecoration(
+            color: theme.blurColor,
           ),
           alignment: const AlignmentDirectional(0, 1),
           child: InkWell(
@@ -90,7 +91,11 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: FlutterFlowTheme.of(context).primaryBackground,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+                color: theme.primaryBackground,
               ),
               child: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 32),
@@ -107,7 +112,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                             'assets/images/lock.svg',
                             width: 32,
                             height: 32,
-                            color: FlutterFlowTheme.of(context).primaryColor,
+                            color: theme.primaryColor,
                             fit: BoxFit.fill,
                           ),
                           Padding(
@@ -116,11 +121,11 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                             child: Text(
                               'Password Recovery',
                               textAlign: TextAlign.center,
-                              style: FlutterFlowTheme.of(context)
+                              style: theme
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Open Sans',
-                                    color: FlutterFlowTheme.of(context)
+                                    color: theme
                                         .primaryColor,
                                     fontSize: 24,
                                     fontWeight: FontWeight.bold,
@@ -132,20 +137,20 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                       Divider(
                         height: 48,
                         thickness: 1,
-                        color: FlutterFlowTheme.of(context).lineColor,
+                        color: theme.lineColor,
                       ),
                       SizedBox(
                         width: double.infinity,
                         child: Text(
                           'Please enter the email address used for \nregistration.',
                           textAlign: TextAlign.start,
-                          style: FlutterFlowTheme.of(context)
+                          style: theme
                               .bodyText1
                               .override(
                                 fontFamily: 'Open Sans',
                                 fontSize: 14,
                                 color:
-                                    FlutterFlowTheme.of(context).tertiaryText,
+                                    theme.tertiaryText,
                                 fontWeight: FontWeight.normal,
                               ),
                         ),
@@ -162,14 +167,14 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                                 Icons.email_outlined,
                               ),
                               floatingLabelStyle: TextStyle(
-                                  color: FlutterFlowTheme.of(context)
+                                  color: theme
                                       .primaryColor),
                               errorText: submitted
                                   ? formValues[email][errorIndex]
                                   : null,
                               hintText: 'example@email.com',
                             ),
-                            style: FlutterFlowTheme.of(context).bodyText1,
+                            style: theme.bodyText1,
                             onChanged: (value) {
                               setState(() {
                                 formValues[email] = [value, null];

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../utils/constants.dart';
+import 'notification_icon.dart';
 
 class CollapsingLibreAppBar extends StatefulWidget {
   const CollapsingLibreAppBar(
@@ -11,13 +12,14 @@ class CollapsingLibreAppBar extends StatefulWidget {
       required this.title,
       this.top = 0.0,
       this.iconPath,
-      this.svgIconColor})
+      this.svgIconColor, this.showNotificationIcon = false})
       : super(key: key);
 
   final String title;
   final String? iconPath;
   final double top;
   final Color? svgIconColor;
+  final bool showNotificationIcon;
 
   @override
   State<CollapsingLibreAppBar> createState() => _CollapsingLibreAppBarState();
@@ -33,7 +35,8 @@ class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar> {
   @override
   void initState() {
     super.initState();
-    iconColor = widget.svgIconColor ?? FlutterFlowTheme.of(context).svgIconColor;
+    iconColor =
+        widget.svgIconColor ?? FlutterFlowTheme.of(context).svgIconColor;
     top = widget.top;
     titleSpace = formatExpandedTitle(widget.title);
   }
@@ -64,6 +67,13 @@ class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar> {
         snap: false,
         floating: false,
         shadowColor: FlutterFlowTheme.of(context).tertiaryColor,
+        actions: [
+          widget.showNotificationIcon
+              ? notificationIcon(setState: (VoidCallback fn) {
+                  setState(fn);
+                })
+              : Container(),
+        ],
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, size: 24),
           onPressed: () async {
@@ -118,10 +128,13 @@ class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar> {
     FontWeight fw;
     if (transitionVal < 1.25) {
       fw = FontWeight.w600;
-    } else if (transitionVal < 2.5) {
+    } else if (transitionVal < 2) {
       fw = FontWeight.w700;
+    }
+    else if (transitionVal < 2.5) {
+      fw = FontWeight.w800;
     } else {
-      fw = FontWeight.bold;
+      fw = FontWeight.w900; // Extra Bold
     }
 
     return FlutterFlowTheme.of(context).title3.override(

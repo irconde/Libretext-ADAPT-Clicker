@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import '../backend/router/app_router.gr.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
+import 'notification_icon.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MainAppBar({Key? key, required this.title, required this.scaffoldKey, required this.setState})
@@ -30,44 +31,12 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       title: Text(title),
       actions: [
-        notificationIcon(context),
+        notificationIcon(setState: setState,),
       ],
     );
   }
 
-  Widget notificationIcon(BuildContext context) {
-    int val = FFAppState().notificationCount();
-    if (val == 0) {
-      return IconButton(
-        icon: const Icon(
-          Icons.notifications,
-        ),
-        onPressed: () async {
-          context.pushRoute(const NotificationsRouteWidget()).then((_) =>
-              setState(() {}));
-        },
-      );
-    } else {
-      return Align(
-        alignment: Alignment.bottomCenter,
-        child: badges.Badge(
 
-          position: badges.BadgePosition.topEnd(top: 0, end: 6),
-          badgeContent: Text('$val', style: TextStyle(color: FlutterFlowTheme.of(context).primaryBackground),),
-
-          child: IconButton(
-            icon: const Icon(
-              Icons.notifications,
-            ),
-            onPressed: () async {
-              context.pushRoute(const NotificationsRouteWidget()).then((_) =>
-                  setState(() {}));
-            },
-          ),
-        ),
-      );
-    }
-  }
 
 
 }

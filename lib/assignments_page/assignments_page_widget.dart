@@ -40,16 +40,16 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
   late Map<String, dynamic> course;
 
   final List<String> _filterOptions = [
-    'ALL ASSIGNMENTS',
-    'EXAM',
-    'EXTRA CREDIT',
-    'HOMEWORK',
-    'LAB'
+    'All Assignments',
+    'Exam',
+    'Extra Credit',
+    'Homework',
+    'Lab'
   ];
   final _orderOptions = {
-    'ORDER BY: NAME': 'name',
-    'ORDER BY: START DATE': 'available_from',
-    'ORDER BY: DUE DATE': 'due'
+    'Name': 'name',
+    'Start Date': 'available_from',
+    'Due Date': 'due'
   };
 
   Future<void> getCourse() async {
@@ -123,6 +123,16 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
     });
   }
 
+  // Define a function that takes a date string and returns a formatted string
+  String formatDate(String date) {
+    // Parse the date string using the given format
+    DateTime parsedDate = DateFormat('yyyy-MM-dd HH:mm:ss').parse(date);
+    // Format the date using the desired format
+    String formattedDate = DateFormat('MM/d/yy').format(parsedDate);
+    // Return the formatted date
+    return formattedDate;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -135,6 +145,7 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                 bool innerBoxIsScrolled) {
               return <Widget>[
                 CollapsingLibreAppBar(
+                  showNotificationIcon: true,
                   title: course['course_section_name'] ?? 'Add name to Course API' ,
                   iconPath: 'assets/images/libretexts_logo.svg',
                 ),
@@ -314,7 +325,7 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                                                                 'Start Date: ',
                                                               ),
                                                               TextSpan(
-                                                                text: course['start_date'],
+                                                                text: formatDate(course['start_date']),
                                                                 style: FlutterFlowTheme
                                                                     .of(context)
                                                                     .bodyText1
@@ -391,7 +402,7 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                                                                 text: 'End Date: ',
                                                               ),
                                                               TextSpan(
-                                                                text:  course['end_date'],
+                                                                text:  formatDate(course['end_date']),
                                                                 style: FlutterFlowTheme
                                                                     .of(context)
                                                                     .bodyText1

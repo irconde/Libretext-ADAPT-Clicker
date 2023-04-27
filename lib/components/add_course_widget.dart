@@ -60,7 +60,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                   fontSize: 14,
                 ),
             ),
-            backgroundColor: FlutterFlowTheme.of(context).secondaryText,
+            backgroundColor:FlutterFlowTheme.of(context).secondaryText,
           ),
         );
       }
@@ -80,6 +80,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
 
   @override
   Widget build(BuildContext context) {
+    var theme = FlutterFlowTheme.of(context);
     return InkWell(
       onTap: () async {
         context.popRoute();
@@ -89,8 +90,8 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
         child: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: const BoxDecoration(
-            color: Color(0x0E1862B3),
+          decoration: BoxDecoration(
+            color: theme.blurColor,
           ),
           alignment: const AlignmentDirectional(0, 1),
           child: InkWell(
@@ -98,7 +99,11 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: FlutterFlowTheme.of(context).secondaryBackground,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+                color:theme.primaryBackground,
               ),
               child: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 32),
@@ -115,7 +120,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                             'assets/images/book_icon.svg',
                             width: 32,
                             height: 32,
-                            color: FlutterFlowTheme.of(context).primaryColor,
+                            color:theme.primaryColor,
                             fit: BoxFit.fill,
                           ),
                           Padding(
@@ -124,11 +129,11 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                             child: Text(
                               'Course Registration',
                               textAlign: TextAlign.center,
-                              style: FlutterFlowTheme.of(context)
+                              style:theme
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Open Sans',
-                                    color: FlutterFlowTheme.of(context)
+                                    color:theme
                                         .primaryColor,
                                     fontSize: 24,
                                     fontWeight: FontWeight.bold,
@@ -140,20 +145,20 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                       Divider(
                         height: 48,
                         thickness: 1,
-                        color: FlutterFlowTheme.of(context).lineColor,
+                        color:theme.lineColor,
                       ),
                       SizedBox(
                         width: double.infinity,
                         child: Text(
                           'Please enter the course code used given by your instructor.',
                           textAlign: TextAlign.start,
-                          style: FlutterFlowTheme.of(context)
+                          style:theme
                               .bodyText1
                               .override(
                                 fontFamily: 'Open Sans',
                                 fontSize: 14,
                                 color:
-                                    FlutterFlowTheme.of(context).secondaryText,
+                                   theme.secondaryText,
                                 fontWeight: FontWeight.normal,
                               ),
                         ),
@@ -173,14 +178,14 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                                       Icons.mode_edit,
                                     ),
                                     floatingLabelStyle: TextStyle(
-                                        color: FlutterFlowTheme.of(context)
+                                        color:theme
                                             .primaryColor),
                                     hintText: 'Course Code',
                                     errorText: submitted
                                         ? formValues[code][errorIndex]
                                         : null,
                                   ),
-                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                  style:theme.bodyText1,
                                   onChanged: _onTextChanged,
                                 ),
                               ),

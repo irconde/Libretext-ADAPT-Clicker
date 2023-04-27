@@ -31,6 +31,7 @@ abstract class FlutterFlowTheme {
   late Color drawerIconColor;
   late Color success;
   late Color failure;
+  late Color blurColor;
 
   late Color activityGood;
   late Color activityMedium;
@@ -112,6 +113,8 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color primaryText = const Color(0xFF101213);
   late Color secondaryText = const Color(0xFF57636C);
   late Color tertiaryText = const Color(0xFF6A6A6A);
+  late Color blurColor = const Color(0x0E1862B3);
+
 
   late Color primaryBtnText = const Color(0xFFFFFFFF);
   late Color lineColor = const Color(0xFFE0E3E7);

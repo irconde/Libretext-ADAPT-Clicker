@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../utils/constants.dart';
+import 'filter_sheet.dart';
 
 class AssignmentDropdown extends StatefulWidget {
-  const AssignmentDropdown(
-      {Key? key,
-      required String? dropDownValue,
-      required this.itemList,
-      required this.onItemSelectedCallback})
-      : selectedItem = dropDownValue,
+  const AssignmentDropdown({
+    Key? key,
+    required String? dropDownValue,
+    required this.itemList,
+    required this.onItemSelectedCallback,
+  })  : selectedItem = dropDownValue,
         super(key: key);
+
   final String? selectedItem;
   final List<String>? itemList;
   final Function(String) onItemSelectedCallback;
@@ -27,57 +29,66 @@ class AssignmentDropdownState extends State<AssignmentDropdown> {
     _value = widget.selectedItem;
   }
 
+  void onFilterOptionSelected(filterOption) {
+    widget.onItemSelectedCallback(filterOption);
+    setState(() {
+      _value = filterOption;
+    });
+  }
+
+  void showFilterOptions() {
+    showModalBottomSheet<void>(
+      useSafeArea: true,
+      isScrollControlled: true,
+      backgroundColor: const Color(0x0E1862B3),
+      context: context,
+      builder: (context) {
+        return Padding(
+            padding: MediaQuery.of(context).viewInsets,
+            child: FilterSheet(
+                filterOptions: widget.itemList!,
+                onItemSelectedCallback: onFilterOptionSelected));
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-      child: Container(
-        height: 36,
-        width: 172,
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 1,
-            color: FlutterFlowTheme.of(context).textFieldBorder,
+    return GestureDetector(
+      onTap: showFilterOptions,
+      child: Padding(
+        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+        child: Container(
+          height: 36,
+          width: 172,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1,
+              color: FlutterFlowTheme.of(context).textFieldBorder,
+            ),
+            borderRadius:
+                const BorderRadius.all(Radius.circular(Constants.xxsMargin)),
+            color: Colors.transparent,
           ),
-          borderRadius:
-              const BorderRadius.all(Radius.circular(Constants.xxsMargin)),
-          color: Colors.transparent,
-        ),
-        child: ButtonTheme(
-            alignedDropdown: false,
-            child: DropdownButton<String>(
-              value: _value ?? widget.itemList?.first,
-              isExpanded: true,
-              items: widget.itemList?.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      value,
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                          fontFamily: 'Open Sans',
-                          fontWeight: FontWeight.bold,
-                          color: FlutterFlowTheme.of(context).tertiaryText),
-                    ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    _value ?? widget.itemList?.first ?? '',
+                    style: FlutterFlowTheme.of(context).bodyText1,
                   ),
-                );
-              }).toList(),
-              dropdownColor: FlutterFlowTheme.of(context).textFieldBackground,
-              onChanged: (String? value) {
-                // This is called when the user selects an item.
-                widget.onItemSelectedCallback(value!);
-                setState(() {
-                  _value = value;
-                });
-              },
-              style: FlutterFlowTheme.of(context).bodyText1,
-              underline: Container(),
-              hint: Text(
-                widget.itemList?.first ?? '',
-                style: FlutterFlowTheme.of(context).bodyText1,
+                ),
               ),
-            )),
+              Icon(
+                Icons.arrow_drop_down,
+                color: FlutterFlowTheme.of(context).primaryColor,
+                size: 24,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
