@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/components/connection_state_mixin.dart';
 import 'package:adapt_clicker/components/question_c_t_n_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -5,10 +6,9 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
-import '../utils/check_internet_connectivity.dart';
 import '../utils/constants.dart';
 
-class AssignmentGridWidget extends StatefulWidget {
+class AssignmentGridWidget extends ConsumerStatefulWidget {
   const AssignmentGridWidget(
       {Key? key,
       this.questionsItem,
@@ -25,10 +25,12 @@ class AssignmentGridWidget extends StatefulWidget {
   final int questionsIndex;
 
   @override
-  State<AssignmentGridWidget> createState() => AssignmentGridWidgetState();
+  ConsumerState<AssignmentGridWidget> createState() =>
+      AssignmentGridWidgetState();
 }
 
-class AssignmentGridWidgetState extends State<AssignmentGridWidget> {
+class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
+    with ConnectionStateMixin {
   dynamic questionsItem;
   late Map<String, dynamic> assignmentSummary;
   late WidgetRef ref;
@@ -43,16 +45,6 @@ class AssignmentGridWidgetState extends State<AssignmentGridWidget> {
     ref = widget.ref;
     builderResponse = widget.builderResponse;
     questionsIndex = widget.questionsIndex;
-  }
-
-  bool _checkConnection() {
-    ConnectivityStatus? status =
-        ref.read(provider.notifier).getConnectionStatus();
-    if (status != ConnectivityStatus.isConnected) {
-      functions.showSnackbar(context, status);
-      return false;
-    }
-    return true;
   }
 
   // Define a function that takes a date string and returns a formatted string
@@ -75,7 +67,7 @@ class AssignmentGridWidgetState extends State<AssignmentGridWidget> {
       color: theme.primaryBackground,
       child: InkWell(
         onTap: () async {
-          if (!_checkConnection()) return;
+          if (!checkConnection()) return;
           setState(() => AppState().view = builderResponse.jsonBody);
           setState(() => AppState().question = questionsItem);
           setState(() => AppState().isBasic = functions.isBasic(getJsonField(
