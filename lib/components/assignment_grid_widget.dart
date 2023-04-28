@@ -62,7 +62,7 @@ class AssignmentGridWidgetState extends State<AssignmentGridWidget> {
     return Container(
       color: theme.primaryBackground,
       child: InkWell(
-        splashColor: Colors.green,
+
         onTap: () async {
           if (!_checkConnection()) return;
           setState(() => AppState().view =
@@ -109,81 +109,104 @@ class AssignmentGridWidgetState extends State<AssignmentGridWidget> {
             },
           );
         },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              functions
-                  .addOne(
-                  questionsIndex)
-                  .toString(),
-              textAlign:
-              TextAlign.center,
-              style:
-              FlutterFlowTheme.of(
-                  context)
-                  .bodyText1
-                  .override(
-                fontSize: 48,
-                fontFamily:
-                'Open Sans',
-                fontWeight:
-                FontWeight
-                    .bold,
-                color: FlutterFlowTheme.of(
-                    context)
-                    .primaryColor,
-              ),
-            ),
-            Visibility(
-              visible: questionsItem['last_submitted'] != 'N/A',
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    Icons.check_circle_outline,
-                    color: theme.success,
-                    size: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(Constants.xxsMargin, 0, 0, Constants.xxsMargin),
-                    child: Text(
-                        formatDate(questionsItem['last_submitted']),
-                        textAlign:
-                        TextAlign.center,
-                        style:
-                        FlutterFlowTheme.of(
-                            context)
-                            .bodyText1
-                            .override(
-                          fontFamily:
-                          'Open Sans',
-                          fontWeight:
-                          FontWeight.normal,
-                          color: theme.success,
-                        ),
-
-                      ),
-                  ),
-                ],
-              ),
-            ),
-            Text(
-                '${questionsItem['total_score'] ?? '0'}/${questionsItem['points']} Points' ?? 'points/total',
+        child: Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(0, Constants.xxsMargin, 0,0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                functions
+                    .addOne(
+                    questionsIndex)
+                    .toString(),
                 textAlign:
                 TextAlign.center,
                 style:
                 FlutterFlowTheme.of(
                     context)
-                    .bodyText3
+                    .bodyText1
                     .override(
+                  fontSize: 48,
                   fontFamily:
                   'Open Sans',
-                  fontWeight: FontWeight.normal,
+                  fontWeight:
+                  FontWeight
+                      .bold,
+                  color: FlutterFlowTheme.of(
+                      context)
+                      .primaryColor,
                 ),
               ),
-          ],
+              Visibility(
+                visible: questionsItem['last_submitted'] != 'N/A',
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.check_circle_outline,
+                      color: theme.success,
+                      size: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(Constants.xxsMargin, 0, 0, Constants.xxsMargin),
+                      child: Text(
+                          formatDate(questionsItem['last_submitted']),
+                          textAlign:
+                          TextAlign.center,
+                          style:
+                          FlutterFlowTheme.of(
+                              context)
+                              .bodyText1
+                              .override(
+                            fontFamily:
+                            'Open Sans',
+                            fontWeight:
+                            FontWeight.normal,
+                            color: theme.success,
+                          ),
+
+                        ),
+                    ),
+                  ],
+                ),
+              ),
+              Visibility(
+                visible: questionsItem['last_submitted'] != 'N/A',
+                child: Text(
+                    '${questionsItem['total_score'] ?? 'Max'}/${questionsItem['points']} Points' ?? 'points/total',
+                    textAlign:
+                    TextAlign.center,
+                    style:
+                    FlutterFlowTheme.of(
+                        context)
+                        .bodyText3
+                        .override(
+                      fontFamily:
+                      'Open Sans',
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+              ),
+              Visibility(
+                visible: questionsItem['last_submitted'] == 'N/A',
+                child: Text(
+                  'Max ${questionsItem['points']} Points' ?? 'points/total',
+                  textAlign:
+                  TextAlign.center,
+                  style:
+                  FlutterFlowTheme.of(
+                      context)
+                      .bodyText3
+                      .override(
+                    fontFamily:
+                    'Open Sans',
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
