@@ -271,17 +271,9 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                 final questionsListItem = questionsList[index];
                 setState(() {
                   AppState().question = questionsListItem;
-                  AppState().isBasic = functions.isBasic(getJsonField(
-                    questionsListItem,
-                    r'''$.technology_iframe''',
-                  ).toString());
-                  AppState().hasSubmission = getJsonField(
-                    questionsListItem,
-                    r'''$.has_at_least_one_submission''',
-                  );
-                  controller.loadUrl(getJsonField(
-                      questionsListItem, r'''$.technology_iframe'''));
-                  log('Setting index to $index');
+                  AppState().isBasic =  functions.isBasic(questionsListItem['technology_iframe']);
+                  AppState().hasSubmission = questionsListItem['has_at_least_one_submission'];
+                  controller.loadUrl(questionsListItem['technology_iframe']);
                   StoredPreferences.selectedIndex = index;
                 });
               },
