@@ -115,7 +115,9 @@ class _AssignmentDetailsWidgetState
                       });
                     },
                     icon: Icon(
-                      expansionController.value ? Icons.info : Icons.info_outline,
+                      expansionController.value
+                          ? Icons.info
+                          : Icons.info_outline,
                       color: theme.primaryColor,
                     )),
               ],
@@ -142,92 +144,100 @@ class _AssignmentDetailsWidgetState
                         decoration:
                             BoxDecoration(color: theme.coursePagePullDown),
                         child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(Constants.xsMargin, Constants.sMargin, Constants.xsMargin, Constants.sMargin),
-                        child: Align(
-                          
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: [
-                                Chip(
-                                  backgroundColor: theme.secondaryColor,
-                                  label: Text(
-                                      " ${assignmentSummary['total_points']} points",
-                                    style: theme
-                                        .bodyText1
-                                        .override(
-                                      fontFamily: 'Open Sans',
-                                      color: theme.primaryBackground,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(Constants.xsMargin, 0, Constants.xsMargin, 0),
-                                  child: Chip(
-                                    backgroundColor: theme.secondaryColor,
-                                    label: Text(
-                                        " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} allowed attempts",
-                                      style: theme
-                                          .bodyText1
-                                          .override(
-                                        fontFamily: 'Open Sans',
-                                        color: theme.primaryBackground,
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                Constants.xsMargin,
+                                Constants.sMargin,
+                                Constants.xsMargin,
+                                Constants.sMargin),
+                            child: Align(
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: [
+                                    Chip(
+                                      backgroundColor: theme.secondaryColor,
+                                      label: Text(
+                                        " ${assignmentSummary['total_points']} points",
+                                        style: theme.bodyText1.override(
+                                          fontFamily: 'Open Sans',
+                                          color: theme.primaryBackground,
+                                        ),
                                       ),
                                     ),
-
-                                  ),
-                                ),
-                                Chip(
-                                  backgroundColor: theme.secondaryColor,
-                                  padding:  const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
-                                  labelPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 4, 0),
-                                  avatar: Icon(
-                                      Icons.date_range,
-                                      color: theme.primaryBackground,
-                                  ),
-                                  label: Text(
-                                      " ${formatDate(assignmentSummary['formatted_due'] ?? assignmentSummary['due']['due_date'])}",
-                                    style: theme
-                                        .bodyText1
-                                        .override(
-                                      fontFamily: 'Open Sans',
-                                      color: theme.primaryBackground,
+                                    Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              Constants.xsMargin,
+                                              0,
+                                              Constants.xsMargin,
+                                              0),
+                                      child: Chip(
+                                        backgroundColor: theme.secondaryColor,
+                                        label: Text(
+                                          " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} allowed attempts",
+                                          style: theme.bodyText1.override(
+                                            fontFamily: 'Open Sans',
+                                            color: theme.primaryBackground,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    Chip(
+                                      backgroundColor: theme.secondaryColor,
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              8, 0, 8, 0),
+                                      labelPadding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 4, 0),
+                                      avatar: Icon(
+                                        Icons.date_range,
+                                        color: theme.primaryBackground,
+                                      ),
+                                      label: Text(
+                                        " ${formatDate(assignmentSummary['formatted_due'] ?? assignmentSummary['due']['due_date'])}",
+                                        style: theme.bodyText1.override(
+                                          fontFamily: 'Open Sans',
+                                          color: theme.primaryBackground,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                        )),
+                              ),
+                            )),
                       ),
                       expanded: Container(
                         width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            color: theme.coursePagePullDown),
+                        decoration:
+                            BoxDecoration(color: theme.coursePagePullDown),
                         child: Padding(
                           padding: const EdgeInsets.all(24),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Visibility(
-                                visible: assignmentSummary['public_description'] != null,
+                                visible:
+                                    assignmentSummary['public_description'] !=
+                                        null,
                                 child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.msMargin),
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, Constants.msMargin),
                                   child: RichText(
                                     text: TextSpan(
                                       style: theme.bodyText3,
                                       children: <TextSpan>[
                                         TextSpan(
                                           text: 'Description:  ',
-                                          style: theme
-                                              .bodyText3
-                                              .override(
+                                          style: theme.bodyText3.override(
                                             fontFamily: 'Open Sans',
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         TextSpan(
-                                          text: assignmentSummary['public_description'] ?? 'There is no description',
+                                          text: assignmentSummary[
+                                                  'public_description'] ??
+                                              'There is no description',
                                         ),
                                       ],
                                     ),
@@ -235,24 +245,29 @@ class _AssignmentDetailsWidgetState
                                 ),
                               ),
                               Visibility(
-                                visible: (assignmentSummary['formatted_late_policy'] != null || assignmentSummary['late_policy'] != null),
+                                visible: (assignmentSummary[
+                                            'formatted_late_policy'] !=
+                                        null ||
+                                    assignmentSummary['late_policy'] != null),
                                 child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.smMargin),
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, Constants.smMargin),
                                   child: RichText(
                                     text: TextSpan(
                                       style: theme.bodyText3,
                                       children: <TextSpan>[
                                         TextSpan(
                                           text: 'Late Policy: ',
-                                          style: theme
-                                              .bodyText3
-                                              .override(
+                                          style: theme.bodyText3.override(
                                             fontFamily: 'Open Sans',
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         TextSpan(
-                                          text: assignmentSummary['formatted_late_policy'] ?? assignmentSummary['late_policy'].toString(),
+                                          text: assignmentSummary[
+                                                  'formatted_late_policy'] ??
+                                              assignmentSummary['late_policy']
+                                                  .toString(),
                                         ),
                                       ],
                                     ),
@@ -286,78 +301,65 @@ class _AssignmentDetailsWidgetState
                                       color: theme.primaryColor,
                                     ),
                                   ),
-                                  builder: (context, snapshot) {
-                                    // Customize what your widget looks like when it's loading.
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: 48,
-                                          height: 48,
-                                          child: CircularProgressIndicator(
-                                            color: theme
-                                                .primaryColor,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                    final builderResponse = snapshot.data!;
-                                    return Builder(
-                                      builder: (context) {
-                                        int gridViewCrossAxisCount = 3;
-                                        final questions = ViewCall.questions(
-                                          builderResponse.jsonBody,
-                                        )?.toList();
+                                );
+                              }
+                              final builderResponse = snapshot.data!;
+                              return Builder(builder: (context) {
+                                int gridViewCrossAxisCount = 3;
+                                final questions = ViewCall.questions(
+                                  builderResponse.jsonBody,
+                                )?.toList();
 
+                                if (questions.length != 0) {
+                                  bool spacing = true;
+                                  if (questions.length == 1) {
+                                    spacing = false;
+                                  }
+                                  return Container(
+                                    color: Colors.black12,
+                                    child: GridView.builder(
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: gridViewCrossAxisCount,
+                                        childAspectRatio: 1,
+                                        mainAxisSpacing: spacing ? 2.0 : 0,
+                                        crossAxisSpacing: spacing ? 2.0 : 0,
+                                      ),
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
 
-                                        if (questions.length != 0) {
-                                          bool spacing = true;
-                                          if(questions.length == 1 )
-                                            {
-                                              spacing = false;
-                                            }
-                                          return Container(
-                                            color: Colors.black12,
-                                            child: GridView.builder(
-                                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: gridViewCrossAxisCount,
-                                                childAspectRatio: 1,
-                                                mainAxisSpacing: spacing ? 2.0 : 0,
-                                                crossAxisSpacing:  spacing ? 2.0 : 0,
-                                              ),
-                                              padding: EdgeInsets.zero,
-                                              shrinkWrap: true,
-
-                                              physics: const NeverScrollableScrollPhysics(),
-                                              itemCount: itemCount(
-                                                  questions.length,
-                                                  gridViewCrossAxisCount),
-                                              // add more items to fill the space
-                                              clipBehavior: Clip.none,
-                                              itemBuilder: (context,
-                                                  questionsIndex) {
-                                                return questionsIndex >=
-                                                    questions
-                                                        .length // check if the index is equal to the length of the list
-                                                    ? Container(color: theme
-                                                    .primaryBackground,) // return an empty container
-                                                    : AssignmentGridWidget(
-                                                  questionsItem: questions[questionsIndex],
-                                                  assignmentSummary: assignmentSummary,
-                                                  ref: ref,
-                                                  builderResponse: builderResponse,
-                                                  questionsIndex: questionsIndex,
-                                                ); // otherwise return your widget
-
-                                              },
-                                            ),
-                                          );
-                                        } else {
-                                          return Container();}
-                                      }
-                                    );
-                                  },
-                                ),
-
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount: itemCount(questions.length,
+                                          gridViewCrossAxisCount),
+                                      // add more items to fill the space
+                                      clipBehavior: Clip.none,
+                                      itemBuilder: (context, questionsIndex) {
+                                        return questionsIndex >=
+                                                questions
+                                                    .length // check if the index is equal to the length of the list
+                                            ? Container(
+                                                color: theme.primaryBackground,
+                                              ) // return an empty container
+                                            : AssignmentGridWidget(
+                                                questionsItem:
+                                                    questions[questionsIndex],
+                                                assignmentSummary:
+                                                    assignmentSummary,
+                                                ref: ref,
+                                                builderResponse:
+                                                    builderResponse,
+                                                questionsIndex: questionsIndex,
+                                              ); // otherwise return your widget
+                                      },
+                                    ),
+                                  );
+                                } else {
+                                  return Container();
+                                }
+                              });
+                            },
+                          ),
                         ],
                       ),
                     ),
@@ -370,14 +372,15 @@ class _AssignmentDetailsWidgetState
   }
 
   itemCount(length, int gridViewCrossAxisCount) {
-    if(length % gridViewCrossAxisCount == 0 )
+    if (length % gridViewCrossAxisCount == 0) {
       return length;
+    }
     var mod = (length % gridViewCrossAxisCount);
-    print('mod is $mod');
+    // print('mod is $mod');
     var reverse = (gridViewCrossAxisCount - mod);
-    print('reverse is $reverse');
+    // print('reverse is $reverse');
     var l = length + reverse;
-    print('l is $l');
+    // print('l is $l');
     return l;
   }
 }

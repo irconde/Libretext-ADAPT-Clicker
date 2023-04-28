@@ -9,7 +9,14 @@ import '../utils/check_internet_connectivity.dart';
 import '../utils/constants.dart';
 
 class AssignmentGridWidget extends StatefulWidget {
-  const AssignmentGridWidget({Key? key, this.questionsItem, required this.assignmentSummary, required this.ref, this.builderResponse, required this.questionsIndex}) : super(key: key);
+  const AssignmentGridWidget(
+      {Key? key,
+      this.questionsItem,
+      required this.assignmentSummary,
+      required this.ref,
+      this.builderResponse,
+      required this.questionsIndex})
+      : super(key: key);
 
   final dynamic questionsItem;
   final dynamic builderResponse;
@@ -18,23 +25,29 @@ class AssignmentGridWidget extends StatefulWidget {
   final int questionsIndex;
 
   @override
-  State<AssignmentGridWidget> createState() => AssignmentGridWidgetState(questionsItem, assignmentSummary, ref, builderResponse, questionsIndex);
+  State<AssignmentGridWidget> createState() => AssignmentGridWidgetState();
 }
 
-
-
 class AssignmentGridWidgetState extends State<AssignmentGridWidget> {
-
-  AssignmentGridWidgetState(this.questionsItem, this.assignmentSummary, this.ref, this.builderResponse, this.questionsIndex);
   dynamic questionsItem;
-  Map<String, dynamic> assignmentSummary;
-  WidgetRef ref;
+  late Map<String, dynamic> assignmentSummary;
+  late WidgetRef ref;
   dynamic builderResponse;
-  int questionsIndex;
+  late int questionsIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    questionsItem = widget.questionsItem;
+    assignmentSummary = widget.assignmentSummary;
+    ref = widget.ref;
+    builderResponse = widget.builderResponse;
+    questionsIndex = widget.questionsIndex;
+  }
 
   bool _checkConnection() {
     ConnectivityStatus? status =
-    ref.read(provider.notifier).getConnectionStatus();
+        ref.read(provider.notifier).getConnectionStatus();
     if (status != ConnectivityStatus.isConnected) {
       functions.showSnackbar(context, status);
       return false;
@@ -44,8 +57,7 @@ class AssignmentGridWidgetState extends State<AssignmentGridWidget> {
 
   // Define a function that takes a date string and returns a formatted string
   String formatDate(String date) {
-
-    if(date == 'N/A') {
+    if (date == 'N/A') {
       return '';
     }
     // Parse the date string using the given format
@@ -62,47 +74,30 @@ class AssignmentGridWidgetState extends State<AssignmentGridWidget> {
     return Container(
       color: theme.primaryBackground,
       child: InkWell(
-
         onTap: () async {
           if (!_checkConnection()) return;
-          setState(() => AppState().view =
-              builderResponse
-                  .jsonBody);
-          setState(() => AppState()
-              .question = questionsItem);
-          setState(() =>
-          AppState().isBasic =
-              functions.isBasic(
-                  getJsonField(
-                    questionsItem,
-                    r'''$.technology_iframe''',
-                  ).toString()));
-          setState(() =>
-          AppState().hasSubmission =
-              getJsonField(
+          setState(() => AppState().view = builderResponse.jsonBody);
+          setState(() => AppState().question = questionsItem);
+          setState(() => AppState().isBasic = functions.isBasic(getJsonField(
+                questionsItem,
+                r'''$.technology_iframe''',
+              ).toString()));
+          setState(() => AppState().hasSubmission = getJsonField(
                 questionsItem,
                 r'''$.has_at_least_one_submission''',
               ));
           await showModalBottomSheet(
             useSafeArea: true,
             isScrollControlled: true,
-            backgroundColor:
-            FlutterFlowTheme.of(
-                context)
-                .primaryBackground,
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             context: context,
             builder: (context) {
               return Padding(
-                padding:
-                MediaQuery.of(context)
-                    .viewInsets,
+                padding: MediaQuery.of(context).viewInsets,
                 child: SizedBox(
                   height: double.infinity,
-                  child:
-                  QuestionCTNWidget(
-                    assignmentName:
-                    assignmentSummary[
-                    'name'],
+                  child: QuestionCTNWidget(
+                    assignmentName: assignmentSummary['name'],
                   ),
                 ),
               );
@@ -110,32 +105,20 @@ class AssignmentGridWidgetState extends State<AssignmentGridWidget> {
           );
         },
         child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(0, Constants.xxsMargin, 0,0),
+          padding: const EdgeInsetsDirectional.fromSTEB(
+              0, Constants.xxsMargin, 0, 0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                functions
-                    .addOne(
-                    questionsIndex)
-                    .toString(),
-                textAlign:
-                TextAlign.center,
-                style:
-                FlutterFlowTheme.of(
-                    context)
-                    .bodyText1
-                    .override(
-                  fontSize: 48,
-                  fontFamily:
-                  'Open Sans',
-                  fontWeight:
-                  FontWeight
-                      .bold,
-                  color: FlutterFlowTheme.of(
-                      context)
-                      .primaryColor,
-                ),
+                functions.addOne(questionsIndex).toString(),
+                textAlign: TextAlign.center,
+                style: FlutterFlowTheme.of(context).bodyText1.override(
+                      fontSize: 48,
+                      fontFamily: 'Open Sans',
+                      fontWeight: FontWeight.bold,
+                      color: FlutterFlowTheme.of(context).primaryColor,
+                    ),
               ),
               Visibility(
                 visible: questionsItem['last_submitted'] != 'N/A',
@@ -149,24 +132,17 @@ class AssignmentGridWidgetState extends State<AssignmentGridWidget> {
                       size: 20,
                     ),
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(Constants.xxsMargin, 0, 0, Constants.xxsMargin),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          Constants.xxsMargin, 0, 0, Constants.xxsMargin),
                       child: Text(
-                          formatDate(questionsItem['last_submitted']),
-                          textAlign:
-                          TextAlign.center,
-                          style:
-                          FlutterFlowTheme.of(
-                              context)
-                              .bodyText1
-                              .override(
-                            fontFamily:
-                            'Open Sans',
-                            fontWeight:
-                            FontWeight.normal,
-                            color: theme.success,
-                          ),
-
-                        ),
+                        formatDate(questionsItem['last_submitted']),
+                        textAlign: TextAlign.center,
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.normal,
+                              color: theme.success,
+                            ),
+                      ),
                     ),
                   ],
                 ),
@@ -174,35 +150,24 @@ class AssignmentGridWidgetState extends State<AssignmentGridWidget> {
               Visibility(
                 visible: questionsItem['last_submitted'] != 'N/A',
                 child: Text(
-                    '${questionsItem['total_score'] ?? 'Max'}/${questionsItem['points']} Points' ?? 'points/total',
-                    textAlign:
-                    TextAlign.center,
-                    style:
-                    FlutterFlowTheme.of(
-                        context)
-                        .bodyText3
-                        .override(
-                      fontFamily:
-                      'Open Sans',
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
+                  '${questionsItem['total_score'] ?? 'Max'}/${questionsItem['points']} Points' ??
+                      'points/total',
+                  textAlign: TextAlign.center,
+                  style: FlutterFlowTheme.of(context).bodyText3.override(
+                        fontFamily: 'Open Sans',
+                        fontWeight: FontWeight.normal,
+                      ),
+                ),
               ),
               Visibility(
                 visible: questionsItem['last_submitted'] == 'N/A',
                 child: Text(
                   'Max ${questionsItem['points']} Points' ?? 'points/total',
-                  textAlign:
-                  TextAlign.center,
-                  style:
-                  FlutterFlowTheme.of(
-                      context)
-                      .bodyText3
-                      .override(
-                    fontFamily:
-                    'Open Sans',
-                    fontWeight: FontWeight.normal,
-                  ),
+                  textAlign: TextAlign.center,
+                  style: FlutterFlowTheme.of(context).bodyText3.override(
+                        fontFamily: 'Open Sans',
+                        fontWeight: FontWeight.normal,
+                      ),
                 ),
               ),
             ],
@@ -211,5 +176,4 @@ class AssignmentGridWidgetState extends State<AssignmentGridWidget> {
       ),
     );
   }
-
 }

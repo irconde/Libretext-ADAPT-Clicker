@@ -132,8 +132,8 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget>
     RouteHandler rh = RouteHandler();
     // Handle incoming push notifications when the app is in the foreground
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data}');
+      // print('Got a message whilst in the foreground!');
+      // print('Message data: ${message.data}');
       // Extract the route parameter from the message
       String path = message.data['path'];
       String id = message.data['id'];
@@ -144,8 +144,8 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget>
     });
     // Handle push notification when opening it
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-      print('A new onMessageOpenedApp event was published!');
-      print('Message data: ${message.data}');
+      // print('A new onMessageOpenedApp event was published!');
+      // print('Message data: ${message.data}');
       // Extract the route parameter from the message
       String path = message.data['path'];
       List<String> data = [message.data['id']];
