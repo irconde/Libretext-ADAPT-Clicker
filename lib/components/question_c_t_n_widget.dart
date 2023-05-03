@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'dart:developer';
+import '../utils/constants.dart';
 import '../utils/stored_preferences.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
@@ -287,97 +288,54 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
             },
             children: pages),
         bottomNavigationBar: Card(
-            margin: EdgeInsets.zero,
-            elevation: 8,
-            child: NumberPaginator(
-              controller: paginatorController,
-              config: NumberPaginatorUIConfig(
-                buttonShape: ContinuousRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
+            elevation: 0,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Divider(
+                  thickness: Constants.dividerThickness,
+                  indent: 16,
+                  endIndent: 16,
                 ),
-                buttonSelectedForegroundColor: FlutterFlowTheme.of(context).primaryBackground,
-                buttonUnselectedForegroundColor:  FlutterFlowTheme.of(context).primaryColor,
-                buttonUnselectedBackgroundColor:  FlutterFlowTheme.of(context).primaryBackground,
-                buttonSelectedBackgroundColor: FlutterFlowTheme.of(context).primaryColor,
-              ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(24, 16, 24, 0),
+                  child: NumberPaginator(
+                    controller: paginatorController,
+                    config: NumberPaginatorUIConfig(
+                      buttonShape: ContinuousRectangleBorder(
+                        side: BorderSide(
+                          color: FlutterFlowTheme.of(context).outlineColor,
+                          width: 1
+                        ),
+                      ),
+                      buttonSelectedForegroundColor: FlutterFlowTheme.of(context).primaryBackground,
+                      buttonUnselectedForegroundColor:  FlutterFlowTheme.of(context).primaryColor,
+                      buttonUnselectedBackgroundColor:  FlutterFlowTheme.of(context).primaryBackground,
+                      buttonSelectedBackgroundColor: FlutterFlowTheme.of(context).primaryColor,
+                    ),
 
-              initialPage: _currentPage,
-              // by default, the paginator shows numbers as center content
-              numberPages: numPages,
-              onPageChange: (index) async {
-                final questionsListItem = questionsList[index];
-                setState(() {
-                  AppState().question = questionsListItem;
-                  AppState().isBasic =  functions.isBasic(questionsListItem['technology_iframe']);
-                  AppState().hasSubmission = questionsListItem['has_at_least_one_submission'];
-                  webViewController?.loadUrl(urlRequest: URLRequest(url: Uri.parse(questionsListItem['technology_iframe'])));
-
-                  StoredPreferences.selectedIndex = index;
-                });
-              },
+                    initialPage: _currentPage,
+                    // by default, the paginator shows numbers as center content
+                    numberPages: numPages,
+                    onPageChange: (index) async {
+                      final questionsListItem = questionsList[index];
+                      setState(() {
+                        AppState().question = questionsListItem;
+                        AppState().isBasic =  functions.isBasic(questionsListItem['technology_iframe']);
+                        AppState().hasSubmission = questionsListItem['has_at_least_one_submission'];
+                        webViewController?.loadUrl(urlRequest: URLRequest(url: Uri.parse(questionsListItem['technology_iframe'])));
+                        StoredPreferences.selectedIndex = index;
+                      });
+                    },
+                  ),
+                ),
+              ],
             )
         )
     );
   }
 }
-
-
-Widget containerSelection(index, context) {
-  bool selected = false;
-  int a = StoredPreferences.selectedIndex;
-
-  // ignore: prefer_single_quotes
-  log("Index: $index, selected: $a");
-
-  if (index == StoredPreferences.selectedIndex) selected = true;
-
-  if (selected) {
-    return selectedQuestionCard(index, context);
-  } else {
-    return unselectedQuestionCard(index, context);
-  }
-}
-
-Widget selectedQuestionCard(int index, BuildContext context) => Container(
-      alignment: const AlignmentDirectional(0, 0),
-      width: 32,
-      height: 32,
-      decoration: BoxDecoration(
-        color: FlutterFlowTheme.of(context).primaryColor,
-        shape: BoxShape.circle,
-      ),
-      child: Text(
-        '$index',
-        style: FlutterFlowTheme.of(context).bodyText1.override(
-              fontFamily: 'Open Sans',
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-              color: FlutterFlowTheme.of(context).primaryBackground,
-            ),
-        textAlign: TextAlign.center,
-      ),
-    );
-
-Widget unselectedQuestionCard(int index, BuildContext context) => Container(
-      alignment: const AlignmentDirectional(0, 0),
-      width: 32,
-      height: 32,
-      decoration: BoxDecoration(
-          color: FlutterFlowTheme.of(context).primaryBackground,
-          shape: BoxShape.circle,
-          border: Border.all(
-              width: .4, color: FlutterFlowTheme.of(context).tertiaryColor)),
-      child: Text(
-        '$index',
-        style: FlutterFlowTheme.of(context).bodyText1.override(
-              fontFamily: 'Open Sans',
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-              color: FlutterFlowTheme.of(context).primaryColor,
-            ),
-        textAlign: TextAlign.center,
-      ),
-    );
 
 void injectViewport(InAppWebViewController controller) async {
 

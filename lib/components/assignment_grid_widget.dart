@@ -84,17 +84,25 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             context: context,
             builder: (context) {
-              return Padding(
-                padding: MediaQuery.of(context).viewInsets,
-                child: SizedBox(
-                  height: double.infinity,
-                  child: QuestionCTNWidget(
-                    assignmentName: assignmentSummary['name'],
-                  ),
-                ),
+              return StatefulBuilder(
+                  builder: (context, StateSetter setState) {
+                    return Padding(
+                      padding: MediaQuery
+                          .of(context)
+                          .viewInsets,
+                      child: SizedBox(
+                        height: double.infinity,
+                        child: QuestionCTNWidget(
+                          assignmentName: assignmentSummary['name'],
+                          index: questionsIndex,
+                          view: builderResponse.jsonBody,
+                        ),
+                      ),
+                    );
+                  }
               );
-            },
-          );
+            }
+            );
         },
         child: Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(
