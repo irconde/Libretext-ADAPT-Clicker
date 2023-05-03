@@ -44,11 +44,13 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
   int _currentPage;
 
   NumberPaginatorController paginatorController = NumberPaginatorController();
+  PageController pageController = PageController();
 
   @override
   void initState() {
     super.initState();
     paginatorController.currentPage = _currentPage;
+    pageController = PageController(initialPage: _currentPage);
     if (kIsWeb) {
       _keyboardVisibilitySubscription =
           KeyboardVisibilityController().onChange.listen((bool visible) {
@@ -121,7 +123,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                         ),
                       ),
                     )
-                        : FutureBuilder<ApiCallResponse>(
+                  : FutureBuilder<ApiCallResponse>(
                       future: GetNonTechnologyIframeCall.call(
                         pageId: getJsonField(
                           AppState().question,
@@ -270,6 +272,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
         ),
         body: PageView(
             physics: const BouncingScrollPhysics(),
+            controller: pageController,
             onPageChanged: (index) {
               final questionsListItem = questionsList[index];
               setState(() {
