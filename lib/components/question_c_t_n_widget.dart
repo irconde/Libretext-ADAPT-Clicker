@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:number_paginator/number_paginator.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -12,9 +11,10 @@ import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import '../utils/constants.dart';
 import 'dart:developer';
 import '../utils/stored_preferences.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+
 
 @RoutePage()
 class QuestionCTNWidget extends StatefulWidget {
@@ -68,7 +68,24 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
     }
     super.dispose();
   }
-  late WebViewController controller;
+
+
+  InAppWebViewController? webViewController;
+  InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
+      crossPlatform: InAppWebViewOptions(
+        useShouldOverrideUrlLoading: true,
+        mediaPlaybackRequiresUserGesture: false,
+        supportZoom: true,
+        javaScriptEnabled: true,
+        javaScriptCanOpenWindowsAutomatically: true,
+        cacheEnabled: true,
+      ),
+      android: AndroidInAppWebViewOptions(
+        useHybridComposition: true,
+      ),
+      ios: IOSInAppWebViewOptions(
+        allowsInlineMediaPlayback: true,
+      ));
 
   @override
   Widget build(BuildContext context) {
@@ -84,22 +101,23 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                         ? Card(
                       child: SizedBox(
                         height: 400,
-                        child: WebView(
-                          initialUrl: AppState().question['technology_iframe'],
-                          onWebViewCreated: (WebViewController webViewController) {
-                            controller = webViewController;
+                        child: InAppWebView(
+                          initialUrlRequest: URLRequest(url: Uri.parse(AppState().question['technology_iframe'])),
+                          onWebViewCreated: (controller) {
+                            webViewController = controller;
                             injectViewport(controller);
                           },
-                          onPageFinished: (url) {
+                          onLoadStart: (controller, uri)
+                          {
                             injectViewport(controller);
                           },
-                          javascriptMode: JavascriptMode.unrestricted,
-                          gestureNavigationEnabled: true,
+
+                          initialOptions: options,
                           gestureRecognizers: Set()
                             ..add(Factory(() => EagerGestureRecognizer()))
                             ..add(Factory<VerticalDragGestureRecognizer>(
                                     () => VerticalDragGestureRecognizer())),
-                          zoomEnabled: true,
+
                         ),
                       ),
                     )
@@ -225,6 +243,7 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
 
     /*-----------------Building Page-----------------------*/
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryColor,
@@ -249,11 +268,26 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                 fontWeight: FontWeight.w700),
           ),
         ),
-        body: pages[_currentPage],
+        body: PageView(
+            physics: const BouncingScrollPhysics(),
+            onPageChanged: (index) {
+              final questionsListItem = questionsList[index];
+              setState(() {
+                AppState().question = questionsListItem;
+                AppState().isBasic =  functions.isBasic(questionsListItem['technology_iframe']);
+                AppState().hasSubmission = questionsListItem['has_at_least_one_submission'];
+                webViewController?.loadUrl(urlRequest: URLRequest(url: Uri.parse(questionsListItem['technology_iframe'])));
+
+                StoredPreferences.selectedIndex = index;
+                paginatorController.currentPage = index;
+              });
+            },
+            children: pages),
         bottomNavigationBar: Card(
             margin: EdgeInsets.zero,
             elevation: 8,
             child: NumberPaginator(
+              controller: paginatorController,
               config: NumberPaginatorUIConfig(
                 buttonShape: ContinuousRectangleBorder(
                   borderRadius: BorderRadius.circular(4),
@@ -273,11 +307,14 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
                   AppState().question = questionsListItem;
                   AppState().isBasic =  functions.isBasic(questionsListItem['technology_iframe']);
                   AppState().hasSubmission = questionsListItem['has_at_least_one_submission'];
-                  controller.loadUrl(questionsListItem['technology_iframe']);
+                  webViewController?.loadUrl(urlRequest: URLRequest(url: Uri.parse(questionsListItem['technology_iframe'])));
+
                   StoredPreferences.selectedIndex = index;
                 });
               },
-            )));
+            )
+        )
+    );
   }
 }
 
@@ -339,16 +376,7 @@ Widget unselectedQuestionCard(int index, BuildContext context) => Container(
       ),
     );
 
-void injectViewport(WebViewController controller) async {
-  await controller.runJavascript('''
-    var viewport = document.querySelector("meta[name=viewport]");
-    if (viewport != null) {
-      viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes');
-    } else {
-      var newViewport = document.createElement('meta');
-      newViewport.setAttribute('name', 'viewport');
-      newViewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes');
-      document.head.appendChild(newViewport);
-    }
-  ''');
+void injectViewport(InAppWebViewController controller) async {
+
+  await controller.evaluateJavascript(source: '''var flutterViewPort=document.createElement("meta"); flutterViewPort.name = "viewport"; flutterViewPort.content = "width=400, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"; document.getElementsByTagName("head")[0].appendChild(flutterViewPort);''');
 }
