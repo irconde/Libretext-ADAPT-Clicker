@@ -33,16 +33,6 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
     );
     // TODO. Replace animation with CustomRoute
     if ((serverRequest?.succeeded ?? true) && context.mounted) {
-      await Future.delayed(const Duration(milliseconds: 3000));
-      await Navigator.push(
-        context,
-        PageTransition(
-          type: PageTransitionType.fade,
-          duration: const Duration(milliseconds: 300),
-          reverseDuration: const Duration(milliseconds: 300),
-          child: WelcomePageWidget(),
-        ),
-      );
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text(
@@ -53,6 +43,15 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
             ),
           ),
           backgroundColor: FlutterFlowTheme.of(context).secondaryText,
+        ),
+      );
+      await Navigator.push(
+        context,
+        PageTransition(
+          type: PageTransitionType.fade,
+          duration: const Duration(milliseconds: 300),
+          reverseDuration: const Duration(milliseconds: 300),
+          child: const WelcomePageWidget(),
         ),
       );
       setState(() {});
