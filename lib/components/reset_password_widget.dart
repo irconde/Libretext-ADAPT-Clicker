@@ -47,10 +47,10 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
         SnackBar(
           content: const Text(
             'Password reset requested. Check your inbox.',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-              ),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+            ),
           ),
           backgroundColor: FlutterFlowTheme.of(context).secondaryText,
         ),
@@ -121,15 +121,12 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                             child: Text(
                               'Password Recovery',
                               textAlign: TextAlign.center,
-                              style: theme
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Open Sans',
-                                    color: theme
-                                        .primaryColor,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              style: theme.bodyText1.override(
+                                fontFamily: 'Open Sans',
+                                color: theme.primaryColor,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ],
@@ -144,15 +141,12 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                         child: Text(
                           'Please enter the email address used for \nregistration.',
                           textAlign: TextAlign.start,
-                          style: theme
-                              .bodyText1
-                              .override(
-                                fontFamily: 'Open Sans',
-                                fontSize: 14,
-                                color:
-                                    theme.tertiaryText,
-                                fontWeight: FontWeight.normal,
-                              ),
+                          style: theme.bodyText1.override(
+                            fontFamily: 'Open Sans',
+                            fontSize: 14,
+                            color: theme.tertiaryText,
+                            fontWeight: FontWeight.normal,
+                          ),
                         ),
                       ),
                       Padding(
@@ -161,14 +155,14 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                         child: SizedBox(
                           width: double.infinity,
                           child: TextFormField(
+                            enabled: formState != FormStateValue.processing,
                             decoration: InputDecoration(
                               labelText: 'Email*',
                               prefixIcon: const Icon(
                                 Icons.email_outlined,
                               ),
-                              floatingLabelStyle: TextStyle(
-                                  color: theme
-                                      .primaryColor),
+                              floatingLabelStyle:
+                                  TextStyle(color: theme.primaryColor),
                               errorText: submitted
                                   ? formValues[email][errorIndex]
                                   : null,

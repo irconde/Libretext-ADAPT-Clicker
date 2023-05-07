@@ -70,10 +70,10 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
           SnackBar(
             content: Text(
               serverRequest!.jsonBody['message'],
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                ),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+              ),
             ),
             backgroundColor: FlutterFlowTheme.of(context).secondaryText,
           ),
@@ -159,6 +159,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
                           const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                       child: TextFormField(
                           autofocus: true,
+                          enabled: formState != FormStateValue.processing,
                           decoration: InputDecoration(
                             labelText: 'Name*',
                             errorText:
@@ -176,6 +177,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                       child: TextFormField(
+                          enabled: formState != FormStateValue.processing,
                           decoration: InputDecoration(
                             labelText: 'Email*',
                             floatingLabelStyle: TextStyle(
@@ -204,6 +206,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
                           const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                       child: TextFormField(
                           textAlignVertical: TextAlignVertical.top,
+                          enabled: formState != FormStateValue.processing,
                           obscureText: false,
                           decoration: InputDecoration(
                             labelText: 'Message',

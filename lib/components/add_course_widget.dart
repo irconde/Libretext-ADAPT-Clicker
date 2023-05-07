@@ -55,12 +55,12 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
           SnackBar(
             content: const Text(
               'You have successfully joined the course.',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                ),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+              ),
             ),
-            backgroundColor:FlutterFlowTheme.of(context).secondaryText,
+            backgroundColor: FlutterFlowTheme.of(context).secondaryText,
           ),
         );
       }
@@ -103,7 +103,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20),
                 ),
-                color:theme.primaryBackground,
+                color: theme.primaryBackground,
               ),
               child: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 32),
@@ -120,7 +120,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                             'assets/images/book_icon.svg',
                             width: 32,
                             height: 32,
-                            color:theme.primaryColor,
+                            color: theme.primaryColor,
                             fit: BoxFit.fill,
                           ),
                           Padding(
@@ -129,15 +129,12 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                             child: Text(
                               'Course Registration',
                               textAlign: TextAlign.center,
-                              style:theme
-                                  .bodyText1
-                                  .override(
-                                    fontFamily: 'Open Sans',
-                                    color:theme
-                                        .primaryColor,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              style: theme.bodyText1.override(
+                                fontFamily: 'Open Sans',
+                                color: theme.primaryColor,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           )
                         ],
@@ -145,22 +142,19 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                       Divider(
                         height: 48,
                         thickness: 1,
-                        color:theme.lineColor,
+                        color: theme.lineColor,
                       ),
                       SizedBox(
                         width: double.infinity,
                         child: Text(
                           'Please enter the course code used given by your instructor.',
                           textAlign: TextAlign.start,
-                          style:theme
-                              .bodyText1
-                              .override(
-                                fontFamily: 'Open Sans',
-                                fontSize: 14,
-                                color:
-                                   theme.secondaryText,
-                                fontWeight: FontWeight.normal,
-                              ),
+                          style: theme.bodyText1.override(
+                            fontFamily: 'Open Sans',
+                            fontSize: 14,
+                            color: theme.secondaryText,
+                            fontWeight: FontWeight.normal,
+                          ),
                         ),
                       ),
                       Form(
@@ -177,16 +171,17 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                                     prefixIcon: const Icon(
                                       Icons.mode_edit,
                                     ),
-                                    floatingLabelStyle: TextStyle(
-                                        color:theme
-                                            .primaryColor),
+                                    floatingLabelStyle:
+                                        TextStyle(color: theme.primaryColor),
                                     hintText: 'Course Code',
                                     errorText: submitted
                                         ? formValues[code][errorIndex]
                                         : null,
                                   ),
-                                  style:theme.bodyText1,
+                                  style: theme.bodyText1,
                                   onChanged: _onTextChanged,
+                                  enabled:
+                                      formState != FormStateValue.processing,
                                 ),
                               ),
                               Padding(

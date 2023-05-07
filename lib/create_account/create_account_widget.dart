@@ -160,6 +160,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                           child: TextFormField(
                             autofocus: true,
+                            enabled: formState != FormStateValue.processing,
                             decoration: InputDecoration(
                               hintText: 'First Name',
                               labelText: 'First Name',
@@ -183,6 +184,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                           child: TextFormField(
+                            enabled: formState != FormStateValue.processing,
                             decoration: InputDecoration(
                               hintText: 'Last Name',
                               labelText: 'Last Name',
@@ -206,6 +208,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                           child: TextFormField(
+                            enabled: formState != FormStateValue.processing,
                             decoration: InputDecoration(
                               prefixIcon: const Icon(
                                 Icons.school_outlined,
@@ -229,6 +232,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                           child: TextFormField(
+                            enabled: formState != FormStateValue.processing,
                             decoration: InputDecoration(
                               hintText: 'Email',
                               labelText: 'Email',
@@ -252,6 +256,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                           child: TextFormField(
+                            enabled: formState != FormStateValue.processing,
                             obscureText: !passwordFieldCAVisibility,
                             decoration: InputDecoration(
                               hintText: 'Password',
@@ -289,6 +294,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                           child: TextFormField(
+                            enabled: formState != FormStateValue.processing,
                             obscureText: !confirmPasswordFieldCAVisibility,
                             decoration: InputDecoration(
                               hintText: 'Confirm Password',

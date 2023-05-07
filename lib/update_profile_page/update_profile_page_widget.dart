@@ -176,6 +176,8 @@ class _UpdateProfilePageWidgetState
                                             0, 0, 0, Constants.msMargin),
                                     child: TextFormField(
                                         autofocus: true,
+                                        enabled: formState !=
+                                            FormStateValue.processing,
                                         initialValue: snapshot.data?[firstName],
                                         decoration: InputDecoration(
                                           labelText: 'First Name*',
@@ -205,6 +207,8 @@ class _UpdateProfilePageWidgetState
                                             0, 0, 0, Constants.msMargin),
                                     child: TextFormField(
                                         initialValue: snapshot.data?[lastName],
+                                        enabled: formState !=
+                                            FormStateValue.processing,
                                         decoration: InputDecoration(
                                           labelText: 'Last Name*',
                                           errorText: submitted
@@ -231,6 +235,8 @@ class _UpdateProfilePageWidgetState
                                             0, 0, 0, Constants.msMargin),
                                     child: TextFormField(
                                         initialValue: snapshot.data?[studentId],
+                                        enabled: formState !=
+                                            FormStateValue.processing,
                                         decoration: InputDecoration(
                                           labelText: 'Student ID*',
                                           errorText: submitted

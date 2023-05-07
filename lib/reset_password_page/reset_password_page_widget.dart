@@ -105,6 +105,7 @@ class _ResetPasswordPageWidgetState
                                 0, 0, 0, Constants.msMargin),
                             child: TextFormField(
                                 autofocus: true,
+                                enabled: formState != FormStateValue.processing,
                                 obscureText:
                                     !_fieldsVisibility[currentPassword]!,
                                 decoration: InputDecoration(
@@ -143,6 +144,7 @@ class _ResetPasswordPageWidgetState
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 0, 0, Constants.msMargin),
                             child: TextFormField(
+                                enabled: formState != FormStateValue.processing,
                                 obscureText: !_fieldsVisibility[password]!,
                                 decoration: InputDecoration(
                                   labelText: 'New Password*',
@@ -178,6 +180,7 @@ class _ResetPasswordPageWidgetState
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 0, 0, Constants.msMargin),
                             child: TextFormField(
+                                enabled: formState != FormStateValue.processing,
                                 obscureText:
                                     !_fieldsVisibility[passwordConfirmation]!,
                                 decoration: InputDecoration(
