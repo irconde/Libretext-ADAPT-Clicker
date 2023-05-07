@@ -116,8 +116,8 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
         StoredPreferences.userAccount = currentEmail;
         StoredPreferences.userPassword = currentPassword;
       });
+      FocusScope.of(context).unfocus();
       await context.pushRoute(CoursesRouteWidget());
-      setState(() {});
     } else {
       final errors =
           getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');

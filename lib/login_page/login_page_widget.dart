@@ -79,8 +79,8 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
         StoredPreferences.userAccount = formValues[email][dataIndex];
         StoredPreferences.userPassword = formValues[password][dataIndex];
       });
+      FocusScope.of(context).unfocus();
       await context.pushRoute(CoursesRouteWidget());
-      setState(() {});
     } else {
       final errors =
           getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
@@ -332,7 +332,6 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
                                   if (!checkConnection()) return;
                                   await mLaunchUrl(
                                       'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
-
                                 },
                               ),
                             ),

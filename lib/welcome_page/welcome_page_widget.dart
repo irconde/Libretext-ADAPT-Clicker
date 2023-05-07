@@ -31,6 +31,7 @@ class _WelcomePageWidgetState extends ConsumerState<WelcomePageWidget>
     }
     return WillPopScope(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: SafeArea(

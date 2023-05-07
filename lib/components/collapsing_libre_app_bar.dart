@@ -12,7 +12,8 @@ class CollapsingLibreAppBar extends StatefulWidget {
       required this.title,
       this.top = 0.0,
       this.iconPath,
-      this.svgIconColor, this.showNotificationIcon = false})
+      this.svgIconColor,
+      this.showNotificationIcon = false})
       : super(key: key);
 
   final String title;
@@ -77,6 +78,7 @@ class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, size: 24),
           onPressed: () async {
+            FocusScope.of(context).unfocus();
             Navigator.of(context).pop();
           },
         ),
@@ -130,8 +132,7 @@ class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar> {
       fw = FontWeight.w600;
     } else if (transitionVal < 2) {
       fw = FontWeight.w700;
-    }
-    else if (transitionVal < 2.5) {
+    } else if (transitionVal < 2.5) {
       fw = FontWeight.w800;
     } else {
       fw = FontWeight.w900; // Extra Bold
