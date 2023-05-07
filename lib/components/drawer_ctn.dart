@@ -9,8 +9,6 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../utils/constants.dart';
-import '../utils/check_internet_connectivity.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
 
 enum DrawerItems { courses, profile, password, contact }
 
@@ -169,7 +167,10 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget>
                                 onPressed: () async {
                                   Navigator.pop(context);
                                   if (widget.currentSelected ==
-                                      DrawerItems.profile) return;
+                                          DrawerItems.profile ||
+                                      !checkConnection()) {
+                                    return;
+                                  }
                                   context.pushRoute(
                                       const UpdateProfileRouteWidget());
                                 }),
@@ -217,7 +218,10 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget>
                                   onPressed: () async {
                                     Navigator.pop(context);
                                     if (widget.currentSelected ==
-                                        DrawerItems.password) return;
+                                            DrawerItems.password ||
+                                        !checkConnection()) {
+                                      return;
+                                    }
                                     context.pushRoute(
                                         const ResetPasswordRouteWidget());
                                   }),
@@ -267,7 +271,10 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget>
                                 onPressed: () async {
                                   Navigator.pop(context);
                                   if (widget.currentSelected ==
-                                      DrawerItems.contact) return;
+                                      DrawerItems.contact ||
+                                      !checkConnection()) {
+                                    return;
+                                  }
                                   context.pushRoute(
                                     ContactUsWidget(
                                       openFromDrawer: true,
@@ -300,7 +307,10 @@ class _DrawerCtnWidgetState extends ConsumerState<DrawerCtnWidget>
                         ),
                       ),
                       onPressed: () async {
-                        if (!checkConnection()) return;
+                        if (!checkConnection()) {
+                          Navigator.pop(context);
+                          return;
+                        }
                         logout = await LogoutCall.call(
                           token: StoredPreferences.authToken,
                         );
