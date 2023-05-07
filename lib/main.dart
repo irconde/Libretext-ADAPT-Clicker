@@ -19,6 +19,11 @@ void main() async {
     systemNavigationBarColor: Colors.white,
     systemNavigationBarIconBrightness: Brightness.dark,
   ));
+  // Set preferred screen orientations to portrait
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   bool isAuthenticated;
   try {
     isAuthenticated = await userIsAuthenticated();
