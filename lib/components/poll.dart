@@ -15,12 +15,11 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 @RoutePage()
 class PollWidget extends StatefulWidget {
-  const PollWidget(
-      {Key? key,
-        @PathParam('name') this.assignmentName,
-        @PathParam('poll') this.poll,
-      })
-      : super(key: key);
+  const PollWidget({
+    Key? key,
+    @PathParam('name') this.assignmentName,
+    @PathParam('poll') this.poll,
+  }) : super(key: key);
 
   final String? assignmentName;
   final dynamic poll;
@@ -35,17 +34,16 @@ class _PollWidgetState extends State<PollWidget> {
   late StreamSubscription<bool> _keyboardVisibilitySubscription;
   bool _isKeyboardVisible = false;
 
-
   @override
   void initState() {
     super.initState();
     if (kIsWeb) {
       _keyboardVisibilitySubscription =
           KeyboardVisibilityController().onChange.listen((bool visible) {
-            setState!(() {
-              _isKeyboardVisible = visible;
-            });
-          });
+        setState!(() {
+          _isKeyboardVisible = visible;
+        });
+      });
     }
 
     textController = TextEditingController();
@@ -58,7 +56,6 @@ class _PollWidgetState extends State<PollWidget> {
     }
     super.dispose();
   }
-
 
   InAppWebViewController? webViewController;
   InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
@@ -81,8 +78,6 @@ class _PollWidgetState extends State<PollWidget> {
   Widget build(BuildContext context) {
     final question = widget.poll;
 
-
-
     /*-----------------Building Page-----------------------*/
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -100,7 +95,8 @@ class _PollWidgetState extends State<PollWidget> {
               context.popRoute();
             },
           ),
-          title: Text('Poll',
+          title: Text(
+            'Poll',
             maxLines: 1,
             overflow: TextOverflow.fade,
             style: FlutterFlowTheme.of(context).bodyText1.override(
@@ -110,10 +106,10 @@ class _PollWidgetState extends State<PollWidget> {
                 fontWeight: FontWeight.w700),
           ),
         ),
-        body:  SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
@@ -123,15 +119,28 @@ class _PollWidgetState extends State<PollWidget> {
                   padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-
                     children: [
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
-                        child: Icon(Icons.timer, color: FlutterFlowTheme.of(context).primaryBackground,size: 28,),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                        child: Icon(
+                          Icons.timer,
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          size: 28,
+                        ),
                       ),
-                      Text('REMAINING TIME: ', style: FlutterFlowTheme.of(context).title3,),
-                      Text("${widget.poll['timer'] ?? '0:00'}", style: FlutterFlowTheme.of(context).title2,),
+                      RichText(
+                        text: TextSpan(
+                            style: FlutterFlowTheme.of(context).title3,
+                            children: [
+                              const TextSpan(
+                                text: 'REMAINING TIME: ',
+                              ),
+                              TextSpan(
+                                  text: "${widget.poll['timer'] ?? '0:00'}",
+                                  style: FlutterFlowTheme.of(context).title2)
+                            ]),
+                      ),
                     ],
                   ),
                 ),
@@ -140,58 +149,58 @@ class _PollWidgetState extends State<PollWidget> {
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 80, 0, 24),
                 child: AppState().isBasic
                     ? Card(
-                  elevation: 2,
-                  child: SizedBox(
-                    height: 400,
-                    child: InAppWebView(
-                      initialUrlRequest: URLRequest(url: Uri.parse(AppState().question['technology_iframe'])),
-                      onWebViewCreated: (controller) {
-                        webViewController = controller;
-                        injectViewport(controller);
-                      },
-                      onLoadStart: (controller, uri)
-                      {
-                        injectViewport(controller);
-                      },
-
-                      initialOptions: options,
-                      gestureRecognizers: Set()
-                        ..add(Factory(() => EagerGestureRecognizer()))
-                        ..add(Factory<VerticalDragGestureRecognizer>(
-                                () => VerticalDragGestureRecognizer())),
-
-                    ),
-                  ),
-                )
-                    : FutureBuilder<ApiCallResponse>(
-                  future: GetNonTechnologyIframeCall.call(
-                    pageId: getJsonField(
-                      AppState().question,
-                      r'''$.page_id''',
-                    ),
-                    token: StoredPreferences.authToken,
-                  ),
-                  builder: (context, snapshot) {
-                    // Customize what your widget looks like when it's loading.
-                    if (!snapshot.hasData) {
-                      return Center(
+                        elevation: 2,
                         child: SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: CircularProgressIndicator(
-                            color: FlutterFlowTheme.of(context).primaryColor,
+                          height: 400,
+                          child: InAppWebView(
+                            initialUrlRequest: URLRequest(
+                                url: Uri.parse(
+                                    AppState().question['technology_iframe'])),
+                            onWebViewCreated: (controller) {
+                              webViewController = controller;
+                              injectViewport(controller);
+                            },
+                            onLoadStart: (controller, uri) {
+                              injectViewport(controller);
+                            },
+                            initialOptions: options,
+                            gestureRecognizers: Set()
+                              ..add(Factory(() => EagerGestureRecognizer()))
+                              ..add(Factory<VerticalDragGestureRecognizer>(
+                                  () => VerticalDragGestureRecognizer())),
                           ),
                         ),
-                      );
-                    }
-                    final htmlViewGetNonTechnologyIframeResponse =
-                    snapshot.data!;
-                    return Html(
-                      data: htmlViewGetNonTechnologyIframeResponse
-                          .elements.outerHtml,
-                    );
-                  },
-                ),
+                      )
+                    : FutureBuilder<ApiCallResponse>(
+                        future: GetNonTechnologyIframeCall.call(
+                          pageId: getJsonField(
+                            AppState().question,
+                            r'''$.page_id''',
+                          ),
+                          token: StoredPreferences.authToken,
+                        ),
+                        builder: (context, snapshot) {
+                          // Customize what your widget looks like when it's loading.
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: CircularProgressIndicator(
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                ),
+                              ),
+                            );
+                          }
+                          final htmlViewGetNonTechnologyIframeResponse =
+                              snapshot.data!;
+                          return Html(
+                            data: htmlViewGetNonTechnologyIframeResponse
+                                .elements.outerHtml,
+                          );
+                        },
+                      ),
               ),
               if (functions.isTextSubmission(getJsonField(
                 AppState().question,
@@ -252,7 +261,8 @@ class _PollWidgetState extends State<PollWidget> {
                       maxLines: 16,
                     ),
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
                       child: FFButtonWidget(
                         onPressed: () {
                           // TODO. Check this. What is this for?
@@ -264,10 +274,10 @@ class _PollWidgetState extends State<PollWidget> {
                           height: 40,
                           color: FlutterFlowTheme.of(context).primaryColor,
                           textStyle:
-                          FlutterFlowTheme.of(context).subtitle2.override(
-                            fontFamily: 'Open Sans',
-                            color: Colors.white,
-                          ),
+                              FlutterFlowTheme.of(context).subtitle2.override(
+                                    fontFamily: 'Open Sans',
+                                    color: Colors.white,
+                                  ),
                           borderSide: const BorderSide(
                             color: Colors.transparent,
                             width: 1,
@@ -280,12 +290,12 @@ class _PollWidgetState extends State<PollWidget> {
                 ),
             ],
           ),
-        )
-    );
+        ));
   }
 }
 
 void injectViewport(InAppWebViewController controller) async {
-
-  await controller.evaluateJavascript(source: '''var flutterViewPort=document.createElement("meta"); flutterViewPort.name = "viewport"; flutterViewPort.content = "width=400, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"; document.getElementsByTagName("head")[0].appendChild(flutterViewPort);''');
+  await controller.evaluateJavascript(
+      source:
+          '''var flutterViewPort=document.createElement("meta"); flutterViewPort.name = "viewport"; flutterViewPort.content = "width=400, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"; document.getElementsByTagName("head")[0].appendChild(flutterViewPort);''');
 }
