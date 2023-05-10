@@ -67,6 +67,8 @@ dependencies:
   number_paginator: ^0.2.3
   webview_flutter: ^2.8.0
   flutter_inappwebview: ^5.7.2+3
+  flutter_shimmer: ^2.1.2
+  shimmer: ^2.0.0
 
 dependency_overrides:
   # Uncomment this to update the launcher icon

@@ -49,13 +49,6 @@ class RouteHandler {
     return jsonEncode(assignmentSummary.jsonBody['assignment']);
   }
 
-  Future<String> getCourse(String course) async {
-    dynamic courseCall = await GetCourse.call(
-        token: StoredPreferences.authToken, course: int.parse(course));
-    //print('Course Body: ${courseCall.jsonBody['course']}');
-    courseCall.jsonBody['course'].remove('textbook_url');
-    return jsonEncode(courseCall.jsonBody['course']);
-  }
 
   Future<String> getQuestion(List<String> args) async {
     dynamic courseCall = await ViewCall.call(
@@ -69,7 +62,7 @@ class RouteHandler {
       case '/Assignment':
         return getSummary(args[0]);
       case '/Course':
-        return getCourse(args[0]);
+        return args[0];
       case '/Question':
         return getQuestion(args);
       default:

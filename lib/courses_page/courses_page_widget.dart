@@ -268,7 +268,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget>
                               onTap: () async {
                                 if (!checkConnection()) return;
                                 context.pushRoute(AssignmentsRouteWidget(
-                                  course: enrollmentsListItem,
+                                  id: enrollmentsListItem['id'].toString()
                                 ));
                               },
                               child: Padding(
@@ -279,10 +279,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget>
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      getJsonField(
-                                        enrollmentsListItem,
-                                        r'''$.course_section_name''',
-                                      ).toString().split('-')[0],
+                                     enrollmentsListItem['course_section_name'],
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -298,10 +295,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget>
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0, 8, 0, 24),
                                       child: Text(
-                                        getJsonField(
-                                          enrollmentsListItem,
-                                          r'''$.instructor''',
-                                        ).toString(),
+                                        enrollmentsListItem['instructor'],
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText1
                                             .override(

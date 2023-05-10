@@ -13,16 +13,17 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
+import '../utils/Shimmer.dart';
 import '../utils/constants.dart';
 
 @RoutePage()
 class AssignmentsPageWidget extends ConsumerStatefulWidget {
   const AssignmentsPageWidget({
     Key? key,
-    @PathParam('course') required this.course,
+    @PathParam('course') required this.id,
   }) : super(key: key);
 
-  final dynamic course;
+  final String id;
 
   @override
   ConsumerState<AssignmentsPageWidget> createState() =>
@@ -33,12 +34,528 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
   final ScrollController _mainController = ScrollController();
   final ScrollController _learningTabController = ScrollController();
   final ScrollController _assignmentsTabController = ScrollController();
-  String? _currentFilterOption;
-  String? _currentOrderOption;
 
   late int id;
-  late Map<String, dynamic> course;
+  late Map<String, dynamic> scores;
+  Map<String, dynamic>? course;
+  late ApiCallResponse scoreResponse;
 
+  @override
+  void initState() {
+    id = int.parse(widget.id);
+    super.initState();
+    // On page load action.
+    _currentFilterOption = _filterOptions[0];
+    _currentOrderOption = _orderOptions.keys.toList()[0];
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      setState(() => AppState().assignmentUp = false);
+    });
+  }
+
+  Future<ApiCallResponse?> getScores() async {
+    scoreResponse = await GetScoresByUserCall.call(
+        token: StoredPreferences.authToken, course: id);
+
+    scores = scoreResponse.jsonBody;
+    course = scores['course'];
+    return scoreResponse;
+  }
+
+  //Shimmer page
+  Widget buildFoodShimmer() {
+    var theme = FlutterFlowTheme.of(context);
+    Color mainBackground = Colors.grey;
+    return Column(
+      children: [
+        //Appbar
+        const ShimmerWidget.rectangular(
+          height: Constants.appBarHeight + 72,
+        ),
+        //Dropdown
+        ShimmerWidget.rectangular(
+          height: 112,
+          backgroundColor: theme.coursePagePullDown,
+        ),
+        //Learning
+        ShimmerWidget.rectangular(
+          height: 64,
+          backgroundColor: theme.primaryBackground,
+        ),
+        //Activities
+        Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(Constants.msMargin,
+              Constants.mlMargin, Constants.msMargin, Constants.smMargin),
+          child: ShimmerWidget.rectangular(
+            height: 80,
+            backgroundColor: theme.lightPrimaryColor,
+            shimmerColor: theme.primaryBackground,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(
+              Constants.msMargin, 0, Constants.msMargin, Constants.smMargin),
+          child: ShimmerWidget.rectangular(
+            height: 80,
+            backgroundColor: theme.lightPrimaryColor,
+            shimmerColor: theme.primaryBackground,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(
+              Constants.msMargin, 0, Constants.msMargin, Constants.smMargin),
+          child: ShimmerWidget.rectangular(
+            height: 80,
+            backgroundColor: theme.lightPrimaryColor,
+            shimmerColor: theme.primaryBackground,
+          ),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = FlutterFlowTheme.of(context);
+    return Scaffold(
+        backgroundColor: theme.primaryBackground,
+        body: FutureBuilder(
+            future: getScores(),
+            builder: (context, snapshot) {
+              return course == null ? buildFoodShimmer() : loadedPage(context);
+            }));
+  }
+
+  //Actual Page
+  Widget loadedPage(BuildContext context) {
+    var theme = FlutterFlowTheme.of(context);
+    return NestedScrollView(
+      controller: _mainController,
+      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+        return <Widget>[
+          CollapsingLibreAppBar(
+            showNotificationIcon: true,
+            title: course?['name'] ?? 'Add name to Course API',
+            iconPath: 'assets/images/libretexts_logo.svg',
+          ),
+        ];
+      },
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+              child: Material(
+                color: Colors.transparent,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0),
+                ),
+                child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    color: theme.primaryColor,
+                    borderRadius: BorderRadius.circular(0),
+                    border: Border.all(
+                      color: theme.primaryColor,
+                      width: 0,
+                    ),
+                  ),
+                  child: DefaultTabController(
+                    length: 2,
+                    initialIndex: 0,
+                    child: Column(
+                      children: [
+                        TabBar(
+                          labelColor: theme.primaryBackground,
+                          unselectedLabelColor: const Color(0xCBFFFFFF),
+                          labelStyle: theme.bodyText1,
+                          indicatorColor: theme.primaryBackground,
+                          tabs: const [
+                            Tab(
+                              text: 'HOME',
+                            ),
+                            Tab(
+                              text: 'ASSIGNMENTS',
+                            ),
+                          ],
+                        ),
+                        Expanded(
+                          child: TabBarView(
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: theme.primaryBackground,
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      width: double.infinity,
+                                      color: theme.coursePagePullDown,
+                                      child: ExpandableNotifier(
+                                        initialExpanded: false,
+                                        child: ExpandablePanel(
+                                          header: Container(
+                                            alignment: Alignment.centerLeft,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height: 116,
+                                            decoration: BoxDecoration(
+                                                color:
+                                                    theme.coursePagePullDown),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                      Constants.mmMargin,
+                                                      Constants.msMargin,
+                                                      0,
+                                                      Constants.msMargin),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            Constants.msMargin),
+                                                    child: RichText(
+                                                      text: TextSpan(
+                                                          style: theme.bodyText1
+                                                              .override(
+                                                                  fontFamily:
+                                                                      'Open Sans',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  color: theme
+                                                                      .tertiaryText),
+                                                          children: [
+                                                            const TextSpan(
+                                                                text:
+                                                                    'Instructor: '),
+                                                            TextSpan(
+                                                              text: course?[
+                                                                      'instructor'] ??
+                                                                  'No Instructor Listed',
+                                                              style: theme
+                                                                  .bodyText1
+                                                                  .override(
+                                                                color: theme
+                                                                    .tertiaryText,
+                                                                fontFamily:
+                                                                    'Open Sans',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                            ),
+                                                          ]),
+                                                    ),
+                                                  ),
+                                                  RichText(
+                                                    text: TextSpan(
+                                                      style: theme.bodyText1
+                                                          .override(
+                                                        fontFamily: 'Open Sans',
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color:
+                                                            theme.tertiaryText,
+                                                      ),
+                                                      children: <TextSpan>[
+                                                        const TextSpan(
+                                                          text: 'Start Date: ',
+                                                        ),
+                                                        TextSpan(
+                                                          text: formatDate(course?[
+                                                                  'start_date'] ??
+                                                              '2023-01-01'),
+                                                          style: theme.bodyText1
+                                                              .override(
+                                                            fontFamily:
+                                                                'Open Sans',
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal,
+                                                            color: theme
+                                                                .tertiaryText,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          collapsed: Container(
+                                              color: theme.coursePagePullDown),
+                                          expanded: Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            decoration: BoxDecoration(
+                                              color: theme.coursePagePullDown,
+                                            ),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                          Constants.mmMargin,
+                                                          0,
+                                                          0,
+                                                          Constants.msMargin),
+                                                  child: RichText(
+                                                    text: TextSpan(
+                                                      style: theme.bodyText1
+                                                          .override(
+                                                        fontFamily: 'Open Sans',
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color:
+                                                            theme.tertiaryText,
+                                                      ),
+                                                      children: <TextSpan>[
+                                                        const TextSpan(
+                                                          text: 'End Date: ',
+                                                        ),
+                                                        TextSpan(
+                                                          text: formatDate(course?[
+                                                                  'end_date'] ??
+                                                              '2023-01-01'),
+                                                          style: theme.bodyText1
+                                                              .override(
+                                                            fontFamily:
+                                                                'Open Sans',
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal,
+                                                            color: theme
+                                                                .tertiaryText,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                Visibility(
+                                                  visible:
+                                                      course?['description'] !=
+                                                          null,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                            Constants.mmMargin,
+                                                            0,
+                                                            0,
+                                                            Constants.msMargin),
+                                                    child: RichText(
+                                                      text: TextSpan(
+                                                        style: theme.bodyText1
+                                                            .override(
+                                                          fontFamily:
+                                                              'Open Sans',
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: theme
+                                                              .tertiaryText,
+                                                        ),
+                                                        children: <TextSpan>[
+                                                          const TextSpan(
+                                                            text:
+                                                                'Description: ',
+                                                          ),
+                                                          TextSpan(
+                                                            text: course?[
+                                                                'description'],
+                                                            style: theme
+                                                                .bodyText1
+                                                                .override(
+                                                              fontFamily:
+                                                                  'Open Sans',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal,
+                                                              color: theme
+                                                                  .tertiaryText,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          theme: ExpandableThemeData(
+                                            tapHeaderToExpand: true,
+                                            tapBodyToExpand: true,
+                                            tapBodyToCollapse: false,
+                                            headerAlignment:
+                                                ExpandablePanelHeaderAlignment
+                                                    .center,
+                                            hasIcon: true,
+                                            expandIcon:
+                                                Icons.keyboard_arrow_down,
+                                            collapseIcon:
+                                                Icons.keyboard_arrow_up,
+                                            iconSize: Constants.llMargin,
+                                            iconPadding:
+                                                const EdgeInsets.fromLTRB(
+                                                    0, 0, 20, 0),
+                                            iconColor: theme.tertiaryText,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: theme.secondaryBackground,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(32, 24, 24, 24),
+                                        child: Text(
+                                          'Learning Process',
+                                          style: theme.bodyText1.override(
+                                            fontFamily: 'Open Sans',
+                                            fontWeight: FontWeight.bold,
+                                            color: theme.tertiaryText,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: ScrollShadow(
+                                          controller: _learningTabController,
+                                          child: ListView.builder(
+                                            controller: _learningTabController,
+                                            itemCount: 10,
+                                            itemBuilder: (context, index) {
+                                              return const AssignmentStatCtnWidget();
+                                            },
+                                          )),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: double.infinity,
+                                height: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: theme.primaryBackground,
+                                  shape: BoxShape.rectangle,
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Container(
+                                      width: double.infinity,
+                                      height: 100,
+                                      decoration: BoxDecoration(
+                                        color: theme.coursePagePullDown,
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          AssignmentDropdown(
+                                            dropDownValue: _currentFilterOption,
+                                            itemList: _filterOptions,
+                                            onItemSelectedCallback:
+                                                onFilterOptionSelected,
+                                          ),
+                                          AssignmentDropdown(
+                                            dropDownValue: _currentOrderOption,
+                                            itemList:
+                                                _orderOptions.keys.toList(),
+                                            onItemSelectedCallback:
+                                                onOrderOptionSelected,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: ScrollShadow(
+                                        controller: _assignmentsTabController,
+                                        child: SingleChildScrollView(
+                                          controller: _assignmentsTabController,
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Builder(
+                                                builder: (context) {
+                                                  final filteredAssignmentList =
+                                                      orderAssignmentList(
+                                                          filterAssignmentList(
+                                                              jsonToAssignmentList(
+                                                                  scoreResponse),
+                                                              _currentFilterOption!),
+                                                          _currentOrderOption!);
+                                                  return ListView.builder(
+                                                    padding: EdgeInsets.zero,
+                                                    shrinkWrap: true,
+                                                    scrollDirection:
+                                                        Axis.vertical,
+                                                    itemCount:
+                                                        filteredAssignmentList
+                                                            .length,
+                                                    itemBuilder: (context,
+                                                        assignmentsIndex) {
+                                                      final assignmentsItem =
+                                                          filteredAssignmentList[
+                                                              assignmentsIndex];
+
+                                                      return AssignmentCtn(
+                                                          assignmentsItem:
+                                                              (assignmentsItem));
+                                                    },
+                                                  );
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  String? _currentFilterOption;
+  String? _currentOrderOption;
   final List<String> _filterOptions = [
     'All Assignments',
     'Exam',
@@ -52,26 +569,14 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
     'Due Date': 'due'
   };
 
-  Future<void> getCourse() async {
-    if(widget.course.runtimeType == String) {
-      String decodedString = Uri.decodeComponent(widget.course);
-      course = jsonDecode(decodedString);
-      id = course['sections'][0]['course_id'];
-    }else {
-      course = widget.course;
-      id = course['id'];
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // On page load action.
-    _currentFilterOption = _filterOptions[0];
-    _currentOrderOption = _orderOptions.keys.toList()[0];
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() => AppState().assignmentUp = false);
-    });
+  // Define a function that takes a date string and returns a formatted string
+  String formatDate(String date) {
+    // Parse the date string using the given format
+    DateTime parsedDate = DateFormat('yyyy-MM-dd').parse(date);
+    // Format the date using the desired format
+    String formattedDate = DateFormat('MM/d/yy').format(parsedDate);
+    // Return the formatted date
+    return formattedDate;
   }
 
   List jsonToAssignmentList(ApiCallResponse snapshot) =>
@@ -121,568 +626,5 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
     setState(() {
       _currentOrderOption = orderOption;
     });
-  }
-
-  // Define a function that takes a date string and returns a formatted string
-  String formatDate(String date) {
-    // Parse the date string using the given format
-    DateTime parsedDate = DateFormat('yyyy-MM-dd HH:mm:ss').parse(date);
-    // Format the date using the desired format
-    String formattedDate = DateFormat('MM/d/yy').format(parsedDate);
-    // Return the formatted date
-    return formattedDate;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder(
-        future: getCourse(),
-        builder: (context, snapshot) {
-          return NestedScrollView(
-            controller: _mainController,
-            headerSliverBuilder: (BuildContext context,
-                bool innerBoxIsScrolled) {
-              return <Widget>[
-                CollapsingLibreAppBar(
-                  showNotificationIcon: true,
-                  title: course['course_section_name'] ?? 'Add name to Course API' ,
-                  iconPath: 'assets/images/libretexts_logo.svg',
-                ),
-              ];
-            },
-            body: GestureDetector(
-              onTap: () => FocusScope.of(context).unfocus(),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: Material(
-                      color: Colors.transparent,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0),
-                      ),
-                      child: Container(
-                        width: double.infinity,
-                        height: double.infinity,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme
-                              .of(context)
-                              .primaryColor,
-                          borderRadius: BorderRadius.circular(0),
-                          border: Border.all(
-                            color: FlutterFlowTheme
-                                .of(context)
-                                .primaryColor,
-                            width: 0,
-                          ),
-                        ),
-                        child: DefaultTabController(
-                          length: 2,
-                          initialIndex: 0,
-                          child: Column(
-                            children: [
-                              TabBar(
-                                labelColor:
-                                FlutterFlowTheme
-                                    .of(context)
-                                    .primaryBackground,
-                                unselectedLabelColor: const Color(0xCBFFFFFF),
-                                labelStyle: FlutterFlowTheme
-                                    .of(context)
-                                    .bodyText1,
-                                indicatorColor:
-                                FlutterFlowTheme
-                                    .of(context)
-                                    .primaryBackground,
-                                tabs: const [
-                                  Tab(
-                                    text: 'HOME',
-                                  ),
-                                  Tab(
-                                    text: 'ASSIGNMENTS',
-                                  ),
-                                ],
-                              ),
-                              Expanded(
-                                child: TabBarView(
-                                  children: [
-                                    Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme
-                                            .of(context)
-                                            .primaryBackground,
-                                      ),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Container(
-                                            width: double.infinity,
-                                            color: FlutterFlowTheme
-                                                .of(context)
-                                                .coursePagePullDown,
-                                            child: ExpandableNotifier(
-                                              initialExpanded: false,
-                                              child: ExpandablePanel(
-                                                header: Container(
-                                                  alignment: Alignment
-                                                      .centerLeft,
-                                                  width: MediaQuery
-                                                      .of(context)
-                                                      .size
-                                                      .width,
-                                                  height: 116,
-                                                  decoration: BoxDecoration(
-                                                      color: FlutterFlowTheme
-                                                          .of(
-                                                          context)
-                                                          .coursePagePullDown),
-                                                  child: Padding(
-                                                    padding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        Constants.mmMargin,
-                                                        Constants.msMargin,
-                                                        0,
-                                                        Constants.msMargin),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                          const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              0,
-                                                              0,
-                                                              0,
-                                                              Constants
-                                                                  .msMargin),
-                                                          child: RichText(
-                                                            text: TextSpan(
-                                                                style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                    .bodyText1
-                                                                    .override(
-                                                                    fontFamily:
-                                                                    'Open Sans',
-                                                                    fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                    color: FlutterFlowTheme
-                                                                        .of(
-                                                                        context)
-                                                                        .tertiaryText),
-                                                                children: [
-                                                                  const TextSpan(
-                                                                      text:
-                                                                      'Instructor: '),
-                                                                  TextSpan(
-                                                                    text: course['instructor'] ?? 'Add instructor to Course API' ,
-                                                                    style: FlutterFlowTheme
-                                                                        .of(
-                                                                        context)
-                                                                        .bodyText1
-                                                                        .override(
-                                                                      color: FlutterFlowTheme
-                                                                          .of(
-                                                                          context)
-                                                                          .tertiaryText,
-                                                                      fontFamily:
-                                                                      'Open Sans',
-                                                                      fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
-                                                                    ),
-                                                                  ),
-                                                                ]),
-                                                          ),
-                                                        ),
-                                                        RichText(
-                                                          text: TextSpan(
-                                                            style:
-                                                            FlutterFlowTheme
-                                                                .of(
-                                                                context)
-                                                                .bodyText1
-                                                                .override(
-                                                              fontFamily:
-                                                              'Open Sans',
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .w600,
-                                                              color: FlutterFlowTheme
-                                                                  .of(
-                                                                  context)
-                                                                  .tertiaryText,
-                                                            ),
-                                                            children: <
-                                                                TextSpan>[
-                                                              const TextSpan(
-                                                                text:
-                                                                'Start Date: ',
-                                                              ),
-                                                              TextSpan(
-                                                                text: formatDate(course['start_date']),
-                                                                style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                    .bodyText1
-                                                                    .override(
-                                                                  fontFamily:
-                                                                  'Open Sans',
-                                                                  fontWeight:
-                                                                  FontWeight
-                                                                      .normal,
-                                                                  color: FlutterFlowTheme
-                                                                      .of(
-                                                                      context)
-                                                                      .tertiaryText,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                                collapsed: Container(
-                                                    color:
-                                                    FlutterFlowTheme
-                                                        .of(context)
-                                                        .coursePagePullDown),
-                                                expanded: Container(
-                                                  width: MediaQuery
-                                                      .of(context)
-                                                      .size
-                                                      .width,
-                                                  decoration: BoxDecoration(
-                                                    color:
-                                                    FlutterFlowTheme
-                                                        .of(context)
-                                                        .coursePagePullDown,
-                                                  ),
-                                                  child: Column(
-                                                    mainAxisSize: MainAxisSize
-                                                        .min,
-                                                    crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            Constants.mmMargin,
-                                                            0,
-                                                            0,
-                                                            Constants.msMargin),
-                                                        child: RichText(
-                                                          text: TextSpan(
-                                                            style:
-                                                            FlutterFlowTheme
-                                                                .of(
-                                                                context)
-                                                                .bodyText1
-                                                                .override(
-                                                              fontFamily:
-                                                              'Open Sans',
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .w600,
-                                                              color: FlutterFlowTheme
-                                                                  .of(
-                                                                  context)
-                                                                  .tertiaryText,
-                                                            ),
-                                                            children: <
-                                                                TextSpan>[
-                                                              const TextSpan(
-                                                                text: 'End Date: ',
-                                                              ),
-                                                              TextSpan(
-                                                                text:  formatDate(course['end_date']),
-                                                                style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                    .bodyText1
-                                                                    .override(
-                                                                  fontFamily:
-                                                                  'Open Sans',
-                                                                  fontWeight:
-                                                                  FontWeight
-                                                                      .normal,
-                                                                  color: FlutterFlowTheme
-                                                                      .of(
-                                                                      context)
-                                                                      .tertiaryText,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            Constants.mmMargin,
-                                                            0,
-                                                            0,
-                                                            Constants.msMargin),
-                                                        child: RichText(
-                                                          text: TextSpan(
-                                                            style:
-                                                            FlutterFlowTheme
-                                                                .of(
-                                                                context)
-                                                                .bodyText1
-                                                                .override(
-                                                              fontFamily:
-                                                              'Open Sans',
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .w600,
-                                                              color: FlutterFlowTheme
-                                                                  .of(
-                                                                  context)
-                                                                  .tertiaryText,
-                                                            ),
-                                                            children: <
-                                                                TextSpan>[
-                                                              const TextSpan(
-                                                                text:
-                                                                'Description: ',
-                                                              ),
-                                                              TextSpan(
-                                                                text: course['public_description'],
-                                                                style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                    .bodyText1
-                                                                    .override(
-                                                                  fontFamily:
-                                                                  'Open Sans',
-                                                                  fontWeight:
-                                                                  FontWeight
-                                                                      .normal,
-                                                                  color: FlutterFlowTheme
-                                                                      .of(
-                                                                      context)
-                                                                      .tertiaryText,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                theme: ExpandableThemeData(
-                                                  tapHeaderToExpand: true,
-                                                  tapBodyToExpand: true,
-                                                  tapBodyToCollapse: false,
-                                                  headerAlignment:
-                                                  ExpandablePanelHeaderAlignment
-                                                      .center,
-                                                  hasIcon: true,
-                                                  expandIcon:
-                                                  Icons.keyboard_arrow_down,
-                                                  collapseIcon:
-                                                  Icons.keyboard_arrow_up,
-                                                  iconSize: Constants.llMargin,
-                                                  iconPadding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      0, 0, 20, 0),
-                                                  iconColor:
-                                                  FlutterFlowTheme
-                                                      .of(context)
-                                                      .tertiaryText,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                              color: FlutterFlowTheme
-                                                  .of(context)
-                                                  .secondaryBackground,
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(32, 24, 24, 24),
-                                              child: Text(
-                                                'Learning Process',
-                                                style: FlutterFlowTheme
-                                                    .of(context)
-                                                    .bodyText1
-                                                    .override(
-                                                  fontFamily: 'Open Sans',
-                                                  fontWeight: FontWeight.bold,
-                                                  color: FlutterFlowTheme
-                                                      .of(
-                                                      context)
-                                                      .tertiaryText,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Flexible(
-                                            child: ScrollShadow(
-                                                controller: _learningTabController,
-                                                child: ListView.builder(
-                                                  controller:
-                                                  _learningTabController,
-                                                  itemCount: 10,
-                                                  itemBuilder: (context,
-                                                      index) {
-                                                    return const AssignmentStatCtnWidget();
-                                                  },
-                                                )),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      width: double.infinity,
-                                      height: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme
-                                            .of(context)
-                                            .primaryBackground,
-                                        shape: BoxShape.rectangle,
-                                      ),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Container(
-                                            width: double.infinity,
-                                            height: 100,
-                                            decoration: BoxDecoration(
-                                              color: FlutterFlowTheme
-                                                  .of(context)
-                                                  .coursePagePullDown,
-                                            ),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                AssignmentDropdown(
-                                                  dropDownValue:
-                                                  _currentFilterOption,
-                                                  itemList: _filterOptions,
-                                                  onItemSelectedCallback:
-                                                  onFilterOptionSelected,
-                                                ),
-                                                AssignmentDropdown(
-                                                  dropDownValue:
-                                                  _currentOrderOption,
-                                                  itemList:
-                                                  _orderOptions.keys.toList(),
-                                                  onItemSelectedCallback:
-                                                  onOrderOptionSelected,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: ScrollShadow(
-                                              controller: _assignmentsTabController,
-                                              child: SingleChildScrollView(
-                                                controller:
-                                                _assignmentsTabController,
-                                                child: Column(
-                                                  mainAxisSize: MainAxisSize
-                                                      .max,
-                                                  children: [
-                                                    FutureBuilder<
-                                                        ApiCallResponse>(
-                                                      future: getScores(),
-                                                      builder: (context,
-                                                          snapshot) {
-                                                        // Customize what your widget looks like when it's loading.
-                                                        if (!snapshot.hasData) {
-                                                          return Center(
-                                                            child: SizedBox(
-                                                              width: 50,
-                                                              height: 50,
-                                                              child:
-                                                              CircularProgressIndicator(
-                                                                color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                    .primaryColor,
-                                                              ),
-                                                            ),
-                                                          );
-                                                        }
-                                                        return Builder(
-                                                          builder: (context) {
-                                                            final filteredAssignmentList =
-                                                            orderAssignmentList(
-                                                                filterAssignmentList(
-                                                                    jsonToAssignmentList(
-                                                                        snapshot
-                                                                            .data!),
-                                                                    _currentFilterOption!),
-                                                                _currentOrderOption!);
-                                                            return ListView
-                                                                .builder(
-                                                              padding:
-                                                              EdgeInsets.zero,
-                                                              shrinkWrap: true,
-                                                              scrollDirection:
-                                                              Axis.vertical,
-                                                              itemCount:
-                                                              filteredAssignmentList
-                                                                  .length,
-                                                              itemBuilder: (
-                                                                  context,
-                                                                  assignmentsIndex) {
-                                                                final assignmentsItem =
-                                                                filteredAssignmentList[
-                                                                assignmentsIndex];
-
-                                                                return AssignmentCtn(
-                                                                    assignmentsItem:
-                                                                    (assignmentsItem));
-                                                              },
-                                                            );
-                                                          },
-                                                        );
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        }
-      )
-    );
-  }
-
-  Future<ApiCallResponse> getScores() async{
-    dynamic response = await GetScoresByUserCall.call(
-        token: StoredPreferences.authToken,
-        course: id);
-    return response;
   }
 }
