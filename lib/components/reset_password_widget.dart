@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:adapt_clicker/components/blurred_bottom_sheet.dart';
 import 'package:adapt_clicker/components/connection_state_mixin.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -72,30 +73,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
   @override
   Widget build(BuildContext context) {
     var theme = FlutterFlowTheme.of(context);
-    return InkWell(
-      onTap: () async {
-        context.popRoute(); //pop back on blur
-      },
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            color: theme.blurColor,
-          ),
-          alignment: const AlignmentDirectional(0, 1),
-          child: InkWell(
-            onTap: () async {}, //no pop back on white background
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-                color: theme.primaryBackground,
-              ),
+    return BlurredBottomSheet(
               child: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 32),
                 child: SingleChildScrollView(
@@ -188,10 +166,6 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                   ),
                 ),
               ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

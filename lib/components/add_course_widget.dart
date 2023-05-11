@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:adapt_clicker/components/connection_state_mixin.dart';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
@@ -8,6 +7,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'blurred_bottom_sheet.dart';
 import 'custom_elevated_button.dart';
 import 'form_state_mixin.dart';
 
@@ -81,30 +81,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
   @override
   Widget build(BuildContext context) {
     var theme = FlutterFlowTheme.of(context);
-    return InkWell(
-      onTap: () async {
-        context.popRoute();
-      },
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            color: theme.blurColor,
-          ),
-          alignment: const AlignmentDirectional(0, 1),
-          child: InkWell(
-            onTap: () async {}, //keeps actual background not clicking
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-                color: theme.primaryBackground,
-              ),
+    return BlurredBottomSheet(
               child: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 32),
                 child: SingleChildScrollView(
@@ -203,10 +180,6 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                   ),
                 ),
               ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
