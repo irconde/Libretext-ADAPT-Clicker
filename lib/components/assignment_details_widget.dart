@@ -88,9 +88,9 @@ class _AssignmentDetailsWidgetState
               backgroundColor: theme.primaryBackground,
               elevation: 0.0,
               leading: IconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.close,
-                  color: Colors.grey,
+                  color: theme.tertiaryColor,
                 ),
                 onPressed: () {
                   context.popRoute();

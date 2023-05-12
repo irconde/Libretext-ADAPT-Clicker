@@ -88,8 +88,8 @@ class _PollWidgetState extends State<PollWidget> {
           leading: IconButton(
             icon: Icon(
               Icons.close,
-              size: 32,
-              color: FlutterFlowTheme.of(context).secondaryColor,
+              size: 24,
+              color: FlutterFlowTheme.of(context).tertiaryColor,
             ),
             onPressed: () {
               context.popRoute();
