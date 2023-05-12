@@ -15,6 +15,8 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 
+import '../utils/constants.dart';
+
 @RoutePage()
 class LoginPageWidget extends ConsumerStatefulWidget {
   const LoginPageWidget({Key? key}) : super(key: key);
@@ -108,119 +110,191 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
                   FutureBuilder(
                       future: _rememberMeCheck(),
                       builder: (context, snapshot) {
-                        return Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  32, 32, 32, 0),
-                              child: TextFormField(
-                                  autofocus: true,
-                                  enabled:
-                                      formState != FormStateValue.processing,
-                                  initialValue: formValues[email][dataIndex],
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    labelText: 'Email',
-                                    errorText: submitted
-                                        ? formValues[email][errorIndex]
-                                        : null,
-                                    prefixIcon: const Icon(
-                                      Icons.email_outlined,
-                                    ),
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        fontSize: 16,
-                                      ),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      formValues[email] = [value, null];
-                                    });
-                                    checkFormIsReadyToSubmit();
-                                  }),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  32, 24, 32, 24),
-                              child: TextFormField(
-                                  autofocus: true,
-                                  enabled:
-                                      formState != FormStateValue.processing,
-                                  initialValue: formValues[password][dataIndex],
-                                  obscureText: !passwordVisibility,
-                                  decoration: InputDecoration(
-                                    labelText: 'Password',
-                                    errorText: submitted
-                                        ? formValues[password][errorIndex]
-                                        : null,
-                                    prefixIcon: const Icon(
-                                      Icons.lock_outline,
-                                    ),
-                                    suffixIcon: InkWell(
-                                      onTap: () => setState(
-                                        () => passwordVisibility =
-                                            !passwordVisibility,
-                                      ),
-                                      focusNode: FocusNode(skipTraversal: true),
-                                      child: Icon(
-                                        passwordVisibility
-                                            ? Icons.visibility_outlined
-                                            : Icons.visibility_off_outlined,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryColor,
-                                        size: 22,
+                        return Padding(
+                          padding: const EdgeInsets.all(Constants.mmMargin),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              TextFormField(
+                                    autofocus: true,
+                                    enabled:
+                                        formState != FormStateValue.processing,
+                                    initialValue: formValues[email][dataIndex],
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelText: 'Email',
+                                      errorText: submitted
+                                          ? formValues[email][errorIndex]
+                                          : null,
+                                      prefixIcon: const Icon(
+                                        Icons.email_outlined,
                                       ),
                                     ),
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        fontSize: 16,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          fontSize: 16,
+                                        ),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        formValues[email] = [value, null];
+                                      });
+                                      checkFormIsReadyToSubmit();
+                                    }),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, Constants.msMargin, 0, Constants.msMargin),
+                                child: TextFormField(
+                                    autofocus: true,
+                                    enabled:
+                                        formState != FormStateValue.processing,
+                                    initialValue: formValues[password][dataIndex],
+                                    obscureText: !passwordVisibility,
+                                    decoration: InputDecoration(
+                                      labelText: 'Password',
+                                      errorText: submitted
+                                          ? formValues[password][errorIndex]
+                                          : null,
+                                      prefixIcon: const Icon(
+                                        Icons.lock_outline,
                                       ),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      formValues[password] = [value, null];
-                                    });
-                                    checkFormIsReadyToSubmit();
-                                  }),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  18, 0, 32, 0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  ToggleIcon(
-                                    onPressed: () async {
-                                      setState(() =>
+                                      suffixIcon: InkWell(
+                                        onTap: () => setState(
+                                          () => passwordVisibility =
+                                              !passwordVisibility,
+                                        ),
+                                        focusNode: FocusNode(skipTraversal: true),
+                                        child: Icon(
+                                          passwordVisibility
+                                              ? Icons.visibility_outlined
+                                              : Icons.visibility_off_outlined,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryColor,
+                                          size: 22,
+                                        ),
+                                      ),
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          fontSize: 16,
+                                        ),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        formValues[password] = [value, null];
+                                      });
+                                      checkFormIsReadyToSubmit();
+                                    }),
+                              ),
+                              Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SizedBox(
+                                      height: 18.0,
+                                      width: 18.0,
+                                      child: Checkbox(
+                                        onChanged: (bool? value) {
+                                          setState(() =>
                                           StoredPreferences.rememberMe =
-                                              !StoredPreferences.rememberMe);
-                                    },
-                                    value: StoredPreferences.rememberMe,
-                                    onIcon: Icon(
-                                      Icons.check_box,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                      size: 28,
+                                          !StoredPreferences.rememberMe);
+                                        },
+                                        value: StoredPreferences.rememberMe,
+                                          activeColor: FlutterFlowTheme.of(context).primaryColor,
+                                      ),
                                     ),
-                                    offIcon: Icon(
-                                      Icons.check_box_outline_blank,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryColor,
-                                      size: 28,
+                                    Expanded(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                                            child: Text(
+                                              'Remember Me ',
+                                              style: FlutterFlowTheme.of(context)
+                                                  .bodyText1
+                                                  .override(
+                                                    fontFamily: 'Open Sans',
+                                                    color:
+                                                        FlutterFlowTheme.of(context)
+                                                            .secondaryText,
+                                                  ),
+                                            ),
+                                          ),
+                                          RichText(
+                                            text: TextSpan(
+                                                text: 'Forgot Password?',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          color:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .primaryColor,
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .underline,
+                                                          fontFamily: 'Open Sans',
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                recognizer: TapGestureRecognizer()
+                                                  ..onTap = () async {
+                                                    await showModalBottomSheet(
+                                                      isScrollControlled: true,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return Padding(
+                                                          padding: MediaQuery.of(
+                                                                  context)
+                                                              .viewInsets,
+                                                          child:
+                                                              const ResetPasswordWidget(),
+                                                        );
+                                                      },
+                                                    );
+                                                  }),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Remember Me ',
+                                  ],
+                                ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, Constants.msMargin, 0, 0),
+                                child: CustomElevatedButton(
+                                  formState: formState,
+                                  normalText: 'SIGN IN WITH ADAPT',
+                                  errorText: 'TRY IT AGAIN',
+                                  processingText: 'SIGNING UP',
+                                  onPressed: _submit,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, Constants.msMargin, 0, Constants.msMargin),
+                                child: Stack(
+                                  alignment: const AlignmentDirectional(0, 0),
+                                  children: [
+                                    Divider(
+                                      height: 0,
+                                      thickness: 1,
+                                      color:
+                                          FlutterFlowTheme.of(context).lineColor,
+                                    ),
+                                    Container(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryBackground,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          'OR',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1
                                               .override(
@@ -228,114 +302,29 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .secondaryText,
+                                                fontSize: 20,
                                               ),
                                         ),
-                                        RichText(
-                                          text: TextSpan(
-                                              text: 'Forgot Password?',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText1
-                                                      .override(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryColor,
-                                                        decoration:
-                                                            TextDecoration
-                                                                .underline,
-                                                        fontFamily: 'Open Sans',
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                              recognizer: TapGestureRecognizer()
-                                                ..onTap = () async {
-                                                  await showModalBottomSheet(
-                                                    isScrollControlled: true,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return Padding(
-                                                        padding: MediaQuery.of(
-                                                                context)
-                                                            .viewInsets,
-                                                        child:
-                                                            const ResetPasswordWidget(),
-                                                      );
-                                                    },
-                                                  );
-                                                }),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  32, 16, 32, 0),
-                              child: CustomElevatedButton(
-                                formState: formState,
-                                normalText: 'SIGN IN WITH ADAPT',
-                                errorText: 'TRY IT AGAIN',
-                                processingText: 'SIGNING UP',
-                                onPressed: _submit,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  32, 24, 32, 24),
-                              child: Stack(
-                                alignment: const AlignmentDirectional(0, 0),
-                                children: [
-                                  Divider(
-                                    height: 0,
-                                    thickness: 1,
-                                    color:
-                                        FlutterFlowTheme.of(context).lineColor,
-                                  ),
-                                  Container(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Text(
-                                        'OR',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                              fontFamily: 'Open Sans',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              fontSize: 20,
-                                            ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  32, 0, 32, 0),
-                              child: CustomElevatedButton(
-                                type: ButtonType.external,
-                                normalText: 'CAMPUS LOGIN',
-                                onPressed: () async {
-                                  if (!checkConnection()) return;
-                                  await mLaunchUrl(
-                                      'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
-                                },
-                              ),
-                            ),
-                          ],
+                              CustomElevatedButton(
+                                  type: ButtonType.external,
+                                  normalText: 'CAMPUS LOGIN',
+                                  onPressed: () async {
+                                    if (!checkConnection()) return;
+                                    await mLaunchUrl(
+                                        'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=TLvxKEXF5myFPEr3e3EipScuP0jUPB5t3n4A&redirect_uri=https%3A%2F%2Fdev.adapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue');
+                                  },
+                                ),
+                            ],
+                          ),
                         );
                       }),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 48, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, Constants.llMargin, 0, Constants.mmMargin),
                     child: RichText(
                       text: TextSpan(
                           style: FlutterFlowTheme.of(context).bodyText1,

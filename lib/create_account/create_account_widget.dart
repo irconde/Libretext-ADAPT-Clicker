@@ -13,6 +13,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import '../utils/constants.dart';
 import '../utils/stored_preferences.dart';
 
 @RoutePage()
@@ -137,6 +138,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: SingleChildScrollView(
+            reverse: true,
             child: Form(
               key: _formKey,
               child: Column(
@@ -144,14 +146,14 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
+                        const EdgeInsetsDirectional.fromSTEB(Constants.mmMargin, Constants.mmMargin, Constants.mmMargin, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.msMargin),
                           child: TextFormField(
                             autofocus: true,
                             enabled: formState != FormStateValue.processing,
@@ -176,7 +178,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                         ),
                         Padding(
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.msMargin),
                           child: TextFormField(
                             enabled: formState != FormStateValue.processing,
                             decoration: InputDecoration(
@@ -200,7 +202,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                         ),
                         Padding(
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.msMargin),
                           child: TextFormField(
                             enabled: formState != FormStateValue.processing,
                             decoration: InputDecoration(
@@ -224,7 +226,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                         ),
                         Padding(
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.msMargin),
                           child: TextFormField(
                             enabled: formState != FormStateValue.processing,
                             decoration: InputDecoration(
@@ -248,7 +250,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                         ),
                         Padding(
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.msMargin),
                           child: TextFormField(
                             enabled: formState != FormStateValue.processing,
                             obscureText: !passwordFieldCAVisibility,
@@ -286,7 +288,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                         ),
                         Padding(
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.msMargin),
                           child: TextFormField(
                             enabled: formState != FormStateValue.processing,
                             obscureText: !confirmPasswordFieldCAVisibility,
@@ -327,7 +329,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                         ),
                         Padding(
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.msMargin),
                           child: TimezoneDropdown(
                             timezoneDropDownValue: formValues[timeZone]
                                 [dataIndex],
@@ -337,19 +339,17 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                       ],
                     ),
                   ),
-                  if (!(isWeb
-                      ? MediaQuery.of(context).viewInsets.bottom > 0
-                      : _isKeyboardVisible))
+                  if (!(isWeb))
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(32, 0, 32, 0),
+                      const EdgeInsetsDirectional.fromSTEB(Constants.mmMargin, 0, Constants.mmMargin, Constants.mmMargin),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 0, 0, 20),
+                                0, 0, 0, Constants.msMargin),
                             child: CustomElevatedButton(
                               formState: formState,
                               normalText: 'REGISTER',
@@ -388,7 +388,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                           ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 20, 0, 32),
+                                0, Constants.msMargin, 0, Constants.mmMargin),
                             child: CustomElevatedButton(
                               type: ButtonType.external,
                               normalText: 'CAMPUS REGISTRATION',
@@ -399,10 +399,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                               },
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 0, 0, 56),
-                            child: RichText(
+                          RichText(
                               textAlign: TextAlign.center,
                               text: TextSpan(
                                   style: FlutterFlowTheme.of(context).bodyText1,
@@ -429,7 +426,6 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                                           }),
                                   ]),
                             ),
-                          ),
                         ],
                       ),
                     ),

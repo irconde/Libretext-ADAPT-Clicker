@@ -68,11 +68,14 @@ class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar> {
       return _mySliverAppbar();
     }
     return CustomScrollView(
+
         slivers: [
       _mySliverAppbar(),
 
      SliverList(
-          delegate: SliverChildBuilderDelegate(childCount: 1, (context, index) => ListTile(
+          delegate: SliverChildBuilderDelegate(
+              childCount: 1, (context, index) => ListTile(
+                contentPadding: const EdgeInsets.all(0),
                 title: widget.child,
           )
           )),
@@ -85,7 +88,8 @@ class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar> {
       expandedHeight: Constants.appBarHeight,
       pinned: true,
       snap: false,
-      floating: false,
+      floating: true,
+      elevation: 4,
       shadowColor: FlutterFlowTheme.of(context).tertiaryColor,
       actions: [
         widget.showNotificationIcon
