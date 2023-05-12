@@ -8,11 +8,22 @@ class ShimmerWidget extends StatelessWidget{
   final Color? backgroundColor;
   final Color? shimmerColor;
   final Widget? child;
+  final ShapeBorder shapeBorder;
 
   const ShimmerWidget.rectangular({
     this.width = double.infinity,
     required this.height,
     this.backgroundColor,
+    this.shapeBorder = const RoundedRectangleBorder(),
+    this.shimmerColor,
+    this.child,
+});
+
+  const ShimmerWidget.circular({
+    this.width = double.infinity,
+    required this.height,
+    this.backgroundColor,
+    this.shapeBorder = const CircleBorder(),
     this.shimmerColor,
     this.child,
 });
@@ -24,7 +35,11 @@ class ShimmerWidget extends StatelessWidget{
     child: Container(
       width: width,
       height: height, // grey
-      color: backgroundColor ?? FlutterFlowTheme.of(context).primaryColor,
+      decoration: ShapeDecoration(
+        color: backgroundColor ?? FlutterFlowTheme.of(context).primaryColor,
+        shape: shapeBorder,
+      ),
+
       child: child,
     ),
   );

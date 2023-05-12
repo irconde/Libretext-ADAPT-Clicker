@@ -50,7 +50,7 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn>
       return '${parts[0]} out of ${parts[1]}';
     } else {
       // Return an error message
-      return 'Invalid input';
+      return 'No records';
     }
   }
 

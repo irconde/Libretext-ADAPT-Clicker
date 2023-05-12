@@ -77,7 +77,7 @@ class AssignmentDropdownState extends State<AssignmentDropdown> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Text(
-                    _value ?? widget.itemList?.first ?? '',
+                    (_value ?? widget.itemList?.first ?? '').toUpperCase(),
                     style: theme.bodyText1.override(
                       fontFamily: 'Open Sans',
                       fontWeight: FontWeight.w700,
@@ -89,7 +89,7 @@ class AssignmentDropdownState extends State<AssignmentDropdown> {
               ),
               Icon(
                 Icons.arrow_drop_down,
-                color: theme.primaryColor,
+                color: theme.tertiaryColor,
                 size: 24,
               ),
             ],

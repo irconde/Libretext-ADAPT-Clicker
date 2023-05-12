@@ -13,7 +13,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
-import '../utils/Shimmer.dart';
+import '../utils/shimmer.dart';
 import '../utils/constants.dart';
 
 @RoutePage()
@@ -61,54 +61,12 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
     return scoreResponse;
   }
 
-  //Shimmer page
+  //Shimmer page (could be moved to own class if wanted)
   Widget buildFoodShimmer() {
     var theme = FlutterFlowTheme.of(context);
-    Color mainBackground = Colors.grey;
     return Column(
       children: [
-        //Appbar
-        const ShimmerWidget.rectangular(
-          height: Constants.appBarHeight + 72,
-        ),
-        //Dropdown
-        ShimmerWidget.rectangular(
-          height: 112,
-          backgroundColor: theme.coursePagePullDown,
-        ),
-        //Learning
-        ShimmerWidget.rectangular(
-          height: 64,
-          backgroundColor: theme.primaryBackground,
-        ),
-        //Activities
-        Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(Constants.msMargin,
-              Constants.mlMargin, Constants.msMargin, Constants.smMargin),
-          child: ShimmerWidget.rectangular(
-            height: 80,
-            backgroundColor: theme.lightPrimaryColor,
-            shimmerColor: theme.primaryBackground,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(
-              Constants.msMargin, 0, Constants.msMargin, Constants.smMargin),
-          child: ShimmerWidget.rectangular(
-            height: 80,
-            backgroundColor: theme.lightPrimaryColor,
-            shimmerColor: theme.primaryBackground,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(
-              Constants.msMargin, 0, Constants.msMargin, Constants.smMargin),
-          child: ShimmerWidget.rectangular(
-            height: 80,
-            backgroundColor: theme.lightPrimaryColor,
-            shimmerColor: theme.primaryBackground,
-          ),
-        ),
+        ShimmerWidget.rectangular(height: MediaQuery.of(context).size.height, backgroundColor: theme.shadowGrey, shimmerColor: theme.primaryBackground,)
       ],
     );
   }
@@ -558,12 +516,13 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
   String? _currentFilterOption;
   String? _currentOrderOption;
   final List<String> _filterOptions = [
-    'ALL ASSIGNMENTS',
-    'EXAM',
-    'EXTRA CREDIT',
-    'HOMEWORK',
-    'LAB'
+    'All Assignments',
+    'Exam',
+    'Extra Credit',
+    'Homework',
+    'Lab'
   ];
+
   final _orderOptions = {
     'ORDER BY: NAME': 'name',
     'START DATE': 'available_from',
