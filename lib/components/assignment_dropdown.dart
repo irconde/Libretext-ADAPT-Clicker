@@ -54,6 +54,7 @@ class AssignmentDropdownState extends State<AssignmentDropdown> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = FlutterFlowTheme.of(context);
     return GestureDetector(
       onTap: showFilterOptions,
       child: Padding(
@@ -64,7 +65,7 @@ class AssignmentDropdownState extends State<AssignmentDropdown> {
           decoration: BoxDecoration(
             border: Border.all(
               width: 1,
-              color: FlutterFlowTheme.of(context).textFieldBorder,
+              color: theme.textFieldBorder,
             ),
             borderRadius:
                 const BorderRadius.all(Radius.circular(Constants.xxsMargin)),
@@ -77,13 +78,18 @@ class AssignmentDropdownState extends State<AssignmentDropdown> {
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Text(
                     _value ?? widget.itemList?.first ?? '',
-                    style: FlutterFlowTheme.of(context).bodyText1,
+                    style: theme.bodyText1.override(
+                      fontFamily: 'Open Sans',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      color: theme.tertiaryText,
+                    ),
                   ),
                 ),
               ),
               Icon(
                 Icons.arrow_drop_down,
-                color: FlutterFlowTheme.of(context).primaryColor,
+                color: theme.primaryColor,
                 size: 24,
               ),
             ],

@@ -25,7 +25,7 @@ String formatDate(String date) {
   // Parse the date string using the given format
   DateTime parsedDate = DateFormat('yyyy-MM-dd HH:mm:ss').parse(date);
   // Format the date using the desired format
-  String formattedDate = DateFormat('MM/d/yy HH:mm a').format(parsedDate);
+  String formattedDate = DateFormat('MM/dd/yy HH:mm a').format(parsedDate);
   // Return the formatted date
   return formattedDate;
 }
@@ -198,7 +198,7 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn>
                                     ),
                                   ),
                                   Text(formatDate(widget.assignmentsItem['due']['due_date']),
-                                    textAlign: TextAlign.end,
+                                    textAlign: TextAlign.start,
                                     style: theme.bodyText1.override(
                                       fontFamily: 'Open Sans',
                                       color: theme.tertiaryText,
@@ -208,7 +208,7 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn>
                               ),
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(0, 0, Constants.xsMargin, 0),
@@ -219,7 +219,7 @@ class AssignmentCtnState extends ConsumerState<AssignmentCtn>
                                   ),
                                 ),
                                 Text(submittedCount,
-                                  textAlign: TextAlign.end,
+                                  textAlign: TextAlign.start,
                                   style: theme.bodyText1.override(
                                     fontFamily: 'Open Sans',
                                     color: submittedColor,

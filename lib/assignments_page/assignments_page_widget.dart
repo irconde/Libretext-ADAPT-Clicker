@@ -446,8 +446,9 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
                                       child: ScrollShadow(
                                           controller: _learningTabController,
                                           child: ListView.builder(
+                                            padding: const EdgeInsets.all(0),
                                             controller: _learningTabController,
-                                            itemCount: 10,
+                                            itemCount: 5,
                                             itemBuilder: (context, index) {
                                               return const AssignmentStatCtnWidget();
                                             },
@@ -557,16 +558,16 @@ class _AssignmentsPageWidgetState extends ConsumerState<AssignmentsPageWidget> {
   String? _currentFilterOption;
   String? _currentOrderOption;
   final List<String> _filterOptions = [
-    'All Assignments',
-    'Exam',
-    'Extra Credit',
-    'Homework',
-    'Lab'
+    'ALL ASSIGNMENTS',
+    'EXAM',
+    'EXTRA CREDIT',
+    'HOMEWORK',
+    'LAB'
   ];
   final _orderOptions = {
-    'Name': 'name',
-    'Start Date': 'available_from',
-    'Due Date': 'due'
+    'ORDER BY: NAME': 'name',
+    'START DATE': 'available_from',
+    'DUE DATE': 'due'
   };
 
   // Define a function that takes a date string and returns a formatted string
