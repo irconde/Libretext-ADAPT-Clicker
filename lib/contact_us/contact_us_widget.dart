@@ -113,19 +113,13 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
           : null,
       body: widget.openFromDrawer!
           ? buildGestureDetector(context)
-          : NestedScrollView(
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
-                return <Widget>[
-                  CollapsingLibreAppBar(
-                    title: 'Contact Us',
-                    iconPath: 'assets/images/contact_support.svg',
-                    svgIconColor: FlutterFlowTheme.of(context).svgIconColor,
-                  ),
-                ];
-              },
-              body: buildGestureDetector(context),
-            ),
+          : CollapsingLibreAppBar(
+        title: 'Contact Us',
+        iconPath: 'assets/images/contact_support.svg',
+        svgIconColor: FlutterFlowTheme.of(context).svgIconColor,
+        child: buildGestureDetector(context),
+      ),
+
     );
   }
 
@@ -240,7 +234,7 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                          const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 24),
                       child: CustomElevatedButton(
                         formState: formState,
                         normalText: 'SEND MESSAGE',

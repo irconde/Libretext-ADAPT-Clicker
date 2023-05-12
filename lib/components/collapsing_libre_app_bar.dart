@@ -11,6 +11,7 @@ class CollapsingLibreAppBar extends StatefulWidget {
       {Key? key,
       required this.title,
       this.top = 0.0,
+      this.child,
       this.iconPath,
       this.svgIconColor,
       this.showNotificationIcon = false})
@@ -19,6 +20,7 @@ class CollapsingLibreAppBar extends StatefulWidget {
   final String title;
   final String? iconPath;
   final double top;
+  final Widget? child;
   final Color? svgIconColor;
   final bool showNotificationIcon;
 
@@ -61,49 +63,65 @@ class _CollapsingLibreAppBarState extends State<CollapsingLibreAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        expandedHeight: Constants.appBarHeight,
-        pinned: true,
-        snap: false,
-        floating: false,
-        shadowColor: FlutterFlowTheme.of(context).tertiaryColor,
-        actions: [
-          widget.showNotificationIcon
-              ? notificationIcon(setState: (VoidCallback fn) {
-                  setState(fn);
-                })
-              : Container(),
-        ],
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, size: 24),
-          onPressed: () async {
-            FocusScope.of(context).unfocus();
-            Navigator.of(context).pop();
-          },
-        ),
-        flexibleSpace: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-          top = constraints.biggest.height;
-          return FlexibleSpaceBar(
-            titlePadding: getPadding(),
-            title: Text(getTitle(),
-                maxLines: checkTop() ? 1 : 2,
-                overflow: TextOverflow.ellipsis,
-                style: getTitleStyle()),
-            background: widget.iconPath != null
-                ? Align(
-                    alignment: const Alignment(0, .5),
-                    child: SvgPicture.asset(
-                      widget.iconPath!,
-                      fit: BoxFit.scaleDown,
-                      color: iconColor,
-                    ),
-                  )
-                : null,
-          );
-        }));
+    if(widget.child == null)
+    {
+      return _mySliverAppbar();
+    }
+    return CustomScrollView(
+        slivers: [
+      _mySliverAppbar(),
+
+     SliverList(
+          delegate: SliverChildBuilderDelegate(childCount: 1, (context, index) => ListTile(
+                title: widget.child,
+          )
+          )),
+    ]
+    );
   }
+
+  Widget _mySliverAppbar() => SliverAppBar(
+      backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+      expandedHeight: Constants.appBarHeight,
+      pinned: true,
+      snap: false,
+      floating: false,
+      shadowColor: FlutterFlowTheme.of(context).tertiaryColor,
+      actions: [
+        widget.showNotificationIcon
+            ? notificationIcon(setState: (VoidCallback fn) {
+          setState(fn);
+        })
+            : Container(),
+      ],
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back, size: 24),
+        onPressed: () async {
+          FocusScope.of(context).unfocus();
+          Navigator.of(context).pop();
+        },
+      ),
+      flexibleSpace: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            top = constraints.biggest.height;
+            return FlexibleSpaceBar(
+              titlePadding: getPadding(),
+              title: Text(getTitle(),
+                  maxLines: checkTop() ? 1 : 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: getTitleStyle()),
+              background: widget.iconPath != null
+                  ? Align(
+                alignment: const Alignment(0, .5),
+                child: SvgPicture.asset(
+                  widget.iconPath!,
+                  fit: BoxFit.scaleDown,
+                  color: iconColor,
+                ),
+              )
+                  : null,
+            );
+          }));
 
   //This determines the title and padding switch
   bool checkTop() {

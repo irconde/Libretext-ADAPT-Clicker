@@ -93,16 +93,12 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       key: scaffoldKey,
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            CollapsingLibreAppBar(
-                title: 'Welcome Back',
-                iconPath: 'assets/images/hand_wave.svg',
-                svgIconColor: FlutterFlowTheme.of(context).svgIconColor2),
-          ];
-        },
-        body: SingleChildScrollView(
+      body: CollapsingLibreAppBar(
+        title: 'Welcome Back',
+        iconPath: 'assets/images/hand_wave.svg',
+        svgIconColor: FlutterFlowTheme.of(context).svgIconColor2,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(0),
           child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
             child: Form(

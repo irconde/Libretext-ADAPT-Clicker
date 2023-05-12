@@ -130,17 +130,11 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       key: scaffoldKey,
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            CollapsingLibreAppBar(
-              title: 'Create Account',
-              iconPath: 'assets/images/person_add1.svg',
-              svgIconColor: FlutterFlowTheme.of(context).svgIconColor,
-            ),
-          ];
-        },
-        body: GestureDetector(
+      body: CollapsingLibreAppBar(
+        title: 'Create Account',
+        iconPath: 'assets/images/person_add1.svg',
+        svgIconColor: FlutterFlowTheme.of(context).svgIconColor,
+        child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: SingleChildScrollView(
             child: Form(
