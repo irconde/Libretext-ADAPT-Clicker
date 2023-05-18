@@ -339,5 +339,5 @@ class _QuestionCTNWidgetState extends State<QuestionCTNWidget> {
 
 void injectViewport(InAppWebViewController controller) async {
 
-  await controller.evaluateJavascript(source: '''var flutterViewPort=document.createElement("meta"); flutterViewPort.name = "viewport"; flutterViewPort.content = "width=400, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"; document.getElementsByTagName("head")[0].appendChild(flutterViewPort);''');
+  await controller.evaluateJavascript(source: '''var flutterViewPort=document.createElement("meta"); flutterViewPort.name = "viewport"; flutterViewPort.content = "width=400, initial-scale=1.0, maximum-scale=2.0, user-scalable=1"; document.getElementsByTagName("head")[0].appendChild(flutterViewPort);''');
 }
