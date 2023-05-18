@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import '../utils/constants.dart';
 import '../utils/stored_preferences.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 
 @RoutePage()
 class CreateAccountWidget extends ConsumerStatefulWidget {
@@ -114,11 +115,33 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
     );
     if ((serverRequest?.succeeded ?? true) && context.mounted) {
       setState(() {
+
         StoredPreferences.userAccount = currentEmail;
         StoredPreferences.userPassword = currentPassword;
       });
-      FocusScope.of(context).unfocus();
-      await context.pushRoute(CoursesRouteWidget());
+
+      ApiCallResponse? loginRequest = await LoginCall.call(
+        email: currentEmail,
+        password: currentPassword,
+      );
+
+      if ((loginRequest?.succeeded ?? true) && context.mounted) {
+        setState(() {
+          StoredPreferences.authToken = functions.createToken(getJsonField(
+            (loginRequest?.jsonBody ?? ''),
+            r'''$.token''',
+          ).toString());
+        });
+
+        FocusScope.of(context).unfocus();
+        await context.pushRoute(CoursesRouteWidget());
+
+      }else{
+        final errors =
+        getJsonField((loginRequest?.jsonBody ?? ''), r'''$.errors''');
+        onReceivedErrorsFromServer(errors);
+
+      }
     } else {
       final errors =
           getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
