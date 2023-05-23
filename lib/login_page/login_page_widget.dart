@@ -217,7 +217,16 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
                                   textInputAction: TextInputAction.done,
                                   focusNode: formValues[password]
                                       [focusNodeIndex],
-                                  onFieldSubmitted: (_) => _submit(),
+                                  onFieldSubmitted: (_) {
+                                    if (formState != FormStateValue.unfilled) {
+                                      _submit();
+                                    } else if (formValues[password]
+                                            [dataIndex] ==
+                                        null) {
+                                      FocusScope.of(context).requestFocus(
+                                          formValues[password][focusNodeIndex]);
+                                    }
+                                  },
                                 ),
                               ),
                               Row(

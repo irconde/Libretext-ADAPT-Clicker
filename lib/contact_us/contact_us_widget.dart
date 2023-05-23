@@ -251,7 +251,14 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
                         },
                         textInputAction: TextInputAction.send,
                         focusNode: formValues[text][focusNodeIndex],
-                        onFieldSubmitted: (_) => _submit(),
+                        onFieldSubmitted: (_) {
+                          if (formState != FormStateValue.unfilled) {
+                            _submit();
+                          } else if (formValues[text][dataIndex] == null) {
+                            FocusScope.of(context)
+                                .requestFocus(formValues[text][focusNodeIndex]);
+                          }
+                        },
                       ),
                     ),
                     Align(

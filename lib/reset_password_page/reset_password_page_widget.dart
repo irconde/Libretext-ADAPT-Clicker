@@ -248,7 +248,17 @@ class _ResetPasswordPageWidgetState
                               textInputAction: TextInputAction.done,
                               focusNode: formValues[passwordConfirmation]
                                   [focusNodeIndex],
-                              onFieldSubmitted: (_) => _submit(),
+                              onFieldSubmitted: (_) {
+                                if (formState != FormStateValue.unfilled) {
+                                  _submit();
+                                } else if (formValues[passwordConfirmation]
+                                        [dataIndex] ==
+                                    null) {
+                                  FocusScope.of(context).requestFocus(
+                                      formValues[passwordConfirmation]
+                                          [focusNodeIndex]);
+                                }
+                              },
                             ),
                           ),
                           Align(
