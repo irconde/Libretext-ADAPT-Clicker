@@ -35,7 +35,7 @@ dependencies:
   flutter_keyboard_visibility: 5.4.0
   font_awesome_flutter: 10.3.0
   google_fonts: 4.0.1
-  intl: ^0.18.1
+  intl: any
   json_path: 0.4.2
   page_transition: 2.0.9
   shared_preferences: 2.0.17
