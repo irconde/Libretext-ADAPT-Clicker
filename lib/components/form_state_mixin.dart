@@ -1,14 +1,13 @@
-import 'package:adapt_clicker/components/custom_elevated_button.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_manager.dart';
-import '../utils/check_internet_connectivity.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
 
 enum FormStateValue { unfilled, normal, processing, error, success }
 
 mixin FormStateMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
   final int dataIndex = 0;
   final int errorIndex = 1;
+  final int focusNodeIndex = 2;
   final Map<String, dynamic> formValues = {};
   bool submitted = false;
   bool requiredFieldsFilled = false;
@@ -25,6 +24,14 @@ mixin FormStateMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
       }
     }
     return true;
+  }
+
+  void disposeFocusNodes() {
+    List<MapEntry<String, dynamic>> formItems = formValues.entries.toList();
+    for (MapEntry formItem in formItems) {
+      FocusNode focusNode = formItem.value[focusNodeIndex] as FocusNode;
+      focusNode.dispose();
+    }
   }
 
   void checkFormIsReadyToSubmit() {

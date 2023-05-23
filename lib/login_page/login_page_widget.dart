@@ -31,18 +31,14 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
   static const String password = 'password';
   bool passwordVisibility = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  late FocusNode _emailFocusNode;
-  late FocusNode _passwordFocusNode;
 
   @override
   void initState() {
     super.initState();
     passwordVisibility = false;
     requiredFields = [email, password];
-    formValues[email] = [null, null];
-    formValues[password] = [null, null];
-    _emailFocusNode = FocusNode();
-    _passwordFocusNode = FocusNode();
+    formValues[email] = [null, null, FocusNode()];
+    formValues[password] = [null, null, FocusNode()];
   }
 
   Future<void> recoverSavedAuthData() async {
@@ -55,8 +51,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
 
   @override
   void dispose() {
-    _emailFocusNode.dispose();
-    _passwordFocusNode.dispose();
+    disposeFocusNodes();
     super.dispose();
   }
 
@@ -66,8 +61,16 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
     if (StoredPreferences.rememberMe) {
       if (userAccount.isNotEmpty && userPassword.isNotEmpty) {
         setState(() {
-          formValues[email] = [userAccount, null];
-          formValues[password] = [userPassword, null];
+          formValues[email] = [
+            userAccount,
+            null,
+            formValues[email][focusNodeIndex]
+          ];
+          formValues[password] = [
+            userPassword,
+            null,
+            formValues[password][focusNodeIndex]
+          ];
         });
         checkFormIsReadyToSubmit();
       }
@@ -148,14 +151,19 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
                                     ),
                                 onChanged: (value) {
                                   setState(() {
-                                    formValues[email] = [value, null];
+                                    formValues[email] = [
+                                      value,
+                                      null,
+                                      formValues[email][focusNodeIndex]
+                                    ];
                                   });
                                   checkFormIsReadyToSubmit();
                                 },
                                 textInputAction: TextInputAction.next,
-                                focusNode: _emailFocusNode,
+                                focusNode: formValues[email][focusNodeIndex],
                                 onFieldSubmitted: (_) => FocusScope.of(context)
-                                    .requestFocus(_passwordFocusNode),
+                                    .requestFocus(
+                                        formValues[password][focusNodeIndex]),
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(0,
@@ -198,12 +206,17 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
                                       ),
                                   onChanged: (value) {
                                     setState(() {
-                                      formValues[password] = [value, null];
+                                      formValues[password] = [
+                                        value,
+                                        null,
+                                        formValues[password][focusNodeIndex]
+                                      ];
                                     });
                                     checkFormIsReadyToSubmit();
                                   },
                                   textInputAction: TextInputAction.done,
-                                  focusNode: _passwordFocusNode,
+                                  focusNode: formValues[password]
+                                      [focusNodeIndex],
                                   onFieldSubmitted: (_) => _submit(),
                                 ),
                               ),
