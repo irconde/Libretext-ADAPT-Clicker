@@ -39,9 +39,14 @@ class _ResetPasswordPageWidgetState
   void initState() {
     super.initState();
     requiredFields = [password, passwordConfirmation];
-    formValues[currentPassword] = [null, null];
-    formValues[password] = [null, null];
-    formValues[passwordConfirmation] = [null, null];
+    formFields = [currentPassword, password, passwordConfirmation];
+    initFormFieldsInfo();
+  }
+
+  @override
+  void dispose() {
+    disposeFocusNodes();
+    super.dispose();
   }
 
   void _submit() async {
@@ -104,120 +109,147 @@ class _ResetPasswordPageWidgetState
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 0, 0, Constants.msMargin),
                             child: TextFormField(
-                                autofocus: true,
-                                enabled: formState != FormStateValue.processing,
-                                obscureText:
-                                    !_fieldsVisibility[currentPassword]!,
-                                decoration: InputDecoration(
-                                  labelText: 'Current Password',
-                                  errorText: submitted
-                                      ? formValues[currentPassword][errorIndex]
-                                      : null,
-                                  prefixIcon: const Icon(
-                                    Icons.lock_outline,
+                              autofocus: true,
+                              enabled: formState != FormStateValue.processing,
+                              obscureText: !_fieldsVisibility[currentPassword]!,
+                              decoration: InputDecoration(
+                                labelText: 'Current Password',
+                                errorText: submitted
+                                    ? formValues[currentPassword][errorIndex]
+                                    : null,
+                                prefixIcon: const Icon(
+                                  Icons.lock_outline,
+                                ),
+                                suffixIcon: InkWell(
+                                  onTap: () => setState(
+                                    () => _fieldsVisibility[currentPassword] =
+                                        !_fieldsVisibility[currentPassword]!,
                                   ),
-                                  suffixIcon: InkWell(
-                                    onTap: () => setState(
-                                      () => _fieldsVisibility[currentPassword] =
-                                          !_fieldsVisibility[currentPassword]!,
-                                    ),
-                                    focusNode: FocusNode(skipTraversal: true),
-                                    child: Icon(
-                                      _fieldsVisibility[currentPassword]!
-                                          ? Icons.visibility_outlined
-                                          : Icons.visibility_off_outlined,
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
-                                      size: Constants.tfIconSize,
-                                    ),
+                                  focusNode: FocusNode(skipTraversal: true),
+                                  child: Icon(
+                                    _fieldsVisibility[currentPassword]!
+                                        ? Icons.visibility_outlined
+                                        : Icons.visibility_off_outlined,
+                                    color: FlutterFlowTheme.of(context)
+                                        .tertiaryColor,
+                                    size: Constants.tfIconSize,
                                   ),
                                 ),
-                                style: FlutterFlowTheme.of(context).bodyText1,
-                                onChanged: (value) {
-                                  setState(() {
-                                    formValues[currentPassword] = [value, null];
-                                  });
-                                  checkFormIsReadyToSubmit();
-                                }),
+                              ),
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                              onChanged: (value) {
+                                setState(() {
+                                  formValues[currentPassword] = [
+                                    value,
+                                    null,
+                                    formValues[currentPassword][focusNodeIndex]
+                                  ];
+                                });
+                                checkFormIsReadyToSubmit();
+                              },
+                              textInputAction: TextInputAction.next,
+                              focusNode: formValues[currentPassword]
+                                  [focusNodeIndex],
+                              onFieldSubmitted: (_) => FocusScope.of(context)
+                                  .requestFocus(
+                                      formValues[password][focusNodeIndex]),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 0, 0, Constants.msMargin),
                             child: TextFormField(
-                                enabled: formState != FormStateValue.processing,
-                                obscureText: !_fieldsVisibility[password]!,
-                                decoration: InputDecoration(
-                                  labelText: 'New Password*',
-                                  errorText: submitted
-                                      ? formValues[password][errorIndex]
-                                      : null,
-                                  prefixIcon: const Icon(
-                                    Icons.lock_outline,
+                              enabled: formState != FormStateValue.processing,
+                              obscureText: !_fieldsVisibility[password]!,
+                              decoration: InputDecoration(
+                                labelText: 'New Password*',
+                                errorText: submitted
+                                    ? formValues[password][errorIndex]
+                                    : null,
+                                prefixIcon: const Icon(
+                                  Icons.lock_outline,
+                                ),
+                                suffixIcon: InkWell(
+                                  onTap: () => setState(
+                                    () => _fieldsVisibility[password] =
+                                        !_fieldsVisibility[password]!,
                                   ),
-                                  suffixIcon: InkWell(
-                                    onTap: () => setState(
-                                      () => _fieldsVisibility[password] =
-                                          !_fieldsVisibility[password]!,
-                                    ),
-                                    focusNode: FocusNode(skipTraversal: true),
-                                    child: Icon(
-                                      _fieldsVisibility[password]!
-                                          ? Icons.visibility_outlined
-                                          : Icons.visibility_off_outlined,
-                                      size: Constants.tfIconSize,
-                                    ),
+                                  focusNode: FocusNode(skipTraversal: true),
+                                  child: Icon(
+                                    _fieldsVisibility[password]!
+                                        ? Icons.visibility_outlined
+                                        : Icons.visibility_off_outlined,
+                                    size: Constants.tfIconSize,
                                   ),
                                 ),
-                                style: FlutterFlowTheme.of(context).bodyText1,
-                                onChanged: (value) {
-                                  setState(() {
-                                    formValues[password] = [value, null];
-                                  });
-                                  checkFormIsReadyToSubmit();
-                                }),
+                              ),
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                              onChanged: (value) {
+                                setState(() {
+                                  formValues[password] = [
+                                    value,
+                                    null,
+                                    formValues[password][focusNodeIndex]
+                                  ];
+                                });
+                                checkFormIsReadyToSubmit();
+                              },
+                              textInputAction: TextInputAction.next,
+                              focusNode: formValues[password][focusNodeIndex],
+                              onFieldSubmitted: (_) => FocusScope.of(context)
+                                  .requestFocus(formValues[passwordConfirmation]
+                                      [focusNodeIndex]),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 0, 0, Constants.msMargin),
                             child: TextFormField(
-                                enabled: formState != FormStateValue.processing,
-                                obscureText:
-                                    !_fieldsVisibility[passwordConfirmation]!,
-                                decoration: InputDecoration(
-                                  labelText: 'Confirm New Password*',
-                                  errorText: submitted
-                                      ? formValues[passwordConfirmation]
-                                          [errorIndex]
-                                      : null,
-                                  prefixIcon: const Icon(
-                                    Icons.lock_outline,
+                              enabled: formState != FormStateValue.processing,
+                              obscureText:
+                                  !_fieldsVisibility[passwordConfirmation]!,
+                              decoration: InputDecoration(
+                                labelText: 'Confirm New Password*',
+                                errorText: submitted
+                                    ? formValues[passwordConfirmation]
+                                        [errorIndex]
+                                    : null,
+                                prefixIcon: const Icon(
+                                  Icons.lock_outline,
+                                ),
+                                suffixIcon: InkWell(
+                                  onTap: () => setState(
+                                    () => _fieldsVisibility[
+                                            passwordConfirmation] =
+                                        !_fieldsVisibility[
+                                            passwordConfirmation]!,
                                   ),
-                                  suffixIcon: InkWell(
-                                    onTap: () => setState(
-                                      () => _fieldsVisibility[
-                                              passwordConfirmation] =
-                                          !_fieldsVisibility[
-                                              passwordConfirmation]!,
-                                    ),
-                                    focusNode: FocusNode(skipTraversal: true),
-                                    child: Icon(
-                                      _fieldsVisibility[passwordConfirmation]!
-                                          ? Icons.visibility_outlined
-                                          : Icons.visibility_off_outlined,
-                                      size: Constants.tfIconSize,
-                                    ),
+                                  focusNode: FocusNode(skipTraversal: true),
+                                  child: Icon(
+                                    _fieldsVisibility[passwordConfirmation]!
+                                        ? Icons.visibility_outlined
+                                        : Icons.visibility_off_outlined,
+                                    size: Constants.tfIconSize,
                                   ),
                                 ),
-                                style: FlutterFlowTheme.of(context).bodyText1,
-                                onChanged: (value) {
-                                  setState(() {
-                                    formValues[passwordConfirmation] = [
-                                      value,
-                                      null
-                                    ];
-                                  });
-                                  checkFormIsReadyToSubmit();
-                                }),
+                              ),
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                              onChanged: (value) {
+                                setState(() {
+                                  formValues[passwordConfirmation] = [
+                                    value,
+                                    null,
+                                    formValues[passwordConfirmation]
+                                        [focusNodeIndex]
+                                  ];
+                                });
+                                checkFormIsReadyToSubmit();
+                              },
+                              textInputAction: TextInputAction.done,
+                              focusNode: formValues[passwordConfirmation]
+                                  [focusNodeIndex],
+                              onFieldSubmitted: (_) => _submit(),
+                            ),
                           ),
                           Align(
                             alignment: const Alignment(1, 0),
