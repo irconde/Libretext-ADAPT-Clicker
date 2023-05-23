@@ -3,10 +3,14 @@ import '../flutter_flow/flutter_flow_theme.dart';
 
 class ContactUsDropDownList extends StatefulWidget {
   const ContactUsDropDownList(
-      {Key? key, required this.contactUsSubjectDropDownValue, required this.onItemSelected})
+      {Key? key,
+      required this.contactUsSubjectDropDownValue,
+      required this.onItemSelected,
+      this.focusNode})
       : super(key: key);
   final String? contactUsSubjectDropDownValue;
   final Function onItemSelected;
+  final FocusNode? focusNode;
   @override
   State<StatefulWidget> createState() => ContactUsDropDownListState();
 }
@@ -31,6 +35,7 @@ class ContactUsDropDownListState extends State<ContactUsDropDownList> {
           child: DropdownButton<String>(
             value: contactUsSubjectDropDownValue,
             isExpanded: true,
+            focusNode: widget.focusNode!,
             items: <String>[
               'General Inquiry',
               'Technical Issue',

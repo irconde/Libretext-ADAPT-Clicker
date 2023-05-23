@@ -36,16 +36,27 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
   void initState() {
     super.initState();
     requiredFields = [name, email];
-    formValues[name] = [null, null];
-    formValues[email] = [null, null];
-    formValues[subject] = [null, null];
-    formValues[text] = [null, null];
+    formFields = [name, email, subject, text];
+    initFormFieldsInfo();
   }
 
   void _onSubjectSelected(subjectValue) {
     setState(() {
-      formValues[subject] = [subjectValue, null];
+      formValues[subject] = [
+        subjectValue,
+        null,
+        formValues[subject][focusNodeIndex]
+      ];
     });
+    if (formValues[text][dataIndex] == null) {
+      FocusScope.of(context).requestFocus(formValues[text][focusNodeIndex]);
+    }
+  }
+
+  @override
+  void dispose() {
+    disposeFocusNodes();
+    super.dispose();
   }
 
   void _submit() async {
@@ -114,12 +125,11 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
       body: widget.openFromDrawer!
           ? buildGestureDetector(context)
           : CollapsingLibreAppBar(
-        title: 'Contact Us',
-        iconPath: 'assets/images/contact_support.svg',
-        svgIconColor: FlutterFlowTheme.of(context).svgIconColor,
-        child: buildGestureDetector(context),
-      ),
-
+              title: 'Contact Us',
+              iconPath: 'assets/images/contact_support.svg',
+              svgIconColor: FlutterFlowTheme.of(context).svgIconColor,
+              child: buildGestureDetector(context),
+            ),
     );
   }
 
@@ -152,74 +162,97 @@ class _ContactUsWidgetState extends ConsumerState<ContactUsWidget>
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                       child: TextFormField(
-                          autofocus: true,
-                          enabled: formState != FormStateValue.processing,
-                          decoration: InputDecoration(
-                            labelText: 'Name*',
-                            errorText:
-                                submitted ? formValues[name][errorIndex] : null,
-                            hintText: 'FirstName LastName',
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              formValues[name] = [value, null];
-                            });
-                            checkFormIsReadyToSubmit();
-                          }),
+                        autofocus: true,
+                        enabled: formState != FormStateValue.processing,
+                        decoration: InputDecoration(
+                          labelText: 'Name*',
+                          errorText:
+                              submitted ? formValues[name][errorIndex] : null,
+                          hintText: 'FirstName LastName',
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            formValues[name] = [
+                              value,
+                              null,
+                              formValues[name][focusNodeIndex]
+                            ];
+                          });
+                          checkFormIsReadyToSubmit();
+                        },
+                        textInputAction: TextInputAction.next,
+                        focusNode: formValues[name][focusNodeIndex],
+                        onFieldSubmitted: (_) => FocusScope.of(context)
+                            .requestFocus(formValues[email][focusNodeIndex]),
+                      ),
                     ),
                     Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                       child: TextFormField(
-                          enabled: formState != FormStateValue.processing,
-                          decoration: InputDecoration(
-                            labelText: 'Email*',
-                            floatingLabelStyle: TextStyle(
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor),
-                            errorText: submitted
-                                ? formValues[email][errorIndex]
-                                : null,
-                            hintText: 'example@email.com',
-                          ),
-                          style: FlutterFlowTheme.of(context).bodyText1,
-                          onChanged: (value) {
-                            setState(() {
-                              formValues[email] = [value, null];
-                            });
-                            checkFormIsReadyToSubmit();
-                          }),
+                        enabled: formState != FormStateValue.processing,
+                        decoration: InputDecoration(
+                          labelText: 'Email*',
+                          floatingLabelStyle: TextStyle(
+                              color: FlutterFlowTheme.of(context).primaryColor),
+                          errorText:
+                              submitted ? formValues[email][errorIndex] : null,
+                          hintText: 'example@email.com',
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyText1,
+                        onChanged: (value) {
+                          setState(() {
+                            formValues[email] = [
+                              value,
+                              null,
+                              formValues[email][focusNodeIndex]
+                            ];
+                          });
+                          checkFormIsReadyToSubmit();
+                        },
+                        textInputAction: TextInputAction.next,
+                        focusNode: formValues[email][focusNodeIndex],
+                        onFieldSubmitted: (_) => FocusScope.of(context)
+                            .requestFocus(formValues[subject][focusNodeIndex]),
+                      ),
                     ),
                     ContactUsDropDownList(
-                      contactUsSubjectDropDownValue: formValues[subject]
-                          [dataIndex],
-                      onItemSelected: _onSubjectSelected,
-                    ),
+                        contactUsSubjectDropDownValue: formValues[subject]
+                            [dataIndex],
+                        onItemSelected: _onSubjectSelected,
+                        focusNode: formValues[subject][focusNodeIndex]),
                     Padding(
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                       child: TextFormField(
-                          textAlignVertical: TextAlignVertical.top,
-                          enabled: formState != FormStateValue.processing,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            labelText: 'Message',
-                            errorText:
-                                submitted ? formValues[text][errorIndex] : null,
-                            hintText: 'Enter Message',
-                            alignLabelWithHint: true,
-                          ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyText1.override(
-                                    fontFamily: 'Open Sans',
-                                    fontSize: 14,
-                                  ),
-                          maxLines: 8,
-                          onChanged: (value) {
-                            setState(() {
-                              formValues[text] = [value, null];
-                            });
-                          }),
+                        textAlignVertical: TextAlignVertical.top,
+                        enabled: formState != FormStateValue.processing,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          labelText: 'Message',
+                          errorText:
+                              submitted ? formValues[text][errorIndex] : null,
+                          hintText: 'Enter Message',
+                          alignLabelWithHint: true,
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              fontSize: 14,
+                            ),
+                        maxLines: 8,
+                        onChanged: (value) {
+                          setState(() {
+                            formValues[text] = [
+                              value,
+                              null,
+                              formValues[text][focusNodeIndex]
+                            ];
+                          });
+                        },
+                        textInputAction: TextInputAction.send,
+                        focusNode: formValues[text][focusNodeIndex],
+                        onFieldSubmitted: (_) => _submit(),
+                      ),
                     ),
                     Align(
                       alignment: const Alignment(1, 0),
