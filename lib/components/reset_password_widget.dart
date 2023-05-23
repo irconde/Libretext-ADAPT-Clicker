@@ -67,105 +67,121 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
   void initState() {
     super.initState();
     requiredFields = [email];
-    formValues[email] = [null, null];
+    formFields = [email];
+    initFormFieldsInfo();
+  }
+
+  @override
+  void dispose() {
+    disposeFocusNodes();
+    super.dispose();
+  }
+
+  void _onTextChanged(String text) {
+    setState(() {
+      formValues[email] = [text, null, formValues[email][focusNodeIndex]];
+    });
+    checkFormIsReadyToSubmit();
   }
 
   @override
   Widget build(BuildContext context) {
     var theme = FlutterFlowTheme.of(context);
     return BlurredBottomSheet(
-              child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 32),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SvgPicture.asset(
-                            'assets/images/lock.svg',
-                            width: 32,
-                            height: 32,
-                            color: theme.primaryColor,
-                            fit: BoxFit.fill,
-                          ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                8, 0, 0, 0),
-                            child: Text(
-                              'Password Recovery',
-                              textAlign: TextAlign.center,
-                              style: theme.bodyText1.override(
-                                fontFamily: 'Open Sans',
-                                color: theme.primaryColor,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
+      child: Padding(
+        padding: const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 32),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SvgPicture.asset(
+                    'assets/images/lock.svg',
+                    width: 32,
+                    height: 32,
+                    color: theme.primaryColor,
+                    fit: BoxFit.fill,
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                    child: Text(
+                      'Password Recovery',
+                      textAlign: TextAlign.center,
+                      style: theme.bodyText1.override(
+                        fontFamily: 'Open Sans',
+                        color: theme.primaryColor,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Divider(
-                        height: 48,
-                        thickness: 1,
-                        color: theme.lineColor,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: Text(
-                          'Please enter the email address used for \nregistration.',
-                          textAlign: TextAlign.start,
-                          style: theme.bodyText1.override(
-                            fontFamily: 'Open Sans',
-                            fontSize: 14,
-                            color: theme.tertiaryText,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: TextFormField(
-                            enabled: formState != FormStateValue.processing,
-                            decoration: InputDecoration(
-                              labelText: 'Email*',
-                              prefixIcon: const Icon(
-                                Icons.email_outlined,
-                              ),
-                              floatingLabelStyle:
-                                  TextStyle(color: theme.primaryColor),
-                              errorText: submitted
-                                  ? formValues[email][errorIndex]
-                                  : null,
-                              hintText: 'example@email.com',
-                            ),
-                            style: theme.bodyText1,
-                            onChanged: (value) {
-                              setState(() {
-                                formValues[email] = [value, null];
-                              });
-                              checkFormIsReadyToSubmit();
-                            },
-                          ),
-                        ),
-                      ),
-                      CustomElevatedButton(
-                        formState: formState,
-                        normalText: 'RESET PASSWORD',
-                        errorText: 'TRY IT AGAIN',
-                        processingText: 'RESETTING PASSWORD',
-                        onPressed: _submit,
-                      ),
-                    ],
+                    ),
+                  ),
+                ],
+              ),
+              Divider(
+                height: 48,
+                thickness: 1,
+                color: theme.lineColor,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: Text(
+                  'Please enter the email address used for \nregistration.',
+                  textAlign: TextAlign.start,
+                  style: theme.bodyText1.override(
+                    fontFamily: 'Open Sans',
+                    fontSize: 14,
+                    color: theme.tertiaryText,
+                    fontWeight: FontWeight.normal,
                   ),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: TextFormField(
+                    autofocus: true,
+                    focusNode: formValues[email][focusNodeIndex],
+                    enabled: formState != FormStateValue.processing,
+                    decoration: InputDecoration(
+                      labelText: 'Email*',
+                      prefixIcon: const Icon(
+                        Icons.email_outlined,
+                      ),
+                      floatingLabelStyle: TextStyle(color: theme.primaryColor),
+                      errorText:
+                          submitted ? formValues[email][errorIndex] : null,
+                      hintText: 'example@email.com',
+                    ),
+                    style: theme.bodyText1,
+                    onChanged: _onTextChanged,
+                    textInputAction: TextInputAction.send,
+                    onFieldSubmitted: (_) {
+                      if (formState != FormStateValue.unfilled) {
+                        _submit();
+                      } else {
+                        FocusScope.of(context)
+                            .requestFocus(formValues[email][focusNodeIndex]);
+                      }
+                    },
+                  ),
+                ),
+              ),
+              CustomElevatedButton(
+                formState: formState,
+                normalText: 'RESET PASSWORD',
+                errorText: 'TRY IT AGAIN',
+                processingText: 'RESETTING PASSWORD',
+                onPressed: _submit,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

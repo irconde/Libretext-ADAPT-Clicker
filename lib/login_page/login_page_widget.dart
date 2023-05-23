@@ -104,6 +104,25 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
     }
   }
 
+  void _onForgotPasswordTapped() async {
+    FocusScope.of(context).unfocus();
+    await showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor:
+      Colors.transparent,
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding: MediaQuery.of(
+              context)
+              .viewInsets,
+          child:
+          const ResetPasswordWidget(),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -285,23 +304,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
                                                             FontWeight.normal,
                                                       ),
                                               recognizer: TapGestureRecognizer()
-                                                ..onTap = () async {
-                                                  await showModalBottomSheet(
-                                                    isScrollControlled: true,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return Padding(
-                                                        padding: MediaQuery.of(
-                                                                context)
-                                                            .viewInsets,
-                                                        child:
-                                                            const ResetPasswordWidget(),
-                                                      );
-                                                    },
-                                                  );
-                                                }),
+                                                ..onTap = _onForgotPasswordTapped),
                                         ),
                                       ],
                                     ),
