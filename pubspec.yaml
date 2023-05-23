@@ -69,6 +69,7 @@ dependencies:
   flutter_inappwebview: ^5.7.2+3
   flutter_shimmer: ^2.1.2
   shimmer: ^2.0.0
+  logger: ^1.3.0
 
 dependency_overrides:
   # Uncomment this to update the launcher icon
