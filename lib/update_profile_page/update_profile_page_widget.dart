@@ -41,8 +41,10 @@ class _UpdateProfilePageWidgetState
   @override
   void initState() {
     super.initState();
-    _initialProfileValues = _loadInitialUserInfo();
     requiredFields = [firstName, lastName, studentId];
+    formFields = [firstName, lastName, email, studentId, timeZone];
+    initFormFieldsInfo();
+    _initialProfileValues = _loadInitialUserInfo();
     if (!isWeb) {
       _keyboardVisibilitySubscription =
           KeyboardVisibilityController().onChange.listen((bool visible) {
@@ -81,19 +83,44 @@ class _UpdateProfilePageWidgetState
 
   void _initFormData(Map<String, String> inputValues) {
     setState(() {
-      formValues[firstName] = [inputValues[firstName], null];
-      formValues[lastName] = [inputValues[lastName], null];
-      formValues[studentId] = [inputValues[studentId], null];
-      formValues[email] = [inputValues[email], null];
-      formValues[timeZone] = [inputValues[timeZone], null];
+      formValues[firstName] = [
+        inputValues[firstName],
+        null,
+        formValues[firstName][focusNodeIndex]
+      ];
+      formValues[lastName] = [
+        inputValues[lastName],
+        null,
+        formValues[lastName][focusNodeIndex]
+      ];
+      formValues[studentId] = [
+        inputValues[studentId],
+        null,
+        formValues[studentId][focusNodeIndex]
+      ];
+      formValues[email] = [
+        inputValues[email],
+        null,
+        formValues[email][focusNodeIndex]
+      ];
+      formValues[timeZone] = [
+        inputValues[timeZone],
+        null,
+        formValues[timeZone][focusNodeIndex]
+      ];
     });
     checkFormIsReadyToSubmit();
   }
 
-  void onTimezoneSelected(timezone) {
+  void _onTimezoneSelected(timezone) {
     setState(() {
-      formValues[timeZone] = [timezone, null];
+      formValues[timeZone] = [
+        timezone,
+        null,
+        formValues[timeZone][focusNodeIndex]
+      ];
     });
+    checkFormIsReadyToSubmit();
   }
 
   void _submit() async {
@@ -131,6 +158,7 @@ class _UpdateProfilePageWidgetState
     if (!isWeb) {
       _keyboardVisibilitySubscription.cancel();
     }
+    disposeFocusNodes();
     super.dispose();
   }
 
@@ -175,59 +203,77 @@ class _UpdateProfilePageWidgetState
                                         const EdgeInsetsDirectional.fromSTEB(
                                             0, 0, 0, Constants.msMargin),
                                     child: TextFormField(
-                                        autofocus: true,
-                                        enabled: formState !=
-                                            FormStateValue.processing,
-                                        initialValue: snapshot.data?[firstName],
-                                        decoration: InputDecoration(
-                                          labelText: 'First Name*',
-                                          errorText: submitted
-                                              ? formValues[firstName]
-                                                  [errorIndex]
-                                              : null,
-                                          hintText: 'John',
-                                          filled: true,
-                                          prefixIcon: const Icon(
-                                            Icons.person_outline,
-                                          ),
+                                      autofocus: true,
+                                      enabled: formState !=
+                                          FormStateValue.processing,
+                                      initialValue: snapshot.data?[firstName],
+                                      decoration: InputDecoration(
+                                        labelText: 'First Name*',
+                                        errorText: submitted
+                                            ? formValues[firstName][errorIndex]
+                                            : null,
+                                        hintText: 'John',
+                                        filled: true,
+                                        prefixIcon: const Icon(
+                                          Icons.person_outline,
                                         ),
-                                        onChanged: (value) {
-                                          setState(() {
-                                            formValues[firstName] = [
-                                              value,
-                                              null
-                                            ];
-                                          });
-                                          checkFormIsReadyToSubmit();
-                                        }),
+                                      ),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          formValues[firstName] = [
+                                            value,
+                                            null,
+                                            formValues[firstName]
+                                                [focusNodeIndex]
+                                          ];
+                                        });
+                                        checkFormIsReadyToSubmit();
+                                      },
+                                      textInputAction: TextInputAction.next,
+                                      focusNode: formValues[firstName]
+                                          [focusNodeIndex],
+                                      onFieldSubmitted: (_) =>
+                                          FocusScope.of(context).requestFocus(
+                                              formValues[lastName]
+                                                  [focusNodeIndex]),
+                                    ),
                                   ),
                                   Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
                                             0, 0, 0, Constants.msMargin),
                                     child: TextFormField(
-                                        initialValue: snapshot.data?[lastName],
-                                        enabled: formState !=
-                                            FormStateValue.processing,
-                                        decoration: InputDecoration(
-                                          labelText: 'Last Name*',
-                                          errorText: submitted
-                                              ? formValues[lastName][errorIndex]
-                                              : null,
-                                          hintText: 'Doe',
-                                          prefixIcon: const Icon(
-                                            Icons.person_outline,
-                                          ),
+                                      initialValue: snapshot.data?[lastName],
+                                      enabled: formState !=
+                                          FormStateValue.processing,
+                                      decoration: InputDecoration(
+                                        labelText: 'Last Name*',
+                                        errorText: submitted
+                                            ? formValues[lastName][errorIndex]
+                                            : null,
+                                        hintText: 'Doe',
+                                        prefixIcon: const Icon(
+                                          Icons.person_outline,
                                         ),
-                                        onChanged: (value) {
-                                          setState(() {
-                                            formValues[lastName] = [
-                                              value,
-                                              null
-                                            ];
-                                          });
-                                          checkFormIsReadyToSubmit();
-                                        }),
+                                      ),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          formValues[lastName] = [
+                                            value,
+                                            null,
+                                            formValues[lastName][focusNodeIndex]
+                                          ];
+                                        });
+                                        checkFormIsReadyToSubmit();
+                                      },
+                                      textInputAction: TextInputAction.next,
+                                      focusNode: formValues[lastName]
+                                          [focusNodeIndex],
+                                      onFieldSubmitted: (_) =>
+                                          FocusScope.of(context).requestFocus(
+                                              formValues[studentId]
+                                                  [focusNodeIndex]),
+                                    ),
                                   ),
                                   Padding(
                                     padding:
@@ -252,11 +298,20 @@ class _UpdateProfilePageWidgetState
                                           setState(() {
                                             formValues[studentId] = [
                                               value,
-                                              null
+                                              null,
+                                              formValues[studentId]
+                                                  [focusNodeIndex]
                                             ];
                                           });
                                           checkFormIsReadyToSubmit();
-                                        }),
+                                        },
+                                        textInputAction: TextInputAction.next,
+                                        focusNode: formValues[studentId]
+                                            [focusNodeIndex],
+                                        onFieldSubmitted: (_) =>
+                                            FocusScope.of(context).requestFocus(
+                                                formValues[timeZone]
+                                                    [focusNodeIndex])),
                                   ),
                                   Padding(
                                     padding:
@@ -266,7 +321,9 @@ class _UpdateProfilePageWidgetState
                                         timezoneDropDownValue:
                                             formValues[timeZone][dataIndex],
                                         onItemSelectedCallback:
-                                            onTimezoneSelected),
+                                            _onTimezoneSelected,
+                                        focusNode: formValues[timeZone]
+                                            [focusNodeIndex]),
                                   ),
                                   Align(
                                     alignment: const Alignment(1, 0),
