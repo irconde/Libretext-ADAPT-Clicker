@@ -1,9 +1,4 @@
-import 'package:adapt_clicker/app_state.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:badges/badges.dart' as badges;
-import '../backend/router/app_router.gr.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
 import 'notification_icon.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {

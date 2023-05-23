@@ -1,5 +1,6 @@
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/components/main_app_bar.dart';
+import 'package:adapt_clicker/main.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:move_to_background/move_to_background.dart';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
@@ -13,7 +14,6 @@ import '../components/connection_state_mixin.dart';
 import '../components/no_courses_widget.dart';
 import '../components/drawer_ctn.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import 'package:flutter/material.dart' hide Router;
 
@@ -42,6 +42,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget>
       });
       return true;
     } catch (e) {
+      logger.e(e.toString());
       return false;
     }
   }
@@ -117,14 +118,11 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget>
      */
 
     if (await Permission.notification.request().isGranted) {
-      // TODO. To be deleted
-      // print('User granted permission');
+      logger.d('User granted permission');
     } else if (await Permission.notification.status.isLimited) {
-      // TODO. To be deleted
-      // print('User granted provisional permission');
+      logger.d('User granted provisional permission');
     } else {
-      // TODO. To be deleted
-      // print('User declined or has not accepted permission');
+      logger.d('User declined or has not accepted permission');
     }
   }
 
@@ -132,8 +130,8 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget>
     RouteHandler rh = RouteHandler();
     // Handle incoming push notifications when the app is in the foreground
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      // print('Got a message whilst in the foreground!');
-      // print('Message data: ${message.data}');
+      logger.d('Got a message whilst in the foreground!');
+      logger.d('Message data: ${message.data}');
       // Extract the route parameter from the message
       String path = message.data['path'];
       String id = message.data['id'];
@@ -144,8 +142,8 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget>
     });
     // Handle push notification when opening it
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-      // print('A new onMessageOpenedApp event was published!');
-      // print('Message data: ${message.data}');
+      logger.d('A new onMessageOpenedApp event was published!');
+      logger.d('Message data: ${message.data}');
       // Extract the route parameter from the message
       String path = message.data['path'];
       List<String> data = [message.data['id']];
@@ -157,15 +155,14 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget>
 
   void saveToken(var token) async {
     StoredPreferences.setString('ff_deviceIDToken', token);
-    // TODO. To be deleted
-    //print("My token is " + token);
+    logger.d('My token is ' + token);
   }
 
   void getToken() async {
     await FirebaseMessaging.instance.getToken().then((token) {
       setState(() {
-        var mtoken = token;
-        saveToken(mtoken);
+        var mToken = token;
+        saveToken(mToken);
       });
     });
   }
@@ -175,8 +172,7 @@ class _CoursesPageWidgetState extends ConsumerState<CoursesPageWidget>
       token: StoredPreferences.authToken,
       fcmToken: StoredPreferences.deviceIDToken,
     );
-    // TODO. To be deleted
-    // print(sendTokenResponse?.jsonBody.toString());
+    logger.d(sendTokenResponse?.jsonBody.toString());
   }
 
   @override

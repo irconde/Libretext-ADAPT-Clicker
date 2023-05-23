@@ -1,5 +1,3 @@
-import 'package:adapt_clicker/flutter_flow/flutter_flow_theme.dart';
-import 'package:adapt_clicker/utils/check_internet_connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

@@ -6,8 +6,6 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../components/assignment_details_widget.dart';
 import '../utils/constants.dart';
-import '../utils/check_internet_connectivity.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
 
 class AssignmentCtn extends ConsumerStatefulWidget {
   const AssignmentCtn({Key? key, required this.assignmentsItem})

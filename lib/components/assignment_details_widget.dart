@@ -1,5 +1,6 @@
 import 'package:adapt_clicker/components/connection_state_mixin.dart';
 import 'package:adapt_clicker/components/assignment_grid_widget.dart';
+import 'package:adapt_clicker/main.dart';
 import 'package:adapt_clicker/utils/stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:expandable/expandable.dart';
@@ -67,7 +68,7 @@ class _AssignmentDetailsWidgetState
     if (widget.assignmentSum.runtimeType == String) {
       String decodedString = Uri.decodeComponent(widget.assignmentSum);
       assignmentSummary = jsonDecode(decodedString);
-      //print('Assignment Summary : $assignmentSummary');
+      logger.d('Assignment Summary : $assignmentSummary');
     } else {
       assignmentSummary = widget.assignmentSum;
     }
@@ -376,11 +377,11 @@ class _AssignmentDetailsWidgetState
       return length;
     }
     var mod = (length % gridViewCrossAxisCount);
-    // print('mod is $mod');
+    logger.d('mod is $mod');
     var reverse = (gridViewCrossAxisCount - mod);
-    // print('reverse is $reverse');
+    logger.d('reverse is $reverse');
     var l = length + reverse;
-    // print('l is $l');
+    logger.d('l is $l');
     return l;
   }
 }

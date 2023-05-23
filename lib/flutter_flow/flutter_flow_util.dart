@@ -40,7 +40,7 @@ Future mLaunchUrl(String url) async {
       await canLaunchUrl(uri);
       await launchUrl(uri);
   } catch (e) {
-    throw 'Could not launch $uri: $e';
+    logger.e('Could not launch $uri: $e');
   }
 }
 

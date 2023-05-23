@@ -10,11 +10,10 @@ import 'package:adapt_clicker/components/reset_password_widget.dart';
 import '../components/collapsing_libre_app_bar.dart';
 import '../components/form_state_mixin.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_toggle_icon.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
-
+import '../main.dart';
 import '../utils/constants.dart';
 
 @RoutePage()
@@ -45,7 +44,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
     try {
       await _rememberMeCheck();
     } catch (e) {
-      // TODO. User logger here
+      logger.e(e.toString());
     }
   }
 

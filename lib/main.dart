@@ -12,6 +12,13 @@ import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'Firebase/firebase_options.dart';
+import 'package:logger/logger.dart';
+
+final Logger logger = Logger(
+  filter: null,
+  printer: PrettyPrinter(),
+  output: null,
+);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +35,7 @@ void main() async {
   try {
     isAuthenticated = await userIsAuthenticated();
   } catch (e) {
+    logger.e(e.toString());
     isAuthenticated = false;
   }
   //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);

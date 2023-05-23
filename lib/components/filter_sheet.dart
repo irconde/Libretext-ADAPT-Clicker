@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:adapt_clicker/components/blurred_bottom_sheet.dart';
 import 'package:adapt_clicker/components/connection_state_mixin.dart';
 import 'package:adapt_clicker/flutter_flow/flutter_flow_theme.dart';

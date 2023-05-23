@@ -138,10 +138,10 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
         password: currentPassword,
       );
 
-      if ((loginRequest?.succeeded ?? true) && context.mounted) {
+      if ((loginRequest.succeeded ?? true) && context.mounted) {
         setState(() {
           StoredPreferences.authToken = functions.createToken(getJsonField(
-            (loginRequest?.jsonBody ?? ''),
+            (loginRequest.jsonBody ?? ''),
             r'''$.token''',
           ).toString());
         });
@@ -150,7 +150,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
         await context.pushRoute(CoursesRouteWidget());
       } else {
         final errors =
-            getJsonField((loginRequest?.jsonBody ?? ''), r'''$.errors''');
+            getJsonField((loginRequest.jsonBody ?? ''), r'''$.errors''');
         onReceivedErrorsFromServer(errors);
       }
     } else {
