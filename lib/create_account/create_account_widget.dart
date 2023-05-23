@@ -92,9 +92,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
   }
 
   void _openTimezoneSelector() {
-    FocusScope.of(context)
-        .requestFocus(
-        formValues[timeZone][focusNodeIndex]);
+    FocusScope.of(context).requestFocus(formValues[timeZone][focusNodeIndex]);
   }
 
   void _onTimezoneSelected(timezone) {
@@ -108,6 +106,32 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
     checkFormIsReadyToSubmit();
   }
 
+  void _showSignUpSnackbar(String userAccount) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: RichText(
+              text: TextSpan(
+                text: 'An account for ',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: userAccount,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const TextSpan(text: ' has been successfully created.'),
+                ],
+              ),
+            ),
+            backgroundColor: FlutterFlowTheme.of(context).secondaryText),
+      );
+    });
+  }
+
   void _submit() async {
     if (!checkConnection()) return;
     setState(() {
@@ -115,6 +139,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
     });
     final String currentEmail = formValues[email][dataIndex];
     final String currentPassword = formValues[password][dataIndex];
+    final String currentStudentId = formValues[studentId][dataIndex];
     final timezoneValue =
         AppState.timezoneContainer.getValue(formValues[timeZone][dataIndex]);
     serverRequest = await CreateUserCall.call(
@@ -124,7 +149,7 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
       firstName: formValues[firstName][dataIndex],
       lastName: formValues[lastName][dataIndex],
       registrationType: '3',
-      studentId: formValues[studentId][dataIndex],
+      studentId: currentStudentId,
       timeZone: timezoneValue,
     );
     if ((serverRequest?.succeeded ?? true) && context.mounted) {
@@ -132,6 +157,8 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
         StoredPreferences.userAccount = currentEmail;
         StoredPreferences.userPassword = currentPassword;
       });
+
+      _showSignUpSnackbar(currentStudentId);
 
       ApiCallResponse? loginRequest = await LoginCall.call(
         email: currentEmail,
