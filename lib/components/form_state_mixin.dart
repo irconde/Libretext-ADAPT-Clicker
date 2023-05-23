@@ -13,6 +13,7 @@ mixin FormStateMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
   bool requiredFieldsFilled = false;
   FormStateValue formState = FormStateValue.unfilled;
   List<String> requiredFields = [];
+  List<String> formFields = [];
   ApiCallResponse? serverRequest;
 
   bool areRequiredFieldsFilled(
@@ -24,6 +25,12 @@ mixin FormStateMixin<T extends ConsumerStatefulWidget> on ConsumerState<T> {
       }
     }
     return true;
+  }
+
+  void initFormFieldsInfo() {
+    for (String formFieldId in formFields) {
+      formValues[formFieldId] = [null, null, FocusNode()];
+    }
   }
 
   void disposeFocusNodes() {

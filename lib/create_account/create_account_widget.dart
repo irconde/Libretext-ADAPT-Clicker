@@ -61,13 +61,16 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
         passwordConfirmation,
         timeZone
       ];
-      formValues[firstName] = [null, null];
-      formValues[lastName] = [null, null];
-      formValues[studentId] = [null, null];
-      formValues[email] = [null, null];
-      formValues[password] = [null, null];
-      formValues[passwordConfirmation] = [null, null];
-      formValues[timeZone] = [null, null];
+      formFields = [
+        firstName,
+        lastName,
+        studentId,
+        email,
+        password,
+        passwordConfirmation,
+        timeZone
+      ];
+      initFormFieldsInfo();
     });
     if (!isWeb) {
       _keyboardVisibilitySubscription =
@@ -84,12 +87,23 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
     if (!isWeb) {
       _keyboardVisibilitySubscription.cancel();
     }
+    disposeFocusNodes();
     super.dispose();
   }
 
-  void onTimezoneSelected(timezone) {
+  void _openTimezoneSelector() {
+    FocusScope.of(context)
+        .requestFocus(
+        formValues[timeZone][focusNodeIndex]);
+  }
+
+  void _onTimezoneSelected(timezone) {
     setState(() {
-      formValues[timeZone] = [timezone, null];
+      formValues[timeZone] = [
+        timezone,
+        null,
+        formValues[timeZone][focusNodeIndex]
+      ];
     });
     checkFormIsReadyToSubmit();
   }
@@ -115,7 +129,6 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
     );
     if ((serverRequest?.succeeded ?? true) && context.mounted) {
       setState(() {
-
         StoredPreferences.userAccount = currentEmail;
         StoredPreferences.userPassword = currentPassword;
       });
@@ -135,12 +148,10 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
 
         FocusScope.of(context).unfocus();
         await context.pushRoute(CoursesRouteWidget());
-
-      }else{
+      } else {
         final errors =
-        getJsonField((loginRequest?.jsonBody ?? ''), r'''$.errors''');
+            getJsonField((loginRequest?.jsonBody ?? ''), r'''$.errors''');
         onReceivedErrorsFromServer(errors);
-
       }
     } else {
       final errors =
@@ -168,15 +179,18 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(Constants.mmMargin, Constants.mmMargin, Constants.mmMargin, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        Constants.mmMargin,
+                        Constants.mmMargin,
+                        Constants.mmMargin,
+                        0),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.msMargin),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0, 0, 0, Constants.msMargin),
                           child: TextFormField(
                             autofocus: true,
                             enabled: formState != FormStateValue.processing,
@@ -192,16 +206,25 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                             ),
                             onChanged: (value) {
                               setState(() {
-                                formValues[firstName] = [value, null];
+                                formValues[firstName] = [
+                                  value,
+                                  null,
+                                  formValues[firstName][focusNodeIndex]
+                                ];
                               });
                               checkFormIsReadyToSubmit();
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
+                            textInputAction: TextInputAction.next,
+                            focusNode: formValues[firstName][focusNodeIndex],
+                            onFieldSubmitted: (_) => FocusScope.of(context)
+                                .requestFocus(
+                                    formValues[lastName][focusNodeIndex]),
                           ),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.msMargin),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0, 0, 0, Constants.msMargin),
                           child: TextFormField(
                             enabled: formState != FormStateValue.processing,
                             decoration: InputDecoration(
@@ -216,16 +239,25 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                             ),
                             onChanged: (value) {
                               setState(() {
-                                formValues[lastName] = [value, null];
+                                formValues[lastName] = [
+                                  value,
+                                  null,
+                                  formValues[lastName][focusNodeIndex]
+                                ];
                               });
                               checkFormIsReadyToSubmit();
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
+                            textInputAction: TextInputAction.next,
+                            focusNode: formValues[lastName][focusNodeIndex],
+                            onFieldSubmitted: (_) => FocusScope.of(context)
+                                .requestFocus(
+                                    formValues[studentId][focusNodeIndex]),
                           ),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.msMargin),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0, 0, 0, Constants.msMargin),
                           child: TextFormField(
                             enabled: formState != FormStateValue.processing,
                             decoration: InputDecoration(
@@ -240,16 +272,25 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                             ),
                             onChanged: (value) {
                               setState(() {
-                                formValues[studentId] = [value, null];
+                                formValues[studentId] = [
+                                  value,
+                                  null,
+                                  formValues[studentId][focusNodeIndex]
+                                ];
                               });
                               checkFormIsReadyToSubmit();
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
+                            textInputAction: TextInputAction.next,
+                            focusNode: formValues[studentId][focusNodeIndex],
+                            onFieldSubmitted: (_) => FocusScope.of(context)
+                                .requestFocus(
+                                    formValues[email][focusNodeIndex]),
                           ),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.msMargin),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0, 0, 0, Constants.msMargin),
                           child: TextFormField(
                             enabled: formState != FormStateValue.processing,
                             decoration: InputDecoration(
@@ -264,16 +305,25 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                             ),
                             onChanged: (value) {
                               setState(() {
-                                formValues[email] = [value, null];
+                                formValues[email] = [
+                                  value,
+                                  null,
+                                  formValues[email][focusNodeIndex]
+                                ];
                               });
                               checkFormIsReadyToSubmit();
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
+                            textInputAction: TextInputAction.next,
+                            focusNode: formValues[email][focusNodeIndex],
+                            onFieldSubmitted: (_) => FocusScope.of(context)
+                                .requestFocus(
+                                    formValues[password][focusNodeIndex]),
                           ),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.msMargin),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0, 0, 0, Constants.msMargin),
                           child: TextFormField(
                             enabled: formState != FormStateValue.processing,
                             obscureText: !passwordFieldCAVisibility,
@@ -302,16 +352,25 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                             ),
                             onChanged: (value) {
                               setState(() {
-                                formValues[password] = [value, null];
+                                formValues[password] = [
+                                  value,
+                                  null,
+                                  formValues[password][focusNodeIndex]
+                                ];
                               });
                               checkFormIsReadyToSubmit();
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
+                            textInputAction: TextInputAction.next,
+                            focusNode: formValues[password][focusNodeIndex],
+                            onFieldSubmitted: (_) => FocusScope.of(context)
+                                .requestFocus(formValues[passwordConfirmation]
+                                    [focusNodeIndex]),
                           ),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.msMargin),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0, 0, 0, Constants.msMargin),
                           child: TextFormField(
                             enabled: formState != FormStateValue.processing,
                             obscureText: !confirmPasswordFieldCAVisibility,
@@ -342,21 +401,28 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                               setState(() {
                                 formValues[passwordConfirmation] = [
                                   value,
-                                  null
+                                  null,
+                                  formValues[passwordConfirmation]
+                                      [focusNodeIndex]
                                 ];
                               });
                               checkFormIsReadyToSubmit();
                             },
                             style: FlutterFlowTheme.of(context).bodyText1,
+                            textInputAction: TextInputAction.next,
+                            focusNode: formValues[passwordConfirmation]
+                                [focusNodeIndex],
+                            onFieldSubmitted: (_) => _openTimezoneSelector,
                           ),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Constants.msMargin),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0, 0, 0, Constants.msMargin),
                           child: TimezoneDropdown(
                             timezoneDropDownValue: formValues[timeZone]
                                 [dataIndex],
-                            onItemSelectedCallback: onTimezoneSelected,
+                            onItemSelectedCallback: _onTimezoneSelected,
+                            focusNode: formValues[timeZone][focusNodeIndex],
                           ),
                         ),
                       ],
@@ -364,8 +430,11 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                   ),
                   if (!(isWeb))
                     Padding(
-                      padding:
-                      const EdgeInsetsDirectional.fromSTEB(Constants.mmMargin, 0, Constants.mmMargin, Constants.mmMargin),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          Constants.mmMargin,
+                          0,
+                          Constants.mmMargin,
+                          Constants.mmMargin),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -423,32 +492,31 @@ class _CreateAccountWidgetState extends ConsumerState<CreateAccountWidget>
                             ),
                           ),
                           RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                  style: FlutterFlowTheme.of(context).bodyText1,
-                                  children: [
-                                    const TextSpan(text: 'Having problems? '),
-                                    TextSpan(
-                                        text: 'Contact us',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryColor,
-                                              decoration:
-                                                  TextDecoration.underline,
-                                              fontFamily: 'Open Sans',
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                        recognizer: TapGestureRecognizer()
-                                          ..onTap = () async {
-                                            context.pushRoute(
-                                              ContactUsWidget(),
-                                            );
-                                          }),
-                                  ]),
-                            ),
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                                children: [
+                                  const TextSpan(text: 'Having problems? '),
+                                  TextSpan(
+                                      text: 'Contact us',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                            decoration:
+                                                TextDecoration.underline,
+                                            fontFamily: 'Open Sans',
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () async {
+                                          context.pushRoute(
+                                            ContactUsWidget(),
+                                          );
+                                        }),
+                                ]),
+                          ),
                         ],
                       ),
                     ),

@@ -6,10 +6,12 @@ class TimezoneDropdown extends StatefulWidget {
   TimezoneDropdown(
       {Key? key,
       required this.timezoneDropDownValue,
-      this.onItemSelectedCallback})
+      this.onItemSelectedCallback,
+      this.focusNode})
       : super(key: key);
   String? timezoneDropDownValue;
   Function? onItemSelectedCallback;
+  FocusNode? focusNode;
 
   @override
   State<StatefulWidget> createState() => TimezoneDropdownState();
@@ -26,8 +28,9 @@ class TimezoneDropdownState extends State<TimezoneDropdown> {
     if (widget.timezoneDropDownValue != null) {
       _timezoneDropDownValue = widget.timezoneDropDownValue;
       AppState.userTimezone.setValue(_timezoneDropDownValue!);
-      AppState.userTimezone.setText(
-          AppState.timezoneContainer.getText(_timezoneDropDownValue).toString());
+      AppState.userTimezone.setText(AppState.timezoneContainer
+          .getText(_timezoneDropDownValue)
+          .toString());
     }
   }
 
@@ -46,6 +49,7 @@ class TimezoneDropdownState extends State<TimezoneDropdown> {
         child: DropdownButton<String>(
           value: _timezoneDropDownValue,
           isExpanded: true,
+          focusNode: widget.focusNode!,
           items: AppState.timezoneContainer.textZones.map((String value) {
             return DropdownMenuItem<String>(
               value: value,

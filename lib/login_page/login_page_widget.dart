@@ -37,8 +37,8 @@ class _LoginPageWidgetState extends ConsumerState<LoginPageWidget>
     super.initState();
     passwordVisibility = false;
     requiredFields = [email, password];
-    formValues[email] = [null, null, FocusNode()];
-    formValues[password] = [null, null, FocusNode()];
+    formFields = [email, password];
+    initFormFieldsInfo();
   }
 
   Future<void> recoverSavedAuthData() async {
