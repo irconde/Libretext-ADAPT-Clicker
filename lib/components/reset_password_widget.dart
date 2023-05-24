@@ -46,15 +46,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
           backgroundColor: FlutterFlowTheme.of(context).secondaryText,
         ),
       );
-      await Navigator.push(
-        context,
-        PageTransition(
-          type: PageTransitionType.fade,
-          duration: const Duration(milliseconds: 300),
-          reverseDuration: const Duration(milliseconds: 300),
-          child: const WelcomePageWidget(),
-        ),
-      );
+      context.popRoute();
       setState(() {});
     } else {
       final errors =
