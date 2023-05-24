@@ -3,6 +3,7 @@ import 'package:adapt_clicker/backend/user_stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../backend/api_requests/api_calls.dart';
+import '../../constants/colors.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -59,15 +60,15 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
       } else {
         context.popRoute();
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text(
+          const SnackBar(
+            content: Text(
               'You have successfully joined the course.',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 14,
               ),
             ),
-            backgroundColor: AppTheme.of(context).secondaryText,
+            backgroundColor: CColors.secondaryText,
           ),
         );
       }
@@ -104,7 +105,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                     'assets/images/book_icon.svg',
                     width: 32,
                     height: 32,
-                    color: theme.primaryColor,
+                    color: CColors.primaryColor,
                     fit: BoxFit.fill,
                   ),
                   Padding(
@@ -114,7 +115,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                       textAlign: TextAlign.center,
                       style: theme.bodyText1.override(
                         fontFamily: 'Open Sans',
-                        color: theme.primaryColor,
+                        color: CColors.primaryColor,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
@@ -122,10 +123,10 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                   )
                 ],
               ),
-              Divider(
+              const Divider(
                 height: 48,
                 thickness: 1,
-                color: theme.lineColor,
+                color: CColors.lineColor,
               ),
               SizedBox(
                 width: double.infinity,
@@ -135,7 +136,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                   style: theme.bodyText1.override(
                     fontFamily: 'Open Sans',
                     fontSize: 14,
-                    color: theme.secondaryText,
+                    color: CColors.secondaryText,
                     fontWeight: FontWeight.normal,
                   ),
                 ),
@@ -156,7 +157,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                               Icons.mode_edit,
                             ),
                             floatingLabelStyle:
-                                TextStyle(color: theme.primaryColor),
+                                const TextStyle(color: CColors.primaryColor),
                             hintText: 'Course Code',
                             errorText:
                                 submitted ? formValues[code][errorIndex] : null,

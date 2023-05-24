@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../constants/colors.dart';
 import '../../utils/app_theme.dart';
 
 class ContactDropdown extends StatefulWidget {
@@ -26,9 +27,9 @@ class ContactDropdownState extends State<ContactDropdown> {
         decoration: BoxDecoration(
           border: Border.all(
             width: 1,
-            color: AppTheme.of(context).textFieldBorder,
+            color: CColors.textFieldBorder,
           ),
-          color: AppTheme.of(context).textFieldBackground,
+          color: CColors.textFieldBackground,
         ),
         child: ButtonTheme(
           alignedDropdown: true,
@@ -53,7 +54,7 @@ class ContactDropdownState extends State<ContactDropdown> {
                 ),
               );
             }).toList(),
-            dropdownColor: AppTheme.of(context).textFieldBackground,
+            dropdownColor: CColors.textFieldBackground,
             onChanged: (String? value) {
               // This is called when the user selects an item.
               setState(() {

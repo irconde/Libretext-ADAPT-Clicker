@@ -4,10 +4,11 @@ import 'package:adapt_clicker/widgets/navigation_drawer_widget.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
+import '../constants/colors.dart';
 import '../widgets/buttons/custom_elevated_button_widget.dart';
 import '../mixins/form_state_mixin.dart';
 import '../utils/app_theme.dart';
-import '../utils/constants.dart';
+import '../constants/dimens.dart';
 import 'package:flutter/material.dart';
 import '../backend/user_stored_preferences.dart';
 import '../utils/utils.dart';
@@ -21,8 +22,7 @@ class ResetPasswordScreen extends ConsumerStatefulWidget {
       _ResetPasswordScreenState();
 }
 
-class _ResetPasswordScreenState
-    extends ConsumerState<ResetPasswordScreen>
+class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
     with FormStateMixin, ConnectionStateMixin {
   static const String currentPassword = 'current_password';
   static const String password = 'password';
@@ -87,14 +87,15 @@ class _ResetPasswordScreenState
           setState: (VoidCallback fn) {
             setState(fn);
           }),
-      backgroundColor: AppTheme.of(context).primaryBackground,
-      drawer: const NavigationDrawerWidget(currentSelected: DrawerItems.password),
+      backgroundColor: CColors.primaryBackground,
+      drawer:
+          const NavigationDrawerWidget(currentSelected: DrawerItems.password),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(
-                Constants.mmMargin, Constants.mmMargin, Constants.mmMargin, 0),
+                Dimens.mmMargin, Dimens.mmMargin, Dimens.mmMargin, 0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -107,7 +108,7 @@ class _ResetPasswordScreenState
                         children: [
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 0, 0, Constants.msMargin),
+                                0, 0, 0, Dimens.msMargin),
                             child: TextFormField(
                               autofocus: true,
                               enabled: formState != FormStateValue.processing,
@@ -130,9 +131,8 @@ class _ResetPasswordScreenState
                                     _fieldsVisibility[currentPassword]!
                                         ? Icons.visibility_outlined
                                         : Icons.visibility_off_outlined,
-                                    color: AppTheme.of(context)
-                                        .tertiaryColor,
-                                    size: Constants.tfIconSize,
+                                    color: CColors.tertiaryColor,
+                                    size: Dimens.tfIconSize,
                                   ),
                                 ),
                               ),
@@ -157,7 +157,7 @@ class _ResetPasswordScreenState
                           ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 0, 0, Constants.msMargin),
+                                0, 0, 0, Dimens.msMargin),
                             child: TextFormField(
                               enabled: formState != FormStateValue.processing,
                               obscureText: !_fieldsVisibility[password]!,
@@ -179,7 +179,7 @@ class _ResetPasswordScreenState
                                     _fieldsVisibility[password]!
                                         ? Icons.visibility_outlined
                                         : Icons.visibility_off_outlined,
-                                    size: Constants.tfIconSize,
+                                    size: Dimens.tfIconSize,
                                   ),
                                 ),
                               ),
@@ -203,7 +203,7 @@ class _ResetPasswordScreenState
                           ),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 0, 0, Constants.msMargin),
+                                0, 0, 0, Dimens.msMargin),
                             child: TextFormField(
                               enabled: formState != FormStateValue.processing,
                               obscureText:
@@ -229,7 +229,7 @@ class _ResetPasswordScreenState
                                     _fieldsVisibility[passwordConfirmation]!
                                         ? Icons.visibility_outlined
                                         : Icons.visibility_off_outlined,
-                                    size: Constants.tfIconSize,
+                                    size: Dimens.tfIconSize,
                                   ),
                                 ),
                               ),
@@ -265,13 +265,10 @@ class _ResetPasswordScreenState
                             alignment: const Alignment(1, 0),
                             child: Text(
                               '*Required Fields',
-                              style: AppTheme.of(context)
-                                  .bodyText1
-                                  .override(
+                              style: AppTheme.of(context).bodyText1.override(
                                     fontFamily: 'Open Sans',
-                                    color: AppTheme.of(context)
-                                        .primaryColor,
-                                    fontSize: Constants.requiredTextSize,
+                                    color: CColors.primaryColor,
+                                    fontSize: Dimens.requiredTextSize,
                                   ),
                             ),
                           ),
@@ -282,7 +279,7 @@ class _ResetPasswordScreenState
                 ),
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(
-                      0, 0, 0, Constants.msMargin),
+                      0, 0, 0, Dimens.msMargin),
                   child: CustomElevatedButton(
                     formState: formState,
                     normalText: 'CHANGE PASSWORD',

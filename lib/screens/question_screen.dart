@@ -3,12 +3,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:number_paginator/number_paginator.dart';
 import '../backend/api_requests/api_calls.dart';
+import '../constants/colors.dart';
 import '../utils/app_theme.dart';
 import '../widgets/buttons/custom_button_widget.dart';
 import '../utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import '../utils/constants.dart';
+import '../constants/dimens.dart';
 import '../backend/user_stored_preferences.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
@@ -110,12 +111,12 @@ class _QuestionScreenState extends State<QuestionScreen> {
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.
                       if (!snapshot.hasData) {
-                        return Center(
+                        return const Center(
                           child: SizedBox(
                             width: 50,
                             height: 50,
                             child: CircularProgressIndicator(
-                              color: AppTheme.of(context).primaryColor,
+                              color: CColors.primaryColor,
                             ),
                           ),
                         );
@@ -197,7 +198,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       options: ButtonOptions(
                         width: 130,
                         height: 40,
-                        color: AppTheme.of(context).primaryColor,
+                        color: CColors.primaryColor,
                         textStyle: AppTheme.of(context).subtitle2.override(
                               fontFamily: 'Open Sans',
                               color: Colors.white,
@@ -220,13 +221,13 @@ class _QuestionScreenState extends State<QuestionScreen> {
     /*-----------------Building Page-----------------------*/
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: AppTheme.of(context).primaryBackground,
+        backgroundColor: CColors.primaryBackground,
         appBar: AppBar(
-          backgroundColor: AppTheme.of(context).primaryColor,
+          backgroundColor: CColors.primaryColor,
           leading: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
-              color: AppTheme.of(context).primaryBackground,
+              color: CColors.primaryBackground,
             ),
             onPressed: () {
               context.popRoute();
@@ -238,7 +239,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
             overflow: TextOverflow.fade,
             style: AppTheme.of(context).bodyText1.override(
                 fontFamily: 'Open Sans',
-                color: AppTheme.of(context).primaryBackground,
+                color: CColors.primaryBackground,
                 fontSize: 20,
                 fontWeight: FontWeight.w700),
           ),
@@ -271,7 +272,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Divider(
-                  thickness: Constants.dividerThickness,
+                  thickness: Dimens.dividerThickness,
                   indent: 16,
                   endIndent: 16,
                 ),
@@ -279,19 +280,15 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   padding: const EdgeInsetsDirectional.fromSTEB(24, 16, 24, 0),
                   child: NumberPaginator(
                     controller: paginatorController,
-                    config: NumberPaginatorUIConfig(
+                    config: const NumberPaginatorUIConfig(
                       buttonShape: ContinuousRectangleBorder(
-                        side: BorderSide(
-                            color: AppTheme.of(context).outlineColor, width: 1),
+                        side: BorderSide(color: CColors.outlineColor, width: 1),
                       ),
-                      buttonSelectedForegroundColor:
-                          AppTheme.of(context).primaryBackground,
-                      buttonUnselectedForegroundColor:
-                          AppTheme.of(context).primaryColor,
+                      buttonSelectedForegroundColor: CColors.primaryBackground,
+                      buttonUnselectedForegroundColor: CColors.primaryColor,
                       buttonUnselectedBackgroundColor:
-                          AppTheme.of(context).primaryBackground,
-                      buttonSelectedBackgroundColor:
-                          AppTheme.of(context).primaryColor,
+                          CColors.primaryBackground,
+                      buttonSelectedBackgroundColor: CColors.primaryColor,
                     ),
 
                     initialPage: _currentPage,

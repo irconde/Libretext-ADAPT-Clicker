@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../utils/app_theme.dart';
 import '../backend/connectivity_status_management.dart';
+import '../constants/colors.dart';
 
 mixin ConnectionStateMixin<T extends ConsumerStatefulWidget>
     on ConsumerState<T> {
@@ -19,8 +19,8 @@ mixin ConnectionStateMixin<T extends ConsumerStatefulWidget>
           ),
         ),
         backgroundColor: status == ConnectivityStatus.isConnected
-            ? AppTheme.of(context).success
-            : AppTheme.of(context).failure,
+            ? CColors.success
+            : CColors.failure,
       ),
     );
   }

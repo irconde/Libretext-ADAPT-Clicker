@@ -2,8 +2,8 @@ import '../../backend/api_requests/api_calls.dart';
 import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../utils/constants.dart';
+import '../../constants/dimens.dart';
+import '../../constants/colors.dart';
 import '../notification_icon_widget.dart';
 
 class CollapsibleAppBar extends StatefulWidget {
@@ -38,8 +38,7 @@ class _CollapsibleAppBarState extends State<CollapsibleAppBar> {
   @override
   void initState() {
     super.initState();
-    iconColor =
-        widget.svgIconColor ?? AppTheme.of(context).svgIconColor;
+    iconColor = widget.svgIconColor ?? CColors.svgIconColor;
     top = widget.top;
     titleSpace = formatExpandedTitle(widget.title);
   }
@@ -63,39 +62,34 @@ class _CollapsibleAppBarState extends State<CollapsibleAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    if(widget.child == null)
-    {
+    if (widget.child == null) {
       return _mySliverAppbar();
     }
-    return CustomScrollView(
-
-        slivers: [
+    return CustomScrollView(slivers: [
       _mySliverAppbar(),
-
-     SliverList(
+      SliverList(
           delegate: SliverChildBuilderDelegate(
-              childCount: 1, (context, index) => ListTile(
-                contentPadding: const EdgeInsets.all(0),
-                title: widget.child,
-          )
-          )),
-    ]
-    );
+              childCount: 1,
+              (context, index) => ListTile(
+                    contentPadding: const EdgeInsets.all(0),
+                    title: widget.child,
+                  ))),
+    ]);
   }
 
   Widget _mySliverAppbar() => SliverAppBar(
-      backgroundColor: AppTheme.of(context).primaryColor,
-      expandedHeight: Constants.appBarHeight,
+      backgroundColor: CColors.primaryColor,
+      expandedHeight: Dimens.appBarHeight,
       pinned: true,
       snap: false,
       floating: true,
       elevation: 4,
-      shadowColor: AppTheme.of(context).tertiaryColor,
+      shadowColor: CColors.tertiaryColor,
       actions: [
         widget.showNotificationIcon
             ? NotificationIcon(setState: (VoidCallback fn) {
-          setState(fn);
-        })
+                setState(fn);
+              })
             : Container(),
       ],
       leading: IconButton(
@@ -107,29 +101,29 @@ class _CollapsibleAppBarState extends State<CollapsibleAppBar> {
       ),
       flexibleSpace: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
-            top = constraints.biggest.height;
-            return FlexibleSpaceBar(
-              titlePadding: getPadding(),
-              title: Text(getTitle(),
-                  maxLines: checkTop() ? 1 : 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: getTitleStyle()),
-              background: widget.iconPath != null
-                  ? Align(
-                alignment: const Alignment(0, .5),
-                child: SvgPicture.asset(
-                  widget.iconPath!,
-                  fit: BoxFit.scaleDown,
-                  color: iconColor,
-                ),
-              )
-                  : null,
-            );
-          }));
+        top = constraints.biggest.height;
+        return FlexibleSpaceBar(
+          titlePadding: getPadding(),
+          title: Text(getTitle(),
+              maxLines: checkTop() ? 1 : 2,
+              overflow: TextOverflow.ellipsis,
+              style: getTitleStyle()),
+          background: widget.iconPath != null
+              ? Align(
+                  alignment: const Alignment(0, .5),
+                  child: SvgPicture.asset(
+                    widget.iconPath!,
+                    fit: BoxFit.scaleDown,
+                    color: iconColor,
+                  ),
+                )
+              : null,
+        );
+      }));
 
   //This determines the title and padding switch
   bool checkTop() {
-    if (top <= Constants.appBarHeight) {
+    if (top <= Dimens.appBarHeight) {
       return true;
     } else {
       return false;
@@ -143,8 +137,8 @@ class _CollapsibleAppBarState extends State<CollapsibleAppBar> {
   TextStyle getTitleStyle() {
     double transitionVal = 4;
     if (checkTop()) {
-      transitionVal = ((top / Constants.appBarTransitionMin) /
-              (264 / Constants.appBarTransitionMin)) *
+      transitionVal = ((top / Dimens.appBarTransitionMin) /
+              (264 / Dimens.appBarTransitionMin)) *
           4; //264 is max appbar size (max + 24 I believe).
     }
 
@@ -168,9 +162,9 @@ class _CollapsibleAppBarState extends State<CollapsibleAppBar> {
   }
 
   double getTransition(double diff) {
-    double result = 32 + Constants.xlMargin - diff;
+    double result = 32 + Dimens.xlMargin - diff;
     if (result < 32) return 32;
-    if (result > Constants.xlMargin) return Constants.xlMargin;
+    if (result > Dimens.xlMargin) return Dimens.xlMargin;
     return result;
   }
 
@@ -178,15 +172,15 @@ class _CollapsibleAppBarState extends State<CollapsibleAppBar> {
     if (checkTop()) {
       double diff = getDiff();
       return EdgeInsetsDirectional.fromSTEB(getTransition(diff), 0, 0,
-          Constants.smMargin + 1); // +1 made text align better with arrow.
+          Dimens.smMargin + 1); // +1 made text align better with arrow.
     } else {
       return const EdgeInsetsDirectional.fromSTEB(
-          Constants.mmMargin, 0, 0, Constants.mmMargin);
+          Dimens.mmMargin, 0, 0, Dimens.mmMargin);
     }
   }
 
   double getDiff() {
-    return (top - Constants.appBarTransitionMin) / Constants.appBarTitleSpeed +
-        Constants.appBarTitleOffset;
+    return (top - Dimens.appBarTransitionMin) / Dimens.appBarTitleSpeed +
+        Dimens.appBarTitleOffset;
   }
 }

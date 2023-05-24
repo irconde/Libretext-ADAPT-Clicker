@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import '../../backend/api_requests/api_calls.dart';
+import '../../constants/colors.dart';
 import '../../utils/app_theme.dart';
 import '../buttons/custom_button_widget.dart';
 import '../../utils/utils.dart';
@@ -63,15 +64,15 @@ class _PollWidgetState extends State<PollWidget> {
     /*-----------------Building Page-----------------------*/
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: AppTheme.of(context).primaryBackground,
+        backgroundColor: CColors.primaryBackground,
         appBar: AppBar(
           centerTitle: true,
-          backgroundColor: AppTheme.of(context).primaryBackground,
+          backgroundColor: CColors.primaryBackground,
           leading: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.close,
               size: 24,
-              color: AppTheme.of(context).tertiaryColor,
+              color: CColors.tertiaryColor,
             ),
             onPressed: () {
               context.popRoute();
@@ -83,7 +84,7 @@ class _PollWidgetState extends State<PollWidget> {
             overflow: TextOverflow.fade,
             style: AppTheme.of(context).bodyText1.override(
                 fontFamily: 'Open Sans',
-                color: AppTheme.of(context).primaryColor,
+                color: CColors.primaryColor,
                 fontSize: 20,
                 fontWeight: FontWeight.w700),
           ),
@@ -95,19 +96,18 @@ class _PollWidgetState extends State<PollWidget> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                color: AppTheme.of(context).primaryColor,
+                color: CColors.primaryColor,
                 width: double.infinity,
                 child: Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                      const Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
                         child: Icon(
                           Icons.timer,
-                          color: AppTheme.of(context).primaryBackground,
+                          color: CColors.primaryBackground,
                           size: 28,
                         ),
                       ),
@@ -164,13 +164,12 @@ class _PollWidgetState extends State<PollWidget> {
                         builder: (context, snapshot) {
                           // Customize what your widget looks like when it's loading.
                           if (!snapshot.hasData) {
-                            return Center(
+                            return const Center(
                               child: SizedBox(
                                 width: 50,
                                 height: 50,
                                 child: CircularProgressIndicator(
-                                  color:
-                                      AppTheme.of(context).primaryColor,
+                                  color: CColors.primaryColor,
                                 ),
                               ),
                             );
@@ -254,12 +253,11 @@ class _PollWidgetState extends State<PollWidget> {
                         options: ButtonOptions(
                           width: 130,
                           height: 40,
-                          color: AppTheme.of(context).primaryColor,
-                          textStyle:
-                              AppTheme.of(context).subtitle2.override(
-                                    fontFamily: 'Open Sans',
-                                    color: Colors.white,
-                                  ),
+                          color: CColors.primaryColor,
+                          textStyle: AppTheme.of(context).subtitle2.override(
+                                fontFamily: 'Open Sans',
+                                color: Colors.white,
+                              ),
                           borderSide: const BorderSide(
                             color: Colors.transparent,
                             width: 1,

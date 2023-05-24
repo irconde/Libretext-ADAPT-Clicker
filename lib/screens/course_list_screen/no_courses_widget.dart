@@ -1,6 +1,7 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
+import '../../constants/colors.dart';
 
 class NoCoursesWidget extends StatefulWidget {
   const NoCoursesWidget({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
                 textAlign: TextAlign.center,
                 style: AppTheme.of(context).bodyText1.override(
                       fontFamily: 'Open Sans',
-                      color: AppTheme.of(context).secondaryText,
+                      color: CColors.secondaryText,
                       fontSize: 20,
                       fontWeight: FontWeight.normal,
                     ),
@@ -55,7 +56,7 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
                     'ASK YOUR ',
                     style: AppTheme.of(context).bodyText1.override(
                           fontFamily: 'Open Sans',
-                          color: AppTheme.of(context).primaryColor,
+                          color: CColors.primaryColor,
                           fontSize: 24,
                           fontWeight: FontWeight.normal,
                         ),
@@ -64,7 +65,7 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
                     'INSTRUCTOR',
                     style: AppTheme.of(context).bodyText1.override(
                           fontFamily: 'Open Sans',
-                          color: AppTheme.of(context).primaryColor,
+                          color: CColors.primaryColor,
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
@@ -82,7 +83,7 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
                     'FOR A ',
                     style: AppTheme.of(context).bodyText1.override(
                           fontFamily: 'Open Sans',
-                          color: AppTheme.of(context).primaryColor,
+                          color: CColors.primaryColor,
                           fontSize: 24,
                           fontWeight: FontWeight.normal,
                         ),
@@ -91,7 +92,7 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
                     'CODE TO JOIN',
                     style: AppTheme.of(context).bodyText1.override(
                           fontFamily: 'Open Sans',
-                          color: AppTheme.of(context).primaryColor,
+                          color: CColors.primaryColor,
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),

@@ -7,13 +7,14 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/widgets/bottom_sheets/reset_password_widget.dart';
+import '../constants/colors.dart';
 import '../widgets/app_bars/collapsible_app_bar_widget.dart';
 import '../mixins/form_state_mixin.dart';
 import '../utils/app_theme.dart';
 import '../utils/utils.dart';
 import 'package:flutter/material.dart';
 import '../main.dart';
-import '../utils/constants.dart';
+import '../constants/dimens.dart';
 
 @RoutePage()
 class LoginScreenWidget extends ConsumerStatefulWidget {
@@ -106,16 +107,12 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
     FocusScope.of(context).unfocus();
     await showModalBottomSheet(
       isScrollControlled: true,
-      backgroundColor:
-      Colors.transparent,
+      backgroundColor: Colors.transparent,
       context: context,
       builder: (context) {
         return Padding(
-          padding: MediaQuery.of(
-              context)
-              .viewInsets,
-          child:
-          const ResetPasswordWidget(),
+          padding: MediaQuery.of(context).viewInsets,
+          child: const ResetPasswordWidget(),
         );
       },
     );
@@ -124,12 +121,12 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.of(context).primaryBackground,
+      backgroundColor: CColors.primaryBackground,
       key: scaffoldKey,
       body: CollapsibleAppBar(
         title: 'Welcome Back',
         iconPath: 'assets/images/hand_wave.svg',
-        svgIconColor: AppTheme.of(context).svgIconColor2,
+        svgIconColor: CColors.svgIconColor2,
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(0),
           child: GestureDetector(
@@ -142,7 +139,7 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                       future: _rememberMeCheck(),
                       builder: (context, snapshot) {
                         return Padding(
-                          padding: const EdgeInsets.all(Constants.mmMargin),
+                          padding: const EdgeInsets.all(Dimens.mmMargin),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -160,9 +157,7 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                                     Icons.email_outlined,
                                   ),
                                 ),
-                                style: AppTheme.of(context)
-                                    .bodyText1
-                                    .override(
+                                style: AppTheme.of(context).bodyText1.override(
                                       fontFamily: 'Open Sans',
                                       fontSize: 16,
                                     ),
@@ -183,8 +178,8 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                                         formValues[password][focusNodeIndex]),
                               ),
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(0,
-                                    Constants.msMargin, 0, Constants.msMargin),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, Dimens.msMargin, 0, Dimens.msMargin),
                                 child: TextFormField(
                                   autofocus: true,
                                   enabled:
@@ -209,18 +204,16 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                                         passwordVisibility
                                             ? Icons.visibility_outlined
                                             : Icons.visibility_off_outlined,
-                                        color: AppTheme.of(context)
-                                            .secondaryColor,
+                                        color: CColors.secondaryColor,
                                         size: 22,
                                       ),
                                     ),
                                   ),
-                                  style: AppTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        fontSize: 16,
-                                      ),
+                                  style:
+                                      AppTheme.of(context).bodyText1.override(
+                                            fontFamily: 'Open Sans',
+                                            fontSize: 16,
+                                          ),
                                   onChanged: (value) {
                                     setState(() {
                                       formValues[password] = [
@@ -254,13 +247,12 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                                     width: 18.0,
                                     child: Checkbox(
                                       onChanged: (bool? value) {
-                                        setState(() =>
-                                            UserStoredPreferences.rememberMe =
-                                                !UserStoredPreferences.rememberMe);
+                                        setState(() => UserStoredPreferences
+                                                .rememberMe =
+                                            !UserStoredPreferences.rememberMe);
                                       },
                                       value: UserStoredPreferences.rememberMe,
-                                      activeColor: AppTheme.of(context)
-                                          .primaryColor,
+                                      activeColor: CColors.primaryColor,
                                     ),
                                   ),
                                   Expanded(
@@ -277,32 +269,26 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                                                 .bodyText1
                                                 .override(
                                                   fontFamily: 'Open Sans',
-                                                  color: AppTheme.of(
-                                                          context)
-                                                      .secondaryText,
+                                                  color: CColors.secondaryText,
                                                 ),
                                           ),
                                         ),
                                         RichText(
                                           text: TextSpan(
                                               text: 'Forgot Password?',
-                                              style:
-                                                  AppTheme.of(context)
-                                                      .bodyText1
-                                                      .override(
-                                                        color:
-                                                            AppTheme.of(
-                                                                    context)
-                                                                .primaryColor,
-                                                        decoration:
-                                                            TextDecoration
-                                                                .underline,
-                                                        fontFamily: 'Open Sans',
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
+                                              style: AppTheme.of(context)
+                                                  .bodyText1
+                                                  .override(
+                                                    color: CColors.primaryColor,
+                                                    decoration: TextDecoration
+                                                        .underline,
+                                                    fontFamily: 'Open Sans',
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
                                               recognizer: TapGestureRecognizer()
-                                                ..onTap = _onForgotPasswordTapped),
+                                                ..onTap =
+                                                    _onForgotPasswordTapped),
                                         ),
                                       ],
                                     ),
@@ -311,7 +297,7 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, Constants.msMargin, 0, 0),
+                                    0, Dimens.msMargin, 0, 0),
                                 child: CustomElevatedButton(
                                   formState: formState,
                                   normalText: 'SIGN IN WITH ADAPT',
@@ -321,20 +307,18 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(0,
-                                    Constants.msMargin, 0, Constants.msMargin),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, Dimens.msMargin, 0, Dimens.msMargin),
                                 child: Stack(
                                   alignment: const AlignmentDirectional(0, 0),
                                   children: [
-                                    Divider(
+                                    const Divider(
                                       height: 0,
                                       thickness: 1,
-                                      color: AppTheme.of(context)
-                                          .lineColor,
+                                      color: CColors.lineColor,
                                     ),
                                     Container(
-                                      color: AppTheme.of(context)
-                                          .primaryBackground,
+                                      color: CColors.primaryBackground,
                                       child: Padding(
                                         padding: const EdgeInsets.all(4.0),
                                         child: Text(
@@ -343,9 +327,7 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                                               .bodyText1
                                               .override(
                                                 fontFamily: 'Open Sans',
-                                                color:
-                                                    AppTheme.of(context)
-                                                        .secondaryText,
+                                                color: CColors.secondaryText,
                                                 fontSize: 20,
                                               ),
                                         ),
@@ -369,7 +351,7 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                       }),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
-                        0, Constants.llMargin, 0, Constants.mmMargin),
+                        0, Dimens.llMargin, 0, Dimens.mmMargin),
                     child: RichText(
                       text: TextSpan(
                           style: AppTheme.of(context).bodyText1,
@@ -377,11 +359,8 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                             const TextSpan(text: 'Don\'t have an account? '),
                             TextSpan(
                                 text: 'Sign up',
-                                style: AppTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      color: AppTheme.of(context)
-                                          .primaryColor,
+                                style: AppTheme.of(context).bodyText1.override(
+                                      color: CColors.primaryColor,
                                       decoration: TextDecoration.underline,
                                       fontFamily: 'Open Sans',
                                       fontWeight: FontWeight.normal,

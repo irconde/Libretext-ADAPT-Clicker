@@ -3,17 +3,17 @@ import 'package:adapt_clicker/screens/notifications_screen/no_notifications_widg
 import 'package:adapt_clicker/screens/notifications_screen/notification_single.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
+import '../../constants/colors.dart';
 import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
-import '../../utils/constants.dart';
+import '../../constants/dimens.dart';
 
 @RoutePage()
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({Key? key}) : super(key: key);
 
   @override
-  State<NotificationsScreen> createState() =>
-      _NotificationsScreenState();
+  State<NotificationsScreen> createState() => _NotificationsScreenState();
 }
 
 void createList() {
@@ -47,27 +47,31 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: AppTheme.of(context).primaryBackground,
-              size: 24,
-            ),
+          icon: const Icon(
+            Icons.arrow_back,
+            color: CColors.primaryBackground,
+            size: 24,
+          ),
           onPressed: () async {
             Navigator.pop(context, '/');
           },
-          ),
+        ),
         title: const Text('Notifications'),
         actions: [
           Align(
             alignment: const AlignmentDirectional(0, 0),
             child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0, 0, Constants.sMargin, 0),
-              child: ClearAllWidget(isActive: PushNotificationManager().notificationList.isNotEmpty, onTap: clearNotifications),
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(0, 0, Dimens.sMargin, 0),
+              child: ClearAllWidget(
+                  isActive:
+                      PushNotificationManager().notificationList.isNotEmpty,
+                  onTap: clearNotifications),
             ),
           ),
         ],
       ),
-      backgroundColor: AppTheme.of(context).primaryBackground,
+      backgroundColor: CColors.primaryBackground,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -75,48 +79,50 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Expanded(
-                child:  PushNotificationManager().notificationList.isEmpty ? const Align(alignment: Alignment.bottomCenter, child: NoNotificationsWidget()) : ListView.builder(
-                    itemCount: PushNotificationManager().notificationList.length,
-
-                    itemBuilder: (BuildContext context, int index) {
-
-
-                      return Dismissible(
-                        key: UniqueKey(),
-                        background: Container(
-                          color: Colors.red,
-                          child: const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 16),
-                              child: Icon(
-                                Icons.delete,
-                                color: Colors.white,
+                child: PushNotificationManager().notificationList.isEmpty
+                    ? const Align(
+                        alignment: Alignment.bottomCenter,
+                        child: NoNotificationsWidget())
+                    : ListView.builder(
+                        itemCount:
+                            PushNotificationManager().notificationList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Dismissible(
+                            key: UniqueKey(),
+                            background: Container(
+                              color: Colors.red,
+                              child: const Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 16),
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                        secondaryBackground: Container(
-                          color: Colors.red,
-                          child: const Align(
-                            alignment: Alignment.centerRight,
-                            child: Padding(
-                              padding: EdgeInsets.only(right: 16),
-                              child: Icon(Icons.delete),
+                            secondaryBackground: Container(
+                              color: Colors.red,
+                              child: const Align(
+                                alignment: Alignment.centerRight,
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 16),
+                                  child: Icon(Icons.delete),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        onDismissed: (_) {
-                          setState(() {
-                            PushNotificationManager().removeNotification(index);
-                          });
-                        },
-                        child: NotificationSingle(
-                          index: index,
-                        ),
-                      );
-                    }
-                    ),
+                            onDismissed: (_) {
+                              setState(() {
+                                PushNotificationManager()
+                                    .removeNotification(index);
+                              });
+                            },
+                            child: NotificationSingle(
+                              index: index,
+                            ),
+                          );
+                        }),
               )
             ],
           ),
@@ -125,8 +131,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     );
   }
 
-  bool notificationEmpty()
-  {
+  bool notificationEmpty() {
     return true;
   }
 }
@@ -135,13 +140,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 class ClearAllWidget extends StatelessWidget {
   final bool isActive;
   final VoidCallback onTap;
-  const ClearAllWidget({Key? key, required this.isActive, required this.onTap}) : super(key: key);
+  const ClearAllWidget({Key? key, required this.isActive, required this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final color = isActive
-        ? AppTheme.of(context).primaryBackground
-        : AppTheme.of(context).clearAllColor;
+    final color = isActive ? CColors.primaryBackground : CColors.clearAllColor;
 
     return RichText(
       text: TextSpan(
@@ -150,23 +154,19 @@ class ClearAllWidget extends StatelessWidget {
             text: 'Clear All ',
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-
-                if(isActive) {
+                if (isActive) {
                   onTap();
                 }
               },
             style: AppTheme.of(context).bodyText1.override(
-              fontFamily: 'Open Sans',
-              color: color,
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-            ),
+                  fontFamily: 'Open Sans',
+                  color: color,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
           ),
         ],
       ),
     );
   }
 }
-
-
-

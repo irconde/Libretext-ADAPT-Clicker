@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:move_to_background/move_to_background.dart';
+import '../constants/colors.dart';
 import '../mixins/connection_state_mixin.dart';
 import '../widgets/buttons/custom_elevated_button_widget.dart';
 import '../utils/app_theme.dart';
@@ -13,8 +14,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 class HomeScreen extends ConsumerStatefulWidget {
   final bool? isFirstScreen;
 
-  const HomeScreen({Key? key, this.isFirstScreen = false})
-      : super(key: key);
+  const HomeScreen({Key? key, this.isFirstScreen = false}) : super(key: key);
 
   @override
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
@@ -33,7 +33,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         key: scaffoldKey,
-        backgroundColor: AppTheme.of(context).primaryBackground,
+        backgroundColor: CColors.primaryBackground,
         body: SafeArea(
           child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
@@ -90,8 +90,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                                   style: AppTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        color: AppTheme.of(context)
-                                            .primaryColor,
+                                        color: CColors.primaryColor,
                                         decoration: TextDecoration.underline,
                                         fontFamily: 'Open Sans',
                                         fontWeight: FontWeight.normal,

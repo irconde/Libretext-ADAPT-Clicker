@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import '../backend/push_notification_manager.dart';
 import '../backend/router/app_router.gr.dart';
-import '../utils/app_theme.dart';
+import '../constants/colors.dart';
 
 class NotificationIcon extends StatelessWidget {
   const NotificationIcon({super.key, required this.setState,});
@@ -32,8 +32,8 @@ class NotificationIcon extends StatelessWidget {
           position: badges.BadgePosition.topEnd(top: 0, end: 6),
           badgeContent: Text(
             '$val',
-            style: TextStyle(
-                color: AppTheme.of(context).primaryBackground),
+            style: const TextStyle(
+                color: CColors.primaryBackground),
           ),
           child: IconButton(
             icon: const Icon(

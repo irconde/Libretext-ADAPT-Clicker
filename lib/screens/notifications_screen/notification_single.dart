@@ -1,7 +1,8 @@
 import 'package:flutter_svg/svg.dart';
+import '../../constants/colors.dart';
 import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
-import '../../utils/constants.dart';
+import '../../constants/dimens.dart';
 
 class NotificationSingle extends StatefulWidget {
   const NotificationSingle({Key? key, required this.index}) : super(key: key);
@@ -21,7 +22,7 @@ class _NotificationSingleWidgetState extends State<NotificationSingle> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(
-          Constants.mmMargin, Constants.msMargin, 0, 0),
+          Dimens.mmMargin, Dimens.msMargin, 0, 0),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +31,7 @@ class _NotificationSingleWidgetState extends State<NotificationSingle> {
             children: [
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(
-                    0, 0, Constants.xxsMargin, 0),
+                    0, 0, Dimens.xxsMargin, 0),
                 child: SvgPicture.asset(
                   'assets/images/book_icon.svg',
                   height: 24,
@@ -41,7 +42,7 @@ class _NotificationSingleWidgetState extends State<NotificationSingle> {
                 'Notification ${widget.index}',
                 style: AppTheme.of(context).bodyText1.override(
                       fontFamily: 'Open Sans',
-                      color: AppTheme.of(context).primaryColor,
+                      color: CColors.primaryColor,
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
@@ -50,19 +51,19 @@ class _NotificationSingleWidgetState extends State<NotificationSingle> {
           ),
           Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(
-                Constants.mmMargin, Constants.xsMargin, 0, Constants.msMargin),
+                Dimens.mmMargin, Dimens.xsMargin, 0, Dimens.msMargin),
             child: Text(
               'Details',
               style: AppTheme.of(context).bodyText1.override(
                     fontFamily: 'Open Sans',
-                    color: AppTheme.of(context).secondaryText,
+                    color: CColors.secondaryText,
                     fontWeight: FontWeight.normal,
                   ),
             ),
           ),
           const Divider(
             height: 1,
-            thickness: Constants.dividerThickness,
+            thickness: Dimens.dividerThickness,
             endIndent: 30,
           ),
         ],

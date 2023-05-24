@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import '../../utils/app_theme.dart';
+import '../../constants/colors.dart';
 
 class BlurredBottomSheet extends StatelessWidget {
   final Widget child;
@@ -9,7 +9,6 @@ class BlurredBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = AppTheme.of(context);
     return InkWell(
         onTap: () async {
           context.popRoute();
@@ -19,20 +18,20 @@ class BlurredBottomSheet extends StatelessWidget {
             child: Container(
                 width: double.infinity,
                 height: double.infinity,
-                decoration: BoxDecoration(
-                  color: theme.blurColor,
+                decoration: const BoxDecoration(
+                  color: CColors.blurColor,
                 ),
                 alignment: const AlignmentDirectional(0, 1),
                 child: InkWell(
                     onTap: () async {}, //keeps actual background not clicking
                     child: Container(
                         width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.only(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(20),
                             topRight: Radius.circular(20),
                           ),
-                          color: theme.primaryBackground,
+                          color: CColors.primaryBackground,
                         ),
                         child: child)))));
   }

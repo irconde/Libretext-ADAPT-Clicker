@@ -1,4 +1,4 @@
-class Constants {
+class Dimens {
   //FontSizes
   static const double drawerIconSize = 28;
   static const double defaultTextSize = 14;

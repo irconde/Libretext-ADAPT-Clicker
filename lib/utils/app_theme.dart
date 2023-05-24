@@ -1,40 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../constants/colors.dart';
 
 abstract class AppTheme {
   static AppTheme of(BuildContext context) {
     return LightModeTheme();
   }
-
-  late Color primaryColor;
-  late Color lightPrimaryColor;
-  late Color clearAllColor;
-  late Color secondaryColor;
-  late Color tertiaryColor;
-  late Color outlineColor;
-  late Color alternate;
-  late Color primaryBackground;
-  late Color secondaryBackground;
-  late Color primaryText;
-  late Color secondaryText;
-  late Color tertiaryText;
-  late Color coursePagePullDown;
-  late Color shadowGrey;
-
-  late Color primaryBtnText;
-  late Color lineColor;
-  late Color textFieldBackground;
-  late Color textFieldBorder;
-  late Color svgIconColor;
-  late Color svgIconColor2;
-  late Color drawerIconColor;
-  late Color success;
-  late Color failure;
-  late Color blurColor;
-
-  late Color activityGood;
-  late Color activityMedium;
-  late Color activityBad;
 
   String get title1Family => typography.title1Family;
   TextStyle get title1 => typography.title1;
@@ -63,34 +34,35 @@ abstract class AppTheme {
 
   InputDecorationTheme inputTheme() => InputDecorationTheme(
         contentPadding: const EdgeInsets.all(16),
-        floatingLabelStyle: TextStyle(color: primaryColor),
+        floatingLabelStyle:
+            const TextStyle(color: CColors.primaryColor),
         alignLabelWithHint: true,
         labelStyle: bodyText2,
         filled: true,
 
-        //default, all otehr null
-        border: _buildBorder(textFieldBorder),
+        //default, all other null
+        border: _buildBorder(CColors.textFieldBorder),
         //Enabled and not showing error
-        enabledBorder: _buildBorder(textFieldBorder),
+        enabledBorder: _buildBorder(CColors.textFieldBorder),
         //No Focus but error
-        errorBorder: _buildBorder(failure),
+        errorBorder: _buildBorder(CColors.failure),
         //Focussed with error
-        focusedErrorBorder: _buildBorder(failure),
+        focusedErrorBorder: _buildBorder(CColors.failure),
         //Focused but no Error
-        focusedBorder: _buildBorder(primaryColor),
+        focusedBorder: _buildBorder(CColors.primaryColor),
 
-        fillColor: textFieldBackground,
-        prefixIconColor: tertiaryColor,
-        suffixIconColor: tertiaryColor,
+        fillColor: CColors.textFieldBackground,
+        prefixIconColor: CColors.tertiaryColor,
+        suffixIconColor: CColors.tertiaryColor,
       );
 
-  IconThemeData appBarIconThemes() => IconThemeData(
+  IconThemeData appBarIconThemes() => const IconThemeData(
         size: 24,
-        color: primaryBackground,
+        color: CColors.primaryBackground,
       );
 
   AppBarTheme appBarTheme() => AppBarTheme(
-        backgroundColor: primaryColor,
+        backgroundColor: CColors.primaryColor,
         titleTextStyle: title3,
         centerTitle: false,
         actionsIconTheme: appBarIconThemes(),
@@ -100,42 +72,7 @@ abstract class AppTheme {
       );
 }
 
-class LightModeTheme extends AppTheme {
-  late Color primaryColor = const Color(0xFF056ABD);
-  late Color lightPrimaryColor = const Color(0xFFB6E1FF);
-  late Color clearAllColor = const Color(0xFF90CCF2);
-  late Color secondaryColor = const Color(0xFF787878);
-  late Color tertiaryColor = const Color(0xFF898C8E);
-  late Color outlineColor = const Color(0xFFD8D8D8);
-  late Color alternate = const Color(0xFFFF5963);
-  late Color primaryBackground = const Color(0xFFFFFFFF);
-  late Color secondaryBackground = const Color(0xFFFFFFFF);
-  late Color coursePagePullDown = const Color(0xFFF3F3F3);
-  late Color shadowGrey = const Color(0xFFCCCCCC);
-  late Color primaryText = const Color(0xFF101213);
-  late Color secondaryText = const Color(0xFF57636C);
-  late Color tertiaryText = const Color(0xFF6A6A6A);
-  late Color blurColor = const Color(0x0E1862B3);
-
-
-  late Color primaryBtnText = const Color(0xFFFFFFFF);
-  late Color lineColor = const Color(0xFFE0E3E7);
-  late Color textFieldBackground = const Color(0xFFF5FCFF);
-  late Color textFieldBorder = const Color(0xFFD3D8DB);
-  late Color drawerIconColor = const Color(0xFF66AADB);
-  late Color svgIconColor = const Color(0xFF4F9FCF);
-  late Color svgIconColor2 = const Color(0xFF4ABEE2);
-  late Color success = const Color(0xFF008C3D);
-  late Color failure = const Color(0xFFD82828);
-
-  //Shimmer Colors
-
-
-  //Activity Colors
-  late Color activityGood = const Color(0xFF008C3D);
-  late Color activityMedium = const Color(0xFFFF9D00);
-  late Color activityBad = const Color(0xFFEF0C12);
-}
+class LightModeTheme extends AppTheme {}
 
 abstract class Typography {
   String get title1Family;
@@ -161,62 +98,78 @@ class ThemeTypography extends Typography {
 
   final AppTheme theme;
 
+  @override
   String get title1Family => 'Open Sans';
+  @override
   TextStyle get title1 => GoogleFonts.getFont(
         'Open Sans',
-        color: theme.primaryText,
+        color: CColors.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 24,
       );
+  @override
   String get title2Family => 'Open Sans';
+  @override
   TextStyle get title2 => GoogleFonts.getFont(
         'Open Sans',
-        color: theme.primaryBackground,
+        color: CColors.primaryBackground,
         fontSize: 24,
         fontWeight: FontWeight.bold,
       );
+  @override
   String get title3Family => 'Open Sans';
+  @override
   TextStyle get title3 => GoogleFonts.getFont(
         'Open Sans',
-        color: theme.primaryBackground,
+        color: CColors.primaryBackground,
         fontWeight: FontWeight.w600,
         fontSize: 20,
       );
+  @override
   String get subtitle1Family => 'Open Sans';
+  @override
   TextStyle get subtitle1 => GoogleFonts.getFont(
         'Open Sans',
-        color: theme.primaryText,
+        color: CColors.primaryText,
         fontWeight: FontWeight.w600,
         fontSize: 18,
       );
+  @override
   String get subtitle2Family => 'Open Sans';
+  @override
   TextStyle get subtitle2 => GoogleFonts.getFont(
         'Open Sans',
-        color: theme.secondaryText,
+        color: CColors.secondaryText,
         fontWeight: FontWeight.w600,
         fontSize: 16,
       );
+  @override
   String get bodyText1Family => 'Open Sans';
+  @override
   TextStyle get bodyText1 => GoogleFonts.getFont(
         'Open Sans',
-        color: theme.primaryText,
+        color: CColors.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 14,
       );
+  @override
   String get bodyText2Family => 'Open Sans';
+  @override
   TextStyle get bodyText2 => GoogleFonts.getFont(
         'Open Sans',
-        color: theme.secondaryText,
+        color: CColors.secondaryText,
         fontWeight: FontWeight.normal,
         fontSize: 14,
       );
+  @override
   String get bodyText3Family => 'Open Sans';
+  @override
   TextStyle get bodyText3 => GoogleFonts.getFont(
-    'Open Sans',
-    color: theme.tertiaryText,
-    fontWeight: FontWeight.normal,
-    fontSize: 14,
-  );
+        'Open Sans',
+        color: CColors.tertiaryText,
+        fontWeight: FontWeight.normal,
+        fontSize: 14,
+      );
 }
 
 extension TextStyleHelper on TextStyle {

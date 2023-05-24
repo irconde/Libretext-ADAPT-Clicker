@@ -13,7 +13,8 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import '../../widgets/shimmer_widget.dart';
-import '../../utils/constants.dart';
+import '../../constants/dimens.dart';
+import '../../constants/colors.dart';
 
 @RoutePage()
 class CourseDetailsScreen extends ConsumerStatefulWidget {
@@ -65,7 +66,11 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
     var theme = AppTheme.of(context);
     return Column(
       children: [
-        ShimmerWidget.rectangular(height: MediaQuery.of(context).size.height, backgroundColor: theme.shadowGrey, shimmerColor: theme.primaryBackground,)
+        ShimmerWidget.rectangular(
+          height: MediaQuery.of(context).size.height,
+          backgroundColor: CColors.shadowGrey,
+          shimmerColor: CColors.primaryBackground,
+        )
       ],
     );
   }
@@ -74,7 +79,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
   Widget build(BuildContext context) {
     var theme = AppTheme.of(context);
     return Scaffold(
-        backgroundColor: theme.primaryBackground,
+        backgroundColor: CColors.primaryBackground,
         body: FutureBuilder(
             future: getScores(),
             builder: (context, snapshot) {
@@ -112,10 +117,10 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                   width: double.infinity,
                   height: double.infinity,
                   decoration: BoxDecoration(
-                    color: theme.primaryColor,
+                    color: CColors.primaryColor,
                     borderRadius: BorderRadius.circular(0),
                     border: Border.all(
-                      color: theme.primaryColor,
+                      color: CColors.primaryColor,
                       width: 0,
                     ),
                   ),
@@ -125,10 +130,10 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                     child: Column(
                       children: [
                         TabBar(
-                          labelColor: theme.primaryBackground,
+                          labelColor: CColors.primaryBackground,
                           unselectedLabelColor: const Color(0xCBFFFFFF),
                           labelStyle: theme.bodyText1,
-                          indicatorColor: theme.primaryBackground,
+                          indicatorColor: CColors.primaryBackground,
                           tabs: const [
                             Tab(
                               text: 'HOME',
@@ -143,15 +148,15 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                             children: [
                               Container(
                                 width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: theme.primaryBackground,
+                                decoration: const BoxDecoration(
+                                  color: CColors.primaryBackground,
                                 ),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Container(
                                       width: double.infinity,
-                                      color: theme.coursePagePullDown,
+                                      color: CColors.coursePagePullDown,
                                       child: ExpandableNotifier(
                                         initialExpanded: false,
                                         child: ExpandablePanel(
@@ -161,17 +166,17 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                 .size
                                                 .width,
                                             height: 116,
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                                 color:
-                                                    theme.coursePagePullDown),
+                                                    CColors.coursePagePullDown),
                                             child: Padding(
                                               padding:
                                                   const EdgeInsetsDirectional
                                                           .fromSTEB(
-                                                      Constants.mmMargin,
-                                                      Constants.msMargin,
+                                                      Dimens.mmMargin,
+                                                      Dimens.msMargin,
                                                       0,
-                                                      Constants.msMargin),
+                                                      Dimens.msMargin),
                                               child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
@@ -179,11 +184,8 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                   Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            Constants.msMargin),
+                                                                .fromSTEB(0, 0,
+                                                            0, Dimens.msMargin),
                                                     child: RichText(
                                                       text: TextSpan(
                                                           style: theme.bodyText1
@@ -193,7 +195,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w600,
-                                                                  color: theme
+                                                                  color: CColors
                                                                       .tertiaryText),
                                                           children: [
                                                             const TextSpan(
@@ -206,7 +208,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                               style: theme
                                                                   .bodyText1
                                                                   .override(
-                                                                color: theme
+                                                                color: CColors
                                                                     .tertiaryText,
                                                                 fontFamily:
                                                                     'Open Sans',
@@ -225,8 +227,8 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                         fontFamily: 'Open Sans',
                                                         fontWeight:
                                                             FontWeight.w600,
-                                                        color:
-                                                            theme.tertiaryText,
+                                                        color: CColors
+                                                            .tertiaryText,
                                                       ),
                                                       children: <TextSpan>[
                                                         const TextSpan(
@@ -243,7 +245,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                             fontWeight:
                                                                 FontWeight
                                                                     .normal,
-                                                            color: theme
+                                                            color: CColors
                                                                 .tertiaryText,
                                                           ),
                                                         ),
@@ -255,13 +257,14 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                             ),
                                           ),
                                           collapsed: Container(
-                                              color: theme.coursePagePullDown),
+                                              color:
+                                                  CColors.coursePagePullDown),
                                           expanded: Container(
                                             width: MediaQuery.of(context)
                                                 .size
                                                 .width,
-                                            decoration: BoxDecoration(
-                                              color: theme.coursePagePullDown,
+                                            decoration: const BoxDecoration(
+                                              color: CColors.coursePagePullDown,
                                             ),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
@@ -272,10 +275,10 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                   padding:
                                                       const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                          Constants.mmMargin,
+                                                          Dimens.mmMargin,
                                                           0,
                                                           0,
-                                                          Constants.msMargin),
+                                                          Dimens.msMargin),
                                                   child: RichText(
                                                     text: TextSpan(
                                                       style: theme.bodyText1
@@ -283,8 +286,8 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                         fontFamily: 'Open Sans',
                                                         fontWeight:
                                                             FontWeight.w600,
-                                                        color:
-                                                            theme.tertiaryText,
+                                                        color: CColors
+                                                            .tertiaryText,
                                                       ),
                                                       children: <TextSpan>[
                                                         const TextSpan(
@@ -301,7 +304,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                             fontWeight:
                                                                 FontWeight
                                                                     .normal,
-                                                            color: theme
+                                                            color: CColors
                                                                 .tertiaryText,
                                                           ),
                                                         ),
@@ -317,10 +320,10 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                     padding:
                                                         const EdgeInsetsDirectional
                                                                 .fromSTEB(
-                                                            Constants.mmMargin,
+                                                            Dimens.mmMargin,
                                                             0,
                                                             0,
-                                                            Constants.msMargin),
+                                                            Dimens.msMargin),
                                                     child: RichText(
                                                       text: TextSpan(
                                                         style: theme.bodyText1
@@ -329,7 +332,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                               'Open Sans',
                                                           fontWeight:
                                                               FontWeight.w600,
-                                                          color: theme
+                                                          color: CColors
                                                               .tertiaryText,
                                                         ),
                                                         children: <TextSpan>[
@@ -348,7 +351,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .normal,
-                                                              color: theme
+                                                              color: CColors
                                                                   .tertiaryText,
                                                             ),
                                                           ),
@@ -360,7 +363,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                               ],
                                             ),
                                           ),
-                                          theme: ExpandableThemeData(
+                                          theme: const ExpandableThemeData(
                                             tapHeaderToExpand: true,
                                             tapBodyToExpand: true,
                                             tapBodyToCollapse: false,
@@ -372,19 +375,18 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                 Icons.keyboard_arrow_down,
                                             collapseIcon:
                                                 Icons.keyboard_arrow_up,
-                                            iconSize: Constants.llMargin,
-                                            iconPadding:
-                                                const EdgeInsets.fromLTRB(
-                                                    0, 0, 20, 0),
-                                            iconColor: theme.tertiaryText,
+                                            iconSize: Dimens.llMargin,
+                                            iconPadding: EdgeInsets.fromLTRB(
+                                                0, 0, 20, 0),
+                                            iconColor: CColors.tertiaryText,
                                           ),
                                         ),
                                       ),
                                     ),
                                     Container(
                                       width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: theme.secondaryBackground,
+                                      decoration: const BoxDecoration(
+                                        color: CColors.secondaryBackground,
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsetsDirectional
@@ -394,7 +396,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                           style: theme.bodyText1.override(
                                             fontFamily: 'Open Sans',
                                             fontWeight: FontWeight.bold,
-                                            color: theme.tertiaryText,
+                                            color: CColors.tertiaryText,
                                           ),
                                         ),
                                       ),
@@ -417,8 +419,8 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                               Container(
                                 width: double.infinity,
                                 height: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: theme.primaryBackground,
+                                decoration: const BoxDecoration(
+                                  color: CColors.primaryBackground,
                                   shape: BoxShape.rectangle,
                                 ),
                                 child: Column(
@@ -427,8 +429,8 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                     Container(
                                       width: double.infinity,
                                       height: 100,
-                                      decoration: BoxDecoration(
-                                        color: theme.coursePagePullDown,
+                                      decoration: const BoxDecoration(
+                                        color: CColors.coursePagePullDown,
                                       ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,

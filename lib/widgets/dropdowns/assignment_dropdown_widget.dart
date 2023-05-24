@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../constants/colors.dart';
 import '../../utils/app_theme.dart';
-import '../../utils/constants.dart';
+import '../../constants/dimens.dart';
 import '../bottom_sheets/filter_sheet_widget.dart';
 
 class AssignmentDropdown extends StatefulWidget {
@@ -65,10 +66,10 @@ class AssignmentDropdownState extends State<AssignmentDropdown> {
           decoration: BoxDecoration(
             border: Border.all(
               width: 1,
-              color: theme.textFieldBorder,
+              color: CColors.textFieldBorder,
             ),
             borderRadius:
-                const BorderRadius.all(Radius.circular(Constants.xxsMargin)),
+                const BorderRadius.all(Radius.circular(Dimens.xxsMargin)),
             color: Colors.transparent,
           ),
           child: Row(
@@ -82,14 +83,14 @@ class AssignmentDropdownState extends State<AssignmentDropdown> {
                       fontFamily: 'Open Sans',
                       fontWeight: FontWeight.w700,
                       fontSize: 14,
-                      color: theme.tertiaryText,
+                      color: CColors.tertiaryText,
                     ),
                   ),
                 ),
               ),
-              Icon(
+              const Icon(
                 Icons.arrow_drop_down,
-                color: theme.tertiaryColor,
+                color: CColors.tertiaryColor,
                 size: 24,
               ),
             ],

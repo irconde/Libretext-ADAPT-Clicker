@@ -7,11 +7,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/widgets/dropdowns/timezone_dropdown_widget.dart';
+import '../constants/colors.dart';
 import '../widgets/buttons/custom_elevated_button_widget.dart';
 import '../utils/app_theme.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../utils/constants.dart';
+import '../constants/dimens.dart';
 import '../backend/user_stored_preferences.dart';
 import '../utils/utils.dart';
 
@@ -111,7 +112,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                 ],
               ),
             ),
-            backgroundColor: AppTheme.of(context).secondaryText),
+            backgroundColor: CColors.secondaryText),
       );
     });
   }
@@ -174,12 +175,12 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.of(context).primaryBackground,
+      backgroundColor: CColors.primaryBackground,
       key: scaffoldKey,
       body: CollapsibleAppBar(
         title: 'Create Account',
         iconPath: 'assets/images/person_add1.svg',
-        svgIconColor: AppTheme.of(context).svgIconColor,
+        svgIconColor: CColors.svgIconColor,
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: SingleChildScrollView(
@@ -191,17 +192,14 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                 children: [
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
-                        Constants.mmMargin,
-                        Constants.mmMargin,
-                        Constants.mmMargin,
-                        0),
+                        Dimens.mmMargin, Dimens.mmMargin, Dimens.mmMargin, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              0, 0, 0, Constants.msMargin),
+                              0, 0, 0, Dimens.msMargin),
                           child: TextFormField(
                             autofocus: true,
                             enabled: formState != FormStateValue.processing,
@@ -235,7 +233,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              0, 0, 0, Constants.msMargin),
+                              0, 0, 0, Dimens.msMargin),
                           child: TextFormField(
                             enabled: formState != FormStateValue.processing,
                             decoration: InputDecoration(
@@ -268,7 +266,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              0, 0, 0, Constants.msMargin),
+                              0, 0, 0, Dimens.msMargin),
                           child: TextFormField(
                             enabled: formState != FormStateValue.processing,
                             decoration: InputDecoration(
@@ -301,7 +299,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              0, 0, 0, Constants.msMargin),
+                              0, 0, 0, Dimens.msMargin),
                           child: TextFormField(
                             enabled: formState != FormStateValue.processing,
                             decoration: InputDecoration(
@@ -334,7 +332,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              0, 0, 0, Constants.msMargin),
+                              0, 0, 0, Dimens.msMargin),
                           child: TextFormField(
                             enabled: formState != FormStateValue.processing,
                             obscureText: !passwordFieldCAVisibility,
@@ -381,7 +379,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              0, 0, 0, Constants.msMargin),
+                              0, 0, 0, Dimens.msMargin),
                           child: TextFormField(
                             enabled: formState != FormStateValue.processing,
                             obscureText: !confirmPasswordFieldCAVisibility,
@@ -428,7 +426,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              0, 0, 0, Constants.msMargin),
+                              0, 0, 0, Dimens.msMargin),
                           child: TimezoneDropdown(
                             timezoneDropDownValue: formValues[timeZone]
                                 [dataIndex],
@@ -441,17 +439,14 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                   ),
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
-                        Constants.mmMargin,
-                        0,
-                        Constants.mmMargin,
-                        Constants.mmMargin),
+                        Dimens.mmMargin, 0, Dimens.mmMargin, Dimens.mmMargin),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              0, 0, 0, Constants.msMargin),
+                              0, 0, 0, Dimens.msMargin),
                           child: CustomElevatedButton(
                             formState: formState,
                             normalText: 'REGISTER',
@@ -463,25 +458,23 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                         Stack(
                           alignment: const AlignmentDirectional(0, 0),
                           children: [
-                            Divider(
+                            const Divider(
                               height: 0,
                               thickness: 1,
-                              color: AppTheme.of(context).lineColor,
+                              color: CColors.lineColor,
                             ),
                             Container(
-                              color: AppTheme.of(context).primaryBackground,
+                              color: CColors.primaryBackground,
                               child: Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: Text(
                                   'OR',
-                                  style: AppTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color:
-                                            AppTheme.of(context).secondaryText,
-                                        fontSize: 20,
-                                      ),
+                                  style:
+                                      AppTheme.of(context).bodyText1.override(
+                                            fontFamily: 'Open Sans',
+                                            color: CColors.secondaryText,
+                                            fontSize: 20,
+                                          ),
                                 ),
                               ),
                             ),
@@ -489,7 +482,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              0, Constants.msMargin, 0, Constants.mmMargin),
+                              0, Dimens.msMargin, 0, Dimens.mmMargin),
                           child: CustomElevatedButton(
                             type: ButtonType.external,
                             normalText: 'CAMPUS REGISTRATION',
@@ -511,8 +504,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                                     style: AppTheme.of(context)
                                         .bodyText1
                                         .override(
-                                          color:
-                                              AppTheme.of(context).primaryColor,
+                                          color: CColors.primaryColor,
                                           decoration: TextDecoration.underline,
                                           fontFamily: 'Open Sans',
                                           fontWeight: FontWeight.normal,

@@ -16,6 +16,7 @@ import '../../widgets/navigation_drawer_widget.dart';
 import '../../utils/app_theme.dart';
 import 'dart:async';
 import 'package:flutter/material.dart' hide Router;
+import '../../constants/colors.dart';
 
 @RoutePage()
 class CourseListScreen extends ConsumerStatefulWidget {
@@ -88,7 +89,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
                 ],
               ),
             ),
-            backgroundColor: AppTheme.of(context).secondaryText),
+            backgroundColor: CColors.secondaryText),
       );
     });
   }
@@ -189,7 +190,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
             setState: (VoidCallback fn) {
               setState(fn);
             }),
-        backgroundColor: AppTheme.of(context).primaryBackground,
+        backgroundColor: CColors.primaryBackground,
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             if (!checkConnection()) return;
@@ -206,15 +207,16 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
               },
             ).then((value) => {refreshPage()});
           },
-          backgroundColor: AppTheme.of(context).primaryColor,
+          backgroundColor: CColors.primaryColor,
           elevation: 8,
-          child: Icon(
+          child: const Icon(
             Icons.add,
-            color: AppTheme.of(context).primaryBackground,
+            color: CColors.primaryBackground,
             size: 28,
           ),
         ),
-        drawer: const NavigationDrawerWidget(currentSelected: DrawerItems.courses),
+        drawer:
+            const NavigationDrawerWidget(currentSelected: DrawerItems.courses),
         body: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Column(
@@ -226,12 +228,12 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
                 builder: (context, snapshot) {
                   // Customize what your widget looks like when it's loading.
                   if (!snapshot.hasData) {
-                    return Center(
+                    return const Center(
                       child: SizedBox(
                         width: 50,
                         height: 50,
                         child: CircularProgressIndicator(
-                          color: AppTheme.of(context).primaryColor,
+                          color: CColors.primaryColor,
                         ),
                       ),
                     );
@@ -264,8 +266,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
                               onTap: () async {
                                 if (!checkConnection()) return;
                                 context.pushRoute(AssignmentsRouteWidget(
-                                  id: enrollmentsListItem['id'].toString()
-                                ));
+                                    id: enrollmentsListItem['id'].toString()));
                               },
                               child: Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
@@ -275,13 +276,13 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                     enrollmentsListItem['course_section_name'],
+                                      enrollmentsListItem[
+                                          'course_section_name'],
                                       style: AppTheme.of(context)
                                           .bodyText1
                                           .override(
                                             fontFamily: 'Open Sans',
-                                            color: AppTheme.of(context)
-                                                .primaryColor,
+                                            color: CColors.primaryColor,
                                             fontSize: 14,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -296,9 +297,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
                                             .bodyText1
                                             .override(
                                               fontFamily: 'Open Sans',
-                                              color:
-                                                  AppTheme.of(context)
-                                                      .secondaryText,
+                                              color: CColors.secondaryText,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
                                             ),

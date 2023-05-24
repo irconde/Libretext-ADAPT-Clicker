@@ -3,6 +3,7 @@ import 'package:adapt_clicker/mixins/connection_state_mixin.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../backend/api_requests/api_calls.dart';
+import '../../constants/colors.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -30,18 +31,17 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
     serverRequest = await ForgotPasswordCall.call(
       email: formValues[email][dataIndex],
     );
-    // TODO. Replace animation with CustomRoute
     if ((serverRequest?.succeeded ?? true) && context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text(
+        const SnackBar(
+          content: Text(
             'Password reset requested. Check your inbox.',
             style: TextStyle(
               color: Colors.white,
               fontSize: 14,
             ),
           ),
-          backgroundColor: AppTheme.of(context).secondaryText,
+          backgroundColor: CColors.secondaryText,
         ),
       );
       context.popRoute();
@@ -93,7 +93,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                     'assets/images/lock.svg',
                     width: 32,
                     height: 32,
-                    color: theme.primaryColor,
+                    color: CColors.primaryColor,
                     fit: BoxFit.fill,
                   ),
                   Padding(
@@ -103,7 +103,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                       textAlign: TextAlign.center,
                       style: theme.bodyText1.override(
                         fontFamily: 'Open Sans',
-                        color: theme.primaryColor,
+                        color: CColors.primaryColor,
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
@@ -111,10 +111,10 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                   ),
                 ],
               ),
-              Divider(
+              const Divider(
                 height: 48,
                 thickness: 1,
-                color: theme.lineColor,
+                color: CColors.lineColor,
               ),
               SizedBox(
                 width: double.infinity,
@@ -124,7 +124,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                   style: theme.bodyText1.override(
                     fontFamily: 'Open Sans',
                     fontSize: 14,
-                    color: theme.tertiaryText,
+                    color: CColors.tertiaryText,
                     fontWeight: FontWeight.normal,
                   ),
                 ),
@@ -142,7 +142,8 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                       prefixIcon: const Icon(
                         Icons.email_outlined,
                       ),
-                      floatingLabelStyle: TextStyle(color: theme.primaryColor),
+                      floatingLabelStyle:
+                          const TextStyle(color: CColors.primaryColor),
                       errorText:
                           submitted ? formValues[email][errorIndex] : null,
                       hintText: 'example@email.com',

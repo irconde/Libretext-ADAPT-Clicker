@@ -4,12 +4,13 @@ import 'package:adapt_clicker/widgets/navigation_drawer_widget.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
+import '../constants/colors.dart';
 import '../widgets/buttons/custom_elevated_button_widget.dart';
 import '../widgets/app_bars/main_app_bar_widget.dart';
 import '../mixins/form_state_mixin.dart';
 import '../utils/app_theme.dart';
 import '../utils/utils.dart';
-import '../utils/constants.dart';
+import '../constants/dimens.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../backend/user_stored_preferences.dart';
@@ -157,7 +158,7 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
           setState: (VoidCallback fn) {
             setState(fn);
           }),
-      backgroundColor: AppTheme.of(context).primaryBackground,
+      backgroundColor: CColors.primaryBackground,
       drawer:
           const NavigationDrawerWidget(currentSelected: DrawerItems.profile),
       body: SafeArea(
@@ -174,9 +175,9 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
                         child: SingleChildScrollView(
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                Constants.mmMargin,
-                                Constants.mmMargin,
-                                Constants.mmMargin,
+                                Dimens.mmMargin,
+                                Dimens.mmMargin,
+                                Dimens.mmMargin,
                                 0),
                             child: Form(
                               child: Column(
@@ -187,7 +188,7 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
                                   Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, Constants.msMargin),
+                                            0, 0, 0, Dimens.msMargin),
                                     child: TextFormField(
                                       autofocus: true,
                                       enabled: formState !=
@@ -227,7 +228,7 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
                                   Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, Constants.msMargin),
+                                            0, 0, 0, Dimens.msMargin),
                                     child: TextFormField(
                                       initialValue: snapshot.data?[lastName],
                                       enabled: formState !=
@@ -264,7 +265,7 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
                                   Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, Constants.msMargin),
+                                            0, 0, 0, Dimens.msMargin),
                                     child: TextFormField(
                                         initialValue: snapshot.data?[studentId],
                                         enabled: formState !=
@@ -302,7 +303,7 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
                                   Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, Constants.smMargin),
+                                            0, 0, 0, Dimens.smMargin),
                                     child: TimezoneDropdown(
                                         timezoneDropDownValue:
                                             formValues[timeZone][dataIndex],
@@ -319,10 +320,8 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
                                           .bodyText1
                                           .override(
                                             fontFamily: 'Open Sans',
-                                            color: AppTheme.of(context)
-                                                .primaryColor,
-                                            fontSize:
-                                                Constants.requiredTextSize,
+                                            color: CColors.primaryColor,
+                                            fontSize: Dimens.requiredTextSize,
                                           ),
                                     ),
                                   ),
@@ -334,10 +333,10 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
                       ),
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            Constants.mmMargin,
+                            Dimens.mmMargin,
                             0,
-                            Constants.mmMargin,
-                            Constants.msMargin),
+                            Dimens.mmMargin,
+                            Dimens.msMargin),
                         child: CustomElevatedButton(
                           formState: formState,
                           normalText: 'UPDATE PROFILE',

@@ -1,6 +1,6 @@
-import 'package:adapt_clicker/utils/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shimmer/shimmer.dart';
+import '../constants/colors.dart';
 
 class ShimmerWidget extends StatelessWidget {
   final double width;
@@ -32,13 +32,13 @@ class ShimmerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Shimmer.fromColors(
-        baseColor: backgroundColor ?? AppTheme.of(context).primaryColor,
-        highlightColor: shimmerColor ?? AppTheme.of(context).lightPrimaryColor,
+        baseColor: backgroundColor ?? CColors.primaryColor,
+        highlightColor: shimmerColor ?? CColors.lightPrimaryColor,
         child: Container(
           width: width,
           height: height, // grey
           decoration: ShapeDecoration(
-            color: backgroundColor ?? AppTheme.of(context).primaryColor,
+            color: backgroundColor ?? CColors.primaryColor,
             shape: shapeBorder,
           ),
 

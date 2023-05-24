@@ -4,7 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../utils/utils.dart';
 import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
-import '../../utils/constants.dart';
+import '../../constants/dimens.dart';
+import '../../constants/colors.dart';
 
 class AssignmentGridWidget extends ConsumerStatefulWidget {
   const AssignmentGridWidget(
@@ -60,9 +61,8 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
 
   @override
   Widget build(BuildContext context) {
-    var theme = AppTheme.of(context);
     return Container(
-      color: theme.primaryBackground,
+      color: CColors.primaryBackground,
       child: InkWell(
         onTap: () async {
           if (!checkConnection()) return;
@@ -79,7 +79,7 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
           await showModalBottomSheet(
             useSafeArea: true,
             isScrollControlled: true,
-            backgroundColor: AppTheme.of(context).primaryBackground,
+            backgroundColor: CColors.primaryBackground,
             context: context,
             builder: (context) {
               return StatefulBuilder(
@@ -104,7 +104,7 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
         },
         child: Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(
-              0, Constants.xxsMargin, 0, 0),
+              0, Dimens.xxsMargin, 0, 0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -115,7 +115,7 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
                       fontSize: 48,
                       fontFamily: 'Open Sans',
                       fontWeight: FontWeight.bold,
-                      color: AppTheme.of(context).primaryColor,
+                      color: CColors.primaryColor,
                     ),
               ),
               Visibility(
@@ -124,21 +124,21 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.check_circle_outline,
-                      color: theme.success,
+                      color: CColors.success,
                       size: 20,
                     ),
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
-                          Constants.xxsMargin, 0, 0, Constants.xxsMargin),
+                          Dimens.xxsMargin, 0, 0, Dimens.xxsMargin),
                       child: Text(
                         formatDate(questionsItem['last_submitted']),
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Open Sans',
                               fontWeight: FontWeight.normal,
-                              color: theme.success,
+                              color: CColors.success,
                             ),
                       ),
                     ),

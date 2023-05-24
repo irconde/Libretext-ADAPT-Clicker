@@ -1,4 +1,5 @@
-import '../../utils/constants.dart';
+import '../../constants/dimens.dart';
+import '../../constants/colors.dart';
 import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -13,11 +14,11 @@ class AssignmentStatCtnWidget extends StatefulWidget {
 
 Color severityColor(BuildContext context, double percentage) {
   if (percentage < 50) {
-    return AppTheme.of(context).activityBad;
+    return CColors.activityBad;
   } else if (percentage < 80) {
-    return AppTheme.of(context).activityMedium;
+    return CColors.activityMedium;
   } else {
-    return AppTheme.of(context).activityGood;
+    return CColors.activityGood;
   }
 }
 
@@ -28,7 +29,7 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(
-          Constants.mmMargin, 0, Constants.mmMargin, 8),
+          Dimens.mmMargin, 0, Dimens.mmMargin, 8),
       child: Container(
         width: double.infinity,
         height: 80,
@@ -41,7 +42,7 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
           children: [
             Padding(
               padding:
-                  const EdgeInsetsDirectional.fromSTEB(0, 0, Constants.sMargin, 0),
+                  const EdgeInsetsDirectional.fromSTEB(0, 0, Dimens.sMargin, 0),
               child: Container(
                 width: 4,
                 height: double.infinity,
@@ -60,28 +61,25 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
                   children: [
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
-                          0, 0, 0, Constants.xsMargin),
+                          0, 0, 0, Dimens.xsMargin),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 0, Constants.xsMargin, 0),
+                          const Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0, 0, Dimens.xsMargin, 0),
                             child: FaIcon(
                               FontAwesomeIcons.brain,
-                              color: AppTheme.of(context).primaryColor,
+                              color: CColors.primaryColor,
                               size: 16,
                             ),
                           ),
                           Text(
                             'Activity Description',
-                            style: AppTheme.of(context)
-                                .bodyText1
-                                .override(
+                            style: AppTheme.of(context).bodyText1.override(
                                   fontFamily: 'Open Sans',
                                   fontWeight: FontWeight.w600,
-                                  color:
-                                      AppTheme.of(context).primaryColor,
+                                  color: CColors.primaryColor,
                                   fontSize: 16,
                                 ),
                           ),
@@ -92,13 +90,10 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
                       padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                       child: RichText(
                         text: TextSpan(
-                          style: AppTheme.of(context)
-                              .bodyText1
-                              .override(
+                          style: AppTheme.of(context).bodyText1.override(
                                 fontFamily: 'Open Sans',
                                 fontWeight: FontWeight.normal,
-                                color:
-                                    AppTheme.of(context).tertiaryText,
+                                color: CColors.tertiaryText,
                               ),
                           // ignore: prefer_const_literals_to_create_immutables
                           children: [
@@ -118,13 +113,13 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
             ),
             Padding(
               padding:
-                  const EdgeInsetsDirectional.fromSTEB(0, 0, Constants.sMargin, 0),
+                  const EdgeInsetsDirectional.fromSTEB(0, 0, Dimens.sMargin, 0),
               child: Text(
                 '$severityVariable%',
                 style: AppTheme.of(context).bodyText1.override(
                       fontFamily: 'Open Sans',
                       color: severityColor(context, severityVariable),
-                      fontSize: Constants.msMargin,
+                      fontSize: Dimens.msMargin,
                       fontWeight: FontWeight.bold,
                     ),
               ),

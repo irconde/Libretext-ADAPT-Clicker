@@ -10,7 +10,8 @@ import '../../backend/api_requests/api_calls.dart';
 import '../../utils/animations.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/utils.dart';
-import '../../utils/constants.dart';
+import '../../constants/dimens.dart';
+import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -23,12 +24,10 @@ class AssignmentScreen extends ConsumerStatefulWidget {
   final dynamic assignmentSum;
 
   @override
-  ConsumerState<AssignmentScreen> createState() =>
-      _AssignmentScreenState();
+  ConsumerState<AssignmentScreen> createState() => _AssignmentScreenState();
 }
 
-class _AssignmentScreenState
-    extends ConsumerState<AssignmentScreen>
+class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
     with TickerProviderStateMixin, ConnectionStateMixin {
   late Map<String, dynamic> assignmentSummary;
   final animationsMap = {
@@ -83,15 +82,15 @@ class _AssignmentScreenState
         future: getSummary(),
         builder: (context, snapshot) {
           return Scaffold(
-            backgroundColor: theme.primaryBackground,
+            backgroundColor: CColors.primaryBackground,
             appBar: AppBar(
               centerTitle: true,
-              backgroundColor: theme.primaryBackground,
+              backgroundColor: CColors.primaryBackground,
               elevation: 0.0,
               leading: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.close,
-                  color: theme.tertiaryColor,
+                  color: CColors.tertiaryColor,
                 ),
                 onPressed: () {
                   context.popRoute();
@@ -103,7 +102,7 @@ class _AssignmentScreenState
                 overflow: TextOverflow.fade,
                 style: theme.bodyText1.override(
                     fontFamily: 'Open Sans',
-                    color: theme.primaryColor,
+                    color: CColors.primaryColor,
                     fontSize: 20,
                     fontWeight: FontWeight.w700),
               ),
@@ -119,18 +118,18 @@ class _AssignmentScreenState
                       expansionController.value
                           ? Icons.info
                           : Icons.info_outline,
-                      color: theme.primaryColor,
+                      color: CColors.primaryColor,
                     )),
               ],
             ),
             body: ScrollShadow(
-              color: theme.shadowGrey,
+              color: CColors.shadowGrey,
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     const Divider(
-                      thickness: Constants.dividerThickness,
+                      thickness: Dimens.dividerThickness,
                       height: 1,
                     ),
                     ExpandablePanel(
@@ -142,64 +141,64 @@ class _AssignmentScreenState
                       header: Container(
                         alignment: Alignment.centerLeft,
                         width: MediaQuery.of(context).size.width,
-                        decoration:
-                            BoxDecoration(color: theme.coursePagePullDown),
+                        decoration: const BoxDecoration(
+                            color: CColors.coursePagePullDown),
                         child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                Constants.xsMargin,
-                                Constants.sMargin,
-                                Constants.xsMargin,
-                                Constants.sMargin),
+                                Dimens.xsMargin,
+                                Dimens.sMargin,
+                                Dimens.xsMargin,
+                                Dimens.sMargin),
                             child: Align(
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Row(
                                   children: [
                                     Chip(
-                                      backgroundColor: theme.secondaryColor,
+                                      backgroundColor: CColors.secondaryColor,
                                       label: Text(
                                         " ${assignmentSummary['total_points']} points",
                                         style: theme.bodyText1.override(
                                           fontFamily: 'Open Sans',
-                                          color: theme.primaryBackground,
+                                          color: CColors.primaryBackground,
                                         ),
                                       ),
                                     ),
                                     Padding(
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              Constants.xsMargin,
+                                              Dimens.xsMargin,
                                               0,
-                                              Constants.xsMargin,
+                                              Dimens.xsMargin,
                                               0),
                                       child: Chip(
-                                        backgroundColor: theme.secondaryColor,
+                                        backgroundColor: CColors.secondaryColor,
                                         label: Text(
                                           " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} allowed attempts",
                                           style: theme.bodyText1.override(
                                             fontFamily: 'Open Sans',
-                                            color: theme.primaryBackground,
+                                            color: CColors.primaryBackground,
                                           ),
                                         ),
                                       ),
                                     ),
                                     Chip(
-                                      backgroundColor: theme.secondaryColor,
+                                      backgroundColor: CColors.secondaryColor,
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               8, 0, 8, 0),
                                       labelPadding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0, 0, 4, 0),
-                                      avatar: Icon(
+                                      avatar: const Icon(
                                         Icons.date_range,
-                                        color: theme.primaryBackground,
+                                        color: CColors.primaryBackground,
                                       ),
                                       label: Text(
                                         " ${formatDate(assignmentSummary['formatted_due'] ?? assignmentSummary['due']['due_date'])}",
                                         style: theme.bodyText1.override(
                                           fontFamily: 'Open Sans',
-                                          color: theme.primaryBackground,
+                                          color: CColors.primaryBackground,
                                         ),
                                       ),
                                     ),
@@ -211,7 +210,7 @@ class _AssignmentScreenState
                       expanded: Container(
                         width: MediaQuery.of(context).size.width,
                         decoration:
-                            BoxDecoration(color: theme.coursePagePullDown),
+                            BoxDecoration(color: CColors.coursePagePullDown),
                         child: Padding(
                           padding: const EdgeInsets.all(24),
                           child: Column(
@@ -223,7 +222,7 @@ class _AssignmentScreenState
                                         null,
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, Constants.msMargin),
+                                      0, 0, 0, Dimens.msMargin),
                                   child: RichText(
                                     text: TextSpan(
                                       style: theme.bodyText3,
@@ -252,7 +251,7 @@ class _AssignmentScreenState
                                     assignmentSummary['late_policy'] != null),
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, Constants.smMargin),
+                                      0, 0, 0, Dimens.smMargin),
                                   child: RichText(
                                     text: TextSpan(
                                       style: theme.bodyText3,
@@ -281,7 +280,7 @@ class _AssignmentScreenState
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(Constants.smMargin),
+                      padding: const EdgeInsets.all(Dimens.smMargin),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -299,7 +298,7 @@ class _AssignmentScreenState
                                     width: 48,
                                     height: 48,
                                     child: CircularProgressIndicator(
-                                      color: theme.primaryColor,
+                                      color: CColors.primaryColor,
                                     ),
                                   ),
                                 );
@@ -340,7 +339,8 @@ class _AssignmentScreenState
                                                 questions
                                                     .length // check if the index is equal to the length of the list
                                             ? Container(
-                                                color: theme.primaryBackground,
+                                                color:
+                                                    CColors.primaryBackground,
                                               ) // return an empty container
                                             : AssignmentGridWidget(
                                                 questionsItem:

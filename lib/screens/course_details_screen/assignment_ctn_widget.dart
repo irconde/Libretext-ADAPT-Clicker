@@ -5,7 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/utils.dart';
 import '../assignment_screen/assignment_screen.dart';
-import '../../utils/constants.dart';
+import '../../constants/dimens.dart';
+import '../../constants/colors.dart';
 
 class AssignmentCtnWidget extends ConsumerStatefulWidget {
   const AssignmentCtnWidget({Key? key, required this.assignmentsItem})
@@ -44,7 +45,6 @@ class AssignmentCtnWidgetState extends ConsumerState<AssignmentCtnWidget>
   }
 
   Color getColor(List<String> parts) {
-    var theme = AppTheme.of(context);
     // Check if the input has exactly two parts
     if (parts.length == 2) {
       // Parse the parts as integers
@@ -57,11 +57,11 @@ class AssignmentCtnWidgetState extends ConsumerState<AssignmentCtnWidget>
         // Return a color based on the percentage
         // You can change the colors and thresholds as you like
         if (percentage >= 0.8) {
-          return theme.activityGood;
+          return CColors.activityGood;
         } else if (percentage >= 0.25) {
-          return theme.activityMedium;
+          return CColors.activityMedium;
         } else {
-          return theme.activityBad;
+          return CColors.activityBad;
         }
       } else {
         // Return an error color
@@ -96,7 +96,7 @@ class AssignmentCtnWidgetState extends ConsumerState<AssignmentCtnWidget>
                   await showModalBottomSheet(
                     useSafeArea: true,
                     isScrollControlled: true,
-                    backgroundColor: theme.primaryBackground,
+                    backgroundColor: CColors.primaryBackground,
                     context: context,
                     builder: (context) {
                       return Padding(
@@ -116,13 +116,13 @@ class AssignmentCtnWidgetState extends ConsumerState<AssignmentCtnWidget>
               },
               child: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(
-                    Constants.mmMargin, 0, Constants.mmMargin, 0),
+                    Dimens.mmMargin, 0, Dimens.mmMargin, 0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
-                          0, Constants.msMargin, 0, Constants.msMargin),
+                          0, Dimens.msMargin, 0, Dimens.msMargin),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -134,7 +134,7 @@ class AssignmentCtnWidgetState extends ConsumerState<AssignmentCtnWidget>
                               children: [
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, Constants.xsMargin),
+                                      0, 0, 0, Dimens.xsMargin),
                                   child: AutoSizeText(
                                     getJsonField(
                                       widget.assignmentsItem,
@@ -145,7 +145,7 @@ class AssignmentCtnWidgetState extends ConsumerState<AssignmentCtnWidget>
                                         ),
                                     style: theme.bodyText1.override(
                                       fontFamily: 'Open Sans',
-                                      color: theme.primaryColor,
+                                      color: CColors.primaryColor,
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -160,7 +160,7 @@ class AssignmentCtnWidgetState extends ConsumerState<AssignmentCtnWidget>
                                       .maybeHandleOverflow(maxChars: 20),
                                   style: theme.bodyText1.override(
                                     fontFamily: 'Open Sans',
-                                    color: theme.primaryColor,
+                                    color: CColors.primaryColor,
                                   ),
                                 ),
                               ],
@@ -171,17 +171,17 @@ class AssignmentCtnWidgetState extends ConsumerState<AssignmentCtnWidget>
                             children: [
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 0, 0, Constants.sMargin),
+                                    0, 0, 0, Dimens.sMargin),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Padding(
+                                    const Padding(
                                       padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0, 0, Constants.xsMargin, 0),
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, Dimens.xsMargin, 0),
                                       child: Icon(
                                         Icons.today_rounded,
-                                        color: theme.tertiaryText,
+                                        color: CColors.tertiaryText,
                                         size: 20,
                                       ),
                                     ),
@@ -191,7 +191,7 @@ class AssignmentCtnWidgetState extends ConsumerState<AssignmentCtnWidget>
                                       textAlign: TextAlign.start,
                                       style: theme.bodyText1.override(
                                         fontFamily: 'Open Sans',
-                                        color: theme.tertiaryText,
+                                        color: CColors.tertiaryText,
                                       ),
                                     ),
                                   ],
@@ -203,7 +203,7 @@ class AssignmentCtnWidgetState extends ConsumerState<AssignmentCtnWidget>
                                   Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, Constants.xsMargin, 0),
+                                            0, 0, Dimens.xsMargin, 0),
                                     child: Icon(
                                       Icons.check_circle_outline,
                                       color: submittedColor,

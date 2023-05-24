@@ -5,6 +5,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/widgets/dropdowns/contact_dropdown_widget.dart';
+import '../constants/colors.dart';
 import '../widgets/buttons/custom_elevated_button_widget.dart';
 import '../widgets/navigation_drawer_widget.dart';
 import '../mixins/form_state_mixin.dart';
@@ -86,7 +87,7 @@ class _ContactUsScreenState extends ConsumerState<ContactUsScreen>
                 fontSize: 14,
               ),
             ),
-            backgroundColor: AppTheme.of(context).secondaryText,
+            backgroundColor: CColors.secondaryText,
           ),
         );
       } else {
@@ -127,7 +128,7 @@ class _ContactUsScreenState extends ConsumerState<ContactUsScreen>
           : CollapsibleAppBar(
               title: 'Contact Us',
               iconPath: 'assets/images/contact_support.svg',
-              svgIconColor: AppTheme.of(context).svgIconColor,
+              svgIconColor: CColors.svgIconColor,
               child: buildGestureDetector(context),
             ),
     );
@@ -193,8 +194,8 @@ class _ContactUsScreenState extends ConsumerState<ContactUsScreen>
                         enabled: formState != FormStateValue.processing,
                         decoration: InputDecoration(
                           labelText: 'Email*',
-                          floatingLabelStyle: TextStyle(
-                              color: AppTheme.of(context).primaryColor),
+                          floatingLabelStyle:
+                              const TextStyle(color: CColors.primaryColor),
                           errorText:
                               submitted ? formValues[email][errorIndex] : null,
                           hintText: 'example@email.com',
@@ -267,7 +268,7 @@ class _ContactUsScreenState extends ConsumerState<ContactUsScreen>
                         '*Required Fields',
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Open Sans',
-                              color: AppTheme.of(context).primaryColor,
+                              color: CColors.primaryColor,
                               fontSize: 12,
                             ),
                       ),

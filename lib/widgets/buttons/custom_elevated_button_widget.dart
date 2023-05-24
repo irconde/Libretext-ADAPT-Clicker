@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../constants/colors.dart';
 import '../../utils/app_theme.dart';
 import '../../mixins/form_state_mixin.dart';
 
@@ -29,7 +30,7 @@ class CustomElevatedButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-        surfaceTintColor: AppTheme.of(context).primaryBtnText,
+        surfaceTintColor: CColors.primaryBtnText,
         minimumSize: const Size.fromHeight(44),
         backgroundColor: _backgroundColorButton(context),
         foregroundColor: _foregroundColorButton(context),
@@ -46,10 +47,10 @@ class CustomElevatedButton extends StatelessWidget {
   Color _foregroundColorButton(BuildContext context) {
     if (type == ButtonType.secondary) {
       return formState == FormStateValue.error
-          ? AppTheme.of(context).failure
+          ? CColors.failure
           : formState == FormStateValue.success
-              ? AppTheme.of(context).success
-              : AppTheme.of(context).primaryColor;
+              ? CColors.success
+              : CColors.primaryColor;
     } else {
       return Colors.white;
     }
@@ -57,10 +58,10 @@ class CustomElevatedButton extends StatelessWidget {
 
   RoundedRectangleBorder _borderSideButton(BuildContext context) {
     Color borderColor = formState == FormStateValue.error
-        ? AppTheme.of(context).failure
+        ? CColors.failure
         : formState == FormStateValue.success
-            ? AppTheme.of(context).success
-            : AppTheme.of(context).primaryColor;
+            ? CColors.success
+            : CColors.primaryColor;
     if (type == ButtonType.secondary) {
       return RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4),
@@ -77,18 +78,18 @@ class CustomElevatedButton extends StatelessWidget {
     Color btnMainColor;
     switch (type) {
       case ButtonType.primary:
-        btnMainColor = AppTheme.of(context).primaryColor;
+        btnMainColor = CColors.primaryColor;
         if (formState == FormStateValue.error) {
-          btnMainColor = AppTheme.of(context).failure;
+          btnMainColor = CColors.failure;
         } else if (formState == FormStateValue.success) {
-          btnMainColor = AppTheme.of(context).success;
+          btnMainColor = CColors.success;
         }
         break;
       case ButtonType.secondary:
         btnMainColor = Colors.white;
         break;
       case ButtonType.external:
-        btnMainColor = AppTheme.of(context).secondaryColor;
+        btnMainColor = CColors.secondaryColor;
         break;
     }
     return btnMainColor;
