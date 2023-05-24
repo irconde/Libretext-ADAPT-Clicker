@@ -199,7 +199,7 @@ class _PollWidgetState extends State<PollWidget> {
                         hintStyle: AppTheme.of(context).bodyText2,
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0x00000000),
+                            color: CColors.noColor,
                             width: 1,
                           ),
                           borderRadius: BorderRadius.only(
@@ -209,7 +209,7 @@ class _PollWidgetState extends State<PollWidget> {
                         ),
                         focusedBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0x00000000),
+                            color: CColors.noColor,
                             width: 1,
                           ),
                           borderRadius: BorderRadius.only(
@@ -219,7 +219,7 @@ class _PollWidgetState extends State<PollWidget> {
                         ),
                         errorBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0x00000000),
+                            color: CColors.noColor,
                             width: 1,
                           ),
                           borderRadius: BorderRadius.only(
@@ -229,7 +229,7 @@ class _PollWidgetState extends State<PollWidget> {
                         ),
                         focusedErrorBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0x00000000),
+                            color: CColors.noColor,
                             width: 1,
                           ),
                           borderRadius: BorderRadius.only(

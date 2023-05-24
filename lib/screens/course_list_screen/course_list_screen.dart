@@ -197,7 +197,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
             showModalBottomSheet(
               useSafeArea: true,
               isScrollControlled: true,
-              backgroundColor: const Color(0x0E1862B3),
+              backgroundColor: CColors.blurColor,
               context: context,
               builder: (context) {
                 return Padding(

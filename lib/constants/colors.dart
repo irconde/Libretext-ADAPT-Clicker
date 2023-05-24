@@ -11,15 +11,18 @@ class CColors {
   static const Color secondaryBackground = Color(0xFFFFFFFF);
   static const Color coursePagePullDown = Color(0xFFF3F3F3);
   static const Color shadowGrey = Color(0xFFCCCCCC);
-  static const Color primaryText = Color(0xFF101213);
   static const Color secondaryText = Color(0xFF57636C);
   static const Color tertiaryText = Color(0xFF6A6A6A);
   static const Color blurColor = Color(0x0E1862B3);
+  static const Color primaryText = Color(0xFF101213);
+  static const Color noColor = Color(0x00000000);
 
-  static const Color primaryBtnText = Color(0xFFFFFFFF);
+  static const Color pureWhite = Color(0xFFFFFFFF);
   static const Color lineColor = Color(0xFFE0E3E7);
+  static const Color assignmentBackground = Color(0xFFDCF1FF);
   static const Color textFieldBackground = Color(0xFFF5FCFF);
   static const Color textFieldBorder = Color(0xFFD3D8DB);
+  static const Color unselectedLabel = Color(0xCBFFFFFF);
   static const Color drawerIconColor = Color(0xFF66AADB);
   static const Color svgIconColor = Color(0xFF4F9FCF);
   static const Color svgIconColor2 = Color(0xFF4ABEE2);

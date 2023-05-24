@@ -145,7 +145,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       hintStyle: AppTheme.of(context).bodyText2,
                       enabledBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color(0x00000000),
+                          color: CColors.noColor,
                           width: 1,
                         ),
                         borderRadius: BorderRadius.only(
@@ -155,7 +155,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       ),
                       focusedBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color(0x00000000),
+                          color: CColors.noColor,
                           width: 1,
                         ),
                         borderRadius: BorderRadius.only(
@@ -165,7 +165,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       ),
                       errorBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color(0x00000000),
+                          color: CColors.noColor,
                           width: 1,
                         ),
                         borderRadius: BorderRadius.only(
@@ -175,7 +175,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       ),
                       focusedErrorBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color(0x00000000),
+                          color: CColors.noColor,
                           width: 1,
                         ),
                         borderRadius: BorderRadius.only(

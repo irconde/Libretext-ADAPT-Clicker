@@ -34,7 +34,7 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
         width: double.infinity,
         height: 80,
         decoration: const BoxDecoration(
-          color: Color(0xFFDCF1FF),
+          color: CColors.assignmentBackground,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.max,

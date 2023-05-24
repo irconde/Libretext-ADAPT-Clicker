@@ -131,7 +131,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                       children: [
                         TabBar(
                           labelColor: CColors.primaryBackground,
-                          unselectedLabelColor: const Color(0xCBFFFFFF),
+                          unselectedLabelColor: CColors.unselectedLabel,
                           labelStyle: theme.bodyText1,
                           indicatorColor: CColors.primaryBackground,
                           tabs: const [

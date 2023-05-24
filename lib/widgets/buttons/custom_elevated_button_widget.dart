@@ -30,7 +30,7 @@ class CustomElevatedButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-        surfaceTintColor: CColors.primaryBtnText,
+        surfaceTintColor: CColors.pureWhite,
         minimumSize: const Size.fromHeight(44),
         backgroundColor: _backgroundColorButton(context),
         foregroundColor: _foregroundColorButton(context),
