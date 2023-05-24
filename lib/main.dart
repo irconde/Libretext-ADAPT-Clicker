@@ -1,20 +1,19 @@
 import 'dart:ui';
 
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
-import 'package:adapt_clicker/utils/stored_preferences.dart';
+import 'package:adapt_clicker/backend/user_stored_preferences.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
+import 'utils/utils.dart';
 import '../backend/api_requests/api_calls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'backend/router/app_router.dart';
-import 'flutter_flow/flutter_flow_theme.dart';
-import 'flutter_flow/flutter_flow_util.dart';
-import 'flutter_flow/internationalization.dart';
+import 'utils/app_theme.dart';
+import 'utils/internationalization.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'Firebase/firebase_options.dart';
+import 'backend/firebase/firebase_options.dart';
 import 'package:logger/logger.dart';
 
 final Logger logger = Logger(
@@ -43,9 +42,9 @@ void main() async {
   }
   //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   //FirebaseMessaging.onMessage.listen(_firebaseMessagingBackgroundHandler);
-  await StoredPreferences.init();
+  await UserStoredPreferences.init();
   AppState();
-  functions.preloadSVGs();
+  preloadSVGs();
   // Firebase initialization
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -63,11 +62,11 @@ void main() async {
 
 Future<bool> userIsAuthenticated() async {
   bool isSignedIn = false;
-  await StoredPreferences.init();
-  bool rememberMe = StoredPreferences.rememberMe;
-  String userAccount = StoredPreferences.userAccount;
-  String userPassword = StoredPreferences.userPassword;
-  String currentToken = StoredPreferences.authToken;
+  await UserStoredPreferences.init();
+  bool rememberMe = UserStoredPreferences.rememberMe;
+  String userAccount = UserStoredPreferences.userAccount;
+  String userPassword = UserStoredPreferences.userPassword;
+  String currentToken = UserStoredPreferences.authToken;
   if (rememberMe) {
     if (userAccount.isNotEmpty && userPassword.isNotEmpty) {
       ApiCallResponse loginAttempt = await LoginCall.call(
@@ -76,18 +75,18 @@ Future<bool> userIsAuthenticated() async {
       );
       if ((loginAttempt.succeeded)) {
         isSignedIn = true;
-        String newToken = functions.createToken(getJsonField(
+        String newToken = createToken(getJsonField(
           (loginAttempt.jsonBody ?? ''),
           r'''$.token''',
         ).toString());
         if (newToken != currentToken) {
-          StoredPreferences.authToken = newToken;
+          UserStoredPreferences.authToken = newToken;
         }
       }
     }
   }
   if (isSignedIn == false) {
-    StoredPreferences.authToken = '';
+    UserStoredPreferences.authToken = '';
   }
   return Future(() => isSignedIn);
 }
@@ -104,7 +103,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'LibreTexts ADAPT',
       localizationsDelegates: const [
-        FFLocalizationsDelegate(),
+        LBTXTLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -112,8 +111,8 @@ class MyApp extends StatelessWidget {
       supportedLocales: const [Locale('en', '')],
       theme: ThemeData(
         brightness: Brightness.light,
-        inputDecorationTheme: FlutterFlowTheme.of(context).inputTheme(),
-        appBarTheme: FlutterFlowTheme.of(context).appBarTheme(),
+        inputDecorationTheme: AppTheme.of(context).inputTheme(),
+        appBarTheme: AppTheme.of(context).appBarTheme(),
       ),
       themeMode: _themeMode,
       routeInformationProvider: _appRouter.routeInfoProvider(),

@@ -13,18 +13,11 @@ class AppState {
 
   Future initializePersistedState() async {}
 
-  List<String> errorsList = [];
-
   dynamic view;
-
   bool assignmentUp = false;
-
   dynamic question;
-
   bool isBasic = false;
-
   bool hasSubmission = false;
-
   static TimezonesContainer timezoneContainer = TimezonesContainer();
   static Timezone userTimezone = Timezone('UnsetV', 'Timezone');
 }

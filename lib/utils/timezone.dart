@@ -1,5 +1,5 @@
 import '../backend/api_requests/api_calls.dart';
-import 'package:adapt_clicker/flutter_flow/flutter_flow_util.dart';
+import 'package:adapt_clicker/utils/utils.dart';
 
 class Timezone {
   String value, text;
@@ -18,7 +18,6 @@ class Timezone {
 class TimezonesContainer {
   List<Timezone> timeZones = [];
   List<String> textZones = [''];
-
 
   void add(Timezone value) {
     timeZones.add(value);

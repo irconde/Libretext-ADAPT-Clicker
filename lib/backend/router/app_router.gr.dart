@@ -8,21 +8,21 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:adapt_clicker/assignments_page/assignments_page_widget.dart'
+import 'package:adapt_clicker/screens/course_details_screen/course_details_screen.dart'
     as _i1;
-import 'package:adapt_clicker/components/assignment_details_widget.dart' as _i2;
-import 'package:adapt_clicker/components/question_c_t_n_widget.dart' as _i3;
-import 'package:adapt_clicker/contact_us/contact_us_widget.dart' as _i4;
-import 'package:adapt_clicker/courses_page/courses_page_widget.dart' as _i5;
-import 'package:adapt_clicker/create_account/create_account_widget.dart' as _i6;
-import 'package:adapt_clicker/login_page/login_page_widget.dart' as _i7;
-import 'package:adapt_clicker/notifications_page/notifications_page_widget.dart'
+import 'package:adapt_clicker/screens/assignment_screen/assignment_screen.dart' as _i2;
+import 'package:adapt_clicker/screens/question_screen.dart' as _i3;
+import 'package:adapt_clicker/screens/contact_us_screen.dart' as _i4;
+import 'package:adapt_clicker/screens/course_list_screen/course_list_screen.dart' as _i5;
+import 'package:adapt_clicker/screens/create_account_screen.dart' as _i6;
+import 'package:adapt_clicker/screens/login_screen.dart' as _i7;
+import 'package:adapt_clicker/screens/notifications_screen/notifications_screen.dart'
     as _i8;
-import 'package:adapt_clicker/reset_password_page/reset_password_page_widget.dart'
+import 'package:adapt_clicker/screens/reset_password_screen.dart'
     as _i9;
-import 'package:adapt_clicker/update_profile_page/update_profile_page_widget.dart'
+import 'package:adapt_clicker/screens/update_profile_screen.dart'
     as _i10;
-import 'package:adapt_clicker/welcome_page/welcome_page_widget.dart' as _i11;
+import 'package:adapt_clicker/screens/home_screen.dart' as _i11;
 import 'package:auto_route/auto_route.dart' as _i12;
 import 'package:flutter/foundation.dart' as _i14;
 import 'package:flutter/material.dart' as _i13;
@@ -39,7 +39,7 @@ abstract class $AppRouter extends _i12.RootStackRouter {
               AssignmentsRouteWidgetArgs(id: pathParams.getString('course')));
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i1.AssignmentsPageWidget(
+        child: _i1.CourseDetailsScreen(
           key: args.key,
           id: args.id,
         ),
@@ -52,7 +52,7 @@ abstract class $AppRouter extends _i12.RootStackRouter {
               assignmentSum: pathParams.get('summary')));
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i2.AssignmentDetailsWidget(
+        child: _i2.AssignmentScreen(
           key: args.key,
           assignmentSum: args.assignmentSum,
         ),
@@ -67,7 +67,7 @@ abstract class $AppRouter extends _i12.RootStackRouter {
               ));
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i3.QuestionCTNWidget(
+        child: _i3.QuestionScreen(
           key: args.key,
           assignmentName: args.assignmentName,
           view: args.view,
@@ -79,7 +79,7 @@ abstract class $AppRouter extends _i12.RootStackRouter {
           orElse: () => const ContactUsWidgetArgs());
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i4.ContactUsWidget(
+        child: _i4.ContactUsScreen(
           key: args.key,
           openFromDrawer: args.openFromDrawer,
         ),
@@ -90,7 +90,7 @@ abstract class $AppRouter extends _i12.RootStackRouter {
           orElse: () => const CoursesRouteWidgetArgs());
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i5.CoursesPageWidget(
+        child: _i5.CourseListScreen(
           key: args.key,
           isFirstScreen: args.isFirstScreen,
         ),
@@ -99,31 +99,31 @@ abstract class $AppRouter extends _i12.RootStackRouter {
     CreateAccountWidget.name: (routeData) {
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i6.CreateAccountWidget(),
+        child: const _i6.CreateAccountScreen(),
       );
     },
     LoginRouteWidget.name: (routeData) {
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i7.LoginPageWidget(),
+        child: const _i7.LoginScreenWidget(),
       );
     },
     NotificationsRouteWidget.name: (routeData) {
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i8.NotificationsPageWidget(),
+        child: const _i8.NotificationsScreen(),
       );
     },
     ResetPasswordRouteWidget.name: (routeData) {
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i9.ResetPasswordPageWidget(),
+        child: const _i9.ResetPasswordScreen(),
       );
     },
     UpdateProfileRouteWidget.name: (routeData) {
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i10.UpdateProfilePageWidget(),
+        child: const _i10.UpdateProfileScreen(),
       );
     },
     WelcomeRouteWidget.name: (routeData) {
@@ -131,7 +131,7 @@ abstract class $AppRouter extends _i12.RootStackRouter {
           orElse: () => const WelcomeRouteWidgetArgs());
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i11.WelcomePageWidget(
+        child: _i11.HomeScreen(
           key: args.key,
           isFirstScreen: args.isFirstScreen,
         ),
@@ -141,7 +141,7 @@ abstract class $AppRouter extends _i12.RootStackRouter {
 }
 
 /// generated route for
-/// [_i1.AssignmentsPageWidget]
+/// [_i1.CourseDetailsScreen]
 class AssignmentsRouteWidget
     extends _i12.PageRouteInfo<AssignmentsRouteWidgetArgs> {
   AssignmentsRouteWidget({
@@ -181,7 +181,7 @@ class AssignmentsRouteWidgetArgs {
 }
 
 /// generated route for
-/// [_i2.AssignmentDetailsWidget]
+/// [_i2.AssignmentScreen]
 class AssignmentDetailsWidget
     extends _i12.PageRouteInfo<AssignmentDetailsWidgetArgs> {
   AssignmentDetailsWidget({
@@ -221,7 +221,7 @@ class AssignmentDetailsWidgetArgs {
 }
 
 /// generated route for
-/// [_i3.QuestionCTNWidget]
+/// [_i3.QuestionScreen]
 class QuestionCTNWidget extends _i12.PageRouteInfo<QuestionCTNWidgetArgs> {
   QuestionCTNWidget({
     _i14.Key? key,
@@ -268,7 +268,7 @@ class QuestionCTNWidgetArgs {
 }
 
 /// generated route for
-/// [_i4.ContactUsWidget]
+/// [_i4.ContactUsScreen]
 class ContactUsWidget extends _i12.PageRouteInfo<ContactUsWidgetArgs> {
   ContactUsWidget({
     _i13.Key? key,
@@ -306,7 +306,7 @@ class ContactUsWidgetArgs {
 }
 
 /// generated route for
-/// [_i5.CoursesPageWidget]
+/// [_i5.CourseListScreen]
 class CoursesRouteWidget extends _i12.PageRouteInfo<CoursesRouteWidgetArgs> {
   CoursesRouteWidget({
     _i13.Key? key,
@@ -344,7 +344,7 @@ class CoursesRouteWidgetArgs {
 }
 
 /// generated route for
-/// [_i6.CreateAccountWidget]
+/// [_i6.CreateAccountScreen]
 class CreateAccountWidget extends _i12.PageRouteInfo<void> {
   const CreateAccountWidget({List<_i12.PageRouteInfo>? children})
       : super(
@@ -358,7 +358,7 @@ class CreateAccountWidget extends _i12.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i7.LoginPageWidget]
+/// [_i7.LoginScreenWidget]
 class LoginRouteWidget extends _i12.PageRouteInfo<void> {
   const LoginRouteWidget({List<_i12.PageRouteInfo>? children})
       : super(
@@ -372,7 +372,7 @@ class LoginRouteWidget extends _i12.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i8.NotificationsPageWidget]
+/// [_i8.NotificationsScreen]
 class NotificationsRouteWidget extends _i12.PageRouteInfo<void> {
   const NotificationsRouteWidget({List<_i12.PageRouteInfo>? children})
       : super(
@@ -386,7 +386,7 @@ class NotificationsRouteWidget extends _i12.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i9.ResetPasswordPageWidget]
+/// [_i9.ResetPasswordScreen]
 class ResetPasswordRouteWidget extends _i12.PageRouteInfo<void> {
   const ResetPasswordRouteWidget({List<_i12.PageRouteInfo>? children})
       : super(
@@ -400,7 +400,7 @@ class ResetPasswordRouteWidget extends _i12.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i10.UpdateProfilePageWidget]
+/// [_i10.UpdateProfileScreen]
 class UpdateProfileRouteWidget extends _i12.PageRouteInfo<void> {
   const UpdateProfileRouteWidget({List<_i12.PageRouteInfo>? children})
       : super(
@@ -414,7 +414,7 @@ class UpdateProfileRouteWidget extends _i12.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i11.WelcomePageWidget]
+/// [_i11.HomeScreen]
 class WelcomeRouteWidget extends _i12.PageRouteInfo<WelcomeRouteWidgetArgs> {
   WelcomeRouteWidget({
     _i13.Key? key,

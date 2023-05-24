@@ -3,7 +3,7 @@ import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import '../../utils/stored_preferences.dart';
+import '../user_stored_preferences.dart';
 import '../api_requests/api_calls.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Page,Route')
@@ -45,14 +45,14 @@ class RouteHandler {
 
   Future<String> getSummary(String id) async {
     dynamic assignmentSummary = await GetAssignmentSummaryCall.call(
-        token: StoredPreferences.authToken, assignmentNum: int.parse(id));
+        token: UserStoredPreferences.authToken, assignmentNum: int.parse(id));
     return jsonEncode(assignmentSummary.jsonBody['assignment']);
   }
 
 
   Future<String> getQuestion(List<String> args) async {
     dynamic courseCall = await ViewCall.call(
-        token: StoredPreferences.authToken, assignmentID: int.parse(args[1]));
+        token: UserStoredPreferences.authToken, assignmentID: int.parse(args[1]));
     courseCall.jsonBody['course'].remove('textbook_url');
     return jsonEncode(courseCall.jsonBody['course']);
   }
