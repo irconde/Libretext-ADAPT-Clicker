@@ -5,6 +5,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../constants/colors.dart';
+import '../constants/strings.dart';
 import '../widgets/buttons/custom_elevated_button_widget.dart';
 import '../mixins/form_state_mixin.dart';
 import '../utils/app_theme.dart';
@@ -82,7 +83,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
     return Scaffold(
       key: scaffoldKey,
       appBar: MainAppBar(
-          title: 'My Password',
+          title: Strings.myPassword,
           scaffoldKey: scaffoldKey,
           setState: (VoidCallback fn) {
             setState(fn);
@@ -114,7 +115,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
                               enabled: formState != FormStateValue.processing,
                               obscureText: !_fieldsVisibility[currentPassword]!,
                               decoration: InputDecoration(
-                                labelText: 'Current Password',
+                                labelText: Strings.currentPasswordField,
                                 errorText: submitted
                                     ? formValues[currentPassword][errorIndex]
                                     : null,
@@ -162,7 +163,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
                               enabled: formState != FormStateValue.processing,
                               obscureText: !_fieldsVisibility[password]!,
                               decoration: InputDecoration(
-                                labelText: 'New Password*',
+                                labelText: Strings.newPasswordFieldMandatory,
                                 errorText: submitted
                                     ? formValues[password][errorIndex]
                                     : null,
@@ -209,7 +210,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
                               obscureText:
                                   !_fieldsVisibility[passwordConfirmation]!,
                               decoration: InputDecoration(
-                                labelText: 'Confirm New Password*',
+                                labelText: Strings.confirmPasswordFieldMandatory,
                                 errorText: submitted
                                     ? formValues[passwordConfirmation]
                                         [errorIndex]
@@ -264,7 +265,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
                           Align(
                             alignment: const Alignment(1, 0),
                             child: Text(
-                              '*Required Fields',
+                              Strings.requiredFields,
                               style: AppTheme.of(context).bodyText1.override(
                                     fontFamily: 'Open Sans',
                                     color: CColors.primaryColor,
@@ -282,10 +283,10 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
                       0, 0, 0, Dimens.msMargin),
                   child: CustomElevatedButton(
                     formState: formState,
-                    normalText: 'CHANGE PASSWORD',
-                    errorText: 'TRY IT AGAIN',
-                    successText: 'PASSWORD UPDATED',
-                    processingText: 'CHANGING PASSWORD',
+                    normalText: Strings.changePwdBtnLabel,
+                    errorText: Strings.tryAgainBtnLabel,
+                    successText: Strings.changePwdBtnSuccessLabel,
+                    processingText: Strings.changePwdBtnProcessingLabel,
                     onPressed: _submit,
                   ),
                 ),

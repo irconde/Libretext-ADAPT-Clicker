@@ -1,6 +1,7 @@
 import 'package:adapt_clicker/mixins/connection_state_mixin.dart';
 import 'package:adapt_clicker/screens/question_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../constants/strings.dart';
 import '../../utils/utils.dart';
 import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -77,34 +78,30 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
                 r'''$.has_at_least_one_submission''',
               ));
           await showModalBottomSheet(
-            useSafeArea: true,
-            isScrollControlled: true,
-            backgroundColor: CColors.primaryBackground,
-            context: context,
-            builder: (context) {
-              return StatefulBuilder(
-                  builder: (context, StateSetter setState) {
-                    return Padding(
-                      padding: MediaQuery
-                          .of(context)
-                          .viewInsets,
-                      child: SizedBox(
-                        height: double.infinity,
-                        child: QuestionScreen(
-                          assignmentName: assignmentSummary['name'],
-                          index: questionsIndex,
-                          view: builderResponse.jsonBody,
-                        ),
+              useSafeArea: true,
+              isScrollControlled: true,
+              backgroundColor: CColors.primaryBackground,
+              context: context,
+              builder: (context) {
+                return StatefulBuilder(
+                    builder: (context, StateSetter setState) {
+                  return Padding(
+                    padding: MediaQuery.of(context).viewInsets,
+                    child: SizedBox(
+                      height: double.infinity,
+                      child: QuestionScreen(
+                        assignmentName: assignmentSummary['name'],
+                        index: questionsIndex,
+                        view: builderResponse.jsonBody,
                       ),
-                    );
-                  }
-              );
-            }
-            );
+                    ),
+                  );
+                });
+              });
         },
         child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(
-              0, Dimens.xxsMargin, 0, 0),
+          padding:
+              const EdgeInsetsDirectional.fromSTEB(0, Dimens.xxsMargin, 0, 0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -148,8 +145,7 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
               Visibility(
                 visible: questionsItem['last_submitted'] != 'N/A',
                 child: Text(
-                  '${questionsItem['total_score'] ?? 'Max'}/${questionsItem['points']} Points' ??
-                      'points/total',
+                  '${questionsItem['total_score'] ?? 'Max'}/${questionsItem['points']} ${Strings.uppercasePoints}',
                   textAlign: TextAlign.center,
                   style: AppTheme.of(context).bodyText3.override(
                         fontFamily: 'Open Sans',
@@ -160,7 +156,7 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
               Visibility(
                 visible: questionsItem['last_submitted'] == 'N/A',
                 child: Text(
-                  'Max ${questionsItem['points']} Points' ?? 'points/total',
+                  'Max ${questionsItem['points']} ${Strings.uppercasePoints}',
                   textAlign: TextAlign.center,
                   style: AppTheme.of(context).bodyText3.override(
                         fontFamily: 'Open Sans',

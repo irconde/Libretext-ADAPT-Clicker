@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/widgets/dropdowns/timezone_dropdown_widget.dart';
 import '../constants/colors.dart';
+import '../constants/strings.dart';
 import '../widgets/buttons/custom_elevated_button_widget.dart';
 import '../utils/app_theme.dart';
 import 'dart:async';
@@ -98,7 +99,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
         SnackBar(
             content: RichText(
               text: TextSpan(
-                text: 'An account for ',
+                text: Strings.accountFor,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
@@ -108,7 +109,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                     text: userAccount,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  const TextSpan(text: ' has been successfully created.'),
+                  const TextSpan(text: Strings.successfullyCreated),
                 ],
               ),
             ),
@@ -178,7 +179,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
       backgroundColor: CColors.primaryBackground,
       key: scaffoldKey,
       body: CollapsibleAppBar(
-        title: 'Create Account',
+        title: Strings.createAccount,
         iconPath: 'assets/images/person_add1.svg',
         svgIconColor: CColors.svgIconColor,
         child: GestureDetector(
@@ -204,8 +205,8 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                             autofocus: true,
                             enabled: formState != FormStateValue.processing,
                             decoration: InputDecoration(
-                              hintText: 'First Name',
-                              labelText: 'First Name',
+                              hintText: Strings.firstNameFieldHint,
+                              labelText: Strings.firstNameField,
                               errorText: submitted
                                   ? formValues[firstName][errorIndex]
                                   : null,
@@ -237,8 +238,8 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                           child: TextFormField(
                             enabled: formState != FormStateValue.processing,
                             decoration: InputDecoration(
-                              hintText: 'Last Name',
-                              labelText: 'Last Name',
+                              hintText: Strings.lastNameFieldHint,
+                              labelText: Strings.lastNameField,
                               errorText: submitted
                                   ? formValues[lastName][errorIndex]
                                   : null,
@@ -273,11 +274,11 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                               prefixIcon: const Icon(
                                 Icons.school_outlined,
                               ),
-                              labelText: 'Student ID',
+                              labelText: Strings.studentIDField,
                               errorText: submitted
                                   ? formValues[studentId][errorIndex]
                                   : null,
-                              hintText: 'Student ID',
+                              hintText: Strings.studentIDFieldHint,
                             ),
                             onChanged: (value) {
                               setState(() {
@@ -303,8 +304,8 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                           child: TextFormField(
                             enabled: formState != FormStateValue.processing,
                             decoration: InputDecoration(
-                              hintText: 'Email',
-                              labelText: 'Email',
+                              hintText: Strings.emailFieldHint,
+                              labelText: Strings.emailField,
                               errorText: submitted
                                   ? formValues[email][errorIndex]
                                   : null,
@@ -337,8 +338,8 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                             enabled: formState != FormStateValue.processing,
                             obscureText: !passwordFieldCAVisibility,
                             decoration: InputDecoration(
-                              hintText: 'Password',
-                              labelText: 'Password',
+                              hintText: Strings.passwordFieldHint,
+                              labelText: Strings.passwordField,
                               errorText: submitted
                                   ? formValues[password][errorIndex]
                                   : null,
@@ -384,8 +385,8 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                             enabled: formState != FormStateValue.processing,
                             obscureText: !confirmPasswordFieldCAVisibility,
                             decoration: InputDecoration(
-                              hintText: 'Confirm Password',
-                              labelText: 'Confirm Password',
+                              hintText: Strings.passwordFieldHint,
+                              labelText: Strings.confirmPasswordField,
                               errorText: submitted
                                   ? formValues[passwordConfirmation][errorIndex]
                                   : null,
@@ -449,9 +450,9 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                               0, 0, 0, Dimens.msMargin),
                           child: CustomElevatedButton(
                             formState: formState,
-                            normalText: 'REGISTER',
-                            errorText: 'TRY IT AGAIN',
-                            processingText: 'CREATING ACCOUNT',
+                            normalText: Strings.signUpBtnLabel,
+                            errorText: Strings.tryAgainBtnLabel,
+                            processingText: Strings.signUpBtnProcessingLabel,
                             onPressed: _submit,
                           ),
                         ),
@@ -468,7 +469,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                               child: Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: Text(
-                                  'OR',
+                                  Strings.or,
                                   style:
                                       AppTheme.of(context).bodyText1.override(
                                             fontFamily: 'Open Sans',
@@ -485,7 +486,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                               0, Dimens.msMargin, 0, Dimens.mmMargin),
                           child: CustomElevatedButton(
                             type: ButtonType.external,
-                            normalText: 'CAMPUS REGISTRATION',
+                            normalText: Strings.campusSignUpBtnLabel,
                             onPressed: () async {
                               if (!checkConnection()) return;
                               await mLaunchUrl(
@@ -498,9 +499,9 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                           text: TextSpan(
                               style: AppTheme.of(context).bodyText1,
                               children: [
-                                const TextSpan(text: 'Having problems? '),
+                                const TextSpan(text: Strings.havingProblems),
                                 TextSpan(
-                                    text: 'Contact us',
+                                    text: Strings.contactus,
                                     style: AppTheme.of(context)
                                         .bodyText1
                                         .override(

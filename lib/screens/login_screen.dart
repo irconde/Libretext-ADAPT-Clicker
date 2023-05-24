@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/widgets/bottom_sheets/reset_password_widget.dart';
 import '../constants/colors.dart';
+import '../constants/strings.dart';
 import '../widgets/app_bars/collapsible_app_bar_widget.dart';
 import '../mixins/form_state_mixin.dart';
 import '../utils/app_theme.dart';
@@ -124,7 +125,7 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
       backgroundColor: CColors.primaryBackground,
       key: scaffoldKey,
       body: CollapsibleAppBar(
-        title: 'Welcome Back',
+        title: Strings.welcomeBack,
         iconPath: 'assets/images/hand_wave.svg',
         svgIconColor: CColors.svgIconColor2,
         child: SingleChildScrollView(
@@ -149,7 +150,7 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                                 initialValue: formValues[email][dataIndex],
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  labelText: 'Email',
+                                  labelText: Strings.emailField,
                                   errorText: submitted
                                       ? formValues[email][errorIndex]
                                       : null,
@@ -187,7 +188,7 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                                   initialValue: formValues[password][dataIndex],
                                   obscureText: !passwordVisibility,
                                   decoration: InputDecoration(
-                                    labelText: 'Password',
+                                    labelText: Strings.passwordField,
                                     errorText: submitted
                                         ? formValues[password][errorIndex]
                                         : null,
@@ -264,7 +265,7 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(10, 0, 0, 0),
                                           child: Text(
-                                            'Remember Me ',
+                                            Strings.rememberMe,
                                             style: AppTheme.of(context)
                                                 .bodyText1
                                                 .override(
@@ -275,7 +276,7 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                                         ),
                                         RichText(
                                           text: TextSpan(
-                                              text: 'Forgot Password?',
+                                              text: Strings.forgotPassword,
                                               style: AppTheme.of(context)
                                                   .bodyText1
                                                   .override(
@@ -300,9 +301,10 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                                     0, Dimens.msMargin, 0, 0),
                                 child: CustomElevatedButton(
                                   formState: formState,
-                                  normalText: 'SIGN IN WITH ADAPT',
-                                  errorText: 'TRY IT AGAIN',
-                                  processingText: 'SIGNING UP',
+                                  normalText: Strings.signInBtnLabel,
+                                  errorText: Strings.tryAgainBtnLabel,
+                                  processingText:
+                                      Strings.signInBtnProcessingLabel,
                                   onPressed: _submit,
                                 ),
                               ),
@@ -322,7 +324,7 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                                       child: Padding(
                                         padding: const EdgeInsets.all(4.0),
                                         child: Text(
-                                          'OR',
+                                          Strings.or,
                                           style: AppTheme.of(context)
                                               .bodyText1
                                               .override(
@@ -338,7 +340,7 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                               ),
                               CustomElevatedButton(
                                 type: ButtonType.external,
-                                normalText: 'CAMPUS LOGIN',
+                                normalText: Strings.campusLoginBtnLabel,
                                 onPressed: () async {
                                   if (!checkConnection()) return;
                                   await mLaunchUrl(
@@ -356,9 +358,9 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                       text: TextSpan(
                           style: AppTheme.of(context).bodyText1,
                           children: [
-                            const TextSpan(text: 'Don\'t have an account? '),
+                            const TextSpan(text: Strings.dontHaveAccount),
                             TextSpan(
-                                text: 'Sign up',
+                                text: Strings.signUp,
                                 style: AppTheme.of(context).bodyText1.override(
                                       color: CColors.primaryColor,
                                       decoration: TextDecoration.underline,

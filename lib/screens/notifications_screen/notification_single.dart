@@ -1,5 +1,6 @@
 import 'package:flutter_svg/svg.dart';
 import '../../constants/colors.dart';
+import '../../constants/strings.dart';
 import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import '../../constants/dimens.dart';
@@ -39,7 +40,7 @@ class _NotificationSingleWidgetState extends State<NotificationSingle> {
                 ),
               ),
               Text(
-                'Notification ${widget.index}',
+                '${Strings.notification} ${widget.index}',
                 style: AppTheme.of(context).bodyText1.override(
                       fontFamily: 'Open Sans',
                       color: CColors.primaryColor,
@@ -53,7 +54,7 @@ class _NotificationSingleWidgetState extends State<NotificationSingle> {
             padding: const EdgeInsetsDirectional.fromSTEB(
                 Dimens.mmMargin, Dimens.xsMargin, 0, Dimens.msMargin),
             child: Text(
-              'Details',
+              Strings.details,
               style: AppTheme.of(context).bodyText1.override(
                     fontFamily: 'Open Sans',
                     color: CColors.secondaryText,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../constants/colors.dart';
+import '../../constants/strings.dart';
 import '../../utils/app_theme.dart';
 
 class ContactDropdown extends StatefulWidget {
@@ -38,13 +39,13 @@ class ContactDropdownState extends State<ContactDropdown> {
             isExpanded: true,
             focusNode: widget.focusNode!,
             items: <String>[
-              'General Inquiry',
-              'Technical Issue',
-              'Email Change',
-              'Request Instructor Access Code',
-              'Request Tester Access Code',
-              'Integrating ADAPT with LMS',
-              'Other'
+              Strings.generalInquiry,
+              Strings.technicalIssue,
+              Strings.emailChange,
+              Strings.requestInstructorAccessCode,
+              Strings.requestTesterAccessCode,
+              Strings.integratingADAPT,
+              Strings.other
             ].map((String value) {
               return DropdownMenuItem<String>(
                 value: value,
@@ -65,7 +66,7 @@ class ContactDropdownState extends State<ContactDropdown> {
             style: AppTheme.of(context).bodyText1,
             underline: Container(),
             hint: Text(
-              'General Inquiry',
+              Strings.generalInquiry,
               style: AppTheme.of(context).bodyText1,
             ),
           ),

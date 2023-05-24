@@ -1,5 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../constants/colors.dart';
+import '../../constants/strings.dart';
 import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,7 @@ class _NoNotificationsWidgetState extends State<NoNotificationsWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'NO NOTIFICATIONS',
+                Strings.noNotifications,
                 style: AppTheme.of(context).bodyText1.override(
                       fontFamily: 'Open Sans',
                       color: CColors.primaryColor,
@@ -45,7 +46,7 @@ class _NoNotificationsWidgetState extends State<NoNotificationsWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'FOR NOW',
+                Strings.forNow,
                 style: AppTheme.of(context).bodyText1.override(
                       fontFamily: 'Open Sans',
                       color: CColors.primaryColor,

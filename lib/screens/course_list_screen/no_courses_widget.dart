@@ -1,4 +1,5 @@
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../constants/strings.dart';
 import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import '../../constants/colors.dart';
@@ -25,7 +26,7 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
             Align(
               alignment: const AlignmentDirectional(0, 0),
               child: Text(
-                'Oops. it seems there are no classes registered yet',
+                Strings.noCoursesMsg,
                 textAlign: TextAlign.center,
                 style: AppTheme.of(context).bodyText1.override(
                       fontFamily: 'Open Sans',
@@ -53,7 +54,7 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'ASK YOUR ',
+                    Strings.askYour,
                     style: AppTheme.of(context).bodyText1.override(
                           fontFamily: 'Open Sans',
                           color: CColors.primaryColor,
@@ -62,7 +63,7 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
                         ),
                   ),
                   Text(
-                    'INSTRUCTOR',
+                    Strings.instructor,
                     style: AppTheme.of(context).bodyText1.override(
                           fontFamily: 'Open Sans',
                           color: CColors.primaryColor,
@@ -80,7 +81,7 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'FOR A ',
+                    Strings.forA,
                     style: AppTheme.of(context).bodyText1.override(
                           fontFamily: 'Open Sans',
                           color: CColors.primaryColor,
@@ -89,7 +90,7 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
                         ),
                   ),
                   Text(
-                    'CODE TO JOIN',
+                    Strings.codeToJoin,
                     style: AppTheme.of(context).bodyText1.override(
                           fontFamily: 'Open Sans',
                           color: CColors.primaryColor,

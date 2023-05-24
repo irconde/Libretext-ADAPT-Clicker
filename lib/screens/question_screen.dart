@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:number_paginator/number_paginator.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../constants/colors.dart';
+import '../constants/strings.dart';
 import '../utils/app_theme.dart';
 import '../widgets/buttons/custom_button_widget.dart';
 import '../utils/utils.dart';
@@ -141,7 +142,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                     autofocus: true,
                     obscureText: false,
                     decoration: InputDecoration(
-                      hintText: '[Some hint text...]',
+                      hintText: Strings.genericHintText,
                       hintStyle: AppTheme.of(context).bodyText2,
                       enabledBorder: const UnderlineInputBorder(
                         borderSide: BorderSide(

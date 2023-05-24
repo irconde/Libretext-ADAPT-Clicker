@@ -5,6 +5,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../constants/colors.dart';
+import '../constants/strings.dart';
 import '../widgets/buttons/custom_elevated_button_widget.dart';
 import '../widgets/app_bars/main_app_bar_widget.dart';
 import '../mixins/form_state_mixin.dart';
@@ -153,7 +154,7 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
     return Scaffold(
       key: scaffoldKey,
       appBar: MainAppBar(
-          title: 'My Profile',
+          title: Strings.myProfile,
           scaffoldKey: scaffoldKey,
           setState: (VoidCallback fn) {
             setState(fn);
@@ -195,11 +196,12 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
                                           FormStateValue.processing,
                                       initialValue: snapshot.data?[firstName],
                                       decoration: InputDecoration(
-                                        labelText: 'First Name*',
+                                        labelText:
+                                            Strings.firstNameFieldMandatory,
                                         errorText: submitted
                                             ? formValues[firstName][errorIndex]
                                             : null,
-                                        hintText: 'John',
+                                        hintText: Strings.firstNameFieldHint,
                                         filled: true,
                                         prefixIcon: const Icon(
                                           Icons.person_outline,
@@ -234,11 +236,12 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
                                       enabled: formState !=
                                           FormStateValue.processing,
                                       decoration: InputDecoration(
-                                        labelText: 'Last Name*',
+                                        labelText:
+                                            Strings.lastNameFieldMandatory,
                                         errorText: submitted
                                             ? formValues[lastName][errorIndex]
                                             : null,
-                                        hintText: 'Doe',
+                                        hintText: Strings.lastNameFieldHint,
                                         prefixIcon: const Icon(
                                           Icons.person_outline,
                                         ),
@@ -271,12 +274,13 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
                                         enabled: formState !=
                                             FormStateValue.processing,
                                         decoration: InputDecoration(
-                                          labelText: 'Student ID*',
+                                          labelText:
+                                              Strings.studentIDFieldMandatory,
                                           errorText: submitted
                                               ? formValues[studentId]
                                                   [errorIndex]
                                               : null,
-                                          hintText: 'example@gmail.com',
+                                          hintText: Strings.studentIDFieldHint,
                                           prefixIcon: const Icon(
                                             Icons.school_outlined,
                                           ),
@@ -315,7 +319,7 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
                                   Align(
                                     alignment: const Alignment(1, 0),
                                     child: Text(
-                                      '*Required Fields',
+                                      Strings.requiredFields,
                                       style: AppTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -339,10 +343,11 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
                             Dimens.msMargin),
                         child: CustomElevatedButton(
                           formState: formState,
-                          normalText: 'UPDATE PROFILE',
-                          errorText: 'TRY IT AGAIN',
-                          successText: 'PROFILE UPDATED',
-                          processingText: 'UPDATING',
+                          normalText: Strings.updateProfileBtnLabel,
+                          errorText: Strings.tryAgainBtnLabel,
+                          successText: Strings.updateProfileBtnSuccessLabel,
+                          processingText:
+                              Strings.updateProfileBtnProcessingLabel,
                           onPressed: _submit,
                         ),
                       ),

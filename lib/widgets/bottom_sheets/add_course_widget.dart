@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../backend/api_requests/api_calls.dart';
 import '../../constants/colors.dart';
+import '../../constants/strings.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +63,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
-              'You have successfully joined the course.',
+              Strings.joinedCourse,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 14,
@@ -111,7 +112,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
                     child: Text(
-                      'Course Registration',
+                      Strings.courseRegistration,
                       textAlign: TextAlign.center,
                       style: theme.bodyText1.override(
                         fontFamily: 'Open Sans',
@@ -131,7 +132,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
               SizedBox(
                 width: double.infinity,
                 child: Text(
-                  'Please enter the course code used given by your instructor.',
+                  Strings.enterCourseCodeMsg,
                   textAlign: TextAlign.start,
                   style: theme.bodyText1.override(
                     fontFamily: 'Open Sans',
@@ -152,13 +153,13 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                           autofocus: true,
                           focusNode: formValues[code][focusNodeIndex],
                           decoration: InputDecoration(
-                            labelText: 'Course Code',
+                            labelText: Strings.courseCode,
                             prefixIcon: const Icon(
                               Icons.mode_edit,
                             ),
                             floatingLabelStyle:
                                 const TextStyle(color: CColors.primaryColor),
-                            hintText: 'Course Code',
+                            hintText: Strings.courseCode,
                             errorText:
                                 submitted ? formValues[code][errorIndex] : null,
                           ),
@@ -181,9 +182,9 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
                             const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                         child: CustomElevatedButton(
                           formState: formState,
-                          normalText: 'JOIN COURSE',
-                          errorText: 'TRY IT AGAIN',
-                          processingText: 'JOINING COURSE',
+                          normalText: Strings.joinCourseBtnLabel,
+                          errorText: Strings.tryAgainBtnLabel,
+                          processingText: Strings.joinCourseBtnProcessingLabel,
                           onPressed: _submit,
                         ),
                       ),

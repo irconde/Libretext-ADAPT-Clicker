@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../backend/api_requests/api_calls.dart';
 import '../../constants/colors.dart';
+import '../../constants/strings.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-            'Password reset requested. Check your inbox.',
+            Strings.pwdRequestedMsg,
             style: TextStyle(
               color: Colors.white,
               fontSize: 14,
@@ -99,7 +100,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
                     child: Text(
-                      'Password Recovery',
+                      Strings.passwordRecovery,
                       textAlign: TextAlign.center,
                       style: theme.bodyText1.override(
                         fontFamily: 'Open Sans',
@@ -119,7 +120,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
               SizedBox(
                 width: double.infinity,
                 child: Text(
-                  'Please enter the email address used for \nregistration.',
+                  Strings.enterEmail,
                   textAlign: TextAlign.start,
                   style: theme.bodyText1.override(
                     fontFamily: 'Open Sans',
@@ -138,7 +139,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                     focusNode: formValues[email][focusNodeIndex],
                     enabled: formState != FormStateValue.processing,
                     decoration: InputDecoration(
-                      labelText: 'Email*',
+                      labelText: Strings.emailFieldMandatory,
                       prefixIcon: const Icon(
                         Icons.email_outlined,
                       ),
@@ -146,7 +147,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                           const TextStyle(color: CColors.primaryColor),
                       errorText:
                           submitted ? formValues[email][errorIndex] : null,
-                      hintText: 'example@email.com',
+                      hintText: Strings.emailHint,
                     ),
                     style: theme.bodyText1,
                     onChanged: _onTextChanged,
@@ -164,9 +165,9 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
               ),
               CustomElevatedButton(
                 formState: formState,
-                normalText: 'RESET PASSWORD',
-                errorText: 'TRY IT AGAIN',
-                processingText: 'RESETTING PASSWORD',
+                normalText: Strings.resetPwdBtnLabel,
+                errorText: Strings.tryAgainBtnLabel,
+                processingText: Strings.resetPwdBtnProcessingLabel,
                 onPressed: _submit,
               ),
             ],

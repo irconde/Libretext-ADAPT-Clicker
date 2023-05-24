@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/widgets/dropdowns/contact_dropdown_widget.dart';
 import '../constants/colors.dart';
+import '../constants/strings.dart';
 import '../widgets/buttons/custom_elevated_button_widget.dart';
 import '../widgets/navigation_drawer_widget.dart';
 import '../mixins/form_state_mixin.dart';
@@ -114,7 +115,7 @@ class _ContactUsScreenState extends ConsumerState<ContactUsScreen>
       key: scaffoldKey,
       appBar: widget.openFromDrawer!
           ? MainAppBar(
-              title: 'Contact Us',
+              title: Strings.contactUs,
               scaffoldKey: scaffoldKey,
               setState: (VoidCallback fn) {
                 setState(fn);
@@ -126,7 +127,7 @@ class _ContactUsScreenState extends ConsumerState<ContactUsScreen>
       body: widget.openFromDrawer!
           ? buildGestureDetector(context)
           : CollapsibleAppBar(
-              title: 'Contact Us',
+              title: Strings.contactUs,
               iconPath: 'assets/images/contact_support.svg',
               svgIconColor: CColors.svgIconColor,
               child: buildGestureDetector(context),
@@ -152,7 +153,7 @@ class _ContactUsScreenState extends ConsumerState<ContactUsScreen>
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
                       child: Text(
-                        'Please use this form to contact us regarding general questions or issues.',
+                        Strings.contactInfoMsg,
                         style: AppTheme.of(context).bodyText1.override(
                             fontFamily: 'Open Sans',
                             lineHeight: 1.5,
@@ -166,10 +167,10 @@ class _ContactUsScreenState extends ConsumerState<ContactUsScreen>
                         autofocus: true,
                         enabled: formState != FormStateValue.processing,
                         decoration: InputDecoration(
-                          labelText: 'Name*',
+                          labelText: Strings.nameFieldMandatory,
                           errorText:
                               submitted ? formValues[name][errorIndex] : null,
-                          hintText: 'FirstName LastName',
+                          hintText: Strings.nameFieldHint,
                         ),
                         onChanged: (value) {
                           setState(() {
@@ -193,12 +194,12 @@ class _ContactUsScreenState extends ConsumerState<ContactUsScreen>
                       child: TextFormField(
                         enabled: formState != FormStateValue.processing,
                         decoration: InputDecoration(
-                          labelText: 'Email*',
+                          labelText: Strings.emailFieldMandatory,
                           floatingLabelStyle:
                               const TextStyle(color: CColors.primaryColor),
                           errorText:
                               submitted ? formValues[email][errorIndex] : null,
-                          hintText: 'example@email.com',
+                          hintText: Strings.emailFieldHint,
                         ),
                         style: AppTheme.of(context).bodyText1,
                         onChanged: (value) {
@@ -230,10 +231,10 @@ class _ContactUsScreenState extends ConsumerState<ContactUsScreen>
                         enabled: formState != FormStateValue.processing,
                         obscureText: false,
                         decoration: InputDecoration(
-                          labelText: 'Message',
+                          labelText: Strings.messageField,
                           errorText:
                               submitted ? formValues[text][errorIndex] : null,
-                          hintText: 'Enter Message',
+                          hintText: Strings.messageFieldHint,
                           alignLabelWithHint: true,
                         ),
                         style: AppTheme.of(context).bodyText1.override(
@@ -265,7 +266,7 @@ class _ContactUsScreenState extends ConsumerState<ContactUsScreen>
                     Align(
                       alignment: const Alignment(1, 0),
                       child: Text(
-                        '*Required Fields',
+                        Strings.requiredFields,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Open Sans',
                               color: CColors.primaryColor,
@@ -278,10 +279,10 @@ class _ContactUsScreenState extends ConsumerState<ContactUsScreen>
                           const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 24),
                       child: CustomElevatedButton(
                         formState: formState,
-                        normalText: 'SEND MESSAGE',
-                        errorText: 'TRY IT AGAIN',
-                        successText: 'MESSAGE SENT',
-                        processingText: 'SENDING MESSAGE',
+                        normalText: Strings.contactBtnLabel,
+                        errorText: Strings.tryAgainBtnLabel,
+                        successText: Strings.contactBtnSuccessLabel,
+                        processingText: Strings.contactBtnProcessingLabel,
                         onPressed: _submit,
                       ),
                     ),

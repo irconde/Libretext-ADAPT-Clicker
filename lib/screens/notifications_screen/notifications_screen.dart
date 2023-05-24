@@ -4,6 +4,7 @@ import 'package:adapt_clicker/screens/notifications_screen/notification_single.d
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import '../../constants/colors.dart';
+import '../../constants/strings.dart';
 import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import '../../constants/dimens.dart';
@@ -56,7 +57,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             Navigator.pop(context, '/');
           },
         ),
-        title: const Text('Notifications'),
+        title: const Text(Strings.notifications),
         actions: [
           Align(
             alignment: const AlignmentDirectional(0, 0),
@@ -151,7 +152,7 @@ class ClearAllWidget extends StatelessWidget {
       text: TextSpan(
         children: <TextSpan>[
           TextSpan(
-            text: 'Clear All ',
+            text: Strings.clearAllBtnLabel,
             recognizer: TapGestureRecognizer()
               ..onTap = () {
                 if (isActive) {

@@ -9,6 +9,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../backend/Router/app_router.dart';
 import '../../backend/api_requests/api_calls.dart';
+import '../../constants/strings.dart';
 import '../../widgets/bottom_sheets/add_course_widget.dart';
 import '../../mixins/connection_state_mixin.dart';
 import 'no_courses_widget.dart';
@@ -75,7 +76,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
         SnackBar(
             content: RichText(
               text: TextSpan(
-                text: 'Signed in as ',
+                text: Strings.signedInAs,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
@@ -156,7 +157,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
 
   void saveToken(var token) async {
     UserStoredPreferences.setString('ff_deviceIDToken', token);
-    logger.d('My token is ' + token);
+    logger.d('My token is $token');
   }
 
   void getToken() async {
@@ -185,7 +186,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
       child: Scaffold(
         key: scaffoldKey,
         appBar: MainAppBar(
-            title: 'Courses',
+            title: Strings.courses,
             scaffoldKey: scaffoldKey,
             setState: (VoidCallback fn) {
               setState(fn);

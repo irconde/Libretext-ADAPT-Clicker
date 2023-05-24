@@ -7,6 +7,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import '../../backend/api_requests/api_calls.dart';
+import '../../constants/strings.dart';
 import '../../utils/animations.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/utils.dart';
@@ -157,7 +158,7 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                     Chip(
                                       backgroundColor: CColors.secondaryColor,
                                       label: Text(
-                                        " ${assignmentSummary['total_points']} points",
+                                        "${assignmentSummary['total_points']} ${Strings.points}",
                                         style: theme.bodyText1.override(
                                           fontFamily: 'Open Sans',
                                           color: CColors.primaryBackground,
@@ -174,7 +175,7 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                       child: Chip(
                                         backgroundColor: CColors.secondaryColor,
                                         label: Text(
-                                          " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} allowed attempts",
+                                          " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} ${Strings.allowedAttempts}",
                                           style: theme.bodyText1.override(
                                             fontFamily: 'Open Sans',
                                             color: CColors.primaryBackground,
@@ -209,8 +210,8 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                       ),
                       expanded: Container(
                         width: MediaQuery.of(context).size.width,
-                        decoration:
-                            BoxDecoration(color: CColors.coursePagePullDown),
+                        decoration: const BoxDecoration(
+                            color: CColors.coursePagePullDown),
                         child: Padding(
                           padding: const EdgeInsets.all(24),
                           child: Column(
@@ -228,7 +229,7 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                       style: theme.bodyText3,
                                       children: <TextSpan>[
                                         TextSpan(
-                                          text: 'Description:  ',
+                                          text: Strings.description,
                                           style: theme.bodyText3.override(
                                             fontFamily: 'Open Sans',
                                             fontWeight: FontWeight.bold,
@@ -237,7 +238,7 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                         TextSpan(
                                           text: assignmentSummary[
                                                   'public_description'] ??
-                                              'There is no description',
+                                              Strings.noDescription,
                                         ),
                                       ],
                                     ),
@@ -257,7 +258,7 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                       style: theme.bodyText3,
                                       children: <TextSpan>[
                                         TextSpan(
-                                          text: 'Late Policy: ',
+                                          text: Strings.latePolicy,
                                           style: theme.bodyText3.override(
                                             fontFamily: 'Open Sans',
                                             fontWeight: FontWeight.bold,
@@ -293,7 +294,7 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                             builder: (context, snapshot) {
                               // Customize what your widget looks like when it's loading.
                               if (!snapshot.hasData) {
-                                return Center(
+                                return const Center(
                                   child: SizedBox(
                                     width: 48,
                                     height: 48,

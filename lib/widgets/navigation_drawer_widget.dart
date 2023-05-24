@@ -5,6 +5,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../constants/colors.dart';
+import '../constants/strings.dart';
 import '../utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -85,7 +86,7 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                                         : CColors.secondaryColor,
                                     size: Dimens.drawerIconSize,
                                   ),
-                                  label: const Text('Courses'),
+                                  label: const Text(Strings.courses),
                                   style: TextButton.styleFrom(
                                       fixedSize: const Size(224, 48),
                                       padding: const EdgeInsets.only(left: 12),
@@ -130,7 +131,7 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                                       : CColors.secondaryColor,
                                   size: Dimens.drawerIconSize,
                                 ),
-                                label: const Text('My Profile'),
+                                label: const Text(Strings.myProfile),
                                 style: TextButton.styleFrom(
                                     fixedSize: const Size(224, 48),
                                     padding: const EdgeInsets.only(left: 12),
@@ -175,7 +176,7 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                                         : CColors.secondaryColor,
                                     size: Dimens.drawerIconSize,
                                   ),
-                                  label: const Text('My Password'),
+                                  label: const Text(Strings.myPassword),
                                   style: TextButton.styleFrom(
                                       fixedSize: const Size(224, 48),
                                       padding: const EdgeInsets.only(left: 12),
@@ -224,7 +225,7 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                                       : CColors.secondaryColor,
                                   size: Dimens.drawerIconSize,
                                 ),
-                                label: const Text('Contact Us'),
+                                label: const Text(Strings.contactUs),
                                 style: TextButton.styleFrom(
                                     fixedSize: const Size(224, 48),
                                     padding: const EdgeInsets.only(left: 12),
@@ -301,7 +302,7 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                         }
                         setState(() {});
                       },
-                      child: const Text('LOGOUT')),
+                      child: const Text(Strings.logoutBtnLabel)),
                 )),
           ],
         ),

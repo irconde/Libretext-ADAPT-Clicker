@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/backend/user_stored_preferences.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';

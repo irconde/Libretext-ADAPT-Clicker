@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../constants/colors.dart';
-import '../../utils/app_theme.dart';
 import '../../mixins/form_state_mixin.dart';
 
 enum ButtonType { primary, secondary, external }

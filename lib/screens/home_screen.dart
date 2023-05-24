@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:move_to_background/move_to_background.dart';
 import '../constants/colors.dart';
+import '../constants/strings.dart';
 import '../mixins/connection_state_mixin.dart';
 import '../widgets/buttons/custom_elevated_button_widget.dart';
 import '../utils/app_theme.dart';
@@ -56,7 +57,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(32, 0, 32, 8),
                       child: CustomElevatedButton(
-                        normalText: 'LOGIN',
+                        normalText: Strings.loginBtnLabel,
                         onPressed: () async {
                           context.pushRoute(
                             const LoginRouteWidget(),
@@ -69,7 +70,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                           const EdgeInsetsDirectional.fromSTEB(32, 8, 32, 0),
                       child: CustomElevatedButton(
                         type: ButtonType.secondary,
-                        normalText: 'CREATE ACCOUNT',
+                        normalText: Strings.createAccountBtnLabel,
                         onPressed: () async {
                           context.pushRoute(
                             const CreateAccountWidget(),
@@ -84,9 +85,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                         text: TextSpan(
                             style: AppTheme.of(context).bodyText1,
                             children: [
-                              const TextSpan(text: 'Having problems? '),
+                              const TextSpan(text: Strings.havingProblems),
                               TextSpan(
-                                  text: 'Contact us',
+                                  text: Strings.contactus,
                                   style: AppTheme.of(context)
                                       .bodyText1
                                       .override(

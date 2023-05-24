@@ -102,8 +102,6 @@ void preloadSVGs() async {
 
 }
 
-final ValueChanged<String?> onSubmit = (String? value) {};
-
 Future mLaunchUrl(String url) async {
   var uri = Uri.parse(url);
   try {

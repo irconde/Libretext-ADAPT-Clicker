@@ -2,6 +2,7 @@ import 'package:adapt_clicker/mixins/connection_state_mixin.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../constants/strings.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/utils.dart';
 import '../assignment_screen/assignment_screen.dart';
@@ -37,10 +38,10 @@ class AssignmentCtnWidgetState extends ConsumerState<AssignmentCtnWidget>
     // Check if the input has exactly two parts
     if (parts.length == 2) {
       // Return the formatted string
-      return '${parts[0]} out of ${parts[1]}';
+      return '${parts[0]} ${Strings.outOf} ${parts[1]}';
     } else {
       // Return an error message
-      return 'No records';
+      return Strings.noRecords;
     }
   }
 
@@ -176,9 +177,8 @@ class AssignmentCtnWidgetState extends ConsumerState<AssignmentCtnWidget>
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     const Padding(
-                                      padding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              0, 0, Dimens.xsMargin, 0),
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, Dimens.xsMargin, 0),
                                       child: Icon(
                                         Icons.today_rounded,
                                         color: CColors.tertiaryText,

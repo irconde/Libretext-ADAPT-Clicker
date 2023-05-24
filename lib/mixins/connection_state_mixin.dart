@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../backend/connectivity_status_management.dart';
 import '../constants/colors.dart';
+import '../constants/strings.dart';
 
 mixin ConnectionStateMixin<T extends ConsumerStatefulWidget>
     on ConsumerState<T> {
@@ -11,8 +12,8 @@ mixin ConnectionStateMixin<T extends ConsumerStatefulWidget>
       SnackBar(
         content: Text(
           status == ConnectivityStatus.isConnected
-              ? 'Connected to Internet'
-              : 'No Internet connection',
+              ? Strings.connected
+              : Strings.notConnected,
           style: const TextStyle(
             color: Colors.white,
             fontSize: 14,

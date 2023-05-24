@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../backend/api_requests/api_calls.dart';
+import '../../constants/strings.dart';
 import 'assignment_ctn_widget.dart';
 import 'assignment_stat_ctn_widget.dart';
 import '../../widgets/app_bars/collapsible_app_bar_widget.dart';
@@ -63,7 +64,6 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
 
   //Shimmer page (could be moved to own class if wanted)
   Widget buildFoodShimmer() {
-    var theme = AppTheme.of(context);
     return Column(
       children: [
         ShimmerWidget.rectangular(
@@ -77,7 +77,6 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = AppTheme.of(context);
     return Scaffold(
         backgroundColor: CColors.primaryBackground,
         body: FutureBuilder(
@@ -96,7 +95,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
         return <Widget>[
           CollapsibleAppBar(
             showNotificationIcon: true,
-            title: course?['name'] ?? 'Add name to Course API',
+            title: course?['name'] ?? Strings.noCourseName,
             iconPath: 'assets/images/libretexts_logo.svg',
           ),
         ];
@@ -136,10 +135,10 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                           indicatorColor: CColors.primaryBackground,
                           tabs: const [
                             Tab(
-                              text: 'HOME',
+                              text: Strings.homeTab,
                             ),
                             Tab(
-                              text: 'ASSIGNMENTS',
+                              text: Strings.assignmentsTab,
                             ),
                           ],
                         ),
@@ -204,7 +203,8 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                             TextSpan(
                                                               text: course?[
                                                                       'instructor'] ??
-                                                                  'No Instructor Listed',
+                                                                  Strings
+                                                                      .noCourseInstructor,
                                                               style: theme
                                                                   .bodyText1
                                                                   .override(
@@ -232,12 +232,13 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                       ),
                                                       children: <TextSpan>[
                                                         const TextSpan(
-                                                          text: 'Start Date: ',
+                                                          text:
+                                                              Strings.startDate,
                                                         ),
                                                         TextSpan(
                                                           text: formatDate(course?[
                                                                   'start_date'] ??
-                                                              '2023-01-01'),
+                                                              Strings.noDate),
                                                           style: theme.bodyText1
                                                               .override(
                                                             fontFamily:
@@ -291,12 +292,12 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                       ),
                                                       children: <TextSpan>[
                                                         const TextSpan(
-                                                          text: 'End Date: ',
+                                                          text: Strings.endDate,
                                                         ),
                                                         TextSpan(
                                                           text: formatDate(course?[
                                                                   'end_date'] ??
-                                                              '2023-01-01'),
+                                                              Strings.noDate),
                                                           style: theme.bodyText1
                                                               .override(
                                                             fontFamily:
@@ -337,8 +338,8 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                         ),
                                                         children: <TextSpan>[
                                                           const TextSpan(
-                                                            text:
-                                                                'Description: ',
+                                                            text: Strings
+                                                                .description,
                                                           ),
                                                           TextSpan(
                                                             text: course?[
@@ -392,7 +393,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(32, 24, 24, 24),
                                         child: Text(
-                                          'Learning Process',
+                                          Strings.learningProcess,
                                           style: theme.bodyText1.override(
                                             fontFamily: 'Open Sans',
                                             fontWeight: FontWeight.bold,
@@ -517,17 +518,17 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
   String? _currentFilterOption;
   String? _currentOrderOption;
   final List<String> _filterOptions = [
-    'All Assignments',
-    'Exam',
-    'Extra Credit',
-    'Homework',
-    'Lab'
+    Strings.filterAllAssignments,
+    Strings.filterExam,
+    Strings.filterExtraCredit,
+    Strings.filterHomework,
+    Strings.filterLab
   ];
 
   final _orderOptions = {
-    'ORDER BY: NAME': 'name',
-    'START DATE': 'available_from',
-    'DUE DATE': 'due'
+    Strings.orderName: 'name',
+    Strings.orderStartDate: 'available_from',
+    Strings.orderDueDate: 'due'
   };
 
   // Define a function that takes a date string and returns a formatted string

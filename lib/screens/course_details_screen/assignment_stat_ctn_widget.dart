@@ -1,5 +1,6 @@
 import '../../constants/dimens.dart';
 import '../../constants/colors.dart';
+import '../../constants/strings.dart';
 import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -75,7 +76,7 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
                             ),
                           ),
                           Text(
-                            'Activity Description',
+                            Strings.activityDescription,
                             style: AppTheme.of(context).bodyText1.override(
                                   fontFamily: 'Open Sans',
                                   fontWeight: FontWeight.w600,
@@ -98,10 +99,10 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
                           // ignore: prefer_const_literals_to_create_immutables
                           children: [
                             const TextSpan(
-                              text: 'Due Date: ',
+                              text: Strings.dueDate,
                             ),
                             const TextSpan(
-                              text: '8/18/2022 at 1:43 pm',
+                              text: Strings.datePlaceholder,
                             ),
                           ],
                         ),

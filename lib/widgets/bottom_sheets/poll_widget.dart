@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import '../../backend/api_requests/api_calls.dart';
 import '../../constants/colors.dart';
+import '../../constants/strings.dart';
 import '../../utils/app_theme.dart';
 import '../buttons/custom_button_widget.dart';
 import '../../utils/utils.dart';
@@ -79,7 +80,7 @@ class _PollWidgetState extends State<PollWidget> {
             },
           ),
           title: Text(
-            'Poll',
+            Strings.poll,
             maxLines: 1,
             overflow: TextOverflow.fade,
             style: AppTheme.of(context).bodyText1.override(
@@ -116,7 +117,7 @@ class _PollWidgetState extends State<PollWidget> {
                             style: AppTheme.of(context).title3,
                             children: [
                               const TextSpan(
-                                text: 'REMAINING TIME: ',
+                                text: Strings.remainingTime,
                               ),
                               TextSpan(
                                   text: "${widget.poll['timer'] ?? '0:00'}",
@@ -195,7 +196,7 @@ class _PollWidgetState extends State<PollWidget> {
                       autofocus: true,
                       obscureText: false,
                       decoration: InputDecoration(
-                        hintText: '[Some hint text...]',
+                        hintText: Strings.genericHintText,
                         hintStyle: AppTheme.of(context).bodyText2,
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -249,7 +250,7 @@ class _PollWidgetState extends State<PollWidget> {
                           // TODO. Check this. What is this for?
                           //print('Button pressed ...');
                         },
-                        text: 'Submit',
+                        text: Strings.submitBtnLabel,
                         options: ButtonOptions(
                           width: 130,
                           height: 40,
