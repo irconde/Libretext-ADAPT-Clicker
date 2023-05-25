@@ -584,3 +584,267 @@ Widget shimQuestionList(
         ],
       ));
 }
+
+/* -------------------------------- *
+ * ----------Assignment------------ *
+ * -------------------------------- */
+
+Widget shimAssignment (
+    {required StateSetter setState, required BuildContext context}) {
+  return Stack(
+    children: [
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ShimmerWidget.rectangular(
+            height: Dimens.appBarHeight + 72,
+            backgroundColor: CColors.primaryColor,
+            shimmerColor: CColors.primaryBackground,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(32, 0, 0, 12),
+                    child: Container(
+                      width: 256,
+                      height: 24,
+                      decoration: const ShapeDecoration(
+                        color: CColors.titleShimmerBackground,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(32, 0, 0, 12),
+                    child: Container(
+                      width: 320,
+                      height: 24,
+                      decoration: const ShapeDecoration(
+                        color: CColors.titleShimmerBackground,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
+                      ),
+                    ),
+                  ),
+                  Padding(padding: const EdgeInsetsDirectional.fromSTEB(64, 24, 32, 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                      Container(
+                        width: 56,
+                        height: 12,
+                        decoration: const ShapeDecoration(
+                          color: CColors.titleShimmerBackground,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
+                        ),
+                    ),
+                    Padding(
+                      padding: const  EdgeInsetsDirectional.fromSTEB(96, 0, 0, 0),
+                      child: Container(
+                          width: 128,
+                          height: 12,
+                          decoration: const ShapeDecoration(
+                            color: CColors.titleShimmerBackground,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
+                          ),
+                      ),
+                    ),
+                    ],),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width/2,
+                    height: 2,
+                    color: CColors.primaryBackground,
+                  )
+                ],
+
+              )
+            ],
+          ),
+          ShimmerWidget.rectangular(height: 128,
+            children: [
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(32, 32, 0, 0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                      child: Container(
+                        width: 96,
+                        height: 16,
+                        decoration: const ShapeDecoration(
+                          color: CColors.secondaryShimmerBackground,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 96,
+                      height: 16,
+                      decoration: const ShapeDecoration(
+                        color: CColors.secondaryShimmerBackground,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const  EdgeInsetsDirectional.fromSTEB(16, 32, 24, 0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                      child: Container(
+                        width: 156,
+                        height: 16,
+                        decoration: const ShapeDecoration(
+                          color: CColors.secondaryShimmerBackground,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
+                      child: Container(
+                        width: 156,
+                        height: 16,
+                        decoration: const ShapeDecoration(
+                          color: CColors.secondaryShimmerBackground,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 96,
+                      height: 16,
+                      decoration: const ShapeDecoration(
+                        color: CColors.secondaryShimmerBackground,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                child: Icon(Icons.keyboard_arrow_down, size: 48, color: CColors.secondaryColor,),
+              )
+            ],
+          ),
+          const Padding(
+            padding: EdgeInsets.all(32.0),
+            child: ShimmerWidget.rectangular(height: 12, width: 128, backgroundColor: CColors.secondaryShimmerBackground,),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(children: List.generate(6, (index) => Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(32, 0, 23, 8),
+                child: ShimmerWidget.rectangular(
+                  height: 88,
+                  backgroundColor: CColors.buttonShimmerBackground,
+                  children: [
+                    Container(
+                      width: 4,
+                      height: 88,
+                      decoration: const ShapeDecoration(
+                        color: CColors.titleShimmerBackground,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 20, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                                child: Container(
+                                  width: 20,
+                                  height: 20,
+                                  decoration: const ShapeDecoration(
+                                    color: CColors.detailsDarkerBlue,
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: 16,
+                                width: 156,
+                                decoration: const ShapeDecoration(
+                                  color: CColors.detailsDarkerBlue,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
+                                ),
+                              ),
+                            ],),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                                  child: Container(
+                                    width: 80,
+                                    height: 16,
+                                    decoration: const ShapeDecoration(
+                                      color: CColors.detailsLighterBlue,
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: 16,
+                                  width: 156,
+                                  decoration: const ShapeDecoration(
+                                    color: CColors.detailsLighterBlue,
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
+                                  ),
+                                ),
+                              ],),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(width: 32, height: 32,
+                      decoration: const ShapeDecoration(
+                        color: CColors.detailsDarkerBlue,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2))),
+                      ),)
+                  ],
+                ),
+              )),),
+            ),
+          )
+        ],
+      ),
+      Align(
+          alignment: const Alignment(-0.98, -0.925),
+          child: IconButton(icon: const Icon(Icons.arrow_back, color: CColors.primaryBackground, size: 24,),
+          onPressed: ()
+          {
+            context.popRoute();
+          }
+            ,)
+      ),
+      Align(
+          alignment: const Alignment(1, -0.925),
+          child: IconButton(icon: const Icon(Icons.notifications, color: CColors.primaryBackground, size: 24,),
+            onPressed: ()
+            {
+              context.popRoute();
+            }
+            ,)
+      ),
+    ],
+  );
+}

@@ -69,19 +69,6 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
     return scoreResponse;
   }
 
-  //Shimmer page (could be moved to own class if wanted)
-  Widget buildFoodShimmer() {
-    return Column(
-      children: [
-        ShimmerWidget.rectangular(
-          height: MediaQuery.of(context).size.height,
-          backgroundColor: CColors.shadowGrey,
-          shimmerColor: CColors.primaryBackground,
-        )
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +76,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
         body: FutureBuilder(
             future: getScores(),
             builder: (context, snapshot) {
-              return course == null ? buildFoodShimmer() : loadedPage(context);
+              return course == null ? shimAssignment(setState: setState, context: context) : loadedPage(context);
             }));
   }
 
