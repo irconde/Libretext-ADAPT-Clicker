@@ -1,6 +1,7 @@
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/widgets/app_bars/main_app_bar_widget.dart';
 import 'package:adapt_clicker/main.dart';
+import 'package:adapt_clicker/widgets/shimmer/shim_pages.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:move_to_background/move_to_background.dart';
 import 'package:adapt_clicker/backend/user_stored_preferences.dart';
@@ -36,6 +37,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
   final scaffoldKey = GlobalKey<ScaffoldState>();
   Future<ApiCallResponse>? _apiRequestCompleter;
   ApiCallResponse? sendTokenResponse;
+  bool isLoading = true;
 
   Future<bool> refreshPage() async {
     try {
@@ -49,10 +51,16 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
     }
   }
 
-  Future<ApiCallResponse> updateAndGetResponse() {
-    return GetEnrollmentsCall.call(
+  Future<ApiCallResponse> updateAndGetResponse() async {
+    var response = GetEnrollmentsCall.call(
       token: UserStoredPreferences.authToken,
     );
+
+    await response;
+    setState(() {
+      isLoading = false;
+    });
+    return response;
   }
 
   @override
@@ -119,7 +127,9 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
     );
      */
 
-    if (await Permission.notification.request().isGranted) {
+    if (await Permission.notification
+        .request()
+        .isGranted) {
       logger.d('User granted permission');
     } else if (await Permission.notification.status.isLimited) {
       logger.d('User granted provisional permission');
@@ -192,7 +202,15 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
               setState(fn);
             }),
         backgroundColor: CColors.primaryBackground,
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: isLoading ? FloatingActionButton(
+          onPressed: () {},
+          backgroundColor: CColors.buttonShimmerBackground,
+          elevation: 8,
+          child: const Icon(
+          Icons.add,
+          color: CColors.primaryBackground,
+          size: 28,
+        ),): FloatingActionButton(
           onPressed: () async {
             if (!checkConnection()) return;
             showModalBottomSheet(
@@ -202,7 +220,9 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
               context: context,
               builder: (context) {
                 return Padding(
-                  padding: MediaQuery.of(context).viewInsets,
+                  padding: MediaQuery
+                      .of(context)
+                      .viewInsets,
                   child: const AddCourseWidget(),
                 );
               },
@@ -217,116 +237,123 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
           ),
         ),
         drawer:
-            const NavigationDrawerWidget(currentSelected: DrawerItems.courses),
+        const NavigationDrawerWidget(currentSelected: DrawerItems.courses),
         body: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              FutureBuilder<ApiCallResponse>(
-                key: const Key('Course List'),
-                future: _apiRequestCompleter,
-                builder: (context, snapshot) {
-                  // Customize what your widget looks like when it's loading.
-                  if (!snapshot.hasData) {
-                    return const Center(
-                      child: SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: CircularProgressIndicator(
-                          color: CColors.primaryColor,
-                        ),
-                      ),
-                    );
-                  }
-                  final listViewGetEnrollmentsResponse = snapshot.data!;
-                  return Builder(
-                    builder: (context) {
-                      final enrollmentsList =
-                          GetEnrollmentsCall.enrollmentsArray(
-                                listViewGetEnrollmentsResponse.jsonBody,
-                              )?.toList() ??
-                              '';
-                      if (enrollmentsList.isEmpty) {
-                        return const NoCoursesWidget();
-                      }
-                      return RefreshIndicator(
-                        onRefresh: () async {
-                          setState(() => _apiRequestCompleter = null);
-                          await refreshPage();
-                        },
-                        child: ListView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemCount: enrollmentsList.length,
-                          itemBuilder: (context, enrollmentsListIndex) {
-                            final enrollmentsListItem =
-                                enrollmentsList[enrollmentsListIndex];
-                            return InkWell(
-                              onTap: () async {
-                                if (!checkConnection()) return;
-                                context.pushRoute(AssignmentsRouteWidget(
-                                    id: enrollmentsListItem['id'].toString()));
-                              },
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    24, 24, 24, 0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      enrollmentsListItem[
-                                          'course_section_name'],
-                                      style: AppTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Open Sans',
-                                            color: CColors.primaryColor,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0, 8, 0, 24),
-                                      child: Text(
-                                        enrollmentsListItem['instructor'],
-                                        style: AppTheme.of(context)
-                                            .bodyText1
-                                            .override(
-                                              fontFamily: 'Open Sans',
-                                              color: CColors.secondaryText,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                      ),
-                                    ),
-                                    const Divider(
-                                      height: 1,
-                                      thickness: 1,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-            ],
-          ),
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: isLoading ? shimCourses(setState: setState, context: context) : loadedPage(),
         ),
       ),
       onWillPop: () async {
         MoveToBackground.moveTaskToBack();
         return false;
       },
+    );
+  }
+
+
+  Widget loadedPage() {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        FutureBuilder<ApiCallResponse>(
+          key: const Key('Course List'),
+          future: _apiRequestCompleter,
+          builder: (context, snapshot) {
+            // Customize what your widget looks like when it's loading.
+            if (!snapshot.hasData) {
+              return const Center(
+                child: SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: CircularProgressIndicator(
+                    color: CColors.primaryColor,
+                  ),
+                ),
+              );
+            }
+            final listViewGetEnrollmentsResponse = snapshot.data!;
+            return Builder(
+              builder: (context) {
+                final enrollmentsList =
+                    GetEnrollmentsCall.enrollmentsArray(
+                      listViewGetEnrollmentsResponse.jsonBody,
+                    )?.toList() ??
+                        '';
+                if (enrollmentsList.isEmpty) {
+                  return const NoCoursesWidget();
+                }
+                return RefreshIndicator(
+                  onRefresh: () async {
+                    setState(() => _apiRequestCompleter = null);
+                    await refreshPage();
+                  },
+                  child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: enrollmentsList.length,
+                    itemBuilder: (context, enrollmentsListIndex) {
+                      final enrollmentsListItem =
+                      enrollmentsList[enrollmentsListIndex];
+                      return InkWell(
+                        onTap: () async {
+                          if (!checkConnection()) return;
+                          context.pushRoute(AssignmentsRouteWidget(
+                              id: enrollmentsListItem['id'].toString()));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              24, 24, 24, 0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                enrollmentsListItem[
+                                'course_section_name'],
+                                style: AppTheme
+                                    .of(context)
+                                    .bodyText1
+                                    .override(
+                                  fontFamily: 'Open Sans',
+                                  color: CColors.primaryColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                const EdgeInsetsDirectional.fromSTEB(
+                                    0, 8, 0, 24),
+                                child: Text(
+                                  enrollmentsListItem['instructor'],
+                                  style: AppTheme
+                                      .of(context)
+                                      .bodyText1
+                                      .override(
+                                    fontFamily: 'Open Sans',
+                                    color: CColors.secondaryText,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                              const Divider(
+                                height: 1,
+                                thickness: 1,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+            );
+          },
+        ),
+      ],
     );
   }
 }

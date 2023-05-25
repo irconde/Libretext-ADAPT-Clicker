@@ -5,6 +5,7 @@ import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../backend/api_requests/api_calls.dart';
 import '../../constants/strings.dart';
+import '../../widgets/shimmer/shim_pages.dart';
 import '../../widgets/shimmer/shimmer_widget.dart';
 import 'assignment_ctn_widget.dart';
 import 'assignment_stat_ctn_widget.dart';
@@ -88,7 +89,9 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
         body: FutureBuilder(
             future: getScores(),
             builder: (context, snapshot) {
-              return course == null ? buildFoodShimmer() : loadedPage(context);
+              return shimCourses(context: context,  setState: (VoidCallback fn) {
+                setState(fn);
+              });
             }));
   }
 
