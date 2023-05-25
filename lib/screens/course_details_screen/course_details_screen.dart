@@ -5,6 +5,7 @@ import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../backend/api_requests/api_calls.dart';
 import '../../constants/strings.dart';
+import '../../widgets/shimmer/shimmer_widget.dart';
 import 'assignment_ctn_widget.dart';
 import 'assignment_stat_ctn_widget.dart';
 import '../../widgets/app_bars/collapsible_app_bar_widget.dart';
@@ -13,7 +14,6 @@ import '../../utils/utils.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import '../../widgets/shimmer_widget.dart';
 import '../../constants/dimens.dart';
 import '../../constants/colors.dart';
 

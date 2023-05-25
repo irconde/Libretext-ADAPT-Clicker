@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../constants/colors.dart';
 import '../../mixins/form_state_mixin.dart';
 
-enum ButtonType { primary, secondary, external }
+enum ButtonType { primary, secondary, external, shimmer}
 
 class CustomElevatedButton extends StatelessWidget {
   final ButtonType type;
@@ -28,7 +28,7 @@ class CustomElevatedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+        textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
         surfaceTintColor: CColors.pureWhite,
         minimumSize: const Size.fromHeight(44),
         backgroundColor: _backgroundColorButton(context),
@@ -89,6 +89,9 @@ class CustomElevatedButton extends StatelessWidget {
         break;
       case ButtonType.external:
         btnMainColor = CColors.secondaryColor;
+        break;
+      case ButtonType.shimmer:
+          btnMainColor = CColors.buttonShimmerBackground;
         break;
     }
     return btnMainColor;
