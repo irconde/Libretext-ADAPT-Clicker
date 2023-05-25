@@ -2,6 +2,7 @@ import 'package:adapt_clicker/mixins/connection_state_mixin.dart';
 import 'package:adapt_clicker/screens/assignment_screen/assignment_grid_widget.dart';
 import 'package:adapt_clicker/main.dart';
 import 'package:adapt_clicker/backend/user_stored_preferences.dart';
+import 'package:adapt_clicker/widgets/shimmer/shim_pages.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,6 +32,8 @@ class AssignmentScreen extends ConsumerStatefulWidget {
 class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
     with TickerProviderStateMixin, ConnectionStateMixin {
   late Map<String, dynamic> assignmentSummary;
+  bool isLoading = true;
+  late Future<ApiCallResponse> viewCall;
   final animationsMap = {
     'textOnActionTriggerAnimation': AnimationInfo(
       trigger: AnimationTrigger.onActionTrigger,
@@ -62,6 +65,7 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
   @override
   void initState() {
     super.initState();
+    viewCall = getViewCall();
   }
 
   Future<void> getSummary() async {
@@ -74,12 +78,27 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
     }
   }
 
+  Future<ApiCallResponse> getViewCall() async {
+    await getSummary();
+    var response = await ViewCall.call(
+      assignmentID: assignmentSummary['id'],
+      token: UserStoredPreferences.authToken,
+    );
+    setState(() {
+      print("IsLoading set");
+      isLoading = false;
+    });
+    return response;
+
+
+  }
+
   ExpandableController expansionController = ExpandableController();
 
   @override
   Widget build(BuildContext context) {
     var theme = AppTheme.of(context);
-    return FutureBuilder(
+    return isLoading ? shimQuestionList(setState: setState, context: context) : FutureBuilder(
         future: getSummary(),
         builder: (context, snapshot) {
           return Scaffold(
@@ -287,10 +306,7 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           FutureBuilder<ApiCallResponse>(
-                            future: ViewCall.call(
-                              assignmentID: assignmentSummary['id'],
-                              token: UserStoredPreferences.authToken,
-                            ),
+                            future: viewCall,
                             builder: (context, snapshot) {
                               // Customize what your widget looks like when it's loading.
                               if (!snapshot.hasData) {
@@ -385,4 +401,6 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
     logger.d('l is $l');
     return l;
   }
+
+
 }

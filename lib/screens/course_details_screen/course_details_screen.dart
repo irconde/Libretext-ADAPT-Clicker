@@ -89,9 +89,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
         body: FutureBuilder(
             future: getScores(),
             builder: (context, snapshot) {
-              return shimQuestion(context: context,  setState: (VoidCallback fn) {
-                setState(fn);
-              });
+              return course == null ? buildFoodShimmer() : loadedPage(context);
             }));
   }
 

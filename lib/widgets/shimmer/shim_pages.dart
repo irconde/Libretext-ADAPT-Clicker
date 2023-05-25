@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import '../../constants/colors.dart';
 import '../../constants/dimens.dart';
 import '../../constants/strings.dart';
+import '../../screens/assignment_screen/assignment_grid_widget.dart';
 import '../../utils/app_theme.dart';
 import '../buttons/custom_elevated_button_widget.dart';
 import 'shimmer_widget.dart';
@@ -380,12 +382,11 @@ Widget shimQuestion(
         child: ShimmerWidget.divider(),
       ),
       Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(32, 16 , 32, 16),
+          padding: const EdgeInsetsDirectional.fromSTEB(32, 16, 32, 16),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Icon(
-
                 Icons.keyboard_arrow_left,
                 size: 24,
                 color: CColors.secondaryShimmerBackground,
@@ -394,13 +395,13 @@ Widget shimQuestion(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-
                       children: List.generate(
                     10,
                     (index) => const Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
                       child: ShimmerWidget.rectangular(
-                        shapeBorder: RoundedRectangleBorder(side: BorderSide(width: 2)),
+                        shapeBorder:
+                            RoundedRectangleBorder(side: BorderSide(width: 2)),
                         type: ShimmerType.outlined,
                         height: 32,
                         width: 32,
@@ -409,12 +410,9 @@ Widget shimQuestion(
                       ),
                     ),
                   )),
-
                 ),
-
               ),
               const Icon(
-
                 Icons.keyboard_arrow_right,
                 size: 24,
                 color: CColors.secondaryShimmerBackground,
@@ -423,4 +421,166 @@ Widget shimQuestion(
           ))
     ],
   );
+}
+
+/* -------------------------------- *
+ * -----------Questions------------ *
+ * -------------------------------- */
+
+Widget shimQuestionList(
+    {required StateSetter setState, required BuildContext context}) {
+  int gridViewCrossAxisCount = 3;
+
+  return Scaffold(
+      backgroundColor: CColors.primaryBackground,
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: CColors.primaryBackground,
+        elevation: .3,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.close,
+            color: CColors.tertiaryColor,
+          ),
+          onPressed: () {
+            context.popRoute();
+          },
+        ),
+        title: const ShimmerWidget.rectangular(
+          shapeBorder: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(4))),
+          height: 18,
+          width: 128,
+          backgroundColor: CColors.buttonShimmerBackground,
+          shimmerColor: CColors.shimmerColor,
+        ),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
+            child: Container(
+              height: 20,
+              width: 20,
+              decoration: const BoxDecoration(
+                color: CColors.buttonShimmerBackground,
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Container(
+            color: CColors.mainShimmerBackground,
+            child: const Padding(
+              padding: EdgeInsets.all(24),
+              child: Row(
+                children: [
+                  ShimmerWidget.rectangular(
+                    height: 28,
+                    width: 88,
+                    shapeBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16))),
+                    backgroundColor: CColors.secondaryShimmerBackground,
+                    shimmerColor: CColors.shimmerColor,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: ShimmerWidget.rectangular(
+                      height: 28,
+                      width: 128,
+                      shapeBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(16))),
+                      backgroundColor: CColors.secondaryShimmerBackground,
+                      shimmerColor: CColors.shimmerColor,
+                    ),
+                  ),
+                  ShimmerWidget.rectangular(
+                    height: 28,
+                    width: 88,
+                    shapeBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16))),
+                    backgroundColor: CColors.secondaryShimmerBackground,
+                    shimmerColor: CColors.shimmerColor,
+                  )
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(Dimens.smMargin),
+            child: Container(
+              color: Colors.black12,
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: gridViewCrossAxisCount,
+                    childAspectRatio: 1,
+                    mainAxisSpacing: 2.0,
+                    crossAxisSpacing: 2.0),
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 12,
+                clipBehavior: Clip.none,
+                itemBuilder: (context, questionsIndex) {
+                  return Container(
+                    color: CColors.primaryBackground,
+                    child: const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ShimmerWidget.rectangular(
+                          shapeBorder: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(2))),
+                          height: 40,
+                          width: 28,
+                          backgroundColor: CColors.buttonShimmerBackground,
+                          shimmerColor: CColors.shimmerColor,
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ShimmerWidget.circular(
+                                height: 16,
+                                width: 16,
+                                backgroundColor: CColors.shimmerSuccess,
+                                shimmerColor: CColors.shimmerColor,
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
+                                child: ShimmerWidget.rectangular(
+                                  shapeBorder: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(2))),
+                                  height: 12,
+                                  width: 40,
+                                  backgroundColor: CColors.shimmerSuccess,
+                                  shimmerColor: CColors.shimmerColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        ShimmerWidget.rectangular(
+                          shapeBorder: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(2))),
+                          height: 12,
+                          width: 80,
+                          backgroundColor: CColors.secondaryShimmerBackground,
+                          shimmerColor: CColors.shimmerColor,
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ));
 }

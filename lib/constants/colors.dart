@@ -35,6 +35,7 @@ class CColors {
   static const Color tertiaryShimmerBackground = Color(0xFFBDBDBD);
   static const Color buttonShimmerBackground = Color(0xFFb7d6ed);
   static const Color shimmerColor = Color(0xFF90CCF2);
+  static const Color shimmerSuccess = Color(0xFFbfe2ce);
 
   //Activity Colors
   static const Color activityGood = Color(0xFF008C3D);
