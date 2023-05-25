@@ -37,6 +37,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
   int _currentPage;
   NumberPaginatorController paginatorController = NumberPaginatorController();
   PageController pageController = PageController();
+  bool isLoading = true;
 
   @override
   void initState() {

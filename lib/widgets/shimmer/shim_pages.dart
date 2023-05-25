@@ -273,3 +273,154 @@ Widget shimCourses(
         }))),
   );
 }
+
+/* -------------------------------- *
+ * --------------Poll-------------- *
+ * -------------------------------- */
+
+Widget shimPoll(
+    {required StateSetter setState, required BuildContext context}) {
+  return Padding(
+      padding: EdgeInsetsDirectional.fromSTEB(32, 0, 32, 32),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+              child: ShimmerWidget.rectangular(
+                shapeBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(4))),
+                height: 76,
+                width: 76,
+                backgroundColor: CColors.tertiaryShimmerBackground,
+                shimmerColor: CColors.shimmerColor,
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 32, 8),
+              child: ShimmerWidget.rectangular(
+                shapeBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(2))),
+                height: 10,
+                backgroundColor: CColors.secondaryShimmerBackground,
+                shimmerColor: CColors.shimmerColor,
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 32, 8),
+              child: ShimmerWidget.rectangular(
+                shapeBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(2))),
+                height: 10,
+                backgroundColor: CColors.secondaryShimmerBackground,
+                shimmerColor: CColors.shimmerColor,
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 128, 16),
+              child: ShimmerWidget.rectangular(
+                shapeBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(2))),
+                height: 10,
+                backgroundColor: CColors.secondaryShimmerBackground,
+                shimmerColor: CColors.shimmerColor,
+              ),
+            ),
+            Column(
+                children: List.generate(
+              5,
+              (index) => Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 6),
+                child: ShimmerWidget.rectangular(
+                    shapeBorder: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(2))),
+                    height: 32,
+                    backgroundColor: CColors.mainShimmerBackground,
+                    shimmerColor: CColors.shimmerColor,
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                        child: Container(
+                            width: 12,
+                            height: 12,
+                            decoration: const ShapeDecoration(
+                                color: CColors.secondaryShimmerBackground,
+                                shape: CircleBorder())),
+                      ),
+                    ]),
+              ),
+            )),
+            const Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+              child: ShimmerWidget.rectangular(
+                shapeBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(24))),
+                height: 32,
+                width: 96,
+                backgroundColor: CColors.buttonShimmerBackground,
+                shimmerColor: CColors.shimmerColor,
+              ),
+            ),
+          ]));
+}
+
+/* -------------------------------- *
+ * ------------Question------------ *
+ * -------------------------------- */
+
+Widget shimQuestion(
+    {required StateSetter setState, required BuildContext context}) {
+  return Column(
+    children: [
+      Expanded(child: shimPoll(setState: setState, context: context)),
+      const Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(32, 0, 32, 8),
+        child: ShimmerWidget.divider(),
+      ),
+      Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(32, 16 , 32, 16),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Icon(
+
+                Icons.keyboard_arrow_left,
+                size: 24,
+                color: CColors.secondaryShimmerBackground,
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+
+                      children: List.generate(
+                    10,
+                    (index) => const Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                      child: ShimmerWidget.rectangular(
+                        shapeBorder: RoundedRectangleBorder(side: BorderSide(width: 2)),
+                        type: ShimmerType.outlined,
+                        height: 32,
+                        width: 32,
+                        backgroundColor: CColors.mainShimmerBackground,
+                        shimmerColor: CColors.shimmerColor,
+                      ),
+                    ),
+                  )),
+
+                ),
+
+              ),
+              const Icon(
+
+                Icons.keyboard_arrow_right,
+                size: 24,
+                color: CColors.secondaryShimmerBackground,
+              ),
+            ],
+          ))
+    ],
+  );
+}
