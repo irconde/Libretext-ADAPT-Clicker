@@ -30,17 +30,26 @@ class CColors {
   static const Color failure = Color(0xFFD82828);
 
   //Shimmer
-  static const Color mainShimmerBackground = Color(0xFFF3F3F3);
-  static const Color secondaryShimmerBackground = Color(0xFFDADADA);
-  static const Color tertiaryShimmerBackground = Color(0xFFBDBDBD);
-  static const Color buttonShimmerBackground = Color(0xFFb7d6ed);
-  static const Color titleShimmerBackground = Color(0xFF4e9cd3);
-  static const Color shimmerColor = Color(0xFF90CCF2);
-  static const Color shimmerSuccess = Color(0xFFbfe2ce);
+    // Backgrounds
+    static const Color mainShimmerBackground = Color(0xFFF3F3F3);
+    static const Color secondaryShimmerBackground = Color(0xFFDADADA);
+    static const Color tertiaryShimmerBackground = Color(0xFFBDBDBD);
+    static const Color buttonShimmerBackground = Color(0xFFB7D6ED);
+    static const Color titleShimmerBackground = Color(0xFF4e9cd3);
+    static const Color shimmerSuccessBackground = Color(0xFFbfe2ce);
+      //Assignment Shimmer
+      static const Color detailsDarkerBlue = Color(0xFF71aad3);
+      static const Color detailsLighterBlue = Color(0xFF9ac0db);
 
-    //Assignment Shimmer
-    static const Color detailsDarkerBlue = Color(0xFF71aad3);
-    static const Color detailsLighterBlue = Color(0xFF9ac0db);
+    //Shimmer Effect
+    static const Color mainShimmerEffect = Color(0xFFE7E7E7);
+    static const Color secondaryShimmerEffect = Color(0xFFC7C7C7);
+    static const Color tertiaryShimmerEffect = Color(0xFFA1A1A1);
+    static const Color buttonShimmerEffect = Color(0xFFa1cceb);
+    static const Color titleShimmerEffect = Color(0xFF6BACDA);
+    static const Color shimmerSuccessEffect = Color(0xFF7fc59e);
+    static const Color shimmerPrimaryEffect = Color(0xFF067fe3);
+
 
   //Activity Colors
   static const Color activityGood = Color(0xFF008C3D);

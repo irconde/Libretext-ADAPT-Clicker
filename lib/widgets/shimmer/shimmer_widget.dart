@@ -20,7 +20,7 @@ class ShimmerWidget extends StatelessWidget {
     required this.height,
     this.backgroundColor = CColors.mainShimmerBackground,
     this.shapeBorder = const RoundedRectangleBorder(),
-    this.shimmerColor = CColors.shimmerColor,
+    this.shimmerColor = CColors.mainShimmerEffect,
     this.children,
     this.type = ShimmerType.primary,
   }) : super(key: key);
@@ -31,7 +31,7 @@ class ShimmerWidget extends StatelessWidget {
     this.height = 1,
     this.backgroundColor = CColors.mainShimmerBackground,
     this.shapeBorder = const RoundedRectangleBorder(),
-    this.shimmerColor = CColors.shimmerColor,
+    this.shimmerColor = CColors.mainShimmerEffect,
     this.children,
     this.type = ShimmerType.primary,
   }) : super(key: key);
@@ -42,7 +42,7 @@ class ShimmerWidget extends StatelessWidget {
     required this.height,
     this.backgroundColor = CColors.mainShimmerBackground,
     this.shapeBorder = const CircleBorder(),
-    this.shimmerColor =  CColors.shimmerColor,
+    this.shimmerColor =  CColors.mainShimmerEffect,
     this.children,
     this.type = ShimmerType.primary,
   }) : super(key: key);

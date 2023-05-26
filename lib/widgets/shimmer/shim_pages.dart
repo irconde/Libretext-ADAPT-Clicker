@@ -33,8 +33,6 @@ Widget shimProfile(
                 shapeBorder: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(4))),
                 height: 48,
-                backgroundColor: CColors.mainShimmerBackground,
-                shimmerColor: CColors.shimmerColor,
                 children: [
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 8, 0),
@@ -80,8 +78,6 @@ Widget shimProfile(
                   shapeBorder: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(4))),
                   height: 48,
-                  backgroundColor: CColors.mainShimmerBackground,
-                  shimmerColor: CColors.shimmerColor,
                   children: [
                     Padding(
                       padding:
@@ -128,8 +124,6 @@ Widget shimProfile(
                 shapeBorder: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(4))),
                 height: 48,
-                backgroundColor: CColors.mainShimmerBackground,
-                shimmerColor: CColors.shimmerColor,
                 children: [
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 8, 0),
@@ -175,8 +169,6 @@ Widget shimProfile(
                   shapeBorder: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(4))),
                   height: 48,
-                  backgroundColor: CColors.mainShimmerBackground,
-                  shimmerColor: CColors.shimmerColor,
                   children: [
                     Padding(
                       padding:
@@ -253,7 +245,7 @@ Widget shimCourses(
                     borderRadius: BorderRadius.all(Radius.circular(1))),
                 height: 14,
                 backgroundColor: CColors.buttonShimmerBackground,
-                shimmerColor: CColors.shimmerColor,
+                shimmerColor: CColors.buttonShimmerEffect,
               ),
             ),
             Padding(
@@ -263,13 +255,11 @@ Widget shimCourses(
                     borderRadius: BorderRadius.all(Radius.circular(1))),
                 height: 12,
                 backgroundColor: CColors.secondaryShimmerBackground,
-                shimmerColor: CColors.shimmerColor,
+                shimmerColor: CColors.secondaryShimmerEffect,
               ),
             ),
             ShimmerWidget.rectangular(
               height: 1,
-              backgroundColor: CColors.mainShimmerBackground,
-              shimmerColor: CColors.shimmerColor,
             ),
           ]);
         }))),
@@ -296,7 +286,7 @@ Widget shimPoll(
                 height: 76,
                 width: 76,
                 backgroundColor: CColors.tertiaryShimmerBackground,
-                shimmerColor: CColors.shimmerColor,
+                shimmerColor: CColors.tertiaryShimmerEffect,
               ),
             ),
             const Padding(
@@ -306,7 +296,7 @@ Widget shimPoll(
                     borderRadius: BorderRadius.all(Radius.circular(2))),
                 height: 10,
                 backgroundColor: CColors.secondaryShimmerBackground,
-                shimmerColor: CColors.shimmerColor,
+                shimmerColor: CColors.secondaryShimmerEffect,
               ),
             ),
             const Padding(
@@ -316,7 +306,7 @@ Widget shimPoll(
                     borderRadius: BorderRadius.all(Radius.circular(2))),
                 height: 10,
                 backgroundColor: CColors.secondaryShimmerBackground,
-                shimmerColor: CColors.shimmerColor,
+                shimmerColor: CColors.secondaryShimmerEffect,
               ),
             ),
             const Padding(
@@ -326,7 +316,7 @@ Widget shimPoll(
                     borderRadius: BorderRadius.all(Radius.circular(2))),
                 height: 10,
                 backgroundColor: CColors.secondaryShimmerBackground,
-                shimmerColor: CColors.shimmerColor,
+                shimmerColor: CColors.secondaryShimmerEffect,
               ),
             ),
             Column(
@@ -338,8 +328,6 @@ Widget shimPoll(
                     shapeBorder: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(2))),
                     height: 32,
-                    backgroundColor: CColors.mainShimmerBackground,
-                    shimmerColor: CColors.shimmerColor,
                     children: [
                       Padding(
                         padding:
@@ -362,7 +350,7 @@ Widget shimPoll(
                 height: 32,
                 width: 96,
                 backgroundColor: CColors.buttonShimmerBackground,
-                shimmerColor: CColors.shimmerColor,
+                shimmerColor: CColors.buttonShimmerEffect,
               ),
             ),
           ]));
@@ -405,8 +393,6 @@ Widget shimQuestion(
                         type: ShimmerType.outlined,
                         height: 32,
                         width: 32,
-                        backgroundColor: CColors.mainShimmerBackground,
-                        shimmerColor: CColors.shimmerColor,
                       ),
                     ),
                   )),
@@ -452,7 +438,7 @@ Widget shimQuestionList(
           height: 18,
           width: 128,
           backgroundColor: CColors.buttonShimmerBackground,
-          shimmerColor: CColors.shimmerColor,
+          shimmerColor: CColors.buttonShimmerEffect,
         ),
         actions: <Widget>[
           Padding(
@@ -482,7 +468,7 @@ Widget shimQuestionList(
                     shapeBorder: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(16))),
                     backgroundColor: CColors.secondaryShimmerBackground,
-                    shimmerColor: CColors.shimmerColor,
+                    shimmerColor: CColors.secondaryShimmerEffect,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
@@ -492,7 +478,7 @@ Widget shimQuestionList(
                       shapeBorder: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(16))),
                       backgroundColor: CColors.secondaryShimmerBackground,
-                      shimmerColor: CColors.shimmerColor,
+                      shimmerColor: CColors.secondaryShimmerEffect,
                     ),
                   ),
                   ShimmerWidget.rectangular(
@@ -501,7 +487,7 @@ Widget shimQuestionList(
                     shapeBorder: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(16))),
                     backgroundColor: CColors.secondaryShimmerBackground,
-                    shimmerColor: CColors.shimmerColor,
+                    shimmerColor: CColors.secondaryShimmerEffect,
                   )
                 ],
               ),
@@ -536,7 +522,7 @@ Widget shimQuestionList(
                           height: 40,
                           width: 28,
                           backgroundColor: CColors.buttonShimmerBackground,
-                          shimmerColor: CColors.shimmerColor,
+                          shimmerColor: CColors.buttonShimmerEffect,
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
@@ -546,8 +532,8 @@ Widget shimQuestionList(
                               ShimmerWidget.circular(
                                 height: 16,
                                 width: 16,
-                                backgroundColor: CColors.shimmerSuccess,
-                                shimmerColor: CColors.shimmerColor,
+                                backgroundColor: CColors.shimmerSuccessBackground,
+                                shimmerColor: CColors.shimmerSuccessEffect,
                               ),
                               Padding(
                                 padding:
@@ -558,8 +544,8 @@ Widget shimQuestionList(
                                           BorderRadius.all(Radius.circular(2))),
                                   height: 12,
                                   width: 40,
-                                  backgroundColor: CColors.shimmerSuccess,
-                                  shimmerColor: CColors.shimmerColor,
+                                  backgroundColor: CColors.shimmerSuccessBackground,
+                                  shimmerColor: CColors.shimmerSuccessEffect,
                                 ),
                               ),
                             ],
@@ -572,7 +558,7 @@ Widget shimQuestionList(
                           height: 12,
                           width: 80,
                           backgroundColor: CColors.secondaryShimmerBackground,
-                          shimmerColor: CColors.shimmerColor,
+                          shimmerColor: CColors.secondaryShimmerEffect,
                         ),
                       ],
                     ),
@@ -599,7 +585,7 @@ Widget shimAssignment (
           ShimmerWidget.rectangular(
             height: Dimens.appBarHeight + 72,
             backgroundColor: CColors.primaryColor,
-            shimmerColor: CColors.primaryBackground,
+            shimmerColor: CColors.shimmerPrimaryEffect,
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -739,7 +725,12 @@ Widget shimAssignment (
           ),
           const Padding(
             padding: EdgeInsets.all(32.0),
-            child: ShimmerWidget.rectangular(height: 12, width: 128, backgroundColor: CColors.secondaryShimmerBackground,),
+            child: ShimmerWidget.rectangular(
+              height: 12,
+              width: 128,
+              backgroundColor: CColors.secondaryShimmerBackground,
+              shimmerColor: CColors.secondaryShimmerEffect,
+            ),
           ),
           Expanded(
             child: SingleChildScrollView(
@@ -749,6 +740,7 @@ Widget shimAssignment (
                 child: ShimmerWidget.rectangular(
                   height: 88,
                   backgroundColor: CColors.buttonShimmerBackground,
+                  shimmerColor: CColors.buttonShimmerEffect,
                   children: [
                     Container(
                       width: 4,
