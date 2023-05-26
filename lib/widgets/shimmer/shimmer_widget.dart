@@ -3,7 +3,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../constants/colors.dart';
 
-enum ShimmerType { primary, outlined}
+enum ShimmerType { primary, outlined }
 
 class ShimmerWidget extends StatelessWidget {
   final double width;
@@ -42,70 +42,60 @@ class ShimmerWidget extends StatelessWidget {
     required this.height,
     this.backgroundColor = CColors.mainShimmerBackground,
     this.shapeBorder = const CircleBorder(),
-    this.shimmerColor =  CColors.mainShimmerEffect,
+    this.shimmerColor = CColors.mainShimmerEffect,
     this.children,
     this.type = ShimmerType.primary,
   }) : super(key: key);
-
-
 
   @override
   Widget build(BuildContext context) {
     return type == ShimmerType.primary ? primaryShimmer() : outlinedShimmer();
   }
 
-  Widget primaryShimmer () {
-    return Stack(
-        children:[ Shimmer.fromColors(
-          baseColor: backgroundColor,
-          highlightColor: shimmerColor,
-
-          child: Container(
-            width: width,
-            height: height,
-            decoration: ShapeDecoration(
-              color: backgroundColor,
-              shape: shapeBorder,
-            ),
-
+  Widget primaryShimmer() {
+    return Stack(children: [
+      Shimmer.fromColors(
+        baseColor: backgroundColor,
+        highlightColor: shimmerColor,
+        child: Container(
+          width: width,
+          height: height,
+          decoration: ShapeDecoration(
+            color: backgroundColor,
+            shape: shapeBorder,
           ),
         ),
-          Positioned.fill(
-            child: Center(
-              child: Row(
-                children: children ?? [],
-              ),
-            ),
-          ),
-        ]
-    );
-
-  }
-
-  Widget outlinedShimmer () {
-    return Stack(
-        children:[ Shimmer.fromColors(
-          baseColor: backgroundColor,
-          highlightColor: shimmerColor,
-
-          child: Container(
-            width: width,
-            height: height,
-            decoration: ShapeDecoration(
-              shape: shapeBorder,
-            ),
-
+      ),
+      Positioned.fill(
+        child: Center(
+          child: Row(
+            children: children ?? [],
           ),
         ),
-          Positioned.fill(
-            child: Center(
-              child: Row(
-                children: children ?? [],
-              ),
-            ),
-          ),
-        ]
-    );
+      ),
+    ]);
   }
 
+  Widget outlinedShimmer() {
+    return Stack(children: [
+      Shimmer.fromColors(
+        baseColor: backgroundColor,
+        highlightColor: shimmerColor,
+        child: Container(
+          width: width,
+          height: height,
+          decoration: ShapeDecoration(
+            shape: shapeBorder,
+          ),
+        ),
+      ),
+      Positioned.fill(
+        child: Center(
+          child: Row(
+            children: children ?? [],
+          ),
+        ),
+      ),
+    ]);
+  }
 }
