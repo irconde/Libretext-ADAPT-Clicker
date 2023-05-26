@@ -5,9 +5,12 @@ import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class AssignmentStatCtnWidget extends StatefulWidget {
-  const AssignmentStatCtnWidget({Key? key}) : super(key: key);
+import '../../utils/utils.dart';
 
+class AssignmentStatCtnWidget extends StatefulWidget {
+  const AssignmentStatCtnWidget({Key? key, this.assignment}) : super(key: key);
+
+  final dynamic assignment;
   @override
   State<AssignmentStatCtnWidget> createState() =>
       _AssignmentStatCtnWidgetState();
@@ -23,8 +26,46 @@ Color severityColor(BuildContext context, double percentage) {
   }
 }
 
+String formatDate(String date) {
+  // Parse the date string using the given format
+  DateTime parsedDate = DateFormat('yyyy-MM-dd HH:mm:ss').parse(date);
+  // Format the date using the desired format
+  String formattedDate = DateFormat("MM/dd/yy 'at' H:mm a").format(parsedDate);
+
+  if(formattedDate != null){
+  // Return the formatted date
+  return formattedDate;
+  }
+  return Strings.datePlaceholder;
+}
+
+
 class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
   double severityVariable = 15.0;
+
+  @override
+    void initState() {
+        calculateSeverity();
+        super.initState();
+      }
+
+  void calculateSeverity() {
+        var score = widget.assignment['score'];
+        var total = widget.assignment['total_points'];
+        if(total == 0) {
+          severityVariable = 0;
+          return;
+        }
+
+        print(widget.assignment['name']);
+        print("Score: $score");
+        print("Total: $total");
+
+        if(score == 'Not yet released')
+            score = 0;
+
+        severityVariable = (score/total) * 100;
+     }
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +94,7 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
               ),
             ),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                child: Column(
+              child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,28 +103,33 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
                       padding: const EdgeInsetsDirectional.fromSTEB(
                           0, 0, 0, Dimens.xsMargin),
                       child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0, 0, Dimens.xsMargin, 0),
-                            child: FaIcon(
-                              FontAwesomeIcons.brain,
-                              color: CColors.primaryColor,
-                              size: 16,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, Dimens.xsMargin, 0),
+                              child: FaIcon(
+                                FontAwesomeIcons.brain,
+                                color: CColors.primaryColor,
+                                size: 16,
+                              ),
                             ),
-                          ),
-                          Text(
-                            Strings.activityDescription,
-                            style: AppTheme.of(context).bodyText1.override(
-                                  fontFamily: 'Open Sans',
-                                  fontWeight: FontWeight.w600,
-                                  color: CColors.primaryColor,
-                                  fontSize: 16,
-                                ),
-                          ),
-                        ],
-                      ),
+                            SizedBox(
+                              width: 140,
+                              child: Text(
+                                widget.assignment['name'] ?? Strings.activityDescription,
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: false,
+                                style: AppTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Open Sans',
+                                      fontWeight: FontWeight.w600,
+                                      color: CColors.primaryColor,
+                                      fontSize: 16,
+                                    ),
+                              ),
+                            ),
+                          ],
+                        ),
                     ),
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
@@ -98,11 +142,8 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
                               ),
                           // ignore: prefer_const_literals_to_create_immutables
                           children: [
-                            const TextSpan(
-                              text: Strings.dueDate,
-                            ),
-                            const TextSpan(
-                              text: Strings.datePlaceholder,
+                            TextSpan(
+                             text: formatDate(widget.assignment['due']['due_date']),
                             ),
                           ],
                         ),
@@ -110,7 +151,6 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
                     ),
                   ],
                 ),
-              ),
             ),
             Padding(
               padding:

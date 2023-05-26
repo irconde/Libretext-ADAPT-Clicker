@@ -39,6 +39,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
   late int id;
   late Map<String, dynamic> scores;
   Map<String, dynamic>? course;
+  List<dynamic> assignmentsList = [];
   late ApiCallResponse scoreResponse;
 
   @override
@@ -59,6 +60,11 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
 
     scores = scoreResponse.jsonBody;
     course = scores['course'];
+
+    if (scores['assignments'] != null) {
+      assignmentsList = scores['assignments'].toList();
+    }
+
     return scoreResponse;
   }
 
@@ -402,17 +408,25 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                         ),
                                       ),
                                     ),
-                                    Flexible(
+                                   Flexible(
+                                      fit: FlexFit.tight,
                                       child: ScrollShadow(
                                           controller: _learningTabController,
                                           child: ListView.builder(
-                                            padding: const EdgeInsets.all(0),
-                                            controller: _learningTabController,
-                                            itemCount: 5,
-                                            itemBuilder: (context, index) {
-                                              return const AssignmentStatCtnWidget();
-                                            },
-                                          )),
+                                              padding: const EdgeInsets.all(0),
+                                              controller:
+                                              _learningTabController,
+                                              itemCount: assignmentsList.length,
+                                              itemBuilder: (context, index) {
+                                                dynamic assignment =
+                                                    assignmentsList[index];
+                                                if (assignment != null && assignment['past_due'] != null && !assignment['past_due']) {
+                                                  return AssignmentStatCtnWidget(
+                                                    assignment: assignment,
+                                                  );
+                                                }
+
+                                              })),
                                     ),
                                   ],
                                 ),
