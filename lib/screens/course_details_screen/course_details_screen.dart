@@ -408,24 +408,26 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                         ),
                                       ),
                                     ),
-                                   Flexible(
+                                    Flexible(
                                       fit: FlexFit.tight,
                                       child: ScrollShadow(
                                           controller: _learningTabController,
                                           child: ListView.builder(
                                               padding: const EdgeInsets.all(0),
                                               controller:
-                                              _learningTabController,
+                                                  _learningTabController,
                                               itemCount: assignmentsList.length,
                                               itemBuilder: (context, index) {
                                                 dynamic assignment =
                                                     assignmentsList[index];
-                                                if (assignment != null && assignment['past_due'] != null && !assignment['past_due']) {
+                                                if (assignment != null &&
+                                                    assignment['past_due'] !=
+                                                        null &&
+                                                    !assignment['past_due']) {
                                                   return AssignmentStatCtnWidget(
                                                     assignment: assignment,
                                                   );
                                                 }
-
                                               })),
                                     ),
                                   ],

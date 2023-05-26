@@ -1,10 +1,10 @@
 import '../../constants/dimens.dart';
 import '../../constants/colors.dart';
 import '../../constants/strings.dart';
+import '../../main.dart';
 import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import '../../utils/utils.dart';
 
 class AssignmentStatCtnWidget extends StatefulWidget {
@@ -32,40 +32,37 @@ String formatDate(String date) {
   // Format the date using the desired format
   String formattedDate = DateFormat("MM/dd/yy 'at' H:mm a").format(parsedDate);
 
-  if(formattedDate != null){
-  // Return the formatted date
-  return formattedDate;
+  if (formattedDate != null) {
+    // Return the formatted date
+    return formattedDate;
   }
   return Strings.datePlaceholder;
 }
 
-
 class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
-  double severityVariable = 15.0;
+  double _severity = 15.0;
 
   @override
-    void initState() {
-        calculateSeverity();
-        super.initState();
-      }
+  void initState() {
+    calculateSeverity();
+    super.initState();
+  }
 
   void calculateSeverity() {
-        var score = widget.assignment['score'];
-        var total = widget.assignment['total_points'];
-        if(total == 0) {
-          severityVariable = 0;
-          return;
-        }
-
-        print(widget.assignment['name']);
-        print("Score: $score");
-        print("Total: $total");
-
-        if(score == 'Not yet released')
-            score = 0;
-
-        severityVariable = (score/total) * 100;
-     }
+    var score = widget.assignment['score'];
+    var total = widget.assignment['total_points'];
+    if (total == 0) {
+      _severity = 0;
+      return;
+    }
+    logger.d(widget.assignment['name']);
+    logger.d('Score: $score');
+    logger.d('Total: $total');
+    if (score == 'Not yet released') {
+      score = 0;
+    }
+    _severity = (score / total) * 100;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,77 +86,78 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
                 width: 4,
                 height: double.infinity,
                 decoration: BoxDecoration(
-                  color: severityColor(context, severityVariable),
+                  color: severityColor(context, _severity),
                 ),
               ),
             ),
             Expanded(
               child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          0, 0, 0, Dimens.xsMargin),
-                      child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, Dimens.xsMargin, 0),
-                              child: FaIcon(
-                                FontAwesomeIcons.brain,
-                                color: CColors.primaryColor,
-                                size: 16,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 140,
-                              child: Text(
-                                widget.assignment['name'] ?? Strings.activityDescription,
-                                overflow: TextOverflow.ellipsis,
-                                softWrap: false,
-                                style: AppTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Open Sans',
-                                      fontWeight: FontWeight.w600,
-                                      color: CColors.primaryColor,
-                                      fontSize: 16,
-                                    ),
-                              ),
-                            ),
-                          ],
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0, 0, 0, Dimens.xsMargin),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0, 0, Dimens.xsMargin, 0),
+                          child: FaIcon(
+                            FontAwesomeIcons.brain,
+                            color: CColors.primaryColor,
+                            size: 16,
+                          ),
                         ),
+                        SizedBox(
+                          width: 140,
+                          child: Text(
+                            widget.assignment['name'] ??
+                                Strings.activityDescription,
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: false,
+                            style: AppTheme.of(context).bodyText1.override(
+                                  fontFamily: 'Open Sans',
+                                  fontWeight: FontWeight.w600,
+                                  color: CColors.primaryColor,
+                                  fontSize: 16,
+                                ),
+                          ),
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                      child: RichText(
-                        text: TextSpan(
-                          style: AppTheme.of(context).bodyText1.override(
-                                fontFamily: 'Open Sans',
-                                fontWeight: FontWeight.normal,
-                                color: CColors.tertiaryText,
-                              ),
-                          // ignore: prefer_const_literals_to_create_immutables
-                          children: [
-                            TextSpan(
-                             text: formatDate(widget.assignment['due']['due_date']),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                    child: RichText(
+                      text: TextSpan(
+                        style: AppTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.normal,
+                              color: CColors.tertiaryText,
                             ),
-                          ],
-                        ),
+                        children: [
+                          TextSpan(
+                            text: formatDate(
+                                widget.assignment['due']['due_date']),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
             ),
             Padding(
               padding:
                   const EdgeInsetsDirectional.fromSTEB(0, 0, Dimens.sMargin, 0),
               child: Text(
-                '$severityVariable%',
+                '$_severity%',
                 style: AppTheme.of(context).bodyText1.override(
                       fontFamily: 'Open Sans',
-                      color: severityColor(context, severityVariable),
+                      color: severityColor(context, _severity),
                       fontSize: Dimens.msMargin,
                       fontWeight: FontWeight.bold,
                     ),

@@ -60,7 +60,6 @@ class _PollWidgetState extends State<PollWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final question = widget.poll;
 
     /*-----------------Building Page-----------------------*/
     return Scaffold(
