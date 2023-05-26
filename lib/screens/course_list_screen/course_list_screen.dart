@@ -127,9 +127,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
     );
      */
 
-    if (await Permission.notification
-        .request()
-        .isGranted) {
+    if (await Permission.notification.request().isGranted) {
       logger.d('User granted permission');
     } else if (await Permission.notification.status.isLimited) {
       logger.d('User granted provisional permission');
@@ -202,45 +200,48 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
               setState(fn);
             }),
         backgroundColor: CColors.primaryBackground,
-        floatingActionButton: isLoading ? FloatingActionButton(
-          onPressed: () {},
-          backgroundColor: CColors.buttonShimmerBackground,
-          elevation: 8,
-          child: const Icon(
-          Icons.add,
-          color: CColors.primaryBackground,
-          size: 28,
-        ),): FloatingActionButton(
-          onPressed: () async {
-            if (!checkConnection()) return;
-            showModalBottomSheet(
-              useSafeArea: true,
-              isScrollControlled: true,
-              backgroundColor: CColors.blurColor,
-              context: context,
-              builder: (context) {
-                return Padding(
-                  padding: MediaQuery
-                      .of(context)
-                      .viewInsets,
-                  child: const AddCourseWidget(),
-                );
-              },
-            ).then((value) => {refreshPage()});
-          },
-          backgroundColor: CColors.primaryColor,
-          elevation: 8,
-          child: const Icon(
-            Icons.add,
-            color: CColors.primaryBackground,
-            size: 28,
-          ),
-        ),
+        floatingActionButton: isLoading
+            ? FloatingActionButton(
+                onPressed: () {},
+                backgroundColor: CColors.buttonShimmerBackground,
+                elevation: 8,
+                child: const Icon(
+                  Icons.add,
+                  color: CColors.primaryBackground,
+                  size: 28,
+                ),
+              )
+            : FloatingActionButton(
+                onPressed: () async {
+                  if (!checkConnection()) return;
+                  showModalBottomSheet(
+                    useSafeArea: true,
+                    isScrollControlled: true,
+                    backgroundColor: CColors.blurColor,
+                    context: context,
+                    builder: (context) {
+                      return Padding(
+                        padding: MediaQuery.of(context).viewInsets,
+                        child: const AddCourseWidget(),
+                      );
+                    },
+                  ).then((value) => {refreshPage()});
+                },
+                backgroundColor: CColors.primaryColor,
+                elevation: 8,
+                child: const Icon(
+                  Icons.add,
+                  color: CColors.primaryBackground,
+                  size: 28,
+                ),
+              ),
         drawer:
-        const NavigationDrawerWidget(currentSelected: DrawerItems.courses),
+            const NavigationDrawerWidget(currentSelected: DrawerItems.courses),
         body: GestureDetector(
-            onTap: () => FocusScope.of(context).unfocus(),
-            child: isLoading ? shimCourses(setState: setState, context: context) : loadedPage(),
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: isLoading
+              ? shimCourses(setState: setState, context: context)
+              : loadedPage(),
         ),
       ),
       onWillPop: () async {
@@ -249,7 +250,6 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
       },
     );
   }
-
 
   Widget loadedPage() {
     return Column(
@@ -274,11 +274,10 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
             final listViewGetEnrollmentsResponse = snapshot.data!;
             return Builder(
               builder: (context) {
-                final enrollmentsList =
-                    GetEnrollmentsCall.enrollmentsArray(
+                final enrollmentsList = GetEnrollmentsCall.enrollmentsArray(
                       listViewGetEnrollmentsResponse.jsonBody,
                     )?.toList() ??
-                        '';
+                    '';
                 if (enrollmentsList.isEmpty) {
                   return const NoCoursesWidget();
                 }
@@ -294,7 +293,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
                     itemCount: enrollmentsList.length,
                     itemBuilder: (context, enrollmentsListIndex) {
                       final enrollmentsListItem =
-                      enrollmentsList[enrollmentsListIndex];
+                          enrollmentsList[enrollmentsListIndex];
                       return InkWell(
                         onTap: () async {
                           if (!checkConnection()) return;
@@ -309,33 +308,26 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                enrollmentsListItem[
-                                'course_section_name'],
-                                style: AppTheme
-                                    .of(context)
-                                    .bodyText1
-                                    .override(
-                                  fontFamily: 'Open Sans',
-                                  color: CColors.primaryColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                enrollmentsListItem['course_section_name'],
+                                style: AppTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Open Sans',
+                                      color: CColors.primaryColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                               ),
                               Padding(
-                                padding:
-                                const EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, 8, 0, 24),
                                 child: Text(
                                   enrollmentsListItem['instructor'],
-                                  style: AppTheme
-                                      .of(context)
-                                      .bodyText1
-                                      .override(
-                                    fontFamily: 'Open Sans',
-                                    color: CColors.secondaryText,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                  style:
+                                      AppTheme.of(context).bodyText1.override(
+                                            fontFamily: 'Open Sans',
+                                            color: CColors.secondaryText,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                 ),
                               ),
                               const Divider(

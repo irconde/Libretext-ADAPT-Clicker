@@ -76,7 +76,9 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
         body: FutureBuilder(
             future: getScores(),
             builder: (context, snapshot) {
-              return course == null ? shimAssignment(setState: setState, context: context) : loadedPage(context);
+              return course == null
+                  ? shimAssignment(setState: setState, context: context)
+                  : loadedPage(context);
             }));
   }
 

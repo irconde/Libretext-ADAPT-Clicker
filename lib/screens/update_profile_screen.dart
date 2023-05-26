@@ -44,8 +44,6 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
     formFields = [firstName, lastName, email, studentId, timeZone];
     initFormFieldsInfo();
     _initialProfileValues = _loadInitialUserInfo();
-
-
   }
 
   Future<Map<String, String>> _loadInitialUserInfo() async {
@@ -173,7 +171,9 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
         body: SafeArea(
             child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
-          child: isLoading ? shimProfile(setState: setState, context: context) : loadedPage(),
+          child: isLoading
+              ? shimProfile(setState: setState, context: context)
+              : loadedPage(),
         )));
   }
 
