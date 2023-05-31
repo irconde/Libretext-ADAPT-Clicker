@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../constants/colors.dart';
 import '../../constants/dimens.dart';
 import '../../constants/strings.dart';
-import '../../screens/assignment_screen/assignment_grid_widget.dart';
 import '../../utils/app_theme.dart';
 import '../buttons/custom_elevated_button_widget.dart';
 import 'shimmer_widget.dart';
@@ -273,7 +272,7 @@ Widget shimCourses(
 Widget shimPoll(
     {required StateSetter setState, required BuildContext context}) {
   return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(32, 0, 32, 32),
+      padding: const EdgeInsetsDirectional.fromSTEB(32, 0, 32, 32),
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
