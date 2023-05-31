@@ -410,10 +410,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                               itemBuilder: (context, index) {
                                                 dynamic assignment =
                                                     assignmentsList[index];
-                                                if (assignment != null &&
-                                                    assignment['past_due'] !=
-                                                        null &&
-                                                    !assignment['past_due']) {
+                                                if (validStatAssignment(assignment)) {
                                                   return AssignmentStatCtnWidget(
                                                     assignment: assignment,
                                                   );
@@ -594,5 +591,22 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
     setState(() {
       _currentOrderOption = orderOption;
     });
+  }
+
+  //Checks if assignment is valid for stat container
+  bool validStatAssignment(assignment) {
+    if(assignment == null)
+      return false;
+
+    print("Assignment: $assignment");
+
+    if(assignment['past_due'] == null)
+      return false;
+
+    if(assignment['total_points'] == 0)
+      return false;
+
+      return !assignment['past_due'];
+
   }
 }
