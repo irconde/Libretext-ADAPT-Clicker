@@ -2,7 +2,14 @@ import '../../utils/utils.dart';
 import 'api_manager.dart';
 export 'api_manager.dart' show ApiCallResponse;
 
+/// Class responsible for making an API call to perform a login operation.
 class LoginCall {
+  /// Makes an API call to perform a login operation.
+  ///
+  /// The [email] parameter represents the user's email address.
+  /// The [password] parameter represents the user's password.
+  ///
+  /// Returns a [Future] that resolves to an [ApiCallResponse] containing the result of the API call.
   static Future<ApiCallResponse> call({
     String? email = '',
     String? password = '',
@@ -28,7 +35,21 @@ class LoginCall {
   }
 }
 
+/// A static class for making an API call to create a user.
 class CreateUserCall {
+  /// Creates a new user by making an API call.
+  ///
+  /// Returns a [Future] that completes with an [ApiCallResponse].
+  ///
+  /// Optional parameters:
+  /// - [email]: The email of the user.
+  /// - [password]: The password of the user.
+  /// - [passwordConfirmation]: The confirmation password.
+  /// - [firstName]: The first name of the user.
+  /// - [lastName]: The last name of the user.
+  /// - [registrationType]: The type of registration.
+  /// - [studentId]: The student ID of the user.
+  /// - [timeZone]: The time zone of the user.
   static Future<ApiCallResponse> call({
     String? email = '',
     String? password = '',
@@ -65,6 +86,9 @@ class CreateUserCall {
     );
   }
 
+  /// Extracts the errors from the API response.
+  ///
+  /// Takes the [response] as a parameter and returns a dynamic object.
   static dynamic errorslist(dynamic response) => getJsonField(
         response,
         r'''$.errors.*..*''',
@@ -72,7 +96,14 @@ class CreateUserCall {
       );
 }
 
+/// A static class for making an API call to request a password reset.
 class ForgotPasswordCall {
+  /// Sends a password reset request by making an API call.
+  ///
+  /// Returns a [Future] that completes with an [ApiCallResponse].
+  ///
+  /// Optional parameters:
+  /// - [email]: The email of the user requesting a password reset.
   static Future<ApiCallResponse> call({
     String? email = '',
   }) {
@@ -95,7 +126,14 @@ class ForgotPasswordCall {
   }
 }
 
+/// A static class for making an API call to refresh an authentication token.
 class RefreshTokenCall {
+  /// Sends a request to refresh an authentication token by making an API call.
+  ///
+  /// Returns a [Future] that completes with an [ApiCallResponse].
+  ///
+  /// Optional parameters:
+  /// - [token]: The current authentication token to be refreshed.
   static Future<ApiCallResponse> call({
     String? token = '',
   }) {
@@ -114,7 +152,14 @@ class RefreshTokenCall {
   }
 }
 
+/// A static class for making an API call to retrieve user information.
 class GetUserCall {
+  /// Sends a request to retrieve user information by making an API call.
+  ///
+  /// Returns a [Future] that completes with an [ApiCallResponse].
+  ///
+  /// Optional parameters:
+  /// - [token]: The authentication token used for authorization.
   static Future<ApiCallResponse> call({
     String? token = '',
   }) {
@@ -132,7 +177,11 @@ class GetUserCall {
   }
 }
 
+/// Makes an API call to retrieve user enrollments.
 class GetEnrollmentsCall {
+  /// Sends a request to retrieve user enrollments.
+  ///
+  /// The [token] parameter is the authentication token for the API call.
   static Future<ApiCallResponse> call({
     String? token = '',
   }) {
@@ -149,13 +198,22 @@ class GetEnrollmentsCall {
     );
   }
 
+  /// Extracts the enrollments array from the API response.
+  ///
+  /// The [response] parameter is the API response object.
   static dynamic enrollmentsArray(dynamic response) => getJsonField(
         response,
         r'''$.enrollments''',
       );
 }
 
+/// Makes an API call to update the user's profile.
 class UpdateProfileCall {
+  /// Sends a request to update the user's profile.
+  ///
+  /// The [token] parameter is the authentication token for the API call.
+  /// The [firstName], [lastName], [email], [timeZone], and [studentId] parameters
+  /// are the updated values for the corresponding profile fields.
   static Future<ApiCallResponse> call({
     String? token = '',
     String? firstName = '',
@@ -188,7 +246,13 @@ class UpdateProfileCall {
   }
 }
 
+/// Makes an API call to update the user's password.
 class UpdatePasswordCall {
+  /// Sends a request to update the user's password.
+  ///
+  /// The [token] parameter is the authentication token for the API call.
+  /// The [password] parameter is the new password.
+  /// The [passwordConfirmation] parameter is the confirmation of the new password.
   static Future<ApiCallResponse> call({
     String? token = '',
     String? password = '',
@@ -215,7 +279,15 @@ class UpdatePasswordCall {
   }
 }
 
+/// Makes an API call to add a course.
 class AddCourseCall {
+  /// Sends a request to add a course.
+  ///
+  /// The [token] parameter is the authentication token for the API call.
+  /// The [accessCode] parameter is the access code for the course.
+  /// The [studentID] parameter is the student ID.
+  /// The [isLms] parameter indicates whether the course is an LMS course.
+  /// The [timeZone] parameter is the user's time zone.
   static Future<ApiCallResponse> call({
     String? token = '',
     String? accessCode = '',
@@ -246,7 +318,17 @@ class AddCourseCall {
   }
 }
 
+/// Makes an API call to contact customer support.
 class ContactUsCall {
+  /// Sends a request to contact customer support.
+  ///
+  /// The [email] parameter is the email address of the sender.
+  /// The [name] parameter is the name of the sender.
+  /// The [school] parameter is the school of the sender.
+  /// The [subject] parameter is the subject of the inquiry (default: 'General Inquiry').
+  /// The [text] parameter is the text of the inquiry.
+  /// The [toUserId] parameter is the ID of the user to receive the inquiry (default: 'contact_us').
+  /// The [type] parameter is the type of inquiry.
   static Future<ApiCallResponse> call({
     String? email = '',
     String? name = '',
@@ -282,7 +364,12 @@ class ContactUsCall {
   }
 }
 
+/// Makes an API call to get scores by user for a specific course.
 class GetScoresByUserCall {
+  /// Retrieves the scores of a user for a specific course.
+  ///
+  /// The [token] parameter is the access token for authentication.
+  /// The [course] parameter is the ID of the course to retrieve scores from.
   static Future<ApiCallResponse> call({
     String? token = '',
     int? course,
@@ -301,21 +388,26 @@ class GetScoresByUserCall {
     );
   }
 
+  /// Extracts the assignments from the API response.
   static dynamic assignments(dynamic response) => getJsonField(
         response,
         r'''$.assignments''',
       );
 }
 
+/// Makes an API call to get information about a specific course.
 class GetCourse {
+  /// Retrieves information about a specific course.
+  ///
+  /// The [token] parameter is the access token for authentication.
+  /// The [course] parameter is the ID of the course to retrieve information for.
   static Future<ApiCallResponse> call({
     String? token = '',
     int? course,
   }) {
     return ApiManager.instance.makeApiCall(
       callName: 'getScoresByUser',
-      apiUrl:
-      'https://adapt.libretexts.org/api/courses/$course/',
+      apiUrl: 'https://adapt.libretexts.org/api/courses/$course/',
       callType: ApiCallType.GET,
       headers: {
         'accept': 'application/json',
@@ -327,7 +419,12 @@ class GetCourse {
   }
 }
 
+/// Makes an API call to view questions for a specific assignment.
 class ViewCall {
+  /// Retrieves questions for a specific assignment.
+  ///
+  /// The [assignmentID] parameter is the ID of the assignment.
+  /// The [token] parameter is the access token for authentication.
   static Future<ApiCallResponse> call({
     int? assignmentID,
     String? token = '',
@@ -346,13 +443,21 @@ class ViewCall {
     );
   }
 
+  /// Extracts the questions from the API response.
+  ///
+  /// The [response] parameter is the API response object.
   static dynamic questions(dynamic response) => getJsonField(
         response,
         r'''$.questions''',
       );
 }
 
+/// Makes an API call to retrieve the summary of an assignment.
 class GetAssignmentSummaryCall {
+  /// Retrieves the summary of an assignment.
+  ///
+  /// The [token] parameter is the access token for authentication.
+  /// The [assignmentNum] parameter is the number of the assignment.
   static Future<ApiCallResponse> call({
     String? token = '',
     int? assignmentNum,
@@ -371,38 +476,60 @@ class GetAssignmentSummaryCall {
     );
   }
 
+  /// Extracts the assignment ID from the API response.
+  ///
+  /// The [response] parameter is the API response object.
   static dynamic id(dynamic response) => getJsonField(
         response,
         r'''$.assignment.id''',
       );
 
+  /// Extracts the assignment name from the API response.
+  ///
+  /// The [response] parameter is the API response object.
   static dynamic name(dynamic response) => getJsonField(
         response,
         r'''$.assignment.name''',
       );
 
+  /// Extracts the late policy of the assignment from the API response.
+  ///
+  /// The [response] parameter is the API response object.
   static dynamic latePolicy(dynamic response) => getJsonField(
         response,
         r'''$.assignment.formatted_late_policy''',
       );
 
+  /// Extracts the total points of the assignment from the API response.
+  ///
+  /// The [response] parameter is the API response object.
   static dynamic points(dynamic response) => getJsonField(
         response,
         r'''$.assignment.total_points''',
       );
 
+  /// Extracts the due date of the assignment from the API response.
+  ///
+  /// The [response] parameter is the API response object.
   static dynamic dueDate(dynamic response) => getJsonField(
         response,
         r'''$.assignment.formatted_due''',
       );
 
+  /// Extracts the assignment object from the API response.
+  ///
+  /// The [response] parameter is the API response object.
   static dynamic assignment(dynamic response) => getJsonField(
         response,
         r'''$.assignment''',
       );
 }
 
+/// Makes an API call to log out the user.
 class LogoutCall {
+  /// Logs out the user.
+  ///
+  /// The [token] parameter is the access token for authentication.
   static Future<ApiCallResponse> call({
     String? token = '',
   }) {
@@ -422,7 +549,12 @@ class LogoutCall {
   }
 }
 
+/// Makes an API call to retrieve non-technology iframe content.
 class GetNonTechnologyIframeCall {
+  /// Retrieves non-technology iframe content.
+  ///
+  /// The [pageId] parameter is the ID of the page to retrieve the content for.
+  /// The [token] parameter is the access token for authentication.
   static Future<ApiCallResponse> call({
     int? pageId,
     String? token = '',
@@ -443,7 +575,9 @@ class GetNonTechnologyIframeCall {
   }
 }
 
+/// Makes an API call to retrieve the available timezones.
 class GetTimezonesCall {
+  /// Retrieves the available timezones.
   static Future<ApiCallResponse> call() {
     return ApiManager.instance.makeApiCall(
       callName: 'getTimezones',
@@ -457,6 +591,9 @@ class GetTimezonesCall {
     );
   }
 
+  /// Extracts the timezones from the API response.
+  ///
+  /// The [response] parameter is the API response to extract the timezones from.
   static dynamic timezones(dynamic response) => getJsonField(
         response,
         r'''$.time_zones''',
@@ -464,14 +601,19 @@ class GetTimezonesCall {
       );
 }
 
+/// Makes an API call to send a token to the server.
 class SendTokenCall {
+  /// Sends a token to the server.
+  ///
+  /// The [token] parameter is the authorization token.
+  /// The [fcmToken] parameter is the Firebase Cloud Messaging token to send.
   static Future<ApiCallResponse> call({
     String? token = '',
     String? fcmToken = '',
   }) {
     final body = '''
 {
-"fcm_token": "$fcmToken"
+  "fcm_token": "$fcmToken"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'sendToken',
