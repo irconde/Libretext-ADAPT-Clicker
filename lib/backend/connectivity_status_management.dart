@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// Represents the possible connectivity statuses.
 enum ConnectivityStatus {
   initializing,
   notDetermined,
@@ -10,15 +11,18 @@ enum ConnectivityStatus {
   isDisconnected
 }
 
+/// Provider for the connectivity status notifier.
 final provider =
     AsyncNotifierProvider<ConnectivityStatusNotifier, ConnectivityStatus>(() {
   return ConnectivityStatusNotifier();
 });
 
+/// Notifier for the connectivity status.
 class ConnectivityStatusNotifier extends AsyncNotifier<ConnectivityStatus> {
   ConnectivityStatus _lastState = ConnectivityStatus.notDetermined;
   bool _startedListening = false;
 
+  /// Converts the [ConnectivityResult] to [ConnectivityStatus].
   ConnectivityStatus _resultToStatus(ConnectivityResult connectionResult) {
     ConnectivityStatus newState = ConnectivityStatus.notDetermined;
     switch (connectionResult) {
@@ -33,14 +37,15 @@ class ConnectivityStatusNotifier extends AsyncNotifier<ConnectivityStatus> {
     return newState;
   }
 
+  /// Starts listening to connectivity changes.
   void startWatchingConnectivity() {
-    if(_startedListening) return;
+    if (_startedListening) return;
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-        ConnectivityStatus newState = _resultToStatus(result);
-        if (newState != _lastState) {
-          _lastState = newState;
-          state = AsyncData(newState);
-        }
+      ConnectivityStatus newState = _resultToStatus(result);
+      if (newState != _lastState) {
+        _lastState = newState;
+        state = AsyncData(newState);
+      }
     });
     _startedListening = true;
   }
@@ -51,7 +56,7 @@ class ConnectivityStatusNotifier extends AsyncNotifier<ConnectivityStatus> {
     final ConnectivityResult initConnection =
         await Connectivity().checkConnectivity();
     ConnectivityStatus auxConnectionStatus = _resultToStatus(initConnection);
-    if (auxConnectionStatus == ConnectivityStatus.isConnected){
+    if (auxConnectionStatus == ConnectivityStatus.isConnected) {
       connectionStatus = ConnectivityStatus.initializing;
     } else {
       connectionStatus = auxConnectionStatus;
@@ -60,6 +65,7 @@ class ConnectivityStatusNotifier extends AsyncNotifier<ConnectivityStatus> {
     return connectionStatus;
   }
 
+  /// Gets the current connection status.
   ConnectivityStatus getConnectionStatus() {
     return _lastState;
   }
