@@ -15,6 +15,7 @@ import 'package:flutter/foundation.dart'
 /// );
 /// ```
 class DefaultFirebaseOptions {
+  // Retrieves the default Firebase options for the current platform.
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
       throw UnsupportedError(
@@ -49,7 +50,7 @@ class DefaultFirebaseOptions {
     }
   }
 
-
+  // Firebase options for Android.
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDQ753MLJz_U5WhkMzHQJiOflrfI9c_jqE',
     appId: '1:869752552275:android:2fb68a2412db18c98c3fa6',
@@ -58,15 +59,15 @@ class DefaultFirebaseOptions {
     storageBucket: 'libretexts-adapt.appspot.com',
   );
 
+  // Firebase options for iOS.
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBvIdiWdpbY2gDf27O06NW_6brpD9sQOfE',
     appId: '1:869752552275:ios:8ecd3e1b990c338c8c3fa6',
     messagingSenderId: '869752552275',
     projectId: 'libretexts-adapt',
     storageBucket: 'libretexts-adapt.appspot.com',
-    iosClientId: '869752552275-0h1p0l0jospngggj57ha6fv2j8p4lldk.apps.googleusercontent.com',
+    iosClientId:
+        '869752552275-0h1p0l0jospngggj57ha6fv2j8p4lldk.apps.googleusercontent.com',
     iosBundleId: 'edu.ualr.adapt.clicker',
   );
-
-
 }
