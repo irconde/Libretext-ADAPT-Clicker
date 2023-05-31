@@ -4,8 +4,12 @@ import '../backend/connectivity_status_management.dart';
 import '../constants/colors.dart';
 import '../constants/strings.dart';
 
+/// A mixin that provides connectivity state management functionality to a [ConsumerStatefulWidget].
 mixin ConnectionStateMixin<T extends ConsumerStatefulWidget>
     on ConsumerState<T> {
+  /// Displays a snackbar indicating the current connectivity status.
+  ///
+  /// The [status] parameter represents the current connectivity status.
   void _showSnackbar(BuildContext context, ConnectivityStatus? status) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -26,6 +30,9 @@ mixin ConnectionStateMixin<T extends ConsumerStatefulWidget>
     );
   }
 
+  /// Checks the current connectivity status and displays a snackbar if not connected.
+  ///
+  /// Returns `true` if the connection is available, `false` otherwise.
   bool checkConnection() {
     ConnectivityStatus? status =
         ref.read(provider.notifier).getConnectionStatus();
@@ -36,6 +43,7 @@ mixin ConnectionStateMixin<T extends ConsumerStatefulWidget>
     return true;
   }
 
+  /// Starts watching the connectivity status and displays a snackbar with the initial status.
   void startWatchingConnection() {
     final AsyncValue<ConnectivityStatus> connectivityStatusProvider =
         ref.watch(provider);
