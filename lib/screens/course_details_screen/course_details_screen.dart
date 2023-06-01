@@ -1,4 +1,5 @@
 import 'package:adapt_clicker/backend/user_stored_preferences.dart';
+import 'package:adapt_clicker/screens/course_details_screen/no_assignments_widget.dart';
 import 'package:adapt_clicker/widgets/dropdowns/assignment_dropdown_widget.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
@@ -484,6 +485,10 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                                   scoreResponse),
                                                               _currentFilterOption!),
                                                           _currentOrderOption!);
+                                                  if(filteredAssignmentList.isEmpty){
+                                                    return const NoAssignmentsWidget();
+                                                  }
+
                                                   return ListView.builder(
                                                     padding: EdgeInsets.zero,
                                                     shrinkWrap: true,
@@ -617,8 +622,6 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
   bool validStatAssignment(assignment) {
     if(assignment == null)
       return false;
-
-    print("Assignment: $assignment");
 
     if(assignment['past_due'] == null)
       return false;

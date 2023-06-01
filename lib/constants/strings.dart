@@ -145,9 +145,11 @@ class Strings {
   static const String learningProcess = 'Learning Process';
   static const String noItemsMessage =
       'Oops. it seems you haven\'t registered for a course yet';
-  static const String assessment = 'ASSESSMENT';
   static const String no = 'NO ';
+  static const String assessment = 'ASSESSMENT';
   static const String records = 'RECORDS';
+  static const String currently = 'CURRENTLY';
+  static const String assignments = 'ASSIGNMENTS';
   static const String filterAllAssignments = 'All Assignments';
   static const String filterExam = 'Exam';
   static const String filterExtraCredit = 'Extra Credit';

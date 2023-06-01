@@ -31,11 +31,19 @@ class CColors {
   static const Color failure = Color(0xFFD82828);
 
   //No Learning Path
+  static const Color learningEmptyListTitleBackground = Color(0x40FFFFFF);
   static const Color learningBackgroundContainerColor = Color(0x73DCF1FF);
   static const Color learningLeftStatBar = Color(0x73137BC4);
   static const Color learningSquareColor = Color(0x73AFD2EB);
   static const Color learningTopTextContainerColor = Color(0x738CB8D7);
   static const Color learningBtmTextContainerColor = Color(0x73CAE1F2);
+
+  //No Assignments
+  static const Color noAssignmentEmptyListTitleBackground = Color(0x73FFFFFF);
+  static const Color noAssignmentRightText = Color(0xE6DADADA);
+  static const Color noAssignmentRightLeading = Color(0xE6BDBDBD);
+  static const Color noAssignmentLeftText = Color(0xE6CAE1F2);
+
 
   //Shimmer
   // Backgrounds

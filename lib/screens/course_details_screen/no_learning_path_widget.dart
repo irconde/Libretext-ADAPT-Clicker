@@ -22,35 +22,41 @@ class _NoLearningPathWidgetState extends State<NoLearningPathWidget> {
           padding: const EdgeInsetsDirectional.fromSTEB(0, 134, 0, 0),
           child: Align(
             alignment: Alignment.bottomCenter,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                RichText(
-                  text: TextSpan(
-                      style: theme.bodyText1.override(
-                          fontFamily: 'Open Sans',
-                          fontSize: 24,
-                          color: CColors.primaryColor),
-                      children: [
-                        const TextSpan(text: Strings.no),
-                        TextSpan(
-                          text: Strings.assessment,
+            child: Container(
+              color: CColors.learningEmptyListTitleBackground,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    RichText(
+                      text: TextSpan(
                           style: theme.bodyText1.override(
-                            color: CColors.primaryColor,
-                            fontFamily: 'Open Sans',
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
+                              fontFamily: 'Open Sans',
+                              fontSize: 24,
+                              color: CColors.primaryColor),
+                          children: [
+                            const TextSpan(text: Strings.no),
+                            TextSpan(
+                              text: Strings.assessment,
+                              style: theme.bodyText1.override(
+                                color: CColors.primaryColor,
+                                fontFamily: 'Open Sans',
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
 
-                          ),
-                        ),
-                      ]),
+                              ),
+                            ),
+                          ]),
+                    ),
+                    Text(Strings.records, style: theme.bodyText1.override(
+                        fontFamily: 'Open Sans',
+                        fontSize: 24,
+                        color: CColors.primaryColor),),
+                  ],
                 ),
-                Text(Strings.records, style: theme.bodyText1.override(
-                    fontFamily: 'Open Sans',
-                    fontSize: 24,
-                    color: CColors.primaryColor),),
-              ],
+              ),
             ),
           ),
         )
