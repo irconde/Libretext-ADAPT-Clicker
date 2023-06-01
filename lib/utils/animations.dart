@@ -2,23 +2,34 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+/// Enum representing the triggers for animations.
 enum AnimationTrigger {
   onPageLoad,
   onActionTrigger,
 }
 
+/// Class representing the state of an animation.
 class AnimationState {
-  AnimationState({
+  /// Creates an [AnimationState] with the given [offset], [opacity], and [scale].
+  const AnimationState({
     this.offset = const Offset(0, 0),
     this.opacity = 1,
     this.scale = 1,
   });
+
+  /// The offset of the animation.
   final Offset offset;
+
+  /// The opacity of the animation.
   final double opacity;
+
+  /// The scale of the animation.
   final double scale;
 }
 
+/// Class representing the information for an animation.
 class AnimationInfo {
+  /// Creates an [AnimationInfo] with the given parameters.
   AnimationInfo({
     this.curve = Curves.easeInOut,
     required this.trigger,
@@ -30,17 +41,35 @@ class AnimationInfo {
     required this.finalState,
   });
 
+  /// The curve of the animation.
   final Curve curve;
+
+  /// The trigger for the animation.
   final AnimationTrigger trigger;
+
+  /// The duration of the animation.
   final int duration;
+
+  /// The delay before starting the animation.
   final int delay;
+
+  /// Indicates whether to hide the widget before animating.
   final bool hideBeforeAnimating;
+
+  /// Indicates whether to fade in the widget during the animation.
   final bool fadeIn;
+
+  /// The initial state of the animation.
   final AnimationState initialState;
+
+  /// The final state of the animation.
   final AnimationState finalState;
+
+  /// The curved animation used for the animation.
   late CurvedAnimation curvedAnimation;
 }
 
+/// Creates the animation for a single animation info.
 void createAnimation(AnimationInfo animation, TickerProvider vsync) {
   animation.curvedAnimation = CurvedAnimation(
     parent: AnimationController(
@@ -51,6 +80,7 @@ void createAnimation(AnimationInfo animation, TickerProvider vsync) {
   );
 }
 
+/// Starts the animations triggered on page load.
 void startPageLoadAnimations(
     Iterable<AnimationInfo> animations, TickerProvider vsync) {
   animations.forEach((animation) async {
@@ -63,6 +93,7 @@ void startPageLoadAnimations(
   });
 }
 
+/// Sets up the trigger animations.
 void setupTriggerAnimations(
     Iterable<AnimationInfo> animations, TickerProvider vsync) {
   for (var animation in animations) {
@@ -70,6 +101,7 @@ void setupTriggerAnimations(
   }
 }
 
+/// Extension on [Widget] to apply animations.
 extension AnimatedWidgetExtension on Widget {
   Widget animated(Iterable<AnimationInfo> animationInfos) {
     final animationInfo = animationInfos.first;

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../constants/colors.dart';
 
+/// Abstract class for defining the app theme.
 abstract class AppTheme {
+  /// Returns the current app theme based on the provided [context].
   static AppTheme of(BuildContext context) {
     return LightModeTheme();
   }
@@ -24,18 +26,20 @@ abstract class AppTheme {
   String get bodyText3Family => typography.bodyText2Family;
   TextStyle get bodyText3 => typography.bodyText2;
 
+  /// Returns the typography for the app theme.
   Typography get typography => ThemeTypography(this);
 
+  /// Builds an [OutlineInputBorder] with the specified [color].
   OutlineInputBorder _buildBorder(Color color) {
     return OutlineInputBorder(
       borderSide: BorderSide(width: 1, color: color),
     );
   }
 
+  /// Returns the input decoration theme for text fields.
   InputDecorationTheme inputTheme() => InputDecorationTheme(
         contentPadding: const EdgeInsets.all(16),
-        floatingLabelStyle:
-            const TextStyle(color: CColors.primaryColor),
+        floatingLabelStyle: const TextStyle(color: CColors.primaryColor),
         alignLabelWithHint: true,
         labelStyle: bodyText2,
         filled: true,
@@ -56,11 +60,13 @@ abstract class AppTheme {
         suffixIconColor: CColors.tertiaryColor,
       );
 
+  /// Returns the icon theme data for the app bar icons.
   IconThemeData appBarIconThemes() => const IconThemeData(
         size: 24,
         color: CColors.primaryBackground,
       );
 
+  /// Returns the app bar theme.
   AppBarTheme appBarTheme() => AppBarTheme(
         backgroundColor: CColors.primaryColor,
         titleTextStyle: title3,
@@ -72,8 +78,10 @@ abstract class AppTheme {
       );
 }
 
+/// Concrete implementation of the app theme for light mode.
 class LightModeTheme extends AppTheme {}
 
+/// Abstract class that defines the typography configuration for an app.
 abstract class Typography {
   String get title1Family;
   TextStyle get title1;
@@ -93,9 +101,13 @@ abstract class Typography {
   TextStyle get bodyText3;
 }
 
+/// Concrete implementation of the [Typography] abstract class that provides
+/// the typography configuration for a specific app theme.
 class ThemeTypography extends Typography {
+  /// Creates an instance of [ThemeTypography] with the given [theme].
   ThemeTypography(this.theme);
 
+  /// The app theme associated with this typography.
   final AppTheme theme;
 
   @override
@@ -172,7 +184,26 @@ class ThemeTypography extends Typography {
       );
 }
 
+/// Extension on the [TextStyle] class that provides helper methods for
+/// overriding specific properties of a [TextStyle].
 extension TextStyleHelper on TextStyle {
+  /// Creates a new [TextStyle] by overriding specific properties of the current [TextStyle].
+  ///
+  /// The properties that can be overridden are:
+  /// - [fontFamily]: The font family to use.
+  /// - [color]: The color to use.
+  /// - [fontSize]: The font size to use.
+  /// - [fontWeight]: The font weight to use.
+  /// - [letterSpacing]: The letter spacing to use.
+  /// - [fontStyle]: The font style to use.
+  /// - [useGoogleFonts]: Whether to use Google Fonts or not. Defaults to true.
+  /// - [decoration]: The text decoration to use.
+  /// - [decorationColor]: The color of the text decoration.
+  /// - [lineHeight]: The line height to use.
+  /// - [shadows]: The shadows to apply to the text.
+  /// - [decorationThickness]: The thickness of the text decoration.
+  ///
+  /// Returns a new [TextStyle] with the specified properties overridden.
   TextStyle override({
     String? fontFamily,
     Color? color,

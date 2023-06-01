@@ -8,15 +8,19 @@ export 'dart:convert' show jsonEncode, jsonDecode;
 export 'package:intl/intl.dart';
 export 'package:page_transition/page_transition.dart';
 
+/// Creates a token string with the provided token.
 String createToken(String token) {
   return 'Bearer $token';
 }
 
+/// Gets the top error from a list of errors.
 String getTopError(List<String> errorList) {
-  // get the first value out of the list
+  // Get the first value out of the list
   return errorList.isEmpty ? 'empty' : errorList.first;
 }
 
+/// Returns a string representing the solution based on a boolean value.
+/// Returns 'N/A' if the solution is null or false, otherwise returns 'Solution'.
 String questionSolution(bool? solution) {
   if (solution == null || !solution) {
     return 'N/A';
@@ -24,25 +28,33 @@ String questionSolution(bool? solution) {
   return 'Solution';
 }
 
+/// Adds one to the provided value and returns the result.
 int addOne(int value) {
   return ++value;
 }
 
+/// Checks if the provided tech iframe is considered basic.
+/// Returns true if the iframe is not empty, false otherwise.
 bool isBasic(String techIframe) {
   return techIframe != '';
 }
 
+/// Checks if the provided text submission is of type 'text'.
+/// Returns true if the submission is 'text', false otherwise.
 bool isTextSubmission(String textSubmission) {
   return (textSubmission == 'text');
 }
 
+/// Compares two strings case-insensitively.
+/// Returns true if the strings are equal (ignoring case), false otherwise.
 bool equalsIgnoreCase(String? string1, String? string2) {
   return string1?.toLowerCase() == string2?.toLowerCase();
 }
 
+/// Preloads SVG images to avoid rendering delays on the next screen.
+/// This function asynchronously precaches a list of SVG images.
 void preloadSVGs() async {
-  // Preload SVG used in the next screen to avoid rendering delays
-  Future.wait([
+  await Future.wait([
     // LibreTexts ADAPT logo
     precachePicture(
       ExactAssetPicture(SvgPicture.svgStringDecoderOutsideViewBoxBuilder,
@@ -98,10 +110,13 @@ void preloadSVGs() async {
       null,
     ),
   ]);
-
 }
 
-Future mLaunchUrl(String url) async {
+/// Launches a URL using the device's default browser.
+/// Takes a [url] as input and tries to launch it.
+/// If the launch is successful, the URL is opened in the browser.
+/// If the launch fails, an error message is logged.
+Future<void> mLaunchUrl(String url) async {
   var uri = Uri.parse(url);
   try {
     await canLaunchUrl(uri);
@@ -111,6 +126,7 @@ Future mLaunchUrl(String url) async {
   }
 }
 
+/// Extension on [DateTime] class to provide comparison operators.
 extension DateTimeComparisonOperators on DateTime {
   bool operator <(DateTime other) => isBefore(other);
   bool operator >(DateTime other) => isAfter(other);
@@ -118,11 +134,13 @@ extension DateTimeComparisonOperators on DateTime {
   bool operator >=(DateTime other) => this > other || isAtSameMomentAs(other);
 }
 
-dynamic getJsonField(
-    dynamic response,
-    String jsonPath, [
-      bool isForList = false,
-    ]) {
+/// Retrieves a field from a JSON response using a JSON path.
+/// Takes a [response] and a [jsonPath] as input.
+/// Optionally, [isForList] can be set to true if the field is expected to be a list.
+/// Returns the value of the field if found, or null if not found.
+/// If [isForList] is true and the value is not a list, it is wrapped in a list.
+dynamic getJsonField(dynamic response, String jsonPath,
+    [bool isForList = false]) {
   final field = JsonPath(jsonPath).read(response);
   if (field.isEmpty) {
     return null;
@@ -134,6 +152,11 @@ dynamic getJsonField(
   return isForList && value is! Iterable ? [value] : value;
 }
 
+/// Extension on [String] class to handle overflow in a string.
+/// Takes an optional [maxChars] parameter to limit the maximum number of characters.
+/// If the length of the string is greater than [maxChars],
+/// the excess characters are replaced with the specified [replacement] string.
+/// Returns the modified string.
 extension FFStringExt on String {
   String maybeHandleOverflow({int? maxChars, String replacement = ''}) =>
       maxChars != null && length > maxChars
