@@ -30,6 +30,13 @@ class CColors {
   static const Color success = Color(0xFF008C3D);
   static const Color failure = Color(0xFFD82828);
 
+  //No Learning Path
+  static const Color learningBackgroundContainerColor = Color(0x73DCF1FF);
+  static const Color learningLeftStatBar = Color(0x73137BC4);
+  static const Color learningSquareColor = Color(0x73AFD2EB);
+  static const Color learningTopTextContainerColor = Color(0x738CB8D7);
+  static const Color learningBtmTextContainerColor = Color(0x73CAE1F2);
+
   //Shimmer
   // Backgrounds
   static const Color mainShimmerBackground = Color(0xFFF3F3F3);

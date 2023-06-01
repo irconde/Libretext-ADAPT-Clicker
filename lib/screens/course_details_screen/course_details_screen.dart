@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../backend/api_requests/api_calls.dart';
 import '../../constants/strings.dart';
 import '../../widgets/shimmer/shim_pages.dart';
-import '../../widgets/shimmer/shimmer_widget.dart';
 import 'assignment_ctn_widget.dart';
 import 'assignment_stat_ctn_widget.dart';
 import '../../widgets/app_bars/collapsible_app_bar_widget.dart';
@@ -17,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import '../../constants/dimens.dart';
 import '../../constants/colors.dart';
+import 'no_learning_path_widget.dart';
 
 @RoutePage()
 class CourseDetailsScreen extends ConsumerStatefulWidget {
@@ -398,24 +398,34 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                         ),
                                       ),
                                     ),
-                                    Flexible(
-                                      fit: FlexFit.tight,
-                                      child: ScrollShadow(
-                                          controller: _learningTabController,
-                                          child: ListView.builder(
-                                              padding: const EdgeInsets.all(0),
-                                              controller:
-                                                  _learningTabController,
-                                              itemCount: assignmentsList.length,
-                                              itemBuilder: (context, index) {
-                                                dynamic assignment =
-                                                    assignmentsList[index];
-                                                if (validStatAssignment(assignment)) {
-                                                  return AssignmentStatCtnWidget(
-                                                    assignment: assignment,
-                                                  );
-                                                }
-                                              })),
+
+                                    Visibility(
+                                      visible: assignmentsList.isNotEmpty,
+                                      child: Flexible(
+                                        fit: FlexFit.tight,
+                                        child: ScrollShadow(
+                                            controller: _learningTabController,
+                                            child: ListView.builder(
+                                                padding: const EdgeInsets.all(0),
+                                                controller:
+                                                    _learningTabController,
+                                                itemCount: assignmentsList.length,
+                                                itemBuilder: (context, index) {
+                                                  dynamic assignment =
+                                                      assignmentsList[index];
+                                                  if (validStatAssignment(assignment)) {
+                                                    return AssignmentStatCtnWidget(
+                                                      assignment: assignment,
+                                                    );
+                                                  }
+                                                })),
+                                      ),
+                                    ),
+                                    Visibility(
+                                      visible: assignmentsList.isEmpty,
+                                      child: const Flexible(
+                                          fit: FlexFit.tight,
+                                          child: SingleChildScrollView(child: NoLearningPathWidget())),
                                     ),
                                   ],
                                 ),
