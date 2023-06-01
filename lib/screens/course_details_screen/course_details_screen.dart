@@ -56,6 +56,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
     });
   }
 
+  /// Retrieves scores and assignments for the current course.
   Future<ApiCallResponse?> getScores() async {
     scoreResponse = await GetScoresByUserCall.call(
         token: UserStoredPreferences.authToken, course: id);
@@ -83,7 +84,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
             }));
   }
 
-  //Actual Page
+  /// Builds the main content of the page once the course details are loaded.
   Widget loadedPage(BuildContext context) {
     var theme = AppTheme.of(context);
     return NestedScrollView(
@@ -559,7 +560,6 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
     Strings.displayOrderDueDate: Strings.orderDueDate,
   };
 
-  // Define a function that takes a date string and returns a formatted string
   String formatDate(String date) {
     // Parse the date string using the given format
     DateTime parsedDate = DateFormat('yyyy-MM-dd').parse(date);
@@ -569,11 +569,13 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
     return formattedDate;
   }
 
+  /// Converts the JSON response to a list of assignments.
   List jsonToAssignmentList(ApiCallResponse snapshot) =>
       GetScoresByUserCall.assignments(
         snapshot.jsonBody,
       ).toList(); // We already make this call on this page, why do we need it twice?
 
+  /// Filters the assignment list based on the selected filter option.
   List<dynamic> filterAssignmentList(List<dynamic> list, String filter) {
     if (filter == _filterOptions[0]) return list;
     List outputList = list
@@ -582,6 +584,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
     return outputList;
   }
 
+  /// Orders the assignment list based on the selected order option.
   List<dynamic> orderAssignmentList(List<dynamic> list, String orderFactor) {
     String? refProperty = _orderOptions[orderFactor];
     list.sort((a, b) {
@@ -606,12 +609,14 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
     return list;
   }
 
+  /// Callback function when a filter option is selected.
   void onFilterOptionSelected(filterOption) {
     setState(() {
       _currentFilterOption = filterOption;
     });
   }
 
+  /// Callback function when an order option is selected.
   void onOrderOptionSelected(orderOption) {
     if (!displayOrderOptions.containsKey(orderOption)) return;
 

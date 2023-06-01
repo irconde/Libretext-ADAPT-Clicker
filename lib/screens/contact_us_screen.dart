@@ -14,10 +14,14 @@ import '../utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import '../utils/utils.dart';
 
+/// Screen for letting the user contact the Libretexts team.
 @RoutePage()
 class ContactUsScreen extends ConsumerStatefulWidget {
   final bool? openFromDrawer;
 
+  /// Constructs a [ContactUsScreen] widget.
+  ///
+  /// [openFromDrawer] indicates whether the screen is opened from the drawer menu.
   const ContactUsScreen({Key? key, this.openFromDrawer = false})
       : super(key: key);
 
@@ -42,6 +46,7 @@ class _ContactUsScreenState extends ConsumerState<ContactUsScreen>
     initFormFieldsInfo();
   }
 
+  /// Callback when a subject is selected from the dropdown.
   void _onSubjectSelected(subjectValue) {
     setState(() {
       formValues[subject] = [
@@ -61,6 +66,7 @@ class _ContactUsScreenState extends ConsumerState<ContactUsScreen>
     super.dispose();
   }
 
+  /// Submits the contact form.
   void _submit() async {
     if (!checkConnection()) return;
     setState(() {

@@ -9,6 +9,13 @@ import '../../constants/dimens.dart';
 import '../../constants/colors.dart';
 
 class AssignmentGridWidget extends ConsumerStatefulWidget {
+  /// A widget representing a grid item in the assignment grid.
+  ///
+  /// The [questionsItem] represents the question item for the assignment.
+  /// The [builderResponse] represents the builder response for the assignment.
+  /// The [assignmentSummary] represents the summary of the assignment.
+  /// The [ref] represents the widget reference.
+  /// The [questionsIndex] represents the index of the question.
   const AssignmentGridWidget(
       {Key? key,
       this.questionsItem,
@@ -47,7 +54,11 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
     questionsIndex = widget.questionsIndex;
   }
 
-  // Define a function that takes a date string and returns a formatted string
+  /// Formats the given [date] string into a formatted date string.
+  ///
+  /// If the [date] is 'N/A', an empty string is returned.
+  /// Otherwise, the [date] string is parsed using the format 'MMM dd, yyyy HH:mm:ss',
+  /// and the formatted date string is returned using the format 'MMMM d'.
   String formatDate(String date) {
     if (date == 'N/A') {
       return '';

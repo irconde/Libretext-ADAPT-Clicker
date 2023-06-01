@@ -11,6 +11,7 @@ class NoNotificationsWidget extends StatefulWidget {
   State<NoNotificationsWidget> createState() => _NoNotificationsWidgetState();
 }
 
+/// The state for the [NoNotificationsWidget].
 class _NoNotificationsWidgetState extends State<NoNotificationsWidget> {
   @override
   Widget build(BuildContext context) {
@@ -20,12 +21,12 @@ class _NoNotificationsWidgetState extends State<NoNotificationsWidget> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-           SvgPicture.asset(
-              'assets/images/no_notifications.svg',
-              width: double.infinity,
-              height: 300,
-              fit: BoxFit.none,
-            ),
+          SvgPicture.asset(
+            'assets/images/no_notifications.svg',
+            width: double.infinity,
+            height: 300,
+            fit: BoxFit.none,
+          ),
           Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,

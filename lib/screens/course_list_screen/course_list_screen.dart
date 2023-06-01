@@ -24,6 +24,9 @@ import '../../constants/colors.dart';
 class CourseListScreen extends ConsumerStatefulWidget {
   final bool? isFirstScreen;
 
+  /// Constructs a [CourseListScreen] widget.
+  ///
+  /// [isFirstScreen] specifies whether this is the first screen.
   const CourseListScreen({Key? key, this.isFirstScreen = false})
       : super(key: key);
 
@@ -39,6 +42,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
   ApiCallResponse? sendTokenResponse;
   bool isLoading = true;
 
+  /// Refreshes the page by calling [updateAndGetResponse].
   Future<bool> refreshPage() async {
     try {
       setState(() {
@@ -51,6 +55,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
     }
   }
 
+  /// Calls the API to update the response and returns the updated response.
   Future<ApiCallResponse> updateAndGetResponse() async {
     var response = GetEnrollmentsCall.call(
       token: UserStoredPreferences.authToken,
@@ -77,6 +82,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
     }
   }
 
+  /// Shows a snackbar indicating the signed-in user.
   void _showSignInSnackbar() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -103,14 +109,14 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
     });
   }
 
-  //Creating Firebase
+  /// Initializes Firebase services.
   Future<void> initFirebase() async {
     FirebaseMessaging.instance.setDeliveryMetricsExportToBigQuery(true);
     //FirebaseAnalytics analytics = FirebaseAnalytics.instance;
     //String id = await FirebaseInstallations.instance.getId();
   }
 
-  //Permission check
+  /// Requests push notification permission.
   void requestPermission() async {
     // TODO. To be deleted? This is not being used.
     // FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -126,7 +132,6 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
       sound: true,
     );
      */
-
     if (await Permission.notification.request().isGranted) {
       logger.d('User granted permission');
     } else if (await Permission.notification.status.isLimited) {
@@ -136,6 +141,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
     }
   }
 
+  /// Handles incoming push notification routes.
   void handleRoutes() {
     RouteHandler rh = RouteHandler();
     // Handle incoming push notifications when the app is in the foreground
@@ -163,11 +169,13 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
     });
   }
 
+  /// Saves the Firebase token.
   void saveToken(var token) async {
     UserStoredPreferences.setString('ff_deviceIDToken', token);
     logger.d('My token is $token');
   }
 
+  /// Retrieves the Firebase token.
   void getToken() async {
     await FirebaseMessaging.instance.getToken().then((token) {
       setState(() {
@@ -177,6 +185,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
     });
   }
 
+  /// Sends the Firebase token to the server.
   Future<void> sendToken() async {
     sendTokenResponse = await SendTokenCall.call(
       token: UserStoredPreferences.authToken,
@@ -251,6 +260,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
     );
   }
 
+  /// Widget to display the loaded page content.
   Widget loadedPage() {
     return Column(
       mainAxisSize: MainAxisSize.max,

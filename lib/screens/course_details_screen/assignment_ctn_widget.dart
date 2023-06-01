@@ -10,15 +10,24 @@ import '../../constants/dimens.dart';
 import '../../constants/colors.dart';
 
 class AssignmentCtnWidget extends ConsumerStatefulWidget {
+  /// A widget for displaying assignment information.
+  ///
+  /// The [assignmentsItem] parameter is required and represents the data
+  /// for the assignment.
   const AssignmentCtnWidget({Key? key, required this.assignmentsItem})
       : super(key: key);
+
+  /// The data for the assignment.
   final dynamic assignmentsItem;
 
   @override
   AssignmentCtnWidgetState createState() => AssignmentCtnWidgetState();
 }
 
-// Define a function that takes a date string and returns a formatted string
+/// A function that formats a date string into a specific format.
+///
+/// It takes a [date] string in the format 'yyyy-MM-dd HH:mm:ss'
+/// and returns a formatted string in the format 'MM/dd/yy HH:mm a'.
 String formatDate(String date) {
   // Parse the date string using the given format
   DateTime parsedDate = DateFormat('yyyy-MM-dd HH:mm:ss').parse(date);
@@ -33,6 +42,11 @@ class AssignmentCtnWidgetState extends ConsumerState<AssignmentCtnWidget>
   late String submittedCount;
   late Color submittedColor;
 
+  /// Formats the submitted count into a specific format.
+  ///
+  /// It takes a list of [parts], which should have exactly two elements.
+  /// If the input is valid, it returns a formatted string in the format 'x out of y'.
+  /// Otherwise, it returns an error message.
   String formatSubmitted(List<String> parts) {
     // Split the input by the '/' character
     // Check if the input has exactly two parts
@@ -45,6 +59,12 @@ class AssignmentCtnWidgetState extends ConsumerState<AssignmentCtnWidget>
     }
   }
 
+  /// Determines the color based on the submitted count.
+  ///
+  /// It takes a list of [parts], which should have exactly two elements.
+  /// If the input is valid, it calculates the completion percentage
+  /// and returns a color based on the percentage. Otherwise, it returns
+  /// a default error color.
   Color getColor(List<String> parts) {
     // Check if the input has exactly two parts
     if (parts.length == 2) {
@@ -74,6 +94,10 @@ class AssignmentCtnWidgetState extends ConsumerState<AssignmentCtnWidget>
     }
   }
 
+  /// Retrieves the submitted count and color asynchronously.
+  ///
+  /// It sets the [submittedCount] and [submittedColor] based on the
+  /// [assignmentsItem] data.
   Future<void> submitted() async {
     String temp = widget.assignmentsItem['number_submitted'];
     List<String> parts = temp.split('/');

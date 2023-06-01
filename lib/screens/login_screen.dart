@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import '../main.dart';
 import '../constants/dimens.dart';
 
+/// Screen that provides the user with a form to sign in
 @RoutePage()
 class LoginScreenWidget extends ConsumerStatefulWidget {
   const LoginScreenWidget({Key? key}) : super(key: key);
@@ -41,6 +42,7 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
     initFormFieldsInfo();
   }
 
+  /// Retrieves and sets the saved authentication data if "Remember Me" is enabled.
   Future<void> recoverSavedAuthData() async {
     try {
       await _rememberMeCheck();
@@ -55,6 +57,7 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
     super.dispose();
   }
 
+  /// Checks if "Remember Me" is enabled and populates the form fields with saved data.
   Future<void> _rememberMeCheck() async {
     String userAccount = UserStoredPreferences.userAccount;
     String userPassword = UserStoredPreferences.userPassword;
@@ -77,6 +80,7 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
     }
   }
 
+  /// Handles the login form submission.
   void _submit() async {
     if (!checkConnection()) return;
     setState(() {
@@ -104,6 +108,7 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
     }
   }
 
+  /// Handles the "Forgot Password" button tap.
   void _onForgotPasswordTapped() async {
     FocusScope.of(context).unfocus();
     await showModalBottomSheet(

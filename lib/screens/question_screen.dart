@@ -14,6 +14,7 @@ import '../constants/dimens.dart';
 import '../backend/user_stored_preferences.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
+/// Screen that displays information of a particular question
 @RoutePage()
 class QuestionScreen extends StatefulWidget {
   const QuestionScreen({
@@ -31,6 +32,7 @@ class QuestionScreen extends StatefulWidget {
   State<QuestionScreen> createState() => _QuestionScreenState(index);
 }
 
+/// The state class for the QuestionScreen widget.
 class _QuestionScreenState extends State<QuestionScreen> {
   _QuestionScreenState(this._currentPage);
   TextEditingController? textController;
@@ -318,6 +320,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
   }
 }
 
+/// Injects the viewport meta tag into the given [controller].
 void injectViewport(InAppWebViewController controller) async {
   await controller.evaluateJavascript(
       source:

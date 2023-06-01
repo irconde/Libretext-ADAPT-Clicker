@@ -17,6 +17,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import '../backend/user_stored_preferences.dart';
 
+/// Screen for updating the user profile.
 @RoutePage()
 class UpdateProfileScreen extends ConsumerStatefulWidget {
   const UpdateProfileScreen({Key? key}) : super(key: key);
@@ -26,6 +27,7 @@ class UpdateProfileScreen extends ConsumerStatefulWidget {
       _UpdateProfileScreenState();
 }
 
+/// State class for the UpdateProfileScreen widget.
 class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
     with FormStateMixin, ConnectionStateMixin {
   static const String firstName = 'first_name';
@@ -37,6 +39,8 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late Future<Map<String, String>> _initialProfileValues;
   bool isLoading = true;
+
+  /// Initializes the state of the widget.
   @override
   void initState() {
     super.initState();
@@ -46,6 +50,7 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
     _initialProfileValues = _loadInitialUserInfo();
   }
 
+  /// Loads the initial user information asynchronously.
   Future<Map<String, String>> _loadInitialUserInfo() async {
     Map<String, String> currentUserInfo = {};
     final userInfoRequest = await GetUserCall.call(
@@ -69,14 +74,13 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
           .toString();
     }
     _initFormData(currentUserInfo);
-
     setState(() {
       isLoading = false;
     });
-
     return currentUserInfo;
   }
 
+  /// Initializes the form data with the provided input values.
   void _initFormData(Map<String, String> inputValues) {
     setState(() {
       formValues[firstName] = [
@@ -108,6 +112,7 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
     checkFormIsReadyToSubmit();
   }
 
+  /// Callback for when a timezone is selected.
   void _onTimezoneSelected(timezone) {
     setState(() {
       formValues[timeZone] = [
@@ -119,6 +124,7 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
     checkFormIsReadyToSubmit();
   }
 
+  /// Submits the form data for updating the user profile.
   void _submit() async {
     if (!checkConnection()) return;
     setState(() {
@@ -177,6 +183,7 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen>
         )));
   }
 
+  /// Widget for the loaded profile page.
   Widget loadedPage() {
     return FutureBuilder<Map<String, String>>(
         future: _initialProfileValues,

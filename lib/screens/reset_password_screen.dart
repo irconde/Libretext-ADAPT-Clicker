@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import '../backend/user_stored_preferences.dart';
 import '../utils/utils.dart';
 
+/// Screen for setting a new password.
 @RoutePage()
 class ResetPasswordScreen extends ConsumerStatefulWidget {
   const ResetPasswordScreen({Key? key}) : super(key: key);
@@ -23,6 +24,7 @@ class ResetPasswordScreen extends ConsumerStatefulWidget {
       _ResetPasswordScreenState();
 }
 
+/// The state class for the ResetPasswordScreen widget.
 class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
     with FormStateMixin, ConnectionStateMixin {
   static const String currentPassword = 'current_password';
@@ -50,6 +52,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
     super.dispose();
   }
 
+  /// Handles the form submission.
   void _submit() async {
     if (!checkConnection()) return;
     setState(() {
@@ -210,7 +213,8 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
                               obscureText:
                                   !_fieldsVisibility[passwordConfirmation]!,
                               decoration: InputDecoration(
-                                labelText: Strings.confirmPasswordFieldMandatory,
+                                labelText:
+                                    Strings.confirmPasswordFieldMandatory,
                                 errorText: submitted
                                     ? formValues[passwordConfirmation]
                                         [errorIndex]

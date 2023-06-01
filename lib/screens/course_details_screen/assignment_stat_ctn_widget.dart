@@ -8,14 +8,27 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../utils/utils.dart';
 
 class AssignmentStatCtnWidget extends StatefulWidget {
+  /// A widget for displaying assignment statistics.
+  ///
+  /// The [assignment] parameter represents the data for the assignment.
   const AssignmentStatCtnWidget({Key? key, this.assignment}) : super(key: key);
 
+  /// The data for the assignment.
   final dynamic assignment;
+
   @override
   State<AssignmentStatCtnWidget> createState() =>
       _AssignmentStatCtnWidgetState();
 }
 
+/// Returns the color based on the severity percentage.
+///
+/// The [context] parameter is required for accessing the current theme.
+/// The [percentage] parameter represents the severity percentage.
+/// Returns a color based on the severity:
+/// - If the percentage is less than 50, returns [CColors.activityBad].
+/// - If the percentage is less than 80, returns [CColors.activityMedium].
+/// - Otherwise, returns [CColors.activityGood].
 Color severityColor(BuildContext context, double percentage) {
   if (percentage < 50) {
     return CColors.activityBad;
@@ -26,12 +39,16 @@ Color severityColor(BuildContext context, double percentage) {
   }
 }
 
+/// Formats a date string into a specific format.
+///
+/// The [date] parameter is a date string in the format 'yyyy-MM-dd HH:mm:ss'.
+/// Returns a formatted string in the format 'MM/dd/yy 'at' H:mm a'.
+/// If the formatting fails, returns [Strings.datePlaceholder].
 String formatDate(String date) {
   // Parse the date string using the given format
   DateTime parsedDate = DateFormat('yyyy-MM-dd HH:mm:ss').parse(date);
   // Format the date using the desired format
   String formattedDate = DateFormat("MM/dd/yy 'at' H:mm a").format(parsedDate);
-
   if (formattedDate != null) {
     // Return the formatted date
     return formattedDate;
@@ -48,6 +65,11 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
     super.initState();
   }
 
+  /// Calculates the severity based on the assignment's score and total points.
+  ///
+  /// Updates the [_severity] value based on the assignment's score and total points.
+  /// If the total points is 0, sets the [_severity] to 0.
+  /// If the score is 'Not yet released', sets the score to 0 before calculating the [_severity].
   void calculateSeverity() {
     var score = widget.assignment['score'];
     var total = widget.assignment['total_points'];

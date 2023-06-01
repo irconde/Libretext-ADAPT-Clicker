@@ -17,6 +17,7 @@ import '../constants/dimens.dart';
 import '../backend/user_stored_preferences.dart';
 import '../utils/utils.dart';
 
+/// Screen for creating a new account.
 @RoutePage()
 class CreateAccountScreen extends ConsumerStatefulWidget {
   const CreateAccountScreen({Key? key}) : super(key: key);
@@ -39,6 +40,8 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
   bool passwordFieldCAVisibility = false;
   bool confirmPasswordFieldCAVisibility = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  /// Loads the available time zones asynchronously.
   Future<void> _loadTimeZones() async {
     await AppState.timezoneContainer.initTimezones();
     setState(() {});
@@ -77,10 +80,12 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
     super.dispose();
   }
 
+  /// Opens the time zone selector when the user taps on the field.
   void _openTimezoneSelector() {
     FocusScope.of(context).requestFocus(formValues[timeZone][focusNodeIndex]);
   }
 
+  /// Callback when a time zone is selected from the dropdown.
   void _onTimezoneSelected(timezone) {
     setState(() {
       formValues[timeZone] = [
@@ -92,6 +97,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
     checkFormIsReadyToSubmit();
   }
 
+  /// Shows a snackbar with a success message after successful sign up.
   void _showSignUpSnackbar(String userAccount) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -118,6 +124,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
     });
   }
 
+  /// Submits the form for creating a new account.
   void _submit() async {
     if (!checkConnection()) return;
     setState(() {

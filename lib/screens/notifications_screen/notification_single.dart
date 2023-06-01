@@ -7,16 +7,22 @@ import '../../constants/dimens.dart';
 
 class NotificationSingle extends StatefulWidget {
   const NotificationSingle({Key? key, required this.index}) : super(key: key);
+
+  /// The index of the notification.
   final int index;
 
   @override
   State<NotificationSingle> createState() => _NotificationSingleWidgetState();
 }
 
+/// The state for the [NotificationSingle] widget.
 class _NotificationSingleWidgetState extends State<NotificationSingle> {
   _NotificationSingleWidgetState();
+
+  /// Indicates whether the notification has been dismissed.
   bool dismissed = false;
 
+  /// The key value for the widget.
   dynamic keyVal = UniqueKey();
 
   @override

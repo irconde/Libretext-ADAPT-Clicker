@@ -11,6 +11,7 @@ class NoCoursesWidget extends StatefulWidget {
   State<NoCoursesWidget> createState() => _NoCoursesWidgetState();
 }
 
+/// The state for the [NoCoursesWidget].
 class _NoCoursesWidgetState extends State<NoCoursesWidget> {
   @override
   Widget build(BuildContext context) {

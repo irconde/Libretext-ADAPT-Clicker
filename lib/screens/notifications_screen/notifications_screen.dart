@@ -17,10 +17,12 @@ class NotificationsScreen extends StatefulWidget {
   State<NotificationsScreen> createState() => _NotificationsScreenState();
 }
 
+/// Creates the list of notifications.
 void createList() {
   if (PushNotificationManager().notificationList.isEmpty) return;
 }
 
+/// Adds a new notification to the list.
 void addNotification(String details) {
   PushNotificationManager().addNotification(details);
 }
@@ -33,6 +35,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     //addNotification('details');
   }
 
+  /// Clears all notifications from the list.
   void clearNotifications() {
     setState(() {
       PushNotificationManager().clearNotifications();
@@ -132,20 +135,33 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     );
   }
 
+  /// Checks if the notification list is empty.
   bool notificationEmpty() {
     return true;
   }
 }
 
-// Clear All
+/// Widget for clearing all notifications.
 class ClearAllWidget extends StatelessWidget {
+  /// Determines whether the "Clear All" button is active or not.
   final bool isActive;
+
+  /// Callback function invoked when the "Clear All" button is tapped.
   final VoidCallback onTap;
-  const ClearAllWidget({Key? key, required this.isActive, required this.onTap})
-      : super(key: key);
+
+  /// Creates a [ClearAllWidget].
+  ///
+  /// The [isActive] parameter specifies whether the button is active or not.
+  /// The [onTap] parameter is the callback function that is invoked when the button is tapped.
+  const ClearAllWidget({
+    Key? key,
+    required this.isActive,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // Determine the text color based on the [isActive] property.
     final color = isActive ? CColors.primaryBackground : CColors.clearAllColor;
 
     return RichText(

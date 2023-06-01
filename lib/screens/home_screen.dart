@@ -11,8 +11,10 @@ import '../utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+/// Screen displayed when the app is launched
 @RoutePage()
 class HomeScreen extends ConsumerStatefulWidget {
+  /// Specifies if the home screen is the first screen of the app.
   final bool? isFirstScreen;
 
   const HomeScreen({Key? key, this.isFirstScreen = false}) : super(key: key);
