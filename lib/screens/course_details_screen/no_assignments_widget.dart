@@ -3,6 +3,7 @@ import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import '../../constants/colors.dart';
 
+/// A widget displayed when there are no assignments available.
 class NoAssignmentsWidget extends StatefulWidget {
   const NoAssignmentsWidget({Key? key}) : super(key: key);
 
@@ -69,6 +70,7 @@ class _NoAssignmentsWidgetState extends State<NoAssignmentsWidget> {
   }
 }
 
+/// Widget representing an empty assignment.
 Widget emptyAssignment() {
   return Column(
     children: [

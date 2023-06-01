@@ -19,13 +19,18 @@ import '../../constants/dimens.dart';
 import '../../constants/colors.dart';
 import 'no_learning_path_widget.dart';
 
+/// Represents a screen that displays details of a course.
 @RoutePage()
 class CourseDetailsScreen extends ConsumerStatefulWidget {
+  /// Creates a [CourseDetailsScreen].
+  ///
+  /// The [id] parameter is the unique identifier of the course.
   const CourseDetailsScreen({
     Key? key,
     @PathParam('course') required this.id,
   }) : super(key: key);
 
+  /// The unique identifier of the course.
   final String id;
 
   @override
@@ -33,6 +38,7 @@ class CourseDetailsScreen extends ConsumerStatefulWidget {
       _CourseDetailsScreenState();
 }
 
+/// State class for the `CourseDetailsScreen` widget.
 class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
   final ScrollController _mainController = ScrollController();
   final ScrollController _learningTabController = ScrollController();
@@ -625,7 +631,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
     });
   }
 
-  //Checks if assignment is valid for stat container
+  /// Checks if an assignment is valid for the stat container.
   bool validStatAssignment(assignment) {
     if (assignment == null) return false;
 

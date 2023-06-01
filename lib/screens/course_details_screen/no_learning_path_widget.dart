@@ -3,6 +3,7 @@ import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import '../../constants/colors.dart';
 
+/// A widget displayed when there is no learning path available.
 class NoLearningPathWidget extends StatefulWidget {
   const NoLearningPathWidget({Key? key}) : super(key: key);
 
@@ -66,6 +67,7 @@ class _NoLearningPathWidgetState extends State<NoLearningPathWidget> {
   }
 }
 
+/// Widget representing an empty learning task.
 Widget emptyLearningTask() {
   return Padding(
     padding: const EdgeInsetsDirectional.fromSTEB(32, 0, 23, 8),
