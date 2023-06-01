@@ -4,6 +4,14 @@ import '../../utils/app_theme.dart';
 import '../../constants/dimens.dart';
 import '../bottom_sheets/filter_sheet_widget.dart';
 
+/// A dropdown widget for selecting an assignment.
+///
+/// This widget displays a dropdown button for selecting an assignment from a list of available options.
+/// It allows the user to choose an assignment and triggers a callback when an item is selected.
+///
+/// The [selectedItem] parameter is the initial value of the dropdown.
+/// The [itemList] parameter is the list of available items for selection.
+/// The [onItemSelectedCallback] parameter is a callback function triggered when an item is selected.
 class AssignmentDropdown extends StatefulWidget {
   const AssignmentDropdown({
     Key? key,
@@ -21,6 +29,7 @@ class AssignmentDropdown extends StatefulWidget {
   State<StatefulWidget> createState() => AssignmentDropdownState();
 }
 
+/// The state of the [AssignmentDropdown] widget.
 class AssignmentDropdownState extends State<AssignmentDropdown> {
   String? _value;
 

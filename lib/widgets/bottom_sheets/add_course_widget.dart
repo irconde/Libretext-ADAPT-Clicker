@@ -13,6 +13,7 @@ import 'blurred_bottom_sheet.dart';
 import '../buttons/custom_elevated_button_widget.dart';
 import '../../mixins/form_state_mixin.dart';
 
+/// Widget for adding a course.
 class AddCourseWidget extends ConsumerStatefulWidget {
   const AddCourseWidget({Key? key}) : super(key: key);
 
@@ -38,6 +39,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
     super.dispose();
   }
 
+  /// Submits the form to join a course.
   void _submit() async {
     const String toyTimeZone = 'America/Belize';
     setState(() => submitted = true);
@@ -80,6 +82,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
     }
   }
 
+  /// Callback function called when the text in the text field changes.
   void _onTextChanged(String text) {
     setState(() {
       formValues[code] = [text, null, formValues[code][focusNodeIndex]];

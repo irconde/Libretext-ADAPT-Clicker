@@ -12,6 +12,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../buttons/custom_elevated_button_widget.dart';
 import '../../mixins/form_state_mixin.dart';
 
+/// A widget for resetting the user's password.
 class ResetPasswordWidget extends ConsumerStatefulWidget {
   const ResetPasswordWidget({Key? key}) : super(key: key);
 
@@ -20,10 +21,12 @@ class ResetPasswordWidget extends ConsumerStatefulWidget {
       _ResetPasswordWidgetState();
 }
 
+/// The state class for the [ResetPasswordWidget].
 class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
     with TickerProviderStateMixin, FormStateMixin, ConnectionStateMixin {
   static const String email = 'email';
 
+  /// Handles the form submission when the user clicks the submit button.
   void _submit() async {
     if (!checkConnection()) return;
     setState(() {
@@ -68,6 +71,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
     super.dispose();
   }
 
+  /// Callback for handling text changes in the email field.
   void _onTextChanged(String text) {
     setState(() {
       formValues[email] = [text, null, formValues[email][focusNodeIndex]];

@@ -3,21 +3,31 @@ import '../../constants/colors.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/app_state.dart';
 
+/// A dropdown widget for selecting a timezone.
+///
+/// This widget displays a dropdown button for selecting a timezone from a list of available options.
+/// It allows the user to choose a timezone and triggers a callback when an item is selected.
+///
+/// The [timezoneDropDownValue] parameter is the initial value of the dropdown.
+/// The [onItemSelectedCallback] parameter is a callback function triggered when an item is selected.
+/// The [focusNode] parameter is an optional [FocusNode] used to manage the focus of the dropdown.
 class TimezoneDropdown extends StatefulWidget {
-  TimezoneDropdown(
-      {Key? key,
-      required this.timezoneDropDownValue,
-      this.onItemSelectedCallback,
-      this.focusNode})
-      : super(key: key);
-  String? timezoneDropDownValue;
-  Function? onItemSelectedCallback;
-  FocusNode? focusNode;
+  TimezoneDropdown({
+    Key? key,
+    required this.timezoneDropDownValue,
+    this.onItemSelectedCallback,
+    this.focusNode,
+  }) : super(key: key);
+
+  final String? timezoneDropDownValue;
+  final Function? onItemSelectedCallback;
+  final FocusNode? focusNode;
 
   @override
   State<StatefulWidget> createState() => TimezoneDropdownState();
 }
 
+/// The state of the [TimezoneDropdown] widget.
 class TimezoneDropdownState extends State<TimezoneDropdown> {
   String? _timezoneDropDownValue;
 

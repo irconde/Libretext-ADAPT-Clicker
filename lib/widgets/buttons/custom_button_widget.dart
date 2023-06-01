@@ -2,6 +2,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
+/// Options for customizing the appearance of the button.
 class ButtonOptions {
   const ButtonOptions({
     this.textStyle,
@@ -36,6 +37,7 @@ class ButtonOptions {
   final BorderSide? borderSide;
 }
 
+/// A custom button widget with customizable options.
 class CustomButtonWidget extends StatefulWidget {
   const CustomButtonWidget({
     Key? key,
@@ -58,6 +60,7 @@ class CustomButtonWidget extends StatefulWidget {
   State<CustomButtonWidget> createState() => _CustomButtonWidgetState();
 }
 
+/// The state of the [CustomButtonWidget].
 class _CustomButtonWidgetState extends State<CustomButtonWidget> {
   bool loading = false;
 

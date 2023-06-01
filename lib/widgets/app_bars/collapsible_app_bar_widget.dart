@@ -6,7 +6,16 @@ import '../../constants/dimens.dart';
 import '../../constants/colors.dart';
 import '../notification_icon_widget.dart';
 
+/// A collapsible app bar widget that can expand and collapse based on scroll position.
 class CollapsibleAppBar extends StatefulWidget {
+  /// Creates a [CollapsibleAppBar] widget.
+  ///
+  /// The [title] is the text to display as the app bar title.
+  /// The [iconPath] is the path of an SVG icon to display in the background.
+  /// The [top] is the initial height of the app bar.
+  /// The [child] is an optional widget to display below the app bar.
+  /// The [svgIconColor] is the color of the SVG icon. If not specified, it uses the default color.
+  /// The [showNotificationIcon] indicates whether to show the notification icon.
   const CollapsibleAppBar(
       {Key? key,
       required this.title,
@@ -17,11 +26,22 @@ class CollapsibleAppBar extends StatefulWidget {
       this.showNotificationIcon = false})
       : super(key: key);
 
+  /// The text to display as the app bar title.
   final String title;
+
+  /// The path of an SVG icon to display in the background.
   final String? iconPath;
+
+  /// The initial height of the app bar.
   final double top;
+
+  /// An optional widget to display below the app bar.
   final Widget? child;
+
+  /// The color of the SVG icon. If not specified, it uses the default color.
   final Color? svgIconColor;
+
+  /// Indicates whether to show the notification icon.
   final bool showNotificationIcon;
 
   @override

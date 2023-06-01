@@ -11,9 +11,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../constants/dimens.dart';
 
-enum DrawerItems { courses, profile, password, contact }
+/// An enum representing the items in the navigation drawer.
+enum DrawerItems {
+  courses,
+  profile,
+  password,
+  contact,
+}
 
+/// A widget that displays a navigation drawer.
 class NavigationDrawerWidget extends ConsumerStatefulWidget {
+  /// The currently selected item in the navigation drawer.
   final DrawerItems? currentSelected;
 
   const NavigationDrawerWidget({Key? key, this.currentSelected})

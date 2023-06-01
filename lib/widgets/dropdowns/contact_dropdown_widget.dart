@@ -3,20 +3,31 @@ import '../../constants/colors.dart';
 import '../../constants/strings.dart';
 import '../../utils/app_theme.dart';
 
+/// A dropdown widget for selecting a contact subject.
+///
+/// This widget displays a dropdown button for selecting a contact subject from a list of available options.
+/// It allows the user to choose a subject and triggers a callback when an item is selected.
+///
+/// The [contactUsSubjectDropDownValue] parameter is the initial value of the dropdown.
+/// The [onItemSelected] parameter is a callback function triggered when an item is selected.
+/// The [focusNode] parameter is an optional [FocusNode] used to manage the focus of the dropdown.
 class ContactDropdown extends StatefulWidget {
-  const ContactDropdown(
-      {Key? key,
-      required this.contactUsSubjectDropDownValue,
-      required this.onItemSelected,
-      this.focusNode})
-      : super(key: key);
+  const ContactDropdown({
+    Key? key,
+    required this.contactUsSubjectDropDownValue,
+    required this.onItemSelected,
+    this.focusNode,
+  }) : super(key: key);
+
   final String? contactUsSubjectDropDownValue;
   final Function onItemSelected;
   final FocusNode? focusNode;
+
   @override
   State<StatefulWidget> createState() => ContactDropdownState();
 }
 
+/// The state of the [ContactDropdown] widget.
 class ContactDropdownState extends State<ContactDropdown> {
   String? contactUsSubjectDropDownValue;
 

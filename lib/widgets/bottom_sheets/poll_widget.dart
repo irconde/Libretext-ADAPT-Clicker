@@ -12,6 +12,7 @@ import 'package:flutter_html/flutter_html.dart';
 import '../../backend/user_stored_preferences.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
+/// Represents a page that displays a poll.
 @RoutePage()
 class PollWidget extends StatefulWidget {
   const PollWidget({
@@ -20,7 +21,10 @@ class PollWidget extends StatefulWidget {
     @PathParam('poll') this.poll,
   }) : super(key: key);
 
+  /// The name of the assignment.
   final String? assignmentName;
+
+  /// The poll data.
   final dynamic poll;
 
   @override
@@ -60,8 +64,6 @@ class _PollWidgetState extends State<PollWidget> {
 
   @override
   Widget build(BuildContext context) {
-
-    /*-----------------Building Page-----------------------*/
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: CColors.primaryBackground,

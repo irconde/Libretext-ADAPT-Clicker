@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import '../../constants/colors.dart';
 import '../../mixins/form_state_mixin.dart';
 
-enum ButtonType { primary, secondary, external, shimmer}
+/// Enumeration representing the type of a custom elevated button.
+enum ButtonType {
+  primary,
+  secondary,
+  external,
+  shimmer,
+}
 
+/// A custom elevated button widget.
 class CustomElevatedButton extends StatelessWidget {
   final ButtonType type;
   final FormStateValue? formState;
@@ -13,6 +20,15 @@ class CustomElevatedButton extends StatelessWidget {
   String? processingText;
   final Function onPressed;
 
+  /// Constructs a [CustomElevatedButton].
+  ///
+  /// The [type] parameter specifies the type of the button.
+  /// The [formState] parameter represents the state of the form.
+  /// The [normalText] parameter provides the text to display when the button is in its normal state.
+  /// The [errorText] parameter provides the text to display when the form has an error state.
+  /// The [successText] parameter provides the text to display when the form has a success state.
+  /// The [processingText] parameter provides the text to display when the form is in a processing state.
+  /// The [onPressed] parameter is a callback function that will be invoked when the button is pressed.
   CustomElevatedButton({
     this.type = ButtonType.primary,
     Key? key,
@@ -91,7 +107,7 @@ class CustomElevatedButton extends StatelessWidget {
         btnMainColor = CColors.secondaryColor;
         break;
       case ButtonType.shimmer:
-          btnMainColor = CColors.buttonShimmerBackground;
+        btnMainColor = CColors.buttonShimmerBackground;
         break;
     }
     return btnMainColor;

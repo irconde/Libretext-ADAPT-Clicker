@@ -5,10 +5,11 @@ import '../backend/push_notification_manager.dart';
 import '../backend/router/app_router.gr.dart';
 import '../constants/colors.dart';
 
+/// A widget that displays a notification icon.
 class NotificationIcon extends StatelessWidget {
-  const NotificationIcon({super.key, required this.setState,});
-  
-  //Imported Variables
+  const NotificationIcon({Key? key, required this.setState}) : super(key: key);
+
+  /// A callback function to update the state.
   final StateSetter setState;
 
   @override
@@ -33,7 +34,8 @@ class NotificationIcon extends StatelessWidget {
           badgeContent: Text(
             '$val',
             style: const TextStyle(
-                color: CColors.primaryBackground),
+              color: CColors.primaryBackground,
+            ),
           ),
           child: IconButton(
             icon: const Icon(
@@ -49,6 +51,4 @@ class NotificationIcon extends StatelessWidget {
       );
     }
   }
-
-
 }

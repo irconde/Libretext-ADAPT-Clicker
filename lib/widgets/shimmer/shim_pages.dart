@@ -7,12 +7,16 @@ import '../../utils/app_theme.dart';
 import '../buttons/custom_elevated_button_widget.dart';
 import 'shimmer_widget.dart';
 
-/* -------------------------------- *
- * ------------Profile------------- *
- * -------------------------------- */
-
 final scaffoldKey = GlobalKey<ScaffoldState>();
 
+/// Generates a shimmer effect for a profile section.
+///
+/// The [shimProfile] function returns a widget that displays a shimmer effect
+/// for a profile section. It includes multiple shimmering placeholders for
+/// various profile details.
+///
+/// The [setState] parameter is a required callback that allows updating the state
+/// of the parent widget. The [context] parameter is the build context.
 Widget shimProfile(
     {required StateSetter setState, required BuildContext context}) {
   return Padding(
@@ -225,10 +229,14 @@ Widget shimProfile(
   );
 }
 
-/* -------------------------------- *
- * ------------Courses------------- *
- * -------------------------------- */
-
+/// Generates a shimmer effect for a courses section.
+///
+/// The [shimCourses] function returns a widget that displays a shimmer effect
+/// for a list of courses. It generates a scrollable view with multiple shimmering
+/// placeholders for each course item.
+///
+/// The [setState] parameter is a required callback that allows updating the state
+/// of the parent widget. The [context] parameter is the build context.
 Widget shimCourses(
     {required StateSetter setState, required BuildContext context}) {
   return SingleChildScrollView(
@@ -265,10 +273,14 @@ Widget shimCourses(
   );
 }
 
-/* -------------------------------- *
- * --------------Poll-------------- *
- * -------------------------------- */
-
+/// Generates a shimmer effect for a poll widget.
+///
+/// The [shimPoll] function returns a widget that displays a shimmer effect
+/// for a poll. It includes placeholders for the poll image, question, options,
+/// and submit button.
+///
+/// The [setState] parameter is a required callback that allows updating the state
+/// of the parent widget. The [context] parameter is the build context.
 Widget shimPoll(
     {required StateSetter setState, required BuildContext context}) {
   return Padding(
@@ -355,10 +367,14 @@ Widget shimPoll(
           ]));
 }
 
-/* -------------------------------- *
- * ------------Question------------ *
- * -------------------------------- */
-
+/// Generates a shimmer effect for a question widget.
+///
+/// The [shimQuestion] function returns a widget that displays a shimmer effect
+/// for a question. It includes a placeholder for a poll widget, a divider,
+/// and a row of icons with shimmering rectangular widgets.
+///
+/// The [setState] parameter is a required callback that allows updating the state
+/// of the parent widget. The [context] parameter is the build context.
 Widget shimQuestion(
     {required StateSetter setState, required BuildContext context}) {
   return Column(
@@ -408,10 +424,14 @@ Widget shimQuestion(
   );
 }
 
-/* -------------------------------- *
- * -----------Questions------------ *
- * -------------------------------- */
-
+/// Generates a shimmer effect for a list of questions.
+///
+/// The [shimQuestionList] function returns a widget that displays a shimmer effect
+/// for a list of questions. It includes an app bar with shimmering title and actions,
+/// a placeholder for question filters, and a grid view with shimmering question items.
+///
+/// The [setState] parameter is a required callback that allows updating the state
+/// of the parent widget. The [context] parameter is the build context.
 Widget shimQuestionList(
     {required StateSetter setState, required BuildContext context}) {
   int gridViewCrossAxisCount = 3;
@@ -572,10 +592,26 @@ Widget shimQuestionList(
       ));
 }
 
-/* -------------------------------- *
- * ----------Assignment------------ *
- * -------------------------------- */
-
+/// A widget that displays a shimmer effect for an assignment screen.
+///
+/// This widget creates a shimmering effect to mimic content loading on an assignment screen.
+/// It consists of a stack of UI elements, including a shimmering app bar, assignment details,
+/// and a scrollable list of assignment items.
+///
+/// The [setState] parameter is a required [StateSetter] used for updating the state of the widget.
+/// The [context] parameter is the required [BuildContext] used for accessing the current context.
+///
+/// Example usage:
+/// ```dart
+/// Widget assignmentScreen() {
+///   return Scaffold(
+///     body: shimAssignment(
+///       setState: setState,
+///       context: context,
+///     ),
+///   );
+/// }
+/// ```
 Widget shimAssignment(
     {required StateSetter setState, required BuildContext context}) {
   return Stack(
