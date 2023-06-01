@@ -149,6 +149,9 @@ class Strings {
   static const String filterHomework = 'Homework';
   static const String filterLab = 'Lab';
   static const String orderName = 'ORDER BY: NAME';
+  static const String displayOrderName = 'Name';
   static const String orderStartDate = 'START DATE';
+  static const String displayOrderStartDate = 'Available From';
   static const String orderDueDate = 'DUE DATE';
+  static const String displayOrderDueDate = 'Due';
 }

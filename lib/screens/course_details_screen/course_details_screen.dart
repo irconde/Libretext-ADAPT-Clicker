@@ -450,7 +450,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                           AssignmentDropdown(
                                             dropDownValue: _currentOrderOption,
                                             itemList:
-                                                _orderOptions.keys.toList(),
+                                            displayOrderOptions.keys.toList(),
                                             onItemSelectedCallback:
                                                 onOrderOptionSelected,
                                           ),
@@ -531,7 +531,13 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
   final _orderOptions = {
     Strings.orderName: 'name',
     Strings.orderStartDate: 'available_from',
-    Strings.orderDueDate: 'due'
+    Strings.orderDueDate: 'due',
+  };
+
+  final displayOrderOptions = {
+    Strings.displayOrderName:  Strings.orderStartDate,
+    Strings.displayOrderStartDate:  Strings.orderStartDate,
+    Strings.displayOrderDueDate: Strings.orderDueDate,
   };
 
   // Define a function that takes a date string and returns a formatted string
@@ -588,8 +594,12 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
   }
 
   void onOrderOptionSelected(orderOption) {
+    if(!displayOrderOptions.containsKey(orderOption))
+      return;
+
+
     setState(() {
-      _currentOrderOption = orderOption;
+      _currentOrderOption = displayOrderOptions[orderOption];
     });
   }
 
