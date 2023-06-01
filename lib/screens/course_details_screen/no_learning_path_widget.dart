@@ -1,4 +1,3 @@
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../constants/strings.dart';
 import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -45,15 +44,17 @@ class _NoLearningPathWidgetState extends State<NoLearningPathWidget> {
                                 fontFamily: 'Open Sans',
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
-
                               ),
                             ),
                           ]),
                     ),
-                    Text(Strings.records, style: theme.bodyText1.override(
-                        fontFamily: 'Open Sans',
-                        fontSize: 24,
-                        color: CColors.primaryColor),),
+                    Text(
+                      Strings.records,
+                      style: theme.bodyText1.override(
+                          fontFamily: 'Open Sans',
+                          fontSize: 24,
+                          color: CColors.primaryColor),
+                    ),
                   ],
                 ),
               ),
@@ -90,14 +91,16 @@ Widget emptyLearningTask() {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                       child: Container(
                         width: 20,
                         height: 20,
                         decoration: const ShapeDecoration(
                           color: CColors.learningSquareColor,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(2))),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(2))),
                         ),
                       ),
                     ),
@@ -118,7 +121,8 @@ Widget emptyLearningTask() {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
                         child: Container(
                           width: 80,
                           height: 16,
@@ -136,7 +140,8 @@ Widget emptyLearningTask() {
                         decoration: const ShapeDecoration(
                           color: CColors.learningBtmTextContainerColor,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(2))),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(2))),
                         ),
                       ),
                     ],

@@ -399,7 +399,6 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                         ),
                                       ),
                                     ),
-
                                     Visibility(
                                       visible: assignmentsList.isNotEmpty,
                                       child: Flexible(
@@ -407,14 +406,17 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                         child: ScrollShadow(
                                             controller: _learningTabController,
                                             child: ListView.builder(
-                                                padding: const EdgeInsets.all(0),
+                                                padding:
+                                                    const EdgeInsets.all(0),
                                                 controller:
                                                     _learningTabController,
-                                                itemCount: assignmentsList.length,
+                                                itemCount:
+                                                    assignmentsList.length,
                                                 itemBuilder: (context, index) {
                                                   dynamic assignment =
                                                       assignmentsList[index];
-                                                  if (validStatAssignment(assignment)) {
+                                                  if (validStatAssignment(
+                                                      assignment)) {
                                                     return AssignmentStatCtnWidget(
                                                       assignment: assignment,
                                                     );
@@ -426,7 +428,8 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                       visible: assignmentsList.isEmpty,
                                       child: const Flexible(
                                           fit: FlexFit.tight,
-                                          child: SingleChildScrollView(child: NoLearningPathWidget())),
+                                          child: SingleChildScrollView(
+                                              child: NoLearningPathWidget())),
                                     ),
                                   ],
                                 ),
@@ -460,8 +463,8 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                           ),
                                           AssignmentDropdown(
                                             dropDownValue: _currentOrderOption,
-                                            itemList:
-                                            displayOrderOptions.keys.toList(),
+                                            itemList: displayOrderOptions.keys
+                                                .toList(),
                                             onItemSelectedCallback:
                                                 onOrderOptionSelected,
                                           ),
@@ -485,7 +488,8 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                                   scoreResponse),
                                                               _currentFilterOption!),
                                                           _currentOrderOption!);
-                                                  if(filteredAssignmentList.isEmpty){
+                                                  if (filteredAssignmentList
+                                                      .isEmpty) {
                                                     return const NoAssignmentsWidget();
                                                   }
 
@@ -550,8 +554,8 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
   };
 
   final displayOrderOptions = {
-    Strings.displayOrderName:  Strings.orderStartDate,
-    Strings.displayOrderStartDate:  Strings.orderStartDate,
+    Strings.displayOrderName: Strings.orderStartDate,
+    Strings.displayOrderStartDate: Strings.orderStartDate,
     Strings.displayOrderDueDate: Strings.orderDueDate,
   };
 
@@ -609,9 +613,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
   }
 
   void onOrderOptionSelected(orderOption) {
-    if(!displayOrderOptions.containsKey(orderOption))
-      return;
-
+    if (!displayOrderOptions.containsKey(orderOption)) return;
 
     setState(() {
       _currentOrderOption = displayOrderOptions[orderOption];
@@ -620,16 +622,12 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
 
   //Checks if assignment is valid for stat container
   bool validStatAssignment(assignment) {
-    if(assignment == null)
-      return false;
+    if (assignment == null) return false;
 
-    if(assignment['past_due'] == null)
-      return false;
+    if (assignment['past_due'] == null) return false;
 
-    if(assignment['total_points'] == 0)
-      return false;
+    if (assignment['total_points'] == 0) return false;
 
-      return !assignment['past_due'];
-
+    return !assignment['past_due'];
   }
 }

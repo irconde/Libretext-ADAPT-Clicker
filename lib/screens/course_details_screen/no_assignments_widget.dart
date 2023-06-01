@@ -1,4 +1,3 @@
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../constants/strings.dart';
 import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -111,12 +110,14 @@ Widget emptyAssignment() {
                 child: Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                       child: Container(
                         decoration: const ShapeDecoration(
                           color: CColors.noAssignmentRightLeading,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(1))),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(1))),
                         ),
                         height: 16,
                         width: 16,

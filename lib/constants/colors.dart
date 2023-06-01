@@ -44,7 +44,6 @@ class CColors {
   static const Color noAssignmentRightLeading = Color(0xE6BDBDBD);
   static const Color noAssignmentLeftText = Color(0xE6CAE1F2);
 
-
   //Shimmer
   // Backgrounds
   static const Color mainShimmerBackground = Color(0xFFF3F3F3);
