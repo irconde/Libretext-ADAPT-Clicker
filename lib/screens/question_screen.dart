@@ -78,148 +78,150 @@ class _QuestionScreenState extends State<QuestionScreen> {
     var pages = List.generate(
       numPages,
       (index) => Center(
-          child: SingleChildScrollView(
-        child: Column(
-          children: [
-            AppState().isBasic
-                ? Card(
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height ,
-                      child: InAppWebView(
-                        initialUrlRequest: URLRequest(
-                            url: Uri.parse(
-                                AppState().question['technology_iframe'])),
-                        onWebViewCreated: (controller) {
-                          webViewController = controller;
-                          injectViewport(controller);
-                        },
-                        onLoadStart: (controller, uri) {
-                          injectViewport(controller);
-                        },
-                        initialOptions: options,
-                        gestureRecognizers: Set()
-                          ..add(Factory(() => EagerGestureRecognizer()))
-                          ..add(Factory<VerticalDragGestureRecognizer>(
-                              () => VerticalDragGestureRecognizer())),
+
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              AppState().isBasic
+                  ? Card(
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height ,
+                        child: InAppWebView(
+                          initialUrlRequest: URLRequest(
+                              url: Uri.parse(
+                                  AppState().question['technology_iframe'])),
+                          onWebViewCreated: (controller) {
+                            webViewController = controller;
+                            injectViewport(controller);
+                          },
+                          onLoadStart: (controller, uri) {
+                            injectViewport(controller);
+                          },
+                          initialOptions: options,
+                          gestureRecognizers: Set()
+                            ..add(Factory(() => EagerGestureRecognizer()))
+                            ..add(Factory<VerticalDragGestureRecognizer>(
+                                () => VerticalDragGestureRecognizer())),
+                        ),
                       ),
-                    ),
-                  )
-                : FutureBuilder<ApiCallResponse>(
-                    future: GetNonTechnologyIframeCall.call(
-                      pageId: getJsonField(
-                        AppState().question,
-                        r'''$.page_id''',
+                    )
+                  : FutureBuilder<ApiCallResponse>(
+                      future: GetNonTechnologyIframeCall.call(
+                        pageId: getJsonField(
+                          AppState().question,
+                          r'''$.page_id''',
+                        ),
+                        token: UserStoredPreferences.authToken,
                       ),
-                      token: UserStoredPreferences.authToken,
-                    ),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return const Center(
-                          child: SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: CircularProgressIndicator(
-                              color: CColors.primaryColor,
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return const Center(
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: CircularProgressIndicator(
+                                color: CColors.primaryColor,
+                              ),
                             ),
-                          ),
+                          );
+                        }
+                        final htmlViewGetNonTechnologyIframeResponse =
+                            snapshot.data!;
+                        return Html(
+                          data: htmlViewGetNonTechnologyIframeResponse
+                              .elements.outerHtml,
                         );
-                      }
-                      final htmlViewGetNonTechnologyIframeResponse =
-                          snapshot.data!;
-                      return Html(
-                        data: htmlViewGetNonTechnologyIframeResponse
-                            .elements.outerHtml,
-                      );
-                    },
-                  ),
-            if (isTextSubmission(getJsonField(
-              AppState().question,
-              r'''$.open_ended_submission_type''',
-            ).toString()))
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  TextFormField(
-                    controller: textController,
-                    autofocus: true,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      hintText: Strings.genericHintText,
-                      hintStyle: AppTheme.of(context).bodyText2,
-                      enabledBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: CColors.noColor,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(4.0),
-                          topRight: Radius.circular(4.0),
-                        ),
-                      ),
-                      focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: CColors.noColor,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(4.0),
-                          topRight: Radius.circular(4.0),
-                        ),
-                      ),
-                      errorBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: CColors.noColor,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(4.0),
-                          topRight: Radius.circular(4.0),
-                        ),
-                      ),
-                      focusedErrorBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: CColors.noColor,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(4.0),
-                          topRight: Radius.circular(4.0),
-                        ),
-                      ),
-                    ),
-                    style: AppTheme.of(context).bodyText1,
-                    maxLines: 16,
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
-                    child: CustomButtonWidget(
-                      onPressed: () {
-                        // TODO. Check this. What is this for?
-                        //print('Button pressed ...');
                       },
-                      text: 'Submit',
-                      options: ButtonOptions(
-                        width: 130,
-                        height: 40,
-                        color: CColors.primaryColor,
-                        textStyle: AppTheme.of(context).subtitle2.override(
-                              fontFamily: 'Open Sans',
-                              color: Colors.white,
-                            ),
-                        borderSide: const BorderSide(
-                          color: Colors.transparent,
-                          width: 1,
+                    ),
+              if (isTextSubmission(getJsonField(
+                AppState().question,
+                r'''$.open_ended_submission_type''',
+              ).toString()))
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    TextFormField(
+                      controller: textController,
+                      autofocus: true,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        hintText: Strings.genericHintText,
+                        hintStyle: AppTheme.of(context).bodyText2,
+                        enabledBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: CColors.noColor,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(4.0),
+                            topRight: Radius.circular(4.0),
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(8),
+                        focusedBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: CColors.noColor,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(4.0),
+                            topRight: Radius.circular(4.0),
+                          ),
+                        ),
+                        errorBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: CColors.noColor,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(4.0),
+                            topRight: Radius.circular(4.0),
+                          ),
+                        ),
+                        focusedErrorBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: CColors.noColor,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(4.0),
+                            topRight: Radius.circular(4.0),
+                          ),
+                        ),
+                      ),
+                      style: AppTheme.of(context).bodyText1,
+                      maxLines: 16,
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+                      child: CustomButtonWidget(
+                        onPressed: () {
+                          // TODO. Check this. What is this for?
+                          //print('Button pressed ...');
+                        },
+                        text: 'Submit',
+                        options: ButtonOptions(
+                          width: 130,
+                          height: 40,
+                          color: CColors.primaryColor,
+                          textStyle: AppTheme.of(context).subtitle2.override(
+                                fontFamily: 'Open Sans',
+                                color: Colors.white,
+                              ),
+                          borderSide: const BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-          ],
+                  ],
+                ),
+            ],
+          ),
         ),
-      )),
+      ),
     );
 
     /*-----------------Building Page-----------------------*/
@@ -248,33 +250,35 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 fontWeight: FontWeight.w700),
           ),
         ),
-        body: PageView(
-            physics: const BouncingScrollPhysics(),
-            controller: pageController,
-            onPageChanged: (index) {
-              final questionsListItem = questionsList[index];
-              setState(() {
-                AppState().question = questionsListItem;
-                AppState().isBasic =
-                    isBasic(questionsListItem['technology_iframe']);
-                AppState().hasSubmission =
-                    questionsListItem['has_at_least_one_submission'];
-                webViewController?.loadUrl(
-                    urlRequest: URLRequest(
-                        url:
-                            Uri.parse(questionsListItem['technology_iframe'])));
-
-                UserStoredPreferences.selectedIndex = index;
-                paginatorController.currentPage = index;
-              });
-            },
-            children: pages),
-        bottomNavigationBar: Card(
-            elevation: 0,
+        body: SingleChildScrollView(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height - 80,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
               mainAxisSize: MainAxisSize.min,
               children: [
+                Expanded(
+                  child: PageView(
+                      physics: const BouncingScrollPhysics(),
+                      controller: pageController,
+                      onPageChanged: (index) {
+                        final questionsListItem = questionsList[index];
+                        setState(() {
+                          AppState().question = questionsListItem;
+                          AppState().isBasic =
+                              isBasic(questionsListItem['technology_iframe']);
+                          AppState().hasSubmission =
+                              questionsListItem['has_at_least_one_submission'];
+                          webViewController?.loadUrl(
+                              urlRequest: URLRequest(
+                                  url:
+                                      Uri.parse(questionsListItem['technology_iframe'])));
+
+                          UserStoredPreferences.selectedIndex = index;
+                          paginatorController.currentPage = index;
+                        });
+                      },
+                      children: pages),
+                ),
                 const Divider(
                   thickness: Dimens.dividerThickness,
                   indent: 16,
@@ -291,7 +295,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       buttonSelectedForegroundColor: CColors.primaryBackground,
                       buttonUnselectedForegroundColor: CColors.primaryColor,
                       buttonUnselectedBackgroundColor:
-                          CColors.primaryBackground,
+                      CColors.primaryBackground,
                       buttonSelectedBackgroundColor: CColors.primaryColor,
                     ),
 
@@ -305,7 +309,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                         AppState().isBasic =
                             isBasic(questionsListItem['technology_iframe']);
                         AppState().hasSubmission =
-                            questionsListItem['has_at_least_one_submission'];
+                        questionsListItem['has_at_least_one_submission'];
                         webViewController?.loadUrl(
                             urlRequest: URLRequest(
                                 url: Uri.parse(
@@ -316,7 +320,10 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   ),
                 ),
               ],
-            )));
+            ),
+          ),
+        ),
+    );
   }
 }
 

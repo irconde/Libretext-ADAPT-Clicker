@@ -98,14 +98,11 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
                     builder: (context, StateSetter setState) {
                   return Padding(
                     padding: MediaQuery.of(context).viewInsets,
-                    child: SizedBox(
-                      height: double.infinity,
-                      child: QuestionScreen(
+                    child:  QuestionScreen(
                         assignmentName: assignmentSummary['name'],
                         index: questionsIndex,
                         view: builderResponse.jsonBody,
                       ),
-                    ),
                   );
                 });
               });

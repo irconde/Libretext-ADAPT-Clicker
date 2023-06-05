@@ -115,6 +115,7 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
             future: getSummary(),
             builder: (context, snapshot) {
               return Scaffold(
+                resizeToAvoidBottomInset: false,
                 backgroundColor: CColors.primaryBackground,
                 appBar: AppBar(
                   centerTitle: true,
