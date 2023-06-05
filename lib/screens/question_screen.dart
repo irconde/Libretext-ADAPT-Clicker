@@ -84,7 +84,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
             AppState().isBasic
                 ? Card(
                     child: SizedBox(
-                      height: 400,
+                      height: MediaQuery.of(context).size.height ,
                       child: InAppWebView(
                         initialUrlRequest: URLRequest(
                             url: Uri.parse(
@@ -281,7 +281,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   endIndent: 16,
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(24, 16, 24, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(24, 8, 24, 0),
                   child: NumberPaginator(
                     controller: paginatorController,
                     config: const NumberPaginatorUIConfig(
