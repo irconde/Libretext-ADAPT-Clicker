@@ -78,14 +78,13 @@ class _QuestionScreenState extends State<QuestionScreen> {
     var pages = List.generate(
       numPages,
       (index) => Center(
-
         child: SingleChildScrollView(
           child: Column(
             children: [
               AppState().isBasic
                   ? Card(
                       child: SizedBox(
-                        height: MediaQuery.of(context).size.height ,
+                        height: MediaQuery.of(context).size.height,
                         child: InAppWebView(
                           initialUrlRequest: URLRequest(
                               url: Uri.parse(
@@ -193,7 +192,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       maxLines: 16,
                     ),
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
                       child: CustomButtonWidget(
                         onPressed: () {
                           // TODO. Check this. What is this for?
@@ -226,103 +226,102 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
     /*-----------------Building Page-----------------------*/
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: CColors.primaryBackground,
-        appBar: AppBar(
-          backgroundColor: CColors.primaryColor,
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: CColors.primaryBackground,
-            ),
-            onPressed: () {
-              context.popRoute();
-            },
+      resizeToAvoidBottomInset: false,
+      backgroundColor: CColors.primaryBackground,
+      appBar: AppBar(
+        backgroundColor: CColors.primaryColor,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: CColors.primaryBackground,
           ),
-          title: Text(
-            widget.assignmentName!,
-            maxLines: 1,
-            overflow: TextOverflow.fade,
-            style: AppTheme.of(context).bodyText1.override(
-                fontFamily: 'Open Sans',
-                color: CColors.primaryBackground,
-                fontSize: 20,
-                fontWeight: FontWeight.w700),
-          ),
+          onPressed: () {
+            context.popRoute();
+          },
         ),
-        body: SingleChildScrollView(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height - 80,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  child: PageView(
-                      physics: const BouncingScrollPhysics(),
-                      controller: pageController,
-                      onPageChanged: (index) {
-                        final questionsListItem = questionsList[index];
-                        setState(() {
-                          AppState().question = questionsListItem;
-                          AppState().isBasic =
-                              isBasic(questionsListItem['technology_iframe']);
-                          AppState().hasSubmission =
-                              questionsListItem['has_at_least_one_submission'];
-                          webViewController?.loadUrl(
-                              urlRequest: URLRequest(
-                                  url:
-                                      Uri.parse(questionsListItem['technology_iframe'])));
-
-                          UserStoredPreferences.selectedIndex = index;
-                          paginatorController.currentPage = index;
-                        });
-                      },
-                      children: pages),
-                ),
-                const Divider(
-                  thickness: Dimens.dividerThickness,
-                  indent: 16,
-                  endIndent: 16,
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(24, 8, 24, 0),
-                  child: NumberPaginator(
-                    controller: paginatorController,
-                    config: const NumberPaginatorUIConfig(
-                      buttonShape: ContinuousRectangleBorder(
-                        side: BorderSide(color: CColors.outlineColor, width: 1),
-                      ),
-                      buttonSelectedForegroundColor: CColors.primaryBackground,
-                      buttonUnselectedForegroundColor: CColors.primaryColor,
-                      buttonUnselectedBackgroundColor:
-                      CColors.primaryBackground,
-                      buttonSelectedBackgroundColor: CColors.primaryColor,
-                    ),
-
-                    initialPage: _currentPage,
-                    // by default, the paginator shows numbers as center content
-                    numberPages: numPages,
-                    onPageChange: (index) async {
+        title: Text(
+          widget.assignmentName!,
+          maxLines: 1,
+          overflow: TextOverflow.fade,
+          style: AppTheme.of(context).bodyText1.override(
+              fontFamily: 'Open Sans',
+              color: CColors.primaryBackground,
+              fontSize: 20,
+              fontWeight: FontWeight.w700),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height - 80,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: PageView(
+                    physics: const BouncingScrollPhysics(),
+                    controller: pageController,
+                    onPageChanged: (index) {
                       final questionsListItem = questionsList[index];
                       setState(() {
                         AppState().question = questionsListItem;
                         AppState().isBasic =
                             isBasic(questionsListItem['technology_iframe']);
                         AppState().hasSubmission =
-                        questionsListItem['has_at_least_one_submission'];
+                            questionsListItem['has_at_least_one_submission'];
                         webViewController?.loadUrl(
                             urlRequest: URLRequest(
                                 url: Uri.parse(
                                     questionsListItem['technology_iframe'])));
+
                         UserStoredPreferences.selectedIndex = index;
+                        paginatorController.currentPage = index;
                       });
                     },
+                    children: pages),
+              ),
+              const Divider(
+                thickness: Dimens.dividerThickness,
+                indent: 16,
+                endIndent: 16,
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(24, 8, 24, 0),
+                child: NumberPaginator(
+                  controller: paginatorController,
+                  config: const NumberPaginatorUIConfig(
+                    buttonShape: ContinuousRectangleBorder(
+                      side: BorderSide(color: CColors.outlineColor, width: 1),
+                    ),
+                    buttonSelectedForegroundColor: CColors.primaryBackground,
+                    buttonUnselectedForegroundColor: CColors.primaryColor,
+                    buttonUnselectedBackgroundColor: CColors.primaryBackground,
+                    buttonSelectedBackgroundColor: CColors.primaryColor,
                   ),
+
+                  initialPage: _currentPage,
+                  // by default, the paginator shows numbers as center content
+                  numberPages: numPages,
+                  onPageChange: (index) async {
+                    final questionsListItem = questionsList[index];
+                    setState(() {
+                      AppState().question = questionsListItem;
+                      AppState().isBasic =
+                          isBasic(questionsListItem['technology_iframe']);
+                      AppState().hasSubmission =
+                          questionsListItem['has_at_least_one_submission'];
+                      webViewController?.loadUrl(
+                          urlRequest: URLRequest(
+                              url: Uri.parse(
+                                  questionsListItem['technology_iframe'])));
+                      UserStoredPreferences.selectedIndex = index;
+                    });
+                  },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
+      ),
     );
   }
 }
