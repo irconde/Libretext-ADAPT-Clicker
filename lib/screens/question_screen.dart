@@ -1,10 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
+import 'package:logger/logger.dart';
 import 'package:number_paginator/number_paginator.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../constants/colors.dart';
 import '../constants/strings.dart';
+import '../main.dart';
 import '../utils/app_theme.dart';
 import '../widgets/buttons/custom_button_widget.dart';
 import '../utils/utils.dart';
@@ -35,6 +37,7 @@ class QuestionScreen extends StatefulWidget {
 /// The state class for the QuestionScreen widget.
 class _QuestionScreenState extends State<QuestionScreen> {
   _QuestionScreenState(this._currentPage);
+
   TextEditingController? textController;
   int _currentPage;
   NumberPaginatorController paginatorController = NumberPaginatorController();
@@ -63,6 +66,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
         javaScriptEnabled: true,
         javaScriptCanOpenWindowsAutomatically: true,
         cacheEnabled: true,
+        preferredContentMode: UserPreferredContentMode.MOBILE,
       ),
       android: AndroidInAppWebViewOptions(
         useHybridComposition: true,
@@ -91,10 +95,12 @@ class _QuestionScreenState extends State<QuestionScreen> {
                                   AppState().question['technology_iframe'])),
                           onWebViewCreated: (controller) {
                             webViewController = controller;
-                            injectViewport(controller);
                           },
                           onLoadStart: (controller, uri) {
-                            injectViewport(controller);
+                            Future.delayed(const Duration(milliseconds: 25),
+                                () {
+                              injectViewport(controller);
+                            });
                           },
                           initialOptions: options,
                           gestureRecognizers: Set()
@@ -324,11 +330,17 @@ class _QuestionScreenState extends State<QuestionScreen> {
       ),
     );
   }
-}
 
-/// Injects the viewport meta tag into the given [controller].
-void injectViewport(InAppWebViewController controller) async {
-  await controller.evaluateJavascript(
-      source:
-          '''var flutterViewPort=document.createElement("meta"); flutterViewPort.name = "viewport"; flutterViewPort.content = "width=400, initial-scale=1.0, maximum-scale=2.0, user-scalable=1"; document.getElementsByTagName("head")[0].appendChild(flutterViewPort);''');
+  /// Injects the viewport meta tag into the given [controller].
+  void injectViewport(InAppWebViewController controller) async {
+
+    double screenWidth = MediaQuery.of(context).size.width - Dimens.smMargin;
+
+    await controller.evaluateJavascript(
+        source: '''var flutterViewPort=document.createElement("meta"); 
+      flutterViewPort.name = "viewport"; 
+      flutterViewPort.content = "width=$screenWidth, initial-scale=1.0, maximum-scale=2.0, user-scalable=1"; document.getElementsByTagName("head")[0].appendChild(flutterViewPort);
+      ''');
+    logger.i('Injected ${paginatorController.currentPage}');
+  }
 }
