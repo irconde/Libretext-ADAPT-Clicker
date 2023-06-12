@@ -27,6 +27,7 @@ class Strings {
   static const String allowedAttempts = 'allowed attempts';
   // Assignment grid
   static const String uppercasePoints = 'Points';
+  static const String awaitingScore = 'Awaiting Score';
   // Connection state mixin
   static const String connected = 'Connected to Internet';
   static const String notConnected = 'No Internet connection';

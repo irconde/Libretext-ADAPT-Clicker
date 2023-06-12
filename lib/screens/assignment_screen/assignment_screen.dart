@@ -422,11 +422,11 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
       return length;
     }
     var mod = (length % gridViewCrossAxisCount);
-    logger.d('mod is $mod');
+    //logger.d('mod is $mod');
     var reverse = (gridViewCrossAxisCount - mod);
-    logger.d('reverse is $reverse');
+    //logger.d('reverse is $reverse');
     var l = length + reverse;
-    logger.d('l is $l');
+    //logger.d('l is $l');
     return l;
   }
 }

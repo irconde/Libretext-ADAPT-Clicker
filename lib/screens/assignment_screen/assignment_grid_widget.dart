@@ -2,6 +2,7 @@ import 'package:adapt_clicker/mixins/connection_state_mixin.dart';
 import 'package:adapt_clicker/screens/question_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../constants/strings.dart';
+import '../../main.dart';
 import '../../utils/utils.dart';
 import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -152,14 +153,33 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
               ),
               Visibility(
                 visible: questionsItem['last_submitted'] != 'N/A',
-                child: Text(
-                  '${questionsItem['total_score'] ?? 'Max'}/${questionsItem['points']} ${Strings.uppercasePoints}',
-                  textAlign: TextAlign.center,
-                  style: AppTheme.of(context).bodyText3.override(
-                        fontFamily: 'Open Sans',
-                        fontWeight: FontWeight.normal,
+                child: Column(
+                  children: [
+                    Visibility(
+                      visible: questionsItem['total_score'] != null,
+                      child: Text(
+                        '${questionsItem['total_score']}/${questionsItem['points']} ${Strings.uppercasePoints}',
+                        textAlign: TextAlign.center,
+                        style: AppTheme.of(context).bodyText3.override(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.normal,
+                            ),
                       ),
+                    ),
+                    Visibility(
+                      visible: questionsItem['total_score'] == null,
+                      child: Text(
+                        Strings.awaitingScore,
+                        textAlign: TextAlign.center,
+                        style: AppTheme.of(context).bodyText3.override(
+                          fontFamily: 'Open Sans',
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
+
               ),
               Visibility(
                 visible: questionsItem['last_submitted'] == 'N/A',
