@@ -1,7 +1,7 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:json_path/json_path.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../main.dart';
+import '../utils/Logger.dart';
 export '../utils/app_state.dart';
 export 'dart:math' show min, max;
 export 'dart:convert' show jsonEncode, jsonDecode;

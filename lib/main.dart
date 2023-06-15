@@ -3,6 +3,7 @@ import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/backend/user_stored_preferences.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'utils/Logger.dart';
 import 'utils/utils.dart';
 import '../backend/api_requests/api_calls.dart';
 import 'package:flutter/material.dart';
@@ -13,13 +14,7 @@ import 'utils/app_theme.dart';
 import 'utils/internationalization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'backend/firebase/firebase_options.dart';
-import 'package:logger/logger.dart';
 
-final Logger logger = Logger(
-  filter: null,
-  printer: PrettyPrinter(),
-  output: null,
-);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

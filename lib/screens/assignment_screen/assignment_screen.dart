@@ -1,6 +1,5 @@
 import 'package:adapt_clicker/mixins/connection_state_mixin.dart';
 import 'package:adapt_clicker/screens/assignment_screen/assignment_grid_widget.dart';
-import 'package:adapt_clicker/main.dart';
 import 'package:adapt_clicker/backend/user_stored_preferences.dart';
 import 'package:adapt_clicker/widgets/shimmer/shim_pages.dart';
 import 'package:auto_route/auto_route.dart';
@@ -9,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import '../../backend/api_requests/api_calls.dart';
 import '../../constants/strings.dart';
+import '../../utils/Logger.dart';
 import '../../utils/animations.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/utils.dart';

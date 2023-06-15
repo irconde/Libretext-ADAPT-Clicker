@@ -9,12 +9,12 @@ import '../backend/api_requests/api_calls.dart';
 import 'package:adapt_clicker/widgets/bottom_sheets/reset_password_widget.dart';
 import '../constants/colors.dart';
 import '../constants/strings.dart';
+import '../utils/Logger.dart';
 import '../widgets/app_bars/collapsible_app_bar_widget.dart';
 import '../mixins/form_state_mixin.dart';
 import '../utils/app_theme.dart';
 import '../utils/utils.dart';
 import 'package:flutter/material.dart';
-import '../main.dart';
 import '../constants/dimens.dart';
 
 /// Screen that provides the user with a form to sign in

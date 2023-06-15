@@ -1,6 +1,5 @@
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/widgets/app_bars/main_app_bar_widget.dart';
-import 'package:adapt_clicker/main.dart';
 import 'package:adapt_clicker/widgets/shimmer/shim_pages.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:move_to_background/move_to_background.dart';
@@ -11,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../backend/Router/app_router.dart';
 import '../../backend/api_requests/api_calls.dart';
 import '../../constants/strings.dart';
+import '../../utils/Logger.dart';
 import '../../widgets/bottom_sheets/add_course_widget.dart';
 import '../../mixins/connection_state_mixin.dart';
 import 'no_courses_widget.dart';

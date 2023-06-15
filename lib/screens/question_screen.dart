@@ -1,12 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
-import 'package:logger/logger.dart';
 import 'package:number_paginator/number_paginator.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../constants/colors.dart';
 import '../constants/strings.dart';
-import '../main.dart';
+import '../utils/Logger.dart';
 import '../utils/app_theme.dart';
 import '../widgets/buttons/custom_button_widget.dart';
 import '../utils/utils.dart';
