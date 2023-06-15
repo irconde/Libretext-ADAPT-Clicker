@@ -172,142 +172,149 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                           theme: const ExpandableThemeData(
                             hasIcon: false,
                           ),
-                          header: Container(
-                            alignment: Alignment.centerLeft,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: const BoxDecoration(
-                                color: CColors.coursePagePullDown),
-                            child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    Dimens.xsMargin,
-                                    Dimens.sMargin,
-                                    Dimens.xsMargin,
-                                    Dimens.sMargin),
-                                child: Align(
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: Row(
-                                      children: [
-                                        Chip(
-                                          backgroundColor:
-                                              CColors.secondaryColor,
-                                          label: Text(
-                                            "${assignmentSummary['total_points']} ${Strings.points}",
-                                            style: theme.bodyText1.override(
-                                              fontFamily: 'Open Sans',
-                                              color: CColors.primaryBackground,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(Dimens.xsMargin, 0,
-                                              Dimens.xsMargin, 0),
-                                          child: Chip(
-                                            backgroundColor:
-                                                CColors.secondaryColor,
-                                            label: Text(
-                                              " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} ${Strings.allowedAttempts}",
-                                              style: theme.bodyText1.override(
-                                                fontFamily: 'Open Sans',
-                                                color:
-                                                    CColors.primaryBackground,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Chip(
-                                          backgroundColor:
-                                              CColors.secondaryColor,
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(8, 0, 8, 0),
-                                          labelPadding:
-                                              const EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 4, 0),
-                                          avatar: const Icon(
-                                            Icons.date_range,
-                                            color: CColors.primaryBackground,
-                                          ),
-                                          label: Text(
-                                            " ${formatDate(assignmentSummary['formatted_due'] ?? assignmentSummary['due']['due_date'])}",
-                                            style: theme.bodyText1.override(
-                                              fontFamily: 'Open Sans',
-                                              color: CColors.primaryBackground,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )),
-                          ),
+                          header: Container(),
                           expanded: Container(
                             width: MediaQuery.of(context).size.width,
                             decoration: const BoxDecoration(
                                 color: CColors.coursePagePullDown),
                             child: Padding(
-                              padding: const EdgeInsets.all(24),
+                              padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Visibility(
-                                    visible: assignmentSummary[
-                                            'public_description'] !=
-                                        null,
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    width: MediaQuery.of(context).size.width,
+                                    decoration: const BoxDecoration(
+                                        color: CColors.coursePagePullDown),
                                     child: Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0, 0, 0, Dimens.msMargin),
-                                      child: RichText(
-                                        text: TextSpan(
-                                          style: theme.bodyText3,
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                              text: Strings.description,
-                                              style: theme.bodyText3.override(
-                                                fontFamily: 'Open Sans',
-                                                fontWeight: FontWeight.bold,
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            Dimens.xsMargin,
+                                            Dimens.sMargin,
+                                            Dimens.xsMargin,
+                                            Dimens.sMargin),
+                                        child: Align(
+                                          child: SingleChildScrollView(
+                                            scrollDirection: Axis.horizontal,
+                                            child: Row(
+                                              children: [
+                                                Chip(
+                                                  backgroundColor:
+                                                  CColors.secondaryColor,
+                                                  label: Text(
+                                                    "${assignmentSummary['total_points']} ${Strings.points}",
+                                                    style: theme.bodyText1.override(
+                                                      fontFamily: 'Open Sans',
+                                                      color: CColors.primaryBackground,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(Dimens.xsMargin, 0,
+                                                      Dimens.xsMargin, 0),
+                                                  child: Chip(
+                                                    backgroundColor:
+                                                    CColors.secondaryColor,
+                                                    label: Text(
+                                                      " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} ${Strings.allowedAttempts}",
+                                                      style: theme.bodyText1.override(
+                                                        fontFamily: 'Open Sans',
+                                                        color:
+                                                        CColors.primaryBackground,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Chip(
+                                                  backgroundColor:
+                                                  CColors.secondaryColor,
+                                                  padding: const EdgeInsetsDirectional
+                                                      .fromSTEB(8, 0, 8, 0),
+                                                  labelPadding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 4, 0),
+                                                  avatar: const Icon(
+                                                    Icons.date_range,
+                                                    color: CColors.primaryBackground,
+                                                  ),
+                                                  label: Text(
+                                                    " ${formatDate(assignmentSummary['formatted_due'] ?? assignmentSummary['due']['due_date'])}",
+                                                    style: theme.bodyText1.override(
+                                                      fontFamily: 'Open Sans',
+                                                      color: CColors.primaryBackground,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                                    child: Visibility(
+                                      visible: assignmentSummary[
+                                              'public_description'] !=
+                                          null,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                                0, 0, 0, Dimens.msMargin),
+                                        child: RichText(
+                                          text: TextSpan(
+                                            style: theme.bodyText3,
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                text: Strings.description,
+                                                style: theme.bodyText3.override(
+                                                  fontFamily: 'Open Sans',
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
-                                            ),
-                                            TextSpan(
-                                              text: assignmentSummary[
-                                                      'public_description'] ??
-                                                  Strings.noDescription,
-                                            ),
-                                          ],
+                                              TextSpan(
+                                                text: assignmentSummary[
+                                                        'public_description'] ??
+                                                    Strings.noDescription,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                  Visibility(
-                                    visible: (assignmentSummary[
-                                                'formatted_late_policy'] !=
-                                            null ||
-                                        assignmentSummary['late_policy'] !=
-                                            null),
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0, 0, 0, Dimens.smMargin),
-                                      child: RichText(
-                                        text: TextSpan(
-                                          style: theme.bodyText3,
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                              text: Strings.latePolicy,
-                                              style: theme.bodyText3.override(
-                                                fontFamily: 'Open Sans',
-                                                fontWeight: FontWeight.bold,
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                                    child: Visibility(
+                                      visible: (assignmentSummary[
+                                                  'formatted_late_policy'] !=
+                                              null ||
+                                          assignmentSummary['late_policy'] !=
+                                              null),
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                                0, 0, 0, Dimens.smMargin),
+                                        child: RichText(
+                                          text: TextSpan(
+                                            style: theme.bodyText3,
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                text: Strings.latePolicy,
+                                                style: theme.bodyText3.override(
+                                                  fontFamily: 'Open Sans',
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
-                                            ),
-                                            TextSpan(
-                                              text: assignmentSummary[
-                                                      'formatted_late_policy'] ??
-                                                  assignmentSummary[
-                                                          'late_policy']
-                                                      .toString(),
-                                            ),
-                                          ],
+                                              TextSpan(
+                                                text: assignmentSummary[
+                                                        'formatted_late_policy'] ??
+                                                    assignmentSummary[
+                                                            'late_policy']
+                                                        .toString(),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),

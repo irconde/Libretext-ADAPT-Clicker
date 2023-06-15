@@ -475,43 +475,7 @@ Widget shimQuestionList(
       ),
       body: Column(
         children: [
-          Container(
-            color: CColors.mainShimmerBackground,
-            child: const Padding(
-              padding: EdgeInsets.all(24),
-              child: Row(
-                children: [
-                  ShimmerWidget.rectangular(
-                    height: 28,
-                    width: 88,
-                    shapeBorder: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(16))),
-                    backgroundColor: CColors.secondaryShimmerBackground,
-                    shimmerColor: CColors.secondaryShimmerEffect,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: ShimmerWidget.rectangular(
-                      height: 28,
-                      width: 128,
-                      shapeBorder: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(16))),
-                      backgroundColor: CColors.secondaryShimmerBackground,
-                      shimmerColor: CColors.secondaryShimmerEffect,
-                    ),
-                  ),
-                  ShimmerWidget.rectangular(
-                    height: 28,
-                    width: 88,
-                    shapeBorder: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(16))),
-                    backgroundColor: CColors.secondaryShimmerBackground,
-                    shimmerColor: CColors.secondaryShimmerEffect,
-                  )
-                ],
-              ),
-            ),
-          ),
+
           Padding(
             padding: const EdgeInsets.all(Dimens.smMargin),
             child: Container(
