@@ -178,7 +178,8 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                             decoration: const BoxDecoration(
                                 color: CColors.coursePagePullDown),
                             child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 24, 0, 24),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -188,7 +189,8 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                     decoration: const BoxDecoration(
                                         color: CColors.coursePagePullDown),
                                     child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                        padding: const EdgeInsetsDirectional
+                                                .fromSTEB(
                                             Dimens.xsMargin,
                                             Dimens.sMargin,
                                             Dimens.xsMargin,
@@ -200,49 +202,60 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                               children: [
                                                 Chip(
                                                   backgroundColor:
-                                                  CColors.secondaryColor,
+                                                      CColors.secondaryColor,
                                                   label: Text(
                                                     "${assignmentSummary['total_points']} ${Strings.points}",
-                                                    style: theme.bodyText1.override(
+                                                    style: theme.bodyText1
+                                                        .override(
                                                       fontFamily: 'Open Sans',
-                                                      color: CColors.primaryBackground,
+                                                      color: CColors
+                                                          .primaryBackground,
                                                     ),
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(Dimens.xsMargin, 0,
-                                                      Dimens.xsMargin, 0),
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                          Dimens.xsMargin,
+                                                          0,
+                                                          Dimens.xsMargin,
+                                                          0),
                                                   child: Chip(
                                                     backgroundColor:
-                                                    CColors.secondaryColor,
+                                                        CColors.secondaryColor,
                                                     label: Text(
                                                       " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} ${Strings.allowedAttempts}",
-                                                      style: theme.bodyText1.override(
+                                                      style: theme.bodyText1
+                                                          .override(
                                                         fontFamily: 'Open Sans',
-                                                        color:
-                                                        CColors.primaryBackground,
+                                                        color: CColors
+                                                            .primaryBackground,
                                                       ),
                                                     ),
                                                   ),
                                                 ),
                                                 Chip(
                                                   backgroundColor:
-                                                  CColors.secondaryColor,
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(8, 0, 8, 0),
+                                                      CColors.secondaryColor,
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(8, 0, 8, 0),
                                                   labelPadding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 4, 0),
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(0, 0, 4, 0),
                                                   avatar: const Icon(
                                                     Icons.date_range,
-                                                    color: CColors.primaryBackground,
+                                                    color: CColors
+                                                        .primaryBackground,
                                                   ),
                                                   label: Text(
                                                     " ${formatDate(assignmentSummary['formatted_due'] ?? assignmentSummary['due']['due_date'])}",
-                                                    style: theme.bodyText1.override(
+                                                    style: theme.bodyText1
+                                                        .override(
                                                       fontFamily: 'Open Sans',
-                                                      color: CColors.primaryBackground,
+                                                      color: CColors
+                                                          .primaryBackground,
                                                     ),
                                                   ),
                                                 ),
@@ -252,15 +265,15 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                         )),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 24),
                                     child: Visibility(
                                       visible: assignmentSummary[
                                               'public_description'] !=
                                           null,
                                       child: Padding(
-                                        padding:
-                                            const EdgeInsetsDirectional.fromSTEB(
-                                                0, 0, 0, Dimens.msMargin),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 0, 0, Dimens.msMargin),
                                         child: RichText(
                                           text: TextSpan(
                                             style: theme.bodyText3,
@@ -284,7 +297,8 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 24),
                                     child: Visibility(
                                       visible: (assignmentSummary[
                                                   'formatted_late_policy'] !=
@@ -292,9 +306,8 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                           assignmentSummary['late_policy'] !=
                                               null),
                                       child: Padding(
-                                        padding:
-                                            const EdgeInsetsDirectional.fromSTEB(
-                                                0, 0, 0, Dimens.smMargin),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 0, 0, Dimens.smMargin),
                                         child: RichText(
                                           text: TextSpan(
                                             style: theme.bodyText3,

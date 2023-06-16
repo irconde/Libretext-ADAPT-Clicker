@@ -475,7 +475,6 @@ Widget shimQuestionList(
       ),
       body: Column(
         children: [
-
           Padding(
             padding: const EdgeInsets.all(Dimens.smMargin),
             child: Container(
