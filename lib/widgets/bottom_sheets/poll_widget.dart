@@ -131,15 +131,12 @@ class _PollWidgetState extends State<PollWidget> {
               ),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 80, 0, 24),
-                child: AppState().isBasic
-                    ? Card(
+                child: Card(
                         elevation: 2,
                         child: SizedBox(
                           height: 400,
                           child: InAppWebView(
-                            initialUrlRequest: URLRequest(
-                                url: Uri.parse(
-                                    AppState().question['technology_iframe'])),
+                            initialUrlRequest: null,
                             onWebViewCreated: (controller) {
                               webViewController = controller;
                               injectViewport(controller);
@@ -155,123 +152,8 @@ class _PollWidgetState extends State<PollWidget> {
                           ),
                         ),
                       )
-                    : FutureBuilder<ApiCallResponse>(
-                        future: GetNonTechnologyIframeCall.call(
-                          pageId: getJsonField(
-                            AppState().question,
-                            r'''$.page_id''',
-                          ),
-                          token: UserStoredPreferences.authToken,
-                        ),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return const Center(
-                              child: SizedBox(
-                                width: 50,
-                                height: 50,
-                                child: CircularProgressIndicator(
-                                  color: CColors.primaryColor,
-                                ),
-                              ),
-                            );
-                          }
-                          final htmlViewGetNonTechnologyIframeResponse =
-                              snapshot.data!;
-                          return Html(
-                            data: htmlViewGetNonTechnologyIframeResponse
-                                .elements.outerHtml,
-                          );
-                        },
-                      ),
               ),
-              if (isTextSubmission(getJsonField(
-                AppState().question,
-                r'''$.open_ended_submission_type''',
-              ).toString()))
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    TextFormField(
-                      controller: textController,
-                      autofocus: true,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        hintText: Strings.genericHintText,
-                        hintStyle: AppTheme.of(context).bodyText2,
-                        enabledBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: CColors.noColor,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: CColors.noColor,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                        errorBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: CColors.noColor,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                        focusedErrorBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: CColors.noColor,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(4.0),
-                            topRight: Radius.circular(4.0),
-                          ),
-                        ),
-                      ),
-                      style: AppTheme.of(context).bodyText1,
-                      maxLines: 16,
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
-                      child: CustomButtonWidget(
-                        onPressed: () {
-                          // TODO. Check this. What is this for?
-                          //print('Button pressed ...');
-                        },
-                        text: Strings.submitBtnLabel,
-                        options: ButtonOptions(
-                          width: 130,
-                          height: 40,
-                          color: CColors.primaryColor,
-                          textStyle: AppTheme.of(context).subtitle2.override(
-                                fontFamily: 'Open Sans',
-                                color: Colors.white,
-                              ),
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-            ],
-          ),
+              ]),
         ));
   }
 }

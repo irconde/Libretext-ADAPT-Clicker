@@ -1,7 +1,6 @@
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
-import 'package:adapt_clicker/utils/app_state.dart';
-import 'package:adapt_clicker/utils/utils.dart';
 import 'package:adapt_clicker/widgets/app_bars/main_app_bar_widget.dart';
+import 'package:adapt_clicker/main.dart';
 import 'package:adapt_clicker/widgets/shimmer/shim_pages.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:move_to_background/move_to_background.dart';
@@ -13,6 +12,7 @@ import '../../backend/Router/app_router.dart';
 import '../../backend/api_requests/api_calls.dart';
 import '../../constants/strings.dart';
 import '../../utils/Logger.dart';
+import '../../utils/app_state.dart';
 import '../../widgets/bottom_sheets/add_course_widget.dart';
 import '../../mixins/connection_state_mixin.dart';
 import 'no_courses_widget.dart';
@@ -29,10 +29,9 @@ class CourseListScreen extends ConsumerStatefulWidget {
   /// Constructs a [CourseListScreen] widget.
   ///
   /// [isFirstScreen] specifies whether this is the first screen.
-  CourseListScreen({Key? key, this.isFirstScreen = false, @QueryParam('token') token = ''})
+  const CourseListScreen({Key? key, this.isFirstScreen = false})
       : super(key: key);
 
-  String? token;
   @override
   ConsumerState<CourseListScreen> createState() => _CourseListScreenState();
 }
@@ -74,12 +73,6 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
   @override
   void initState() {
     super.initState();
-    init();
-
-  }
-
-  void init() async {
-    await createTokenFromPath();
     initFirebase();
     requestPermission(); //gets push notification permission
     getToken();
@@ -88,22 +81,6 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
     _apiRequestCompleter = updateAndGetResponse();
     if (widget.isFirstScreen!) {
       _showSignInSnackbar();
-    }
-  }
-
-  ///For SSO Login Only
-  Future<void> createTokenFromPath() async {
-    //Gets token from query parameter
-    widget.token = context.routeData.queryParams.getString('token');
-
-    if (widget.token == null || widget.token == '') {
-      return;
-    }
-
-    String token = createToken(widget.token!);
-    await UserStoredPreferences.setString('ff_authToken', token);
-    if (UserStoredPreferences.authToken == null) {
-      await context.pushRoute(const LoginScreenWidget());
     }
   }
 
@@ -236,7 +213,6 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
         backgroundColor: CColors.primaryBackground,
         floatingActionButton: isLoading
             ? FloatingActionButton(
-                tooltip: Strings.addCourseSemanticsLabel,
                 onPressed: () {},
                 backgroundColor: CColors.buttonShimmerBackground,
                 elevation: 8,
@@ -247,7 +223,6 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
                 ),
               )
             : FloatingActionButton(
-                tooltip: Strings.addCourseSemanticsLabel,
                 onPressed: () async {
                   if (!checkConnection()) return;
                   showModalBottomSheet(
@@ -323,63 +298,59 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
                     setState(() => _apiRequestCompleter = null);
                     await refreshPage();
                   },
-                  child: Semantics(
-                    label: Strings.listOfCoursesSemanticsLabel,
-                    child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: enrollmentsList.length,
-                      itemBuilder: (context, enrollmentsListIndex) {
-                        final enrollmentsListItem =
-                            enrollmentsList[enrollmentsListIndex];
-                        return InkWell(
-                          onTap: () async {
-                            if (!checkConnection()) return;
-                            context.pushRoute(CourseDetailsScreen(
-                                id: enrollmentsListItem['id'].toString()));
-                          },
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                24, 24, 24, 0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  enrollmentsListItem['course_section_name'],
+                  child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: enrollmentsList.length,
+                    itemBuilder: (context, enrollmentsListIndex) {
+                      final enrollmentsListItem =
+                          enrollmentsList[enrollmentsListIndex];
+                      return InkWell(
+                        onTap: () async {
+                          if (!checkConnection()) return;
+                          context.pushRoute(AssignmentsRouteWidget(
+                              id: enrollmentsListItem['id'].toString()));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              24, 24, 24, 0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                enrollmentsListItem['course_section_name'],
+                                style: AppTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Open Sans',
+                                      color: CColors.primaryColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 8, 0, 24),
+                                child: Text(
+                                  enrollmentsListItem['instructor'],
                                   style:
                                       AppTheme.of(context).bodyText1.override(
                                             fontFamily: 'Open Sans',
-                                            color: CColors.primaryColor,
+                                            color: CColors.secondaryText,
                                             fontSize: 14,
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight: FontWeight.w600,
                                           ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 8, 0, 24),
-                                  child: Text(
-                                    enrollmentsListItem['instructor'],
-                                    style:
-                                        AppTheme.of(context).bodyText1.override(
-                                              fontFamily: 'Open Sans',
-                                              color: CColors.secondaryText,
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                  ),
-                                ),
-                                const Divider(
-                                  height: 1,
-                                  thickness: 1,
-                                ),
-                              ],
-                            ),
+                              ),
+                              const Divider(
+                                height: 1,
+                                thickness: 1,
+                              ),
+                            ],
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
                   ),
                 );
               },

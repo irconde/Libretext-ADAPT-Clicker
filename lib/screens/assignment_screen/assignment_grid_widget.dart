@@ -44,29 +44,15 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
   late WidgetRef ref;
   dynamic builderResponse;
   late int questionsIndex;
-  late String semanticsLabel;
 
   @override
   void initState() {
     super.initState();
     questionsItem = widget.questionsItem;
-
     assignmentSummary = widget.assignmentSummary;
     ref = widget.ref;
     builderResponse = widget.builderResponse;
     questionsIndex = widget.questionsIndex;
-    if (questionsItem['submission_file_exists'] == true) {
-      logger.w('Question $questionsIndex: ${questionsItem['date_submitted']} ');
-    }
-
-    createSemanticsLabel();
-  }
-
-  void createSemanticsLabel() {
-    semanticsLabel =
-        '${Strings.questionNumberSemanticsLabel} ${questionsIndex + 1};'
-        '${formatDateTwo(questionsItem['date_submitted'] ?? 'N/A') ?? formatDate(questionsItem['last_submitted'])};'
-        '${questionsItem['total_score']} out of ${questionsItem['points']} ${Strings.uppercasePoints}';
   }
 
   /// Formats the given [date] string into a formatted date string.
@@ -80,22 +66,6 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
     }
     // Parse the date string using the given format
     DateTime parsedDate = DateFormat('MMM dd, yyyy HH:mm:ss').parse(date);
-    // Format the date using the desired format
-    String formattedDate = DateFormat('MMMM d').format(parsedDate);
-    // Return the formatted date
-    return formattedDate;
-  }
-
-  String? formatDateTwo(String date) {
-    if (date == 'N/A' || date == null) {
-      return null;
-    }
-    logger.i('Passed in date: $date');
-
-    // Parse the date string using the given format
-    DateTime parsedDate = DateFormat('MMM dd, yyyy HH:mm').parse(date);
-
-    logger.i('Parsed date $parsedDate');
     // Format the date using the desired format
     String formattedDate = DateFormat('MMMM d').format(parsedDate);
     // Return the formatted date
@@ -158,87 +128,57 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
                             color: CColors.primaryColor,
                           ),
                     ),
-                  ),
-                  Visibility(
-                    visible: (questionsItem['last_submitted'] != 'N/A' &&
-                            (questionsItem['submission_file_exists'] ==
-                                null)) ||
-                        questionsItem['submission_file_exists'] == true,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Icon(
-                          Icons.check_circle_outline,
-                          color: CColors.success,
-                          size: 20,
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              Dimens.xxsMargin, 0, 0, Dimens.xxsMargin),
-                          child: Text(
-                            formatDateTwo(
-                                    questionsItem['date_submitted'] ?? 'N/A') ??
-                                formatDate(questionsItem['last_submitted']),
-                            textAlign: TextAlign.center,
-                            style: AppTheme.of(context).bodyText1.override(
-                                  fontFamily: 'Open Sans',
-                                  fontWeight: FontWeight.normal,
-                                  color: CColors.success,
-                                ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Visibility(
-                    visible: (questionsItem['last_submitted'] != 'N/A' &&
-                            (questionsItem['submission_file_exists'] ==
-                                null)) ||
-                        questionsItem['submission_file_exists'] == true,
-                    child: Column(
-                      children: [
-                        Visibility(
-                          visible: questionsItem['total_score'] != null,
-                          child: Text(
-                            '${questionsItem['total_score']}/${questionsItem['points']} ${Strings.uppercasePoints}',
-                            textAlign: TextAlign.center,
-                            style: AppTheme.of(context).bodyText3.override(
-                                  fontFamily: 'Open Sans',
-                                  fontWeight: FontWeight.normal,
-                                ),
-                          ),
-                        ),
-                        Visibility(
-                          visible: questionsItem['total_score'] == null,
-                          child: Text(
-                            Strings.awaitingScore,
-                            textAlign: TextAlign.center,
-                            style: AppTheme.of(context).bodyText3.override(
-                                  fontFamily: 'Open Sans',
-                                  fontWeight: FontWeight.normal,
-                                ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Visibility(
-                    visible: (questionsItem['last_submitted'] == 'N/A' &&
-                            questionsItem['submission_file_exists'] == null) ||
-                        questionsItem['submission_file_exists'] == false,
-                    child: Text(
-                      'Max ${questionsItem['points']} ${Strings.uppercasePoints}',
-                      textAlign: TextAlign.center,
-                      style: AppTheme.of(context).bodyText3.override(
-                            fontFamily: 'Open Sans',
-                            fontWeight: FontWeight.normal,
-                          ),
-                    ),
-                  ),
-                ],
               ),
-            ),
+              Visibility(
+                visible: questionsItem['last_submitted'] != 'N/A',
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      Icons.check_circle_outline,
+                      color: CColors.success,
+                      size: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          Dimens.xxsMargin, 0, 0, Dimens.xxsMargin),
+                      child: Text(
+                        formatDate(questionsItem['last_submitted']),
+                        textAlign: TextAlign.center,
+                        style: AppTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.normal,
+                              color: CColors.success,
+                            ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Visibility(
+                visible: questionsItem['last_submitted'] != 'N/A',
+                child: Text(
+                  '${questionsItem['total_score'] ?? 'Max'}/${questionsItem['points']} ${Strings.uppercasePoints}',
+                  textAlign: TextAlign.center,
+                  style: AppTheme.of(context).bodyText3.override(
+                        fontFamily: 'Open Sans',
+                        fontWeight: FontWeight.normal,
+                      ),
+                ),
+              ),
+              Visibility(
+                visible: questionsItem['last_submitted'] == 'N/A',
+                child: Text(
+                  'Max ${questionsItem['points']} ${Strings.uppercasePoints}',
+                  textAlign: TextAlign.center,
+                  style: AppTheme.of(context).bodyText3.override(
+                        fontFamily: 'Open Sans',
+                        fontWeight: FontWeight.normal,
+                      ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

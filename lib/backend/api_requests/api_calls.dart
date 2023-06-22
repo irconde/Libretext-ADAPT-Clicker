@@ -35,6 +35,9 @@ class LoginCall {
   }
 }
 
+
+
+
 /// A static class for making an API call to create a user.
 class CreateUserCall {
   /// Creates a new user by making an API call.
@@ -151,6 +154,26 @@ class RefreshTokenCall {
     );
   }
 }
+
+
+class SetJWT {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'setJWT',
+      apiUrl: 'https://dev.adapt.libretexts.org/api/users/set-cookie-user-jwt',
+      callType: ApiCallType.GET,
+      headers: {
+        'Accept': 'application/json',
+        'authorization': '$token',
+      },
+      params: {},
+      returnBody: true,
+    );
+  }
+}
+
 
 /// A static class for making an API call to retrieve user information.
 class GetUserCall {
@@ -450,6 +473,33 @@ class ViewCall {
         response,
         r'''$.questions''',
       );
+}
+
+class GetQuestionPageCall {
+  /// Retrieves the webpage for a question
+  ///
+  /// The [token] parameter is the access token for authentication.
+  /// The [assignmentID] parameter is the number of the assignment.
+  /// The [questionID] parameter is the number of the assignment.
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    int? assignmentID,
+    int? questionID,
+  }) {
+    return ApiManager.instance.makeApiCall(
+      callName: 'getAssignmentSummary',
+      apiUrl:
+      'https://adapt.libretexts.org/assignments/$assignmentID/questions/view/$questionID',
+      callType: ApiCallType.GET,
+      headers: {
+        'accept': 'application/json',
+        'authorization': '$token',
+      },
+      params: {},
+      returnBody: true,
+      html: true,
+    );
+  }
 }
 
 /// Makes an API call to retrieve the summary of an assignment.
