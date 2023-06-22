@@ -1,6 +1,7 @@
 import 'package:adapt_clicker/mixins/connection_state_mixin.dart';
 import 'package:adapt_clicker/screens/question_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logger/logger.dart';
 import '../../constants/strings.dart';
 import '../../main.dart';
 import '../../utils/utils.dart';
@@ -49,10 +50,13 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
   void initState() {
     super.initState();
     questionsItem = widget.questionsItem;
+
     assignmentSummary = widget.assignmentSummary;
     ref = widget.ref;
     builderResponse = widget.builderResponse;
     questionsIndex = widget.questionsIndex;
+    if(questionsItem['submission_file_exists'] == true)
+      logger.w('Question $questionsIndex: ${questionsItem['date_submitted']}');
   }
 
   /// Formats the given [date] string into a formatted date string.
@@ -71,6 +75,24 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
     // Return the formatted date
     return formattedDate;
   }
+
+  String? formatDateTwo(String date) {
+    if (date == 'N/A' || date == null) {
+      return null;
+    }
+    logger.i('Passed in date: $date');
+
+    // Parse the date string using the given format
+    DateTime parsedDate = DateFormat('MMM dd, yyyy HH:mm').parse(date);
+
+    logger.i('Parsed date $parsedDate');
+    // Format the date using the desired format
+    String formattedDate = DateFormat('MMMM d').format(parsedDate);
+    // Return the formatted date
+    return formattedDate;
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +147,7 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
                     ),
               ),
               Visibility(
-                visible: questionsItem['last_submitted'] != 'N/A',
+                visible: (questionsItem['last_submitted'] != 'N/A' && (questionsItem['submission_file_exists'] == null)) || questionsItem['submission_file_exists'] == true,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,7 +161,7 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
                       padding: const EdgeInsetsDirectional.fromSTEB(
                           Dimens.xxsMargin, 0, 0, Dimens.xxsMargin),
                       child: Text(
-                        formatDate(questionsItem['last_submitted']),
+                        formatDateTwo(questionsItem['date_submitted'] ?? 'N/A') ?? formatDate(questionsItem['last_submitted']),
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Open Sans',
@@ -151,8 +173,10 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
                   ],
                 ),
               ),
+
+
               Visibility(
-                visible: questionsItem['last_submitted'] != 'N/A',
+                visible: (questionsItem['last_submitted'] != 'N/A' && (questionsItem['submission_file_exists'] == null)) || questionsItem['submission_file_exists'] == true,
                 child: Column(
                   children: [
                     Visibility(
@@ -182,7 +206,7 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
 
               ),
               Visibility(
-                visible: questionsItem['last_submitted'] == 'N/A',
+                visible: (questionsItem['last_submitted'] == 'N/A'  && questionsItem['submission_file_exists'] == null) || questionsItem['submission_file_exists'] == false,
                 child: Text(
                   'Max ${questionsItem['points']} ${Strings.uppercasePoints}',
                   textAlign: TextAlign.center,
