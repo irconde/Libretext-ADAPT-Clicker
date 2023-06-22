@@ -49,6 +49,7 @@ class UserStoredPreferences {
   /// If the value is not found, `false` is returned.
   static bool get rememberMe => getBool(_keyRememberMe);
 
+
   /// Retrieves the value of 'authToken' key.
   ///
   /// If the value is not found, an empty string is returned.

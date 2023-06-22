@@ -1,4 +1,5 @@
 import 'package:adapt_clicker/utils/timezone.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 /// Singleton class for managing the application state.
 class AppState {
@@ -15,20 +16,18 @@ class AppState {
   /// Initializes the persisted state.
   Future initializePersistedState() async {}
 
+  Cookie cookie = Cookie(name: '', value: null);
+
   /// Holds the view.
   dynamic view;
 
   /// Indicates if an assignment is up.
   bool assignmentUp = false;
 
-  /// Holds the question.
-  dynamic question;
-
   /// Indicates if the app is in basic mode.
-  bool isBasic = false;
+  int assignmentId = 0;
 
-  /// Indicates if there is a submission.
-  bool hasSubmission = false;
+  List<String> urls = [];
 
   /// Container for storing timezones.
   static TimezonesContainer timezoneContainer = TimezonesContainer();

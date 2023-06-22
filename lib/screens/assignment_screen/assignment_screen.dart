@@ -1,15 +1,14 @@
 import 'package:adapt_clicker/mixins/connection_state_mixin.dart';
 import 'package:adapt_clicker/screens/assignment_screen/assignment_grid_widget.dart';
+import 'package:adapt_clicker/main.dart';
 import 'package:adapt_clicker/backend/user_stored_preferences.dart';
 import 'package:adapt_clicker/widgets/shimmer/shim_pages.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
-import 'package:logger/logger.dart';
 import '../../backend/api_requests/api_calls.dart';
 import '../../constants/strings.dart';
-import '../../utils/Logger.dart';
 import '../../utils/animations.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/utils.dart';
@@ -38,8 +37,6 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
   late Map<String, dynamic> assignmentSummary;
   bool isLoading = true;
   late Future<ApiCallResponse> viewCall;
-  String allowedAttempts = "";
-
   final animationsMap = {
     'textOnActionTriggerAnimation': AnimationInfo(
       trigger: AnimationTrigger.onActionTrigger,
@@ -134,14 +131,12 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
             future: getSummary(),
             builder: (context, snapshot) {
               return Scaffold(
-                resizeToAvoidBottomInset: false,
                 backgroundColor: CColors.primaryBackground,
                 appBar: AppBar(
                   centerTitle: true,
                   backgroundColor: CColors.primaryBackground,
                   elevation: 0.0,
                   leading: IconButton(
-                    tooltip: Strings.closeButtonSemanticsLabel,
                     icon: const Icon(
                       Icons.close,
                       color: CColors.tertiaryColor,
@@ -162,9 +157,6 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                   ),
                   actions: [
                     IconButton(
-                        tooltip: expansionController.value
-                            ? Strings.assignmentInfoOpenSemanticsLabel
-                            : Strings.assignmentInfoClosedSemanticsLabel,
                         onPressed: () {
                           setState(() {
                             expansionController.expanded =
@@ -195,189 +187,142 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                           theme: const ExpandableThemeData(
                             hasIcon: false,
                           ),
-                          header: Container(),
+                          header: Container(
+                            alignment: Alignment.centerLeft,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: const BoxDecoration(
+                                color: CColors.coursePagePullDown),
+                            child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    Dimens.xsMargin,
+                                    Dimens.sMargin,
+                                    Dimens.xsMargin,
+                                    Dimens.sMargin),
+                                child: Align(
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      children: [
+                                        Chip(
+                                          backgroundColor:
+                                              CColors.secondaryColor,
+                                          label: Text(
+                                            "${assignmentSummary['total_points']} ${Strings.points}",
+                                            style: theme.bodyText1.override(
+                                              fontFamily: 'Open Sans',
+                                              color: CColors.primaryBackground,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(Dimens.xsMargin, 0,
+                                              Dimens.xsMargin, 0),
+                                          child: Chip(
+                                            backgroundColor:
+                                                CColors.secondaryColor,
+                                            label: Text(
+                                              " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} ${Strings.allowedAttempts}",
+                                              style: theme.bodyText1.override(
+                                                fontFamily: 'Open Sans',
+                                                color:
+                                                    CColors.primaryBackground,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Chip(
+                                          backgroundColor:
+                                              CColors.secondaryColor,
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(8, 0, 8, 0),
+                                          labelPadding:
+                                              const EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 4, 0),
+                                          avatar: const Icon(
+                                            Icons.date_range,
+                                            color: CColors.primaryBackground,
+                                          ),
+                                          label: Text(
+                                            " ${formatDate(assignmentSummary['formatted_due'] ?? assignmentSummary['due']['due_date'])}",
+                                            style: theme.bodyText1.override(
+                                              fontFamily: 'Open Sans',
+                                              color: CColors.primaryBackground,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )),
+                          ),
                           expanded: Container(
                             width: MediaQuery.of(context).size.width,
                             decoration: const BoxDecoration(
                                 color: CColors.coursePagePullDown),
                             child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 24, 0, 24),
+                              padding: const EdgeInsets.all(24),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    alignment: Alignment.centerLeft,
-                                    width: MediaQuery.of(context).size.width,
-                                    decoration: const BoxDecoration(
-                                        color: CColors.coursePagePullDown),
+                                  Visibility(
+                                    visible: assignmentSummary[
+                                            'public_description'] !=
+                                        null,
                                     child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                                .fromSTEB(
-                                            Dimens.xsMargin,
-                                            Dimens.sMargin,
-                                            Dimens.xsMargin,
-                                            Dimens.sMargin),
-                                        child: Align(
-                                          child: SingleChildScrollView(
-                                            scrollDirection: Axis.horizontal,
-                                            child: Row(
-                                              children: [
-                                                Semantics(
-                                                  label:
-                                                      "${assignmentSummary['total_points']} ${Strings.totalPointsSemanticsLabel}",
-                                                  child: ExcludeSemantics(
-                                                    child: Chip(
-                                                      backgroundColor: CColors
-                                                          .secondaryColor,
-                                                      label: Text(
-                                                        "${assignmentSummary['total_points']} ${Strings.points}",
-                                                        style: theme.bodyText1
-                                                            .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          color: CColors
-                                                              .primaryBackground,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                          Dimens.xsMargin,
-                                                          0,
-                                                          Dimens.xsMargin,
-                                                          0),
-                                                  child: Semantics(
-                                                    label:
-                                                        " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} $allowedAttempts",
-                                                    child: ExcludeSemantics(
-                                                      child: Chip(
-                                                        backgroundColor: CColors
-                                                            .secondaryColor,
-                                                        label: Text(
-                                                          " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} $allowedAttempts",
-                                                          style: theme.bodyText1
-                                                              .override(
-                                                            fontFamily:
-                                                                'Open Sans',
-                                                            color: CColors
-                                                                .primaryBackground,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Semantics(
-                                                  label: formatDate(
-                                                      assignmentSummary[
-                                                              'formatted_due'] ??
-                                                          assignmentSummary[
-                                                                  'due']
-                                                              ['due_date']),
-                                                  child: ExcludeSemantics(
-                                                    child: Chip(
-                                                      backgroundColor: CColors
-                                                          .secondaryColor,
-                                                      padding:
-                                                          const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                              8, 0, 8, 0),
-                                                      labelPadding:
-                                                          const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                              0, 0, 4, 0),
-                                                      avatar: const Icon(
-                                                        Icons.date_range,
-                                                        color: CColors
-                                                            .primaryBackground,
-                                                      ),
-                                                      label: Text(
-                                                        " ${formatDate(assignmentSummary['formatted_due'] ?? assignmentSummary['due']['due_date'])}",
-                                                        style: theme.bodyText1
-                                                            .override(
-                                                          fontFamily:
-                                                              'Open Sans',
-                                                          color: CColors
-                                                              .primaryBackground,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 0, Dimens.msMargin),
+                                      child: RichText(
+                                        text: TextSpan(
+                                          style: theme.bodyText3,
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                              text: Strings.description,
+                                              style: theme.bodyText3.override(
+                                                fontFamily: 'Open Sans',
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
-                                          ),
-                                        )),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 24),
-                                    child: Visibility(
-                                      visible: assignmentSummary[
-                                              'public_description'] !=
-                                          null,
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 0, 0, Dimens.msMargin),
-                                        child: RichText(
-                                          text: TextSpan(
-                                            style: theme.bodyText3,
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                text: Strings.description,
-                                                style: theme.bodyText3.override(
-                                                  fontFamily: 'Open Sans',
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text: assignmentSummary[
-                                                        'public_description'] ??
-                                                    Strings.noDescription,
-                                              ),
-                                            ],
-                                          ),
+                                            TextSpan(
+                                              text: assignmentSummary[
+                                                      'public_description'] ??
+                                                  Strings.noDescription,
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 24),
-                                    child: Visibility(
-                                      visible: (assignmentSummary[
-                                                  'formatted_late_policy'] !=
-                                              null ||
-                                          assignmentSummary['late_policy'] !=
-                                              null),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0, 0, 0, Dimens.smMargin),
-                                        child: RichText(
-                                          text: TextSpan(
-                                            style: theme.bodyText3,
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                text: Strings.latePolicy,
-                                                style: theme.bodyText3.override(
-                                                  fontFamily: 'Open Sans',
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                  Visibility(
+                                    visible: (assignmentSummary[
+                                                'formatted_late_policy'] !=
+                                            null ||
+                                        assignmentSummary['late_policy'] !=
+                                            null),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 0, Dimens.smMargin),
+                                      child: RichText(
+                                        text: TextSpan(
+                                          style: theme.bodyText3,
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                              text: Strings.latePolicy,
+                                              style: theme.bodyText3.override(
+                                                fontFamily: 'Open Sans',
+                                                fontWeight: FontWeight.bold,
                                               ),
-                                              TextSpan(
-                                                text: assignmentSummary[
-                                                        'formatted_late_policy'] ??
-                                                    assignmentSummary[
-                                                            'late_policy']
-                                                        .toString(),
-                                              ),
-                                            ],
-                                          ),
+                                            ),
+                                            TextSpan(
+                                              text: assignmentSummary[
+                                                      'formatted_late_policy'] ??
+                                                  assignmentSummary[
+                                                          'late_policy']
+                                                      .toString(),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
@@ -492,11 +437,11 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
       return length;
     }
     var mod = (length % gridViewCrossAxisCount);
-    //logger.d('mod is $mod');
+    logger.d('mod is $mod');
     var reverse = (gridViewCrossAxisCount - mod);
-    //logger.d('reverse is $reverse');
+    logger.d('reverse is $reverse');
     var l = length + reverse;
-    //logger.d('l is $l');
+    logger.d('l is $l');
     return l;
   }
 }
