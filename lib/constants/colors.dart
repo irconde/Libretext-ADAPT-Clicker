@@ -11,6 +11,7 @@ class CColors {
   static const Color arrowForegroundColor = Color(0xFF707070);
   static const Color alternate = Color(0xFFFF5963);
   static const Color primaryBackground = Color(0xFFFFFFFF);
+  static const Color halfTransparentPrimaryBackground= Color(0x99FFFFFF);
   static const Color secondaryBackground = Color(0xFFFFFFFF);
   static const Color coursePagePullDown = Color(0xFFF3F3F3);
   static const Color shadowGrey = Color(0xFFCCCCCC);

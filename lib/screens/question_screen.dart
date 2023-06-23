@@ -39,6 +39,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
   TextEditingController? textController;
   int _currentPage;
+
   //NumberPaginatorController paginatorController = NumberPaginatorController();
   PageController pageController = PageController();
   bool isLoading = true;
@@ -244,15 +245,53 @@ class _QuestionScreenState extends State<QuestionScreen> {
             context.popRoute();
           },
         ),
-        title: Text(
-          widget.assignmentName!,
-          maxLines: 1,
-          overflow: TextOverflow.fade,
-          style: AppTheme.of(context).bodyText1.override(
-              fontFamily: 'Open Sans',
-              color: CColors.primaryBackground,
-              fontSize: 20,
-              fontWeight: FontWeight.w700),
+        title: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              RichText(
+                text: TextSpan(
+                    style: AppTheme.of(context).bodyText1.override(
+                        fontFamily: 'Open Sans',
+                        color: CColors.halfTransparentPrimaryBackground,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: '${_currentPage + 1}',
+                        style: AppTheme.of(context).bodyText1.override(
+                            fontFamily: 'Open Sans',
+                            color: CColors.primaryBackground,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700),
+                      ),
+                      TextSpan(text: '/$numPages'),
+                    ]),
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
+                child: Text(
+                  '|',
+                  maxLines: 1,
+                  style: AppTheme.of(context).bodyText1.override(
+                      fontFamily: 'Open Sans',
+                      color: CColors.primaryBackground,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w200),
+                ),
+              ),
+              Text(
+                widget.assignmentName!,
+                maxLines: 1,
+                overflow: TextOverflow.fade,
+                style: AppTheme.of(context).bodyText1.override(
+                    fontFamily: 'Open Sans',
+                    color: CColors.primaryBackground,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700),
+              ),
+            ],
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -289,30 +328,30 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 indent: 16,
                 endIndent: 16,
               ),
-               CustomPager(
-                  itemsPerPageTextStyle: AppTheme.of(context).bodyText3,
-                  pagesView: 5,
-                  currentPage: _currentPage,
-                  totalPages: numPages,
-                  onPageChanged: (index) async {
-                    final questionsListItem = questionsList[index];
-                    setState(() {
-                      logger.i('Changing question');
-                      AppState().question = questionsListItem;
-                      AppState().isBasic =
-                          isBasic(questionsListItem['technology_iframe']);
-                      AppState().hasSubmission =
-                          questionsListItem['has_at_least_one_submission'];
-                      webViewController?.loadUrl(
-                          urlRequest: URLRequest(
-                              url: Uri.parse(
-                                  questionsListItem['technology_iframe'])));
-                      UserStoredPreferences.selectedIndex = index;
-                      logger.i("Index: $index");
-                      _currentPage = index;
-                    });
-                  },
-                ),
+              CustomPager(
+                itemsPerPageTextStyle: AppTheme.of(context).bodyText3,
+                pagesView: 5,
+                currentPage: _currentPage,
+                totalPages: numPages,
+                onPageChanged: (index) async {
+                  final questionsListItem = questionsList[index];
+                  setState(() {
+                    logger.i('Changing question');
+                    AppState().question = questionsListItem;
+                    AppState().isBasic =
+                        isBasic(questionsListItem['technology_iframe']);
+                    AppState().hasSubmission =
+                        questionsListItem['has_at_least_one_submission'];
+                    webViewController?.loadUrl(
+                        urlRequest: URLRequest(
+                            url: Uri.parse(
+                                questionsListItem['technology_iframe'])));
+                    UserStoredPreferences.selectedIndex = index;
+                    logger.i("Index: $index");
+                    _currentPage = index;
+                  });
+                },
+              ),
             ],
           ),
         ),
@@ -322,7 +361,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
   /// Injects the viewport meta tag into the given [controller].
   void injectViewport(InAppWebViewController controller) async {
-
     double screenWidth = MediaQuery.of(context).size.width - Dimens.smMargin;
 
     await controller.evaluateJavascript(
