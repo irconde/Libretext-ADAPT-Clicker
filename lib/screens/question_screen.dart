@@ -1,12 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
-import 'package:number_paginator/number_paginator.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../constants/colors.dart';
 import '../constants/strings.dart';
 import '../utils/Logger.dart';
 import '../utils/app_theme.dart';
+import '../widgets/CustomPager.dart';
 import '../widgets/buttons/custom_button_widget.dart';
 import '../utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -39,14 +39,14 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
   TextEditingController? textController;
   int _currentPage;
-  NumberPaginatorController paginatorController = NumberPaginatorController();
+  //NumberPaginatorController paginatorController = NumberPaginatorController();
   PageController pageController = PageController();
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    paginatorController.currentPage = _currentPage;
+    //paginatorController.currentPage = _currentPage;
     pageController = PageController(initialPage: _currentPage);
     textController = TextEditingController();
   }
@@ -279,7 +279,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                                     questionsListItem['technology_iframe'])));
 
                         UserStoredPreferences.selectedIndex = index;
-                        paginatorController.currentPage = index;
+                        //paginatorController.currentPage = index;
                       });
                     },
                     children: pages),
@@ -289,26 +289,15 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 indent: 16,
                 endIndent: 16,
               ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(24, 8, 24, 0),
-                child: NumberPaginator(
-                  controller: paginatorController,
-                  config: const NumberPaginatorUIConfig(
-                    buttonShape: ContinuousRectangleBorder(
-                      side: BorderSide(color: CColors.outlineColor, width: 1),
-                    ),
-                    buttonSelectedForegroundColor: CColors.primaryBackground,
-                    buttonUnselectedForegroundColor: CColors.primaryColor,
-                    buttonUnselectedBackgroundColor: CColors.primaryBackground,
-                    buttonSelectedBackgroundColor: CColors.primaryColor,
-                  ),
-
-                  initialPage: _currentPage,
-                  // by default, the paginator shows numbers as center content
-                  numberPages: numPages,
-                  onPageChange: (index) async {
+               CustomPager(
+                  itemsPerPageTextStyle: AppTheme.of(context).bodyText3,
+                  pagesView: 5,
+                  currentPage: _currentPage,
+                  totalPages: numPages,
+                  onPageChanged: (index) async {
                     final questionsListItem = questionsList[index];
                     setState(() {
+                      logger.i('Changing question');
                       AppState().question = questionsListItem;
                       AppState().isBasic =
                           isBasic(questionsListItem['technology_iframe']);
@@ -319,10 +308,11 @@ class _QuestionScreenState extends State<QuestionScreen> {
                               url: Uri.parse(
                                   questionsListItem['technology_iframe'])));
                       UserStoredPreferences.selectedIndex = index;
+                      logger.i("Index: $index");
+                      _currentPage = index;
                     });
                   },
                 ),
-              ),
             ],
           ),
         ),
@@ -340,6 +330,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
       flutterViewPort.name = "viewport"; 
       flutterViewPort.content = "width=$screenWidth, initial-scale=1.0, maximum-scale=2.0, user-scalable=1"; document.getElementsByTagName("head")[0].appendChild(flutterViewPort);
       ''');
-    logger.i('Injected ${paginatorController.currentPage}');
+    //logger.i('Injected ${paginatorController.currentPage}');
   }
 }

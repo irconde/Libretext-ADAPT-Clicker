@@ -7,6 +7,8 @@ class CColors {
   static const Color secondaryColor = Color(0xFF787878);
   static const Color tertiaryColor = Color(0xFF898C8E);
   static const Color outlineColor = Color(0xFFD8D8D8);
+  static const Color arrowBackgroundColor = Color(0xFFe3e3e3);
+  static const Color arrowForegroundColor = Color(0xFF707070);
   static const Color alternate = Color(0xFFFF5963);
   static const Color primaryBackground = Color(0xFFFFFFFF);
   static const Color secondaryBackground = Color(0xFFFFFFFF);

@@ -9,6 +9,7 @@ class Dimens {
   static const int snackBarDurationMil = 4000; //milliseconds
   static const int snackBarDurationSec = 4; //seconds
   static const double tfIconSize = 21; //seconds
+  static const double paginatorButtonSize = 34;
 
   //Intro pages AppBar
   static const double appBarHeight = 240.0;
@@ -16,6 +17,8 @@ class Dimens {
   static const double appBarTitleOffset = 32; //higher means closer to top
   static const double appBarTitleSpeed = 2; //higher means slower
 
+
+  //App wide margins
   static const double xlMargin = 68;
   static const double llMargin = 48; //Double spaced
   static const double lmMargin = 44; //
