@@ -1,9 +1,8 @@
 import 'package:adapt_clicker/mixins/connection_state_mixin.dart';
 import 'package:adapt_clicker/screens/question_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:logger/logger.dart';
 import '../../constants/strings.dart';
-import '../../main.dart';
+import '../../utils/Logger.dart';
 import '../../utils/utils.dart';
 import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -55,8 +54,9 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
     ref = widget.ref;
     builderResponse = widget.builderResponse;
     questionsIndex = widget.questionsIndex;
-    if(questionsItem['submission_file_exists'] == true)
+    if (questionsItem['submission_file_exists'] == true) {
       logger.w('Question $questionsIndex: ${questionsItem['date_submitted']}');
+    }
   }
 
   /// Formats the given [date] string into a formatted date string.
@@ -92,8 +92,6 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
     return formattedDate;
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -121,11 +119,11 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
                     builder: (context, StateSetter setState) {
                   return Padding(
                     padding: MediaQuery.of(context).viewInsets,
-                    child:  QuestionScreen(
-                        assignmentName: assignmentSummary['name'],
-                        index: questionsIndex,
-                        view: builderResponse.jsonBody,
-                      ),
+                    child: QuestionScreen(
+                      assignmentName: assignmentSummary['name'],
+                      index: questionsIndex,
+                      view: builderResponse.jsonBody,
+                    ),
                   );
                 });
               });
@@ -147,7 +145,9 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
                     ),
               ),
               Visibility(
-                visible: (questionsItem['last_submitted'] != 'N/A' && (questionsItem['submission_file_exists'] == null)) || questionsItem['submission_file_exists'] == true,
+                visible: (questionsItem['last_submitted'] != 'N/A' &&
+                        (questionsItem['submission_file_exists'] == null)) ||
+                    questionsItem['submission_file_exists'] == true,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,7 +161,9 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
                       padding: const EdgeInsetsDirectional.fromSTEB(
                           Dimens.xxsMargin, 0, 0, Dimens.xxsMargin),
                       child: Text(
-                        formatDateTwo(questionsItem['date_submitted'] ?? 'N/A') ?? formatDate(questionsItem['last_submitted']),
+                        formatDateTwo(
+                                questionsItem['date_submitted'] ?? 'N/A') ??
+                            formatDate(questionsItem['last_submitted']),
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText1.override(
                               fontFamily: 'Open Sans',
@@ -173,10 +175,10 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
                   ],
                 ),
               ),
-
-
               Visibility(
-                visible: (questionsItem['last_submitted'] != 'N/A' && (questionsItem['submission_file_exists'] == null)) || questionsItem['submission_file_exists'] == true,
+                visible: (questionsItem['last_submitted'] != 'N/A' &&
+                        (questionsItem['submission_file_exists'] == null)) ||
+                    questionsItem['submission_file_exists'] == true,
                 child: Column(
                   children: [
                     Visibility(
@@ -196,17 +198,18 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
                         Strings.awaitingScore,
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText3.override(
-                          fontFamily: 'Open Sans',
-                          fontWeight: FontWeight.normal,
-                        ),
+                              fontFamily: 'Open Sans',
+                              fontWeight: FontWeight.normal,
+                            ),
                       ),
                     ),
                   ],
                 ),
-
               ),
               Visibility(
-                visible: (questionsItem['last_submitted'] == 'N/A'  && questionsItem['submission_file_exists'] == null) || questionsItem['submission_file_exists'] == false,
+                visible: (questionsItem['last_submitted'] == 'N/A' &&
+                        questionsItem['submission_file_exists'] == null) ||
+                    questionsItem['submission_file_exists'] == false,
                 child: Text(
                   'Max ${questionsItem['points']} ${Strings.uppercasePoints}',
                   textAlign: TextAlign.center,
