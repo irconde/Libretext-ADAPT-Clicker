@@ -3,7 +3,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../constants/strings.dart';
-import '../../main.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/utils.dart';
 import '../assignment_screen/assignment_screen.dart';
@@ -131,7 +130,8 @@ class AssignmentCtnWidgetState extends ConsumerState<AssignmentCtnWidget>
                 //Checking Internet
                 if (!checkConnection()) return;
                 //Setting assignment ID
-                setState(() => AppState().assignmentId = widget.assignmentsItem['id']);
+                setState(() =>
+                    AppState().assignmentId = widget.assignmentsItem['id']);
                 //Check if assignments already trying to load
                 if (!AppState().assignmentUp && context.mounted) {
                   setState(() => AppState().assignmentUp = true);

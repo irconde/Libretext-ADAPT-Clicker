@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
@@ -38,24 +38,14 @@ class QuestionScreen extends StatefulWidget {
 class _QuestionScreenState extends State<QuestionScreen> {
   _QuestionScreenState(this._currentPage);
   TextEditingController? textController;
+
   int _currentPage;
   NumberPaginatorController paginatorController = NumberPaginatorController();
   PageController pageController = PageController();
   bool isLoading = true;
 
-  @override
-  void initState() {
-    super.initState();
-    paginatorController.currentPage = _currentPage;
-    pageController = PageController(initialPage: _currentPage);
-    textController = TextEditingController();
-  }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
+  final CookieManager _cookieManager = CookieManager.instance();
   InAppWebViewController? webViewController;
   InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
       crossPlatform: InAppWebViewOptions(
@@ -72,6 +62,28 @@ class _QuestionScreenState extends State<QuestionScreen> {
       ios: IOSInAppWebViewOptions(
         allowsInlineMediaPlayback: true,
       ));
+
+  late URLRequest request;
+
+  @override
+  void initState() {
+    super.initState();
+    paginatorController.currentPage = _currentPage;
+    pageController = PageController(initialPage: _currentPage);
+    textController = TextEditingController();
+    setupHttpCredentials();
+  }
+
+  Future<void> setupHttpCredentials() async {
+    String redirectString = base64Url.encode(utf8.encode(AppState().urls[widget.index]));
+
+    request = URLRequest(
+      url: Uri.parse('https://adapt.libretexts.org/user-jwt-test/$redirectString'),
+
+        headers: { 'authorization': UserStoredPreferences.authToken},
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
