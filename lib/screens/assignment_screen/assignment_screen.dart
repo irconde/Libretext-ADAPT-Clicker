@@ -83,12 +83,26 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
       allowedAttempts = Strings.allowedAttempt;
       logger.log(Level.wtf, 'Rawr');
       return;
+  void createQuestionUrls(List<dynamic> questions) {
+    // create an empty list of strings to store the urls
+    List<String> urls = [];
+
+    // loop through each question in the list
+    for (var question in questions) {
+      // get the question id from the json
+      var questionID = question['id'];
+
+      // construct the url using string interpolation
+      var url =
+          'https://adapt.libretexts.org/assignments/${AppState().assignmentId}/questions/view/$questionID';
+
+      // add the url to the list
+      urls.add(url);
     }
 
-    allowedAttempts = Strings.allowedAttempts;
-
-    logger.log(Level.warning, '$b $allowedAttempts');
+    AppState().urls = urls;
   }
+
 
   /// Retrieves the assignment summary from the widget and initializes the [assignmentSummary] variable.
   ///
@@ -356,9 +370,10 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                   final builderResponse = snapshot.data!;
                                   return Builder(builder: (context) {
                                     int gridViewCrossAxisCount = 3;
-                                    final questions = ViewCall.questions(
+                                    final List<dynamic> questions = ViewCall.questions(
                                       builderResponse.jsonBody,
                                     )?.toList();
+                                    createQuestionUrls(questions);
 
                                     if (questions.length != 0) {
                                       bool spacing = true;

@@ -76,57 +76,46 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
   Widget build(BuildContext context) {
     return Container(
       color: CColors.primaryBackground,
-      child: Semantics(
-        label: semanticsLabel,
-        child: ExcludeSemantics(
-          child: InkWell(
-            onTap: () async {
-              if (!checkConnection()) return;
-              setState(() => AppState().view = builderResponse.jsonBody);
-              setState(() => AppState().question = questionsItem);
-              setState(() => AppState().isBasic = isBasic(getJsonField(
-                    questionsItem,
-                    r'''$.technology_iframe''',
-                  ).toString()));
-              setState(() => AppState().hasSubmission = getJsonField(
-                    questionsItem,
-                    r'''$.has_at_least_one_submission''',
-                  ));
-              await showModalBottomSheet(
-                  useSafeArea: true,
-                  isScrollControlled: true,
-                  backgroundColor: CColors.primaryBackground,
-                  context: context,
-                  builder: (context) {
-                    return StatefulBuilder(
-                        builder: (context, StateSetter setState) {
-                      return Padding(
-                        padding: MediaQuery.of(context).viewInsets,
-                        child: QuestionScreen(
-                          assignmentName: assignmentSummary['name'],
-                          index: questionsIndex,
-                          view: builderResponse.jsonBody,
-                        ),
-                      );
-                    });
-                  });
-            },
-            child: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(
-                  0, Dimens.xxsMargin, 0, 0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  ExcludeSemantics(
-                    child: Text(
-                      addOne(questionsIndex).toString(),
-                      textAlign: TextAlign.center,
-                      style: AppTheme.of(context).bodyText1.override(
-                            fontSize: 48,
-                            fontFamily: 'Open Sans',
-                            fontWeight: FontWeight.bold,
-                            color: CColors.primaryColor,
-                          ),
+      child: InkWell(
+        onTap: () async {
+          if (!checkConnection()) return;
+          setState(() => AppState().view = builderResponse.jsonBody);
+          await showModalBottomSheet(
+              useSafeArea: true,
+              isScrollControlled: true,
+              backgroundColor: CColors.primaryBackground,
+              context: context,
+              builder: (context) {
+                return StatefulBuilder(
+                    builder: (context, StateSetter setState) {
+                  return Padding(
+                    padding: MediaQuery.of(context).viewInsets,
+                    child: SizedBox(
+                      height: double.infinity,
+                      child: QuestionScreen(
+                        assignmentName: assignmentSummary['name'],
+                        index: questionsIndex,
+                        view: builderResponse.jsonBody,
+                      ),
+                    ),
+                  );
+                });
+              });
+        },
+        child: Padding(
+          padding:
+              const EdgeInsetsDirectional.fromSTEB(0, Dimens.xxsMargin, 0, 0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                addOne(questionsIndex).toString(),
+                textAlign: TextAlign.center,
+                style: AppTheme.of(context).bodyText1.override(
+                      fontSize: 48,
+                      fontFamily: 'Open Sans',
+                      fontWeight: FontWeight.bold,
+                      color: CColors.primaryColor,
                     ),
               ),
               Visibility(

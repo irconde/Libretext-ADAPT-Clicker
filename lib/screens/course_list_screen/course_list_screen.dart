@@ -3,6 +3,9 @@ import 'package:adapt_clicker/widgets/app_bars/main_app_bar_widget.dart';
 import 'package:adapt_clicker/main.dart';
 import 'package:adapt_clicker/widgets/shimmer/shim_pages.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:move_to_background/move_to_background.dart';
 import 'package:adapt_clicker/backend/user_stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
@@ -11,7 +14,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../backend/Router/app_router.dart';
 import '../../backend/api_requests/api_calls.dart';
 import '../../constants/strings.dart';
-import '../../utils/Logger.dart';
 import '../../utils/app_state.dart';
 import '../../widgets/bottom_sheets/add_course_widget.dart';
 import '../../mixins/connection_state_mixin.dart';
@@ -78,10 +80,40 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
     getToken();
     sendToken();
     handleRoutes();
+    initJWT();
     _apiRequestCompleter = updateAndGetResponse();
     if (widget.isFirstScreen!) {
       _showSignInSnackbar();
     }
+  }
+
+  InAppWebViewController? webViewController;
+  final CookieManager _cookieManager = CookieManager.instance();
+  InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
+      crossPlatform: InAppWebViewOptions(
+        useShouldOverrideUrlLoading: true,
+        mediaPlaybackRequiresUserGesture: false,
+        supportZoom: true,
+        javaScriptEnabled: true,
+        javaScriptCanOpenWindowsAutomatically: true,
+        cacheEnabled: true,
+      ),
+      android: AndroidInAppWebViewOptions(
+        useHybridComposition: true,
+      ),
+      ios: IOSInAppWebViewOptions(
+        allowsInlineMediaPlayback: true,
+      ));
+  late URLRequest request;
+  Future<void> initJWT() async {
+    request = URLRequest(
+      url: Uri.parse(
+          'https://adapt.libretexts.org/api/users/set-cookie-user-jwt'),
+      headers: {'authorization': UserStoredPreferences.authToken},
+    );
+
+    AppState().cookie =
+        (await _cookieManager.getCookie(url: request.url!, name: 'user_jwt'))!;
   }
 
   /// Shows a snackbar indicating the signed-in user.
@@ -356,6 +388,36 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
               },
             );
           },
+        ),
+        Visibility(
+          visible: false,
+          maintainState: true,
+          child: SizedBox(
+            height: 20,
+            child: InAppWebView(
+              initialUrlRequest: request,
+              onWebViewCreated: (controller) {
+                webViewController = controller;
+                //controller.loadUrl(urlRequest: requestJWT);
+                //logger.i(UserStoredPreferences.authToken );
+              },
+              onLoadStop: (controller, uri) async {
+                List<Cookie> cookies =
+                    await _cookieManager.getCookies(url: request.url!);
+                cookies.forEach((cookie) {
+                  if (cookie.name == 'user_jwt') {
+                    AppState().cookie = cookie;
+                    //logger.i(cookie.name + " " + cookie.value);
+                  }
+                });
+              },
+              initialOptions: options,
+              gestureRecognizers: Set()
+                ..add(Factory(() => EagerGestureRecognizer()))
+                ..add(Factory<VerticalDragGestureRecognizer>(
+                    () => VerticalDragGestureRecognizer())),
+            ),
+          ),
         ),
       ],
     );

@@ -1,15 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
-import '../../backend/api_requests/api_calls.dart';
 import '../../constants/colors.dart';
 import '../../constants/strings.dart';
 import '../../utils/app_theme.dart';
-import '../buttons/custom_button_widget.dart';
-import '../../utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
-import '../../backend/user_stored_preferences.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 /// Represents a page that displays a poll.
@@ -93,66 +88,65 @@ class _PollWidgetState extends State<PollWidget> {
         ),
         body: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                color: CColors.primaryColor,
-                width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
-                        child: Icon(
-                          Icons.timer,
-                          color: CColors.primaryBackground,
-                          size: 28,
-                        ),
-                      ),
-                      RichText(
-                        text: TextSpan(
-                            style: AppTheme.of(context).title3,
-                            children: [
-                              const TextSpan(
-                                text: Strings.remainingTime,
-                              ),
-                              TextSpan(
-                                  text: "${widget.poll['timer'] ?? '0:00'}",
-                                  style: AppTheme.of(context).title2)
-                            ]),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 80, 0, 24),
-                child: Card(
-                        elevation: 2,
-                        child: SizedBox(
-                          height: 400,
-                          child: InAppWebView(
-                            initialUrlRequest: null,
-                            onWebViewCreated: (controller) {
-                              webViewController = controller;
-                              injectViewport(controller);
-                            },
-                            onLoadStart: (controller, uri) {
-                              injectViewport(controller);
-                            },
-                            initialOptions: options,
-                            gestureRecognizers: Set()
-                              ..add(Factory(() => EagerGestureRecognizer()))
-                              ..add(Factory<VerticalDragGestureRecognizer>(
-                                  () => VerticalDragGestureRecognizer())),
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  color: CColors.primaryColor,
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                          child: Icon(
+                            Icons.timer,
+                            color: CColors.primaryBackground,
+                            size: 28,
                           ),
                         ),
-                      )
-              ),
+                        RichText(
+                          text: TextSpan(
+                              style: AppTheme.of(context).title3,
+                              children: [
+                                const TextSpan(
+                                  text: Strings.remainingTime,
+                                ),
+                                TextSpan(
+                                    text: "${widget.poll['timer'] ?? '0:00'}",
+                                    style: AppTheme.of(context).title2)
+                              ]),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 80, 0, 24),
+                    child: Card(
+                      elevation: 2,
+                      child: SizedBox(
+                        height: 400,
+                        child: InAppWebView(
+                          initialUrlRequest: null,
+                          onWebViewCreated: (controller) {
+                            webViewController = controller;
+                            injectViewport(controller);
+                          },
+                          onLoadStart: (controller, uri) {
+                            injectViewport(controller);
+                          },
+                          initialOptions: options,
+                          gestureRecognizers: Set()
+                            ..add(Factory(() => EagerGestureRecognizer()))
+                            ..add(Factory<VerticalDragGestureRecognizer>(
+                                () => VerticalDragGestureRecognizer())),
+                        ),
+                      ),
+                    )),
               ]),
         ));
   }

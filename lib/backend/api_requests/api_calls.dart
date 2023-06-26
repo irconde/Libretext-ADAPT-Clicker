@@ -35,9 +35,6 @@ class LoginCall {
   }
 }
 
-
-
-
 /// A static class for making an API call to create a user.
 class CreateUserCall {
   /// Creates a new user by making an API call.
@@ -155,7 +152,6 @@ class RefreshTokenCall {
   }
 }
 
-
 class SetJWT {
   static Future<ApiCallResponse> call({
     String? token = '',
@@ -173,7 +169,6 @@ class SetJWT {
     );
   }
 }
-
 
 /// A static class for making an API call to retrieve user information.
 class GetUserCall {
@@ -489,7 +484,7 @@ class GetQuestionPageCall {
     return ApiManager.instance.makeApiCall(
       callName: 'getAssignmentSummary',
       apiUrl:
-      'https://adapt.libretexts.org/assignments/$assignmentID/questions/view/$questionID',
+          'https://adapt.libretexts.org/assignments/$assignmentID/questions/view/$questionID',
       callType: ApiCallType.GET,
       headers: {
         'accept': 'application/json',
