@@ -1,6 +1,5 @@
 import 'package:adapt_clicker/constants/dimens.dart';
 import 'package:flutter/material.dart';
-
 import '../constants/colors.dart';
 import '../utils/Logger.dart';
 
@@ -12,7 +11,6 @@ class CustomPager extends StatefulWidget {
     required this.onPageChanged,
     this.currentItemsPerPage,
     this.itemsPerPageList,
-    this.pagesView = 3,
     this.currentPage = 1,
     this.numberButtonSelectedColor = CColors.primaryColor,
     this.numberTextSelectedColor = CColors.primaryBackground,
@@ -20,12 +18,10 @@ class CustomPager extends StatefulWidget {
     this.pageChangeIconColor = CColors.arrowForegroundColor,
     this.itemsPerPageText,
     this.itemsPerPageTextStyle,
-  })  : assert(currentPage >= 0 && totalPages > 0 && pagesView > 0,
+  })  : assert(currentPage >= 0 && totalPages > 0,
             "Fatal Error: Make sure the currentPage, totalPages and pagesView fields are greater than zero. "),
         super(key: key) {}
 
-  /// How many page numbers selectable to show at once.
-  int pagesView;
 
   /// Total pages.
   final int totalPages;
@@ -64,10 +60,25 @@ class CustomPager extends StatefulWidget {
   State<CustomPager> createState() => _PagerState();
 }
 
+
+// Declare a ScrollController and attach it to your ListView.builder
+ScrollController _scrollController = ScrollController();
+
+// In your onPressed callback, call this method
+void _scrollToIndex(int index) {
+  // Get the width of each page number button
+  double itemWidth = Dimens.paginatorButtonSize + 4; // add some padding
+
+  // Calculate the offset based on the index
+  double offset = index * itemWidth;
+
+  _scrollController.animateTo(offset, duration: Duration(seconds: 1), curve: Curves.easeOut); // smooth scroll
+}
+
+
 class _PagerState extends State<CustomPager> {
   @override
   Widget build(BuildContext context) {
-    pagesViewValidation();
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -85,6 +96,7 @@ class _PagerState extends State<CustomPager> {
                 onPressed: () {
                   setState(() {
                     widget.currentPage = 0; //index starts at 0
+                    _scrollToIndex(widget.currentPage);
                     widget.onPageChanged(widget.currentPage);
                   });
                 },
@@ -120,6 +132,7 @@ class _PagerState extends State<CustomPager> {
                   setState(() {
                     widget.currentPage =
                         widget.currentPage > 1 ? widget.currentPage - 1 : 1;
+                    _scrollToIndex(widget.currentPage);
                     widget.onPageChanged(widget.currentPage);
                   });
                 },
@@ -133,11 +146,15 @@ class _PagerState extends State<CustomPager> {
             ),
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            for (int i = getPageStart(getPageEnd()); i < getPageEnd(); i++)
-              Padding(
+        SizedBox(
+          height: Dimens.paginatorButtonSize,
+          width:  Dimens.paginatorButtonSize * 5 + 16,
+          child: ListView.builder(
+            controller: _scrollController,
+            scrollDirection: Axis.horizontal,
+            itemCount: widget.totalPages,
+            itemBuilder: (context, i) {
+              return Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
                 child: SizedBox(
                   width: Dimens.paginatorButtonSize,
@@ -145,6 +162,7 @@ class _PagerState extends State<CustomPager> {
                   child: TextButton(
                     onPressed: () {
                       setState(() {
+                        _scrollToIndex(i);
                         widget.currentPage = i;
                         widget.onPageChanged(widget.currentPage);
                       });
@@ -172,8 +190,9 @@ class _PagerState extends State<CustomPager> {
                     ),
                   ),
                 ),
-              ),
-          ],
+              );
+            },
+          ),
         ),
         Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 4, 0),
@@ -193,6 +212,7 @@ class _PagerState extends State<CustomPager> {
                     widget.currentPage = widget.currentPage < widget.totalPages
                         ? widget.currentPage + 1
                         : widget.totalPages;
+                    _scrollToIndex(widget.currentPage);
                     widget.onPageChanged(widget.currentPage);
                   });
                 },
@@ -219,7 +239,9 @@ class _PagerState extends State<CustomPager> {
                 tooltip: "Last Page",
                 onPressed: () {
                   setState(() {
-                    widget.currentPage = widget.totalPages-1; //index starts at 0 but total pages is counting from 1
+
+                    widget.currentPage = widget.totalPages-1;//index starts at 0 but total pages is counting from 1
+                    _scrollToIndex(widget.currentPage);
                     widget.onPageChanged(widget.currentPage);
                     logger.i('curreng page: ${widget.currentPage}');
                   });
@@ -235,26 +257,5 @@ class _PagerState extends State<CustomPager> {
           ),
       ],
     );
-  }
-
-  /// Get last page to show in pagination.
-  int getPageEnd() {
-    return widget.currentPage + widget.pagesView > widget.totalPages
-        ? widget.totalPages
-        : widget.currentPage + widget.pagesView;
-  }
-
-  /// Get first page to show in pagination.
-  int getPageStart(int pageEnd) {
-    return pageEnd == widget.totalPages
-        ? pageEnd - widget.pagesView
-        : widget.currentPage;
-  }
-
-  /// Validation of pagesView field
-  void pagesViewValidation() {
-    if (widget.totalPages < widget.pagesView) {
-      widget.pagesView = widget.totalPages;
-    }
   }
 }

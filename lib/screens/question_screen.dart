@@ -330,7 +330,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
               ),
               CustomPager(
                 itemsPerPageTextStyle: AppTheme.of(context).bodyText3,
-                pagesView: 5,
                 currentPage: _currentPage,
                 totalPages: numPages,
                 onPageChanged: (index) async {
