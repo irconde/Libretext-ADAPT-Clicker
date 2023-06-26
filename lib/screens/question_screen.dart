@@ -88,7 +88,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
               AppState().isBasic
                   ? Card(
                       child: SizedBox(
-                        height: MediaQuery.of(context).size.height,
+                        height: MediaQuery.of(context).size.height - 128,
                         child: InAppWebView(
                           initialUrlRequest: URLRequest(
                               url: Uri.parse(
@@ -335,7 +335,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 onPageChanged: (index) async {
                   final questionsListItem = questionsList[index];
                   setState(() {
-                    logger.i('Changing question');
+                    //logger.i('Changing question');
                     AppState().question = questionsListItem;
                     AppState().isBasic =
                         isBasic(questionsListItem['technology_iframe']);
@@ -346,7 +346,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                             url: Uri.parse(
                                 questionsListItem['technology_iframe'])));
                     UserStoredPreferences.selectedIndex = index;
-                    logger.i("Index: $index");
+                    //.i("Index: $index");
                     _currentPage = index;
                   });
                 },
