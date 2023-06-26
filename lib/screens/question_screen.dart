@@ -4,9 +4,8 @@ import 'package:flutter/gestures.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../constants/colors.dart';
 import '../constants/strings.dart';
-import '../utils/Logger.dart';
 import '../utils/app_theme.dart';
-import '../widgets/CustomPager.dart';
+import '../widgets/custom_pager_widget.dart';
 import '../widgets/buttons/custom_button_widget.dart';
 import '../utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -39,15 +38,12 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
   TextEditingController? textController;
   int _currentPage;
-
-  //NumberPaginatorController paginatorController = NumberPaginatorController();
   PageController pageController = PageController();
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    //paginatorController.currentPage = _currentPage;
     pageController = PageController(initialPage: _currentPage);
     textController = TextEditingController();
   }
@@ -271,13 +267,13 @@ class _QuestionScreenState extends State<QuestionScreen> {
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
                 child: Text(
-                  '|',
+                  ' | ',
                   maxLines: 1,
                   style: AppTheme.of(context).bodyText1.override(
                       fontFamily: 'Open Sans',
-                      color: CColors.primaryBackground,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w200),
+                      color: CColors.halfTransparentPrimaryBackground,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w300),
                 ),
               ),
               Text(
@@ -318,7 +314,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
                                     questionsListItem['technology_iframe'])));
 
                         UserStoredPreferences.selectedIndex = index;
-                        //paginatorController.currentPage = index;
                       });
                     },
                     children: pages),
