@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import '../../constants/colors.dart';
@@ -6,6 +8,7 @@ import '../../constants/strings.dart';
 import '../../utils/app_theme.dart';
 import '../buttons/custom_elevated_button_widget.dart';
 import 'shimmer_widget.dart';
+
 
 final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -577,6 +580,11 @@ Widget shimQuestionList(
 /// ```
 Widget shimAssignment(
     {required StateSetter setState, required BuildContext context}) {
+  var half = MediaQuery.of(context).size.width/2;
+  if(Platform.isIOS)
+  {
+    half = MediaQuery.of(context).size.width/6 * MediaQuery.of(context).devicePixelRatio;
+  }
   return Stack(
     children: [
       Column(
@@ -594,7 +602,7 @@ Widget shimAssignment(
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(32, 0, 0, 12),
                     child: Container(
-                      width: 256,
+                      width: half,
                       height: 24,
                       decoration: const ShapeDecoration(
                         color: CColors.titleShimmerBackground,
@@ -606,7 +614,7 @@ Widget shimAssignment(
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(32, 0, 0, 12),
                     child: Container(
-                      width: 320,
+                      width: half * 1.4,
                       height: 24,
                       decoration: const ShapeDecoration(
                         color: CColors.titleShimmerBackground,
@@ -617,32 +625,32 @@ Widget shimAssignment(
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(64, 24, 32, 16),
+                    EdgeInsetsDirectional.fromSTEB(half/2.5, 24, 0, 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Container(
-                          width: 56,
+                          width: half/4,
                           height: 12,
                           decoration: const ShapeDecoration(
                             color: CColors.titleShimmerBackground,
                             shape: RoundedRectangleBorder(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(2))),
+                                BorderRadius.all(Radius.circular(2))),
                           ),
                         ),
                         Padding(
                           padding:
-                              const EdgeInsetsDirectional.fromSTEB(96, 0, 0, 0),
+                          EdgeInsetsDirectional.fromSTEB(half/1.6, 0, 0, 0),
                           child: Container(
-                            width: 128,
+                            width: half/2,
                             height: 12,
                             decoration: const ShapeDecoration(
                               color: CColors.titleShimmerBackground,
                               shape: RoundedRectangleBorder(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(2))),
+                                  BorderRadius.all(Radius.circular(2))),
                             ),
                           ),
                         ),
@@ -650,7 +658,7 @@ Widget shimAssignment(
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width / 2,
+                    width: half,
                     height: 2,
                     color: CColors.primaryBackground,
                   )
@@ -668,7 +676,7 @@ Widget shimAssignment(
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                      const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                       child: Container(
                         width: 96,
                         height: 16,
@@ -676,7 +684,7 @@ Widget shimAssignment(
                           color: CColors.secondaryShimmerBackground,
                           shape: RoundedRectangleBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(4))),
+                              BorderRadius.all(Radius.circular(4))),
                         ),
                       ),
                     ),
@@ -700,7 +708,7 @@ Widget shimAssignment(
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                      const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                       child: Container(
                         width: 156,
                         height: 16,
@@ -708,13 +716,13 @@ Widget shimAssignment(
                           color: CColors.secondaryShimmerBackground,
                           shape: RoundedRectangleBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(4))),
+                              BorderRadius.all(Radius.circular(4))),
                         ),
                       ),
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
+                      const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
                       child: Container(
                         width: 156,
                         height: 16,
@@ -722,7 +730,7 @@ Widget shimAssignment(
                           color: CColors.secondaryShimmerBackground,
                           shape: RoundedRectangleBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(4))),
+                              BorderRadius.all(Radius.circular(4))),
                         ),
                       ),
                     ),
@@ -763,116 +771,116 @@ Widget shimAssignment(
               child: Column(
                 children: List.generate(
                     6,
-                    (index) => Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              32, 0, 23, 8),
-                          child: ShimmerWidget.rectangular(
+                        (index) => Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          32, 0, 23, 8),
+                      child: ShimmerWidget.rectangular(
+                        height: 88,
+                        backgroundColor: CColors.buttonShimmerBackground,
+                        shimmerColor: CColors.buttonShimmerEffect,
+                        children: [
+                          Container(
+                            width: 4,
                             height: 88,
-                            backgroundColor: CColors.buttonShimmerBackground,
-                            shimmerColor: CColors.buttonShimmerEffect,
-                            children: [
-                              Container(
-                                width: 4,
-                                height: 88,
-                                decoration: const ShapeDecoration(
-                                  color: CColors.titleShimmerBackground,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(2))),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    16, 16, 20, 0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                            decoration: const ShapeDecoration(
+                              color: CColors.titleShimmerBackground,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(2))),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                16, 16, 20, 0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.start,
                                   children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0, 0, 12, 0),
-                                          child: Container(
-                                            width: 20,
-                                            height: 20,
-                                            decoration: const ShapeDecoration(
-                                              color: CColors.detailsDarkerBlue,
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(2))),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          height: 16,
-                                          width: 156,
-                                          decoration: const ShapeDecoration(
-                                            color: CColors.detailsDarkerBlue,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(2))),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
                                     Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0, 16, 0, 8),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 0, 8, 0),
-                                            child: Container(
-                                              width: 80,
-                                              height: 16,
-                                              decoration: const ShapeDecoration(
-                                                color:
-                                                    CColors.detailsLighterBlue,
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                2))),
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            height: 16,
-                                            width: 156,
-                                            decoration: const ShapeDecoration(
-                                              color: CColors.detailsLighterBlue,
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(2))),
-                                            ),
-                                          ),
-                                        ],
+                                      padding: const EdgeInsetsDirectional
+                                          .fromSTEB(0, 0, 12, 0),
+                                      child: Container(
+                                        width: 20,
+                                        height: 20,
+                                        decoration: const ShapeDecoration(
+                                          color: CColors.detailsDarkerBlue,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                              BorderRadius.all(
+                                                  Radius.circular(2))),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 16,
+                                      width: 156,
+                                      decoration: const ShapeDecoration(
+                                        color: CColors.detailsDarkerBlue,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(2))),
                                       ),
                                     ),
                                   ],
                                 ),
-                              ),
-                              Container(
-                                width: 32,
-                                height: 32,
-                                decoration: const ShapeDecoration(
-                                  color: CColors.detailsDarkerBlue,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(2))),
+                                Padding(
+                                  padding:
+                                  const EdgeInsetsDirectional.fromSTEB(
+                                      0, 16, 0, 8),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 0, 8, 0),
+                                        child: Container(
+                                          width: 80,
+                                          height: 16,
+                                          decoration: const ShapeDecoration(
+                                            color:
+                                            CColors.detailsLighterBlue,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                BorderRadius.all(
+                                                    Radius.circular(
+                                                        2))),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 16,
+                                        width: 156,
+                                        decoration: const ShapeDecoration(
+                                          color: CColors.detailsLighterBlue,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                              BorderRadius.all(
+                                                  Radius.circular(2))),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              )
-                            ],
+                              ],
+                            ),
                           ),
-                        )),
+                          Container(
+                            width: 32,
+                            height: 32,
+                            decoration: const ShapeDecoration(
+                              color: CColors.detailsDarkerBlue,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(2))),
+                            ),
+                          )
+                        ],
+                      ),
+                    )),
               ),
             ),
           )
