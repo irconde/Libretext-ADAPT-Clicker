@@ -13,7 +13,7 @@ class Dimens {
 
   //Intro pages AppBar
   static const double appBarHeight = 240.0;
-  static const double appBarTransitionMin = 80;
+  static const double appBarTransitionMin = 48;
   static const double appBarTitleOffset = 32; //higher means closer to top
   static const double appBarTitleSpeed = 2; //higher means slower
 

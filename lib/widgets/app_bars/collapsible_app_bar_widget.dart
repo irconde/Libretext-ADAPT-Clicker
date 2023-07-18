@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:ui';
+
 import '../../backend/api_requests/api_calls.dart';
 import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -121,9 +124,11 @@ class _CollapsibleAppBarState extends State<CollapsibleAppBar> {
       ),
       flexibleSpace: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
-        top = constraints.biggest.height;
+        top = constraints.biggest.height - 20;
         return FlexibleSpaceBar(
           titlePadding: getPadding(),
+          centerTitle: false,
+          collapseMode: CollapseMode.none,
           title: Text(getTitle(),
               maxLines: checkTop() ? 1 : 2,
               overflow: TextOverflow.ellipsis,
@@ -158,8 +163,8 @@ class _CollapsibleAppBarState extends State<CollapsibleAppBar> {
     double transitionVal = 4;
     if (checkTop()) {
       transitionVal = ((top / Dimens.appBarTransitionMin) /
-              (264 / Dimens.appBarTransitionMin)) *
-          4; //264 is max appbar size (max + 24 I believe).
+              (290 / Dimens.appBarTransitionMin)) *
+          4; //290 is max appbar size (max + 26 I believe).
     }
 
     double result = 20 + transitionVal;
@@ -200,6 +205,9 @@ class _CollapsibleAppBarState extends State<CollapsibleAppBar> {
   }
 
   double getDiff() {
+    if(top < 84)
+      top = 84;
+
     return (top - Dimens.appBarTransitionMin) / Dimens.appBarTitleSpeed +
         Dimens.appBarTitleOffset;
   }
