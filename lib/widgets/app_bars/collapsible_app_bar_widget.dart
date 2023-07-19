@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import '../../backend/api_requests/api_calls.dart';
+import '../../constants/strings.dart';
 import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -111,16 +112,20 @@ class _CollapsibleAppBarState extends State<CollapsibleAppBar> {
       actions: [
         widget.showNotificationIcon
             ? NotificationIcon(setState: (VoidCallback fn) {
-                setState(fn);
-              })
+                  setState(fn);
+                },
+            )
             : Container(),
       ],
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back, size: 24),
-        onPressed: () async {
-          FocusScope.of(context).unfocus();
-          Navigator.of(context).pop();
-        },
+      leading: Semantics(
+        label:  Strings.backButtonSemanticsLabel,
+        child: IconButton(
+          icon: const Icon(Icons.arrow_back, size: 24),
+          onPressed: () async {
+            FocusScope.of(context).unfocus();
+            Navigator.of(context).pop();
+          },
+        ),
       ),
       flexibleSpace: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {

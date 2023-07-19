@@ -211,6 +211,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
         backgroundColor: CColors.primaryBackground,
         floatingActionButton: isLoading
             ? FloatingActionButton(
+                tooltip: Strings.addCourseSemanticsLabel,
                 onPressed: () {},
                 backgroundColor: CColors.buttonShimmerBackground,
                 elevation: 8,
@@ -221,6 +222,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
                 ),
               )
             : FloatingActionButton(
+                tooltip: Strings.addCourseSemanticsLabel,
                 onPressed: () async {
                   if (!checkConnection()) return;
                   showModalBottomSheet(

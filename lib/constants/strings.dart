@@ -162,4 +162,13 @@ class Strings {
   static const String displayOrderStartDate = 'Available From';
   static const String orderDueDate = 'DUE DATE';
   static const String displayOrderDueDate = 'Due';
+
+  ///Semantics
+  static const String mainMenuSemanticsLabel = 'Main Menu';
+  static const String notificationSemanticsLabel = 'Notifications';
+  static const String backButtonSemanticsLabel = 'Back';
+  static const String closeButtonSemanticsLabel = 'Close';
+  static const String assignmentInfoClosedSemanticsLabel = 'Assignment Info Closed';
+  static const String assignmentInfoOpenSemanticsLabel = 'Assignment Info Opened';
+  static const String addCourseSemanticsLabel = 'Add Course';
 }

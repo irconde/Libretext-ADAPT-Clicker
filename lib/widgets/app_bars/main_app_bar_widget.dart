@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../constants/strings.dart';
 import '../notification_icon_widget.dart';
 
 /// The main app bar widget.
@@ -33,16 +34,17 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       automaticallyImplyLeading: false,
       leading: IconButton(
-        icon: const Icon(Icons.menu),
-        onPressed: () {
-          scaffoldKey.currentState!.openDrawer();
-        },
+          tooltip: Strings.mainMenuSemanticsLabel,
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            scaffoldKey.currentState!.openDrawer();
+          },
       ),
       title: Text(title),
       actions: [
-        NotificationIcon(
-          setState: setState,
-        ),
+          NotificationIcon(
+            setState: setState,
+          ),
       ],
     );
   }
