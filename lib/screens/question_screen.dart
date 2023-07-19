@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -13,6 +15,7 @@ import 'package:flutter_html/flutter_html.dart';
 import '../constants/dimens.dart';
 import '../backend/user_stored_preferences.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+
 
 /// Screen that displays information of a particular question
 @RoutePage()
@@ -40,12 +43,18 @@ class _QuestionScreenState extends State<QuestionScreen> {
   int _currentPage;
   PageController pageController = PageController();
   bool isLoading = true;
+  double navBarBottomPadding = 0;
 
   @override
   void initState() {
     super.initState();
     pageController = PageController(initialPage: _currentPage);
     textController = TextEditingController();
+
+    if(Platform.isIOS)
+    {
+      navBarBottomPadding = 8;
+    }
   }
 
   @override
@@ -323,28 +332,35 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 indent: 16,
                 endIndent: 16,
               ),
-              CustomPager(
-                itemsPerPageTextStyle: AppTheme.of(context).bodyText3,
-                currentPage: _currentPage,
-                totalPages: numPages,
-                onPageChanged: (index) async {
-                  final questionsListItem = questionsList[index];
-                  setState(() {
-                    //logger.i('Changing question');
-                    AppState().question = questionsListItem;
-                    AppState().isBasic =
-                        isBasic(questionsListItem['technology_iframe']);
-                    AppState().hasSubmission =
-                        questionsListItem['has_at_least_one_submission'];
-                    webViewController?.loadUrl(
-                        urlRequest: URLRequest(
-                            url: Uri.parse(
-                                questionsListItem['technology_iframe'])));
-                    UserStoredPreferences.selectedIndex = index;
-                    //.i("Index: $index");
-                    _currentPage = index;
-                  });
-                },
+
+              SafeArea(
+                bottom: true,
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: navBarBottomPadding),
+                  child: CustomPager(
+                    itemsPerPageTextStyle: AppTheme.of(context).bodyText3,
+                    currentPage: _currentPage,
+                    totalPages: numPages,
+                    onPageChanged: (index) async {
+                      final questionsListItem = questionsList[index];
+                      setState(() {
+                        //logger.i('Changing question');
+                        AppState().question = questionsListItem;
+                        AppState().isBasic =
+                            isBasic(questionsListItem['technology_iframe']);
+                        AppState().hasSubmission =
+                            questionsListItem['has_at_least_one_submission'];
+                        webViewController?.loadUrl(
+                            urlRequest: URLRequest(
+                                url: Uri.parse(
+                                    questionsListItem['technology_iframe'])));
+                        UserStoredPreferences.selectedIndex = index;
+                        //.i("Index: $index");
+                        _currentPage = index;
+                      });
+                    },
+                  ),
+                ),
               ),
             ],
           ),
