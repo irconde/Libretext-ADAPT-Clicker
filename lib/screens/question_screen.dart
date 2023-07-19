@@ -240,6 +240,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
       appBar: AppBar(
         backgroundColor: CColors.primaryColor,
         leading: IconButton(
+          tooltip: Strings.backButtonSemanticsLabel,
           icon: const Icon(
             Icons.arrow_back,
             color: CColors.primaryBackground,

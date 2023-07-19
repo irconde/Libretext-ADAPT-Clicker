@@ -122,6 +122,7 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                   backgroundColor: CColors.primaryBackground,
                   elevation: 0.0,
                   leading: IconButton(
+                    tooltip: Strings.closeButtonSemanticsLabel,
                     icon: const Icon(
                       Icons.close,
                       color: CColors.tertiaryColor,
@@ -142,6 +143,7 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                   ),
                   actions: [
                     IconButton(
+                      tooltip:  expansionController.value ? Strings.assignmentInfoOpenSemanticsLabel : Strings.assignmentInfoClosedSemanticsLabel,
                         onPressed: () {
                           setState(() {
                             expansionController.expanded =

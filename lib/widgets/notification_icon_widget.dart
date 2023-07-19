@@ -4,6 +4,7 @@ import 'package:badges/badges.dart' as badges;
 import '../backend/push_notification_manager.dart';
 import '../backend/router/app_router.gr.dart';
 import '../constants/colors.dart';
+import '../constants/strings.dart';
 
 /// A widget that displays a notification icon.
 class NotificationIcon extends StatelessWidget {
@@ -17,6 +18,7 @@ class NotificationIcon extends StatelessWidget {
     int val = PushNotificationManager().notificationCount();
     if (val == 0) {
       return IconButton(
+        tooltip:  Strings.notificationSemanticsLabel,
         icon: const Icon(
           Icons.notifications,
         ),
@@ -38,6 +40,7 @@ class NotificationIcon extends StatelessWidget {
             ),
           ),
           child: IconButton(
+            tooltip: Strings.notificationSemanticsLabel,
             icon: const Icon(
               Icons.notifications,
             ),
