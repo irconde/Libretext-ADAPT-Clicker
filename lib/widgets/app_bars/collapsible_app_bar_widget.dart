@@ -139,14 +139,16 @@ class _CollapsibleAppBarState extends State<CollapsibleAppBar> {
               overflow: TextOverflow.ellipsis,
               style: getTitleStyle()),
           background: widget.iconPath != null
-              ? Align(
-                  alignment: const Alignment(0, .5),
-                  child: SvgPicture.asset(
-                    widget.iconPath!,
-                    fit: BoxFit.scaleDown,
-                    color: iconColor,
+              ? ExcludeSemantics(
+                child: Align(
+                    alignment: const Alignment(0, .5),
+                    child: SvgPicture.asset(
+                      widget.iconPath!,
+                      fit: BoxFit.scaleDown,
+                      color: iconColor,
+                    ),
                   ),
-                )
+              )
               : null,
         );
       }));

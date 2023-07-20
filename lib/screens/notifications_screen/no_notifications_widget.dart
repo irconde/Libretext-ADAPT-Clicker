@@ -21,11 +21,13 @@ class _NoNotificationsWidgetState extends State<NoNotificationsWidget> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPicture.asset(
-            'assets/images/no_notifications.svg',
-            width: double.infinity,
-            height: 300,
-            fit: BoxFit.none,
+          ExcludeSemantics(
+            child: SvgPicture.asset(
+              'assets/images/no_notifications.svg',
+              width: double.infinity,
+              height: 300,
+              fit: BoxFit.none,
+            ),
           ),
           Row(
             mainAxisSize: MainAxisSize.min,

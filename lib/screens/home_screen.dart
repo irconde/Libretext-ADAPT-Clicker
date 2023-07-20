@@ -40,19 +40,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
         body: SafeArea(
           child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
+            
             child: SizedBox(
               width: double.infinity,
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(42, 42, 42, 24),
-                      child: SvgPicture.asset(
-                        'assets/images/libretexts_adapt_logo.svg',
-                        width: 270,
-                        height: 170,
+                    ExcludeSemantics(
+                      child: Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(42, 42, 42, 24),
+                        child: SvgPicture.asset(
+                          'assets/images/libretexts_adapt_logo.svg',
+                          width: 270,
+                          height: 170,
+                        ),
                       ),
                     ),
                     Padding(

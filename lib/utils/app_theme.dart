@@ -44,6 +44,7 @@ abstract class AppTheme {
         labelStyle: bodyText2,
         filled: true,
 
+
         //default, all other null
         border: _buildBorder(CColors.textFieldBorder),
         //Enabled and not showing error
@@ -76,6 +77,8 @@ abstract class AppTheme {
         titleSpacing: 14, //This is because the built in padding
         elevation: 0,
       );
+
+
 }
 
 /// Concrete implementation of the app theme for light mode.

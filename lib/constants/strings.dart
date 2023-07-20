@@ -164,6 +164,8 @@ class Strings {
   static const String displayOrderDueDate = 'Due';
 
   ///Semantics
+
+  static const String rememberMeSemanticsLabel = 'Remember Me';
   static const String mainMenuSemanticsLabel = 'Main Menu';
   static const String notificationSemanticsLabel = 'Notifications';
   static const String backButtonSemanticsLabel = 'Back';
@@ -171,4 +173,14 @@ class Strings {
   static const String assignmentInfoClosedSemanticsLabel = 'Assignment Info Closed';
   static const String assignmentInfoOpenSemanticsLabel = 'Assignment Info Opened';
   static const String addCourseSemanticsLabel = 'Add Course';
+  static const String passwordToggleShowingSemanticsLabel = 'Toggle Password Visibility; Visible';
+  static const String passwordToggleNotShowingSemanticsLabel = 'Toggle Password Visibility; Not Visible';
+  static const String questionNumberSemanticsLabel = 'Question: ';
+
+    /// Paginator
+  static const String firstPageSemanticsLabel = 'First Page';
+  static const String nextPageSemanticsLabel = 'Next Page';
+  static const String previousPageSemanticsLabel = 'Previous Page';
+  static const String lastPageSemanticsLabel = 'Last Page';
+  static const String totalPointsSemanticsLabel = 'Total Points';
 }

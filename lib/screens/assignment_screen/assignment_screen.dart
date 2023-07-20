@@ -202,16 +202,21 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                             scrollDirection: Axis.horizontal,
                                             child: Row(
                                               children: [
-                                                Chip(
-                                                  backgroundColor:
-                                                      CColors.secondaryColor,
-                                                  label: Text(
-                                                    "${assignmentSummary['total_points']} ${Strings.points}",
-                                                    style: theme.bodyText1
-                                                        .override(
-                                                      fontFamily: 'Open Sans',
-                                                      color: CColors
-                                                          .primaryBackground,
+                                                Semantics(
+                                                  label: "${assignmentSummary['total_points']} ${Strings.totalPointsSemanticsLabel}",
+                                                  child: ExcludeSemantics(
+                                                    child: Chip(
+                                                      backgroundColor:
+                                                          CColors.secondaryColor,
+                                                      label: Text(
+                                                        "${assignmentSummary['total_points']} ${Strings.points}",
+                                                        style: theme.bodyText1
+                                                            .override(
+                                                          fontFamily: 'Open Sans',
+                                                          color: CColors
+                                                              .primaryBackground,
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -223,41 +228,51 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                                           0,
                                                           Dimens.xsMargin,
                                                           0),
-                                                  child: Chip(
-                                                    backgroundColor:
-                                                        CColors.secondaryColor,
-                                                    label: Text(
-                                                      " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} ${Strings.allowedAttempts}",
-                                                      style: theme.bodyText1
-                                                          .override(
-                                                        fontFamily: 'Open Sans',
-                                                        color: CColors
-                                                            .primaryBackground,
+                                                  child: Semantics(
+                                                    label: " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} ${Strings.allowedAttempts}",
+                                                    child: ExcludeSemantics(
+                                                      child: Chip(
+                                                        backgroundColor:
+                                                            CColors.secondaryColor,
+                                                        label: Text(
+                                                          " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} ${Strings.allowedAttempts}",
+                                                          style: theme.bodyText1
+                                                              .override(
+                                                            fontFamily: 'Open Sans',
+                                                            color: CColors
+                                                                .primaryBackground,
+                                                          ),
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
                                                 ),
-                                                Chip(
-                                                  backgroundColor:
-                                                      CColors.secondaryColor,
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(8, 0, 8, 0),
-                                                  labelPadding:
-                                                      const EdgeInsetsDirectional
-                                                          .fromSTEB(0, 0, 4, 0),
-                                                  avatar: const Icon(
-                                                    Icons.date_range,
-                                                    color: CColors
-                                                        .primaryBackground,
-                                                  ),
-                                                  label: Text(
-                                                    " ${formatDate(assignmentSummary['formatted_due'] ?? assignmentSummary['due']['due_date'])}",
-                                                    style: theme.bodyText1
-                                                        .override(
-                                                      fontFamily: 'Open Sans',
-                                                      color: CColors
-                                                          .primaryBackground,
+                                                Semantics(
+                                                  label: formatDate(assignmentSummary['formatted_due'] ?? assignmentSummary['due']['due_date']),
+                                                  child: ExcludeSemantics(
+                                                    child: Chip(
+                                                      backgroundColor:
+                                                          CColors.secondaryColor,
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(8, 0, 8, 0),
+                                                      labelPadding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(0, 0, 4, 0),
+                                                      avatar: const Icon(
+                                                        Icons.date_range,
+                                                        color: CColors
+                                                            .primaryBackground,
+                                                      ),
+                                                      label: Text(
+                                                        " ${formatDate(assignmentSummary['formatted_due'] ?? assignmentSummary['due']['due_date'])}",
+                                                        style: theme.bodyText1
+                                                            .override(
+                                                          fontFamily: 'Open Sans',
+                                                          color: CColors
+                                                              .primaryBackground,
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
