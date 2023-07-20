@@ -134,15 +134,20 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                addOne(questionsIndex).toString(),
-                textAlign: TextAlign.center,
-                style: AppTheme.of(context).bodyText1.override(
-                      fontSize: 48,
-                      fontFamily: 'Open Sans',
-                      fontWeight: FontWeight.bold,
-                      color: CColors.primaryColor,
-                    ),
+              Semantics(
+                label: Strings.questionNumberSemanticsLabel + addOne(questionsIndex).toString(),
+                child: ExcludeSemantics(
+                  child: Text(
+                    addOne(questionsIndex).toString(),
+                    textAlign: TextAlign.center,
+                    style: AppTheme.of(context).bodyText1.override(
+                          fontSize: 48,
+                          fontFamily: 'Open Sans',
+                          fontWeight: FontWeight.bold,
+                          color: CColors.primaryColor,
+                        ),
+                  ),
+                ),
               ),
               Visibility(
                 visible: (questionsItem['last_submitted'] != 'N/A' &&

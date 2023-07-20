@@ -92,8 +92,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
             setState(fn);
           }),
       backgroundColor: CColors.primaryBackground,
-      drawer:
-          const NavigationDrawerWidget(currentSelected: DrawerItems.password),
+      drawer: const NavigationDrawerWidget(currentSelected: DrawerItems.password),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -125,18 +124,22 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
                                 prefixIcon: const Icon(
                                   Icons.lock_outline,
                                 ),
-                                suffixIcon: InkWell(
-                                  onTap: () => setState(
-                                    () => _fieldsVisibility[currentPassword] =
-                                        !_fieldsVisibility[currentPassword]!,
-                                  ),
-                                  focusNode: FocusNode(skipTraversal: true),
-                                  child: Icon(
-                                    _fieldsVisibility[currentPassword]!
-                                        ? Icons.visibility_outlined
-                                        : Icons.visibility_off_outlined,
-                                    color: CColors.tertiaryColor,
-                                    size: Dimens.tfIconSize,
+                                suffixIcon: Semantics(
+                                  label: _fieldsVisibility[currentPassword]!
+                                      ? Strings.passwordToggleShowingSemanticsLabel : Strings.passwordToggleNotShowingSemanticsLabel,
+                                  child: InkWell(
+                                    onTap: () => setState(
+                                      () => _fieldsVisibility[currentPassword] =
+                                          !_fieldsVisibility[currentPassword]!,
+                                    ),
+                                    focusNode: FocusNode(skipTraversal: true),
+                                    child: Icon(
+                                      _fieldsVisibility[currentPassword]!
+                                          ? Icons.visibility_outlined
+                                          : Icons.visibility_off_outlined,
+                                      color: CColors.tertiaryColor,
+                                      size: Dimens.tfIconSize,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -173,17 +176,21 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
                                 prefixIcon: const Icon(
                                   Icons.lock_outline,
                                 ),
-                                suffixIcon: InkWell(
-                                  onTap: () => setState(
-                                    () => _fieldsVisibility[password] =
-                                        !_fieldsVisibility[password]!,
-                                  ),
-                                  focusNode: FocusNode(skipTraversal: true),
-                                  child: Icon(
-                                    _fieldsVisibility[password]!
-                                        ? Icons.visibility_outlined
-                                        : Icons.visibility_off_outlined,
-                                    size: Dimens.tfIconSize,
+                                suffixIcon: Semantics(
+                                  label: _fieldsVisibility[password]!
+                                      ? Strings.passwordToggleShowingSemanticsLabel : Strings.passwordToggleNotShowingSemanticsLabel,
+                                  child: InkWell(
+                                    onTap: () => setState(
+                                      () => _fieldsVisibility[password] =
+                                          !_fieldsVisibility[password]!,
+                                    ),
+                                    focusNode: FocusNode(skipTraversal: true),
+                                    child: Icon(
+                                      _fieldsVisibility[password]!
+                                          ? Icons.visibility_outlined
+                                          : Icons.visibility_off_outlined,
+                                      size: Dimens.tfIconSize,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -222,19 +229,23 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
                                 prefixIcon: const Icon(
                                   Icons.lock_outline,
                                 ),
-                                suffixIcon: InkWell(
-                                  onTap: () => setState(
-                                    () => _fieldsVisibility[
-                                            passwordConfirmation] =
-                                        !_fieldsVisibility[
-                                            passwordConfirmation]!,
-                                  ),
-                                  focusNode: FocusNode(skipTraversal: true),
-                                  child: Icon(
-                                    _fieldsVisibility[passwordConfirmation]!
-                                        ? Icons.visibility_outlined
-                                        : Icons.visibility_off_outlined,
-                                    size: Dimens.tfIconSize,
+                                suffixIcon: Semantics(
+                                  label: _fieldsVisibility[passwordConfirmation]!
+                                      ? Strings.passwordToggleShowingSemanticsLabel : Strings.passwordToggleNotShowingSemanticsLabel,
+                                  child: InkWell(
+                                    onTap: () => setState(
+                                      () => _fieldsVisibility[
+                                              passwordConfirmation] =
+                                          !_fieldsVisibility[
+                                              passwordConfirmation]!,
+                                    ),
+                                    focusNode: FocusNode(skipTraversal: true),
+                                    child: Icon(
+                                      _fieldsVisibility[passwordConfirmation]!
+                                          ? Icons.visibility_outlined
+                                          : Icons.visibility_off_outlined,
+                                      size: Dimens.tfIconSize,
+                                    ),
                                   ),
                                 ),
                               ),

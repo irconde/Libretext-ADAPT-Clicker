@@ -41,10 +41,12 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
               alignment: const AlignmentDirectional(0, 0),
               child: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 64, 0, 32),
-                child: SvgPicture.asset(
-                  'assets/images/no_courses.svg',
-                  width: 283,
-                  fit: BoxFit.none,
+                child: ExcludeSemantics(
+                  child: SvgPicture.asset(
+                    'assets/images/no_courses.svg',
+                    width: 283,
+                    fit: BoxFit.none,
+                  ),
                 ),
               ),
             ),

@@ -153,7 +153,6 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                                 autofocus: true,
                                 enabled: formState != FormStateValue.processing,
                                 initialValue: formValues[email][dataIndex],
-                                obscureText: false,
                                 decoration: InputDecoration(
                                   labelText: Strings.emailField,
                                   errorText: submitted
@@ -187,7 +186,6 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, Dimens.msMargin, 0, Dimens.msMargin),
                                 child: TextFormField(
-                                  autofocus: true,
                                   enabled:
                                       formState != FormStateValue.processing,
                                   initialValue: formValues[password][dataIndex],
@@ -200,18 +198,22 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                                     prefixIcon: const Icon(
                                       Icons.lock_outline,
                                     ),
-                                    suffixIcon: InkWell(
-                                      onTap: () => setState(
-                                        () => passwordVisibility =
-                                            !passwordVisibility,
-                                      ),
-                                      focusNode: FocusNode(skipTraversal: true),
-                                      child: Icon(
-                                        passwordVisibility
-                                            ? Icons.visibility_outlined
-                                            : Icons.visibility_off_outlined,
-                                        color: CColors.secondaryColor,
-                                        size: 22,
+                                    suffixIcon: Semantics(
+                                      label:  passwordVisibility
+                                          ? Strings.passwordToggleShowingSemanticsLabel : Strings.passwordToggleNotShowingSemanticsLabel,
+                                      child: InkWell(
+                                        onTap: () => setState(
+                                          () => passwordVisibility =
+                                              !passwordVisibility,
+                                        ),
+                                        focusNode: FocusNode(skipTraversal: true),
+                                        child: Icon(
+                                          passwordVisibility
+                                              ? Icons.visibility_outlined
+                                              : Icons.visibility_off_outlined,
+                                          color: CColors.secondaryColor,
+                                          size: 22,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -251,14 +253,17 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                                   SizedBox(
                                     height: 18.0,
                                     width: 18.0,
-                                    child: Checkbox(
-                                      onChanged: (bool? value) {
-                                        setState(() => UserStoredPreferences
-                                                .rememberMe =
-                                            !UserStoredPreferences.rememberMe);
-                                      },
-                                      value: UserStoredPreferences.rememberMe,
-                                      activeColor: CColors.primaryColor,
+                                    child: Semantics(
+                                      label: Strings.rememberMeSemanticsLabel,
+                                      child: Checkbox(
+                                        onChanged: (bool? value) {
+                                          setState(() => UserStoredPreferences
+                                                  .rememberMe =
+                                              !UserStoredPreferences.rememberMe);
+                                        },
+                                        value: UserStoredPreferences.rememberMe,
+                                        activeColor: CColors.primaryColor,
+                                      ),
                                     ),
                                   ),
                                   Expanded(
@@ -316,31 +321,33 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0, Dimens.msMargin, 0, Dimens.msMargin),
-                                child: Stack(
-                                  alignment: const AlignmentDirectional(0, 0),
-                                  children: [
-                                    const Divider(
-                                      height: 0,
-                                      thickness: 1,
-                                      color: CColors.lineColor,
-                                    ),
-                                    Container(
-                                      color: CColors.primaryBackground,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Text(
-                                          Strings.or,
-                                          style: AppTheme.of(context)
-                                              .bodyText1
-                                              .override(
-                                                fontFamily: 'Open Sans',
-                                                color: CColors.secondaryText,
-                                                fontSize: 20,
-                                              ),
+                                child: ExcludeSemantics(
+                                  child: Stack(
+                                    alignment: const AlignmentDirectional(0, 0),
+                                    children: [
+                                      const Divider(
+                                        height: 0,
+                                        thickness: 1,
+                                        color: CColors.lineColor,
+                                      ),
+                                      Container(
+                                        color: CColors.primaryBackground,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Text(
+                                            Strings.or,
+                                            style: AppTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'Open Sans',
+                                                  color: CColors.secondaryText,
+                                                  fontSize: 20,
+                                                ),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                               CustomElevatedButton(
