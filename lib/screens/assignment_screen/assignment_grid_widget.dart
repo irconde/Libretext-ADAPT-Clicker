@@ -44,6 +44,7 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
   late WidgetRef ref;
   dynamic builderResponse;
   late int questionsIndex;
+  late String semanticsLabel;
 
   @override
   void initState() {
@@ -55,8 +56,18 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
     builderResponse = widget.builderResponse;
     questionsIndex = widget.questionsIndex;
     if (questionsItem['submission_file_exists'] == true) {
-      logger.w('Question $questionsIndex: ${questionsItem['date_submitted']}');
+      logger.w('Question $questionsIndex: ${questionsItem['date_submitted']} ');
     }
+
+    createSemanticsLabel();
+  }
+
+  void createSemanticsLabel(){
+    semanticsLabel = '${Strings.questionNumberSemanticsLabel} ${questionsIndex+1};'
+        '${formatDateTwo(questionsItem['date_submitted'] ?? 'N/A') ??
+          formatDate(questionsItem['last_submitted'])};'
+          '${questionsItem['total_score']} out of ${questionsItem['points']} ${Strings.uppercasePoints}'
+        ;
   }
 
   /// Formats the given [date] string into a formatted date string.
@@ -75,6 +86,7 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
     // Return the formatted date
     return formattedDate;
   }
+
 
   String? formatDateTwo(String date) {
     if (date == 'N/A' || date == null) {
@@ -96,111 +108,127 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
   Widget build(BuildContext context) {
     return Container(
       color: CColors.primaryBackground,
-      child: InkWell(
-        onTap: () async {
-          if (!checkConnection()) return;
-          setState(() => AppState().view = builderResponse.jsonBody);
-          setState(() => AppState().question = questionsItem);
-          setState(() => AppState().isBasic = isBasic(getJsonField(
-                questionsItem,
-                r'''$.technology_iframe''',
-              ).toString()));
-          setState(() => AppState().hasSubmission = getJsonField(
-                questionsItem,
-                r'''$.has_at_least_one_submission''',
-              ));
-          await showModalBottomSheet(
-              useSafeArea: true,
-              isScrollControlled: true,
-              backgroundColor: CColors.primaryBackground,
-              context: context,
-              builder: (context) {
-                return StatefulBuilder(
-                    builder: (context, StateSetter setState) {
-                  return Padding(
-                    padding: MediaQuery.of(context).viewInsets,
-                    child: QuestionScreen(
-                      assignmentName: assignmentSummary['name'],
-                      index: questionsIndex,
-                      view: builderResponse.jsonBody,
-                    ),
-                  );
-                });
-              });
-        },
-        child: Padding(
-          padding:
-              const EdgeInsetsDirectional.fromSTEB(0, Dimens.xxsMargin, 0, 0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Semantics(
-                label: Strings.questionNumberSemanticsLabel + addOne(questionsIndex).toString(),
-                child: ExcludeSemantics(
-                  child: Text(
-                    addOne(questionsIndex).toString(),
-                    textAlign: TextAlign.center,
-                    style: AppTheme.of(context).bodyText1.override(
-                          fontSize: 48,
-                          fontFamily: 'Open Sans',
-                          fontWeight: FontWeight.bold,
-                          color: CColors.primaryColor,
-                        ),
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: (questionsItem['last_submitted'] != 'N/A' &&
-                        (questionsItem['submission_file_exists'] == null)) ||
-                    questionsItem['submission_file_exists'] == true,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(
-                      Icons.check_circle_outline,
-                      color: CColors.success,
-                      size: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          Dimens.xxsMargin, 0, 0, Dimens.xxsMargin),
-                      child: Text(
-                        formatDateTwo(
-                                questionsItem['date_submitted'] ?? 'N/A') ??
-                            formatDate(questionsItem['last_submitted']),
-                        textAlign: TextAlign.center,
-                        style: AppTheme.of(context).bodyText1.override(
-                              fontFamily: 'Open Sans',
-                              fontWeight: FontWeight.normal,
-                              color: CColors.success,
-                            ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Visibility(
-                visible: (questionsItem['last_submitted'] != 'N/A' &&
-                        (questionsItem['submission_file_exists'] == null)) ||
-                    questionsItem['submission_file_exists'] == true,
+      child: Semantics(
+          label: semanticsLabel,
+          child: ExcludeSemantics(
+            child: InkWell(
+              onTap: () async {
+                if (!checkConnection()) return;
+                setState(() => AppState().view = builderResponse.jsonBody);
+                setState(() => AppState().question = questionsItem);
+                setState(() => AppState().isBasic = isBasic(getJsonField(
+                      questionsItem,
+                      r'''$.technology_iframe''',
+                    ).toString()));
+                setState(() => AppState().hasSubmission = getJsonField(
+                      questionsItem,
+                      r'''$.has_at_least_one_submission''',
+                    ));
+                await showModalBottomSheet(
+                    useSafeArea: true,
+                    isScrollControlled: true,
+                    backgroundColor: CColors.primaryBackground,
+                    context: context,
+                    builder: (context) {
+                      return StatefulBuilder(
+                          builder: (context, StateSetter setState) {
+                        return Padding(
+                          padding: MediaQuery.of(context).viewInsets,
+                          child: QuestionScreen(
+                            assignmentName: assignmentSummary['name'],
+                            index: questionsIndex,
+                            view: builderResponse.jsonBody,
+                          ),
+                        );
+                      });
+                    });
+              },
+              child: Padding(
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(0, Dimens.xxsMargin, 0, 0),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                  ExcludeSemantics(
+                        child: Text(
+                          addOne(questionsIndex).toString(),
+                          textAlign: TextAlign.center,
+                          style: AppTheme.of(context).bodyText1.override(
+                                fontSize: 48,
+                                fontFamily: 'Open Sans',
+                                fontWeight: FontWeight.bold,
+                                color: CColors.primaryColor,
+                              ),
+                        ),
+                      ),
                     Visibility(
-                      visible: questionsItem['total_score'] != null,
-                      child: Text(
-                        '${questionsItem['total_score']}/${questionsItem['points']} ${Strings.uppercasePoints}',
-                        textAlign: TextAlign.center,
-                        style: AppTheme.of(context).bodyText3.override(
-                              fontFamily: 'Open Sans',
-                              fontWeight: FontWeight.normal,
+                      visible: (questionsItem['last_submitted'] != 'N/A' &&
+                              (questionsItem['submission_file_exists'] == null)) ||
+                          questionsItem['submission_file_exists'] == true,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Icon(
+                            Icons.check_circle_outline,
+                            color: CColors.success,
+                            size: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                Dimens.xxsMargin, 0, 0, Dimens.xxsMargin),
+                            child: Text(
+                              formatDateTwo(
+                                      questionsItem['date_submitted'] ?? 'N/A') ??
+                                  formatDate(questionsItem['last_submitted']),
+                              textAlign: TextAlign.center,
+                              style: AppTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Open Sans',
+                                    fontWeight: FontWeight.normal,
+                                    color: CColors.success,
+                                  ),
                             ),
+                          ),
+                        ],
                       ),
                     ),
                     Visibility(
-                      visible: questionsItem['total_score'] == null,
+                      visible: (questionsItem['last_submitted'] != 'N/A' &&
+                              (questionsItem['submission_file_exists'] == null)) ||
+                          questionsItem['submission_file_exists'] == true,
+                      child: Column(
+                        children: [
+                          Visibility(
+                            visible: questionsItem['total_score'] != null,
+                            child: Text(
+                              '${questionsItem['total_score']}/${questionsItem['points']} ${Strings.uppercasePoints}',
+                              textAlign: TextAlign.center,
+                              style: AppTheme.of(context).bodyText3.override(
+                                    fontFamily: 'Open Sans',
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ),
+                          Visibility(
+                            visible: questionsItem['total_score'] == null,
+                            child: Text(
+                              Strings.awaitingScore,
+                              textAlign: TextAlign.center,
+                              style: AppTheme.of(context).bodyText3.override(
+                                    fontFamily: 'Open Sans',
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Visibility(
+                      visible: (questionsItem['last_submitted'] == 'N/A' &&
+                              questionsItem['submission_file_exists'] == null) ||
+                          questionsItem['submission_file_exists'] == false,
                       child: Text(
-                        Strings.awaitingScore,
+                        'Max ${questionsItem['points']} ${Strings.uppercasePoints}',
                         textAlign: TextAlign.center,
                         style: AppTheme.of(context).bodyText3.override(
                               fontFamily: 'Open Sans',
@@ -211,22 +239,8 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
                   ],
                 ),
               ),
-              Visibility(
-                visible: (questionsItem['last_submitted'] == 'N/A' &&
-                        questionsItem['submission_file_exists'] == null) ||
-                    questionsItem['submission_file_exists'] == false,
-                child: Text(
-                  'Max ${questionsItem['points']} ${Strings.uppercasePoints}',
-                  textAlign: TextAlign.center,
-                  style: AppTheme.of(context).bodyText3.override(
-                        fontFamily: 'Open Sans',
-                        fontWeight: FontWeight.normal,
-                      ),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
       ),
     );
   }

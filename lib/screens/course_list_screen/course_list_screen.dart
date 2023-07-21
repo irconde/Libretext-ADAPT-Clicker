@@ -298,59 +298,62 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
                     setState(() => _apiRequestCompleter = null);
                     await refreshPage();
                   },
-                  child: ListView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: enrollmentsList.length,
-                    itemBuilder: (context, enrollmentsListIndex) {
-                      final enrollmentsListItem =
-                          enrollmentsList[enrollmentsListIndex];
-                      return InkWell(
-                        onTap: () async {
-                          if (!checkConnection()) return;
-                          context.pushRoute(AssignmentsRouteWidget(
-                              id: enrollmentsListItem['id'].toString()));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              24, 24, 24, 0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                enrollmentsListItem['course_section_name'],
-                                style: AppTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Open Sans',
-                                      color: CColors.primaryColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 8, 0, 24),
-                                child: Text(
-                                  enrollmentsListItem['instructor'],
-                                  style:
-                                      AppTheme.of(context).bodyText1.override(
-                                            fontFamily: 'Open Sans',
-                                            color: CColors.secondaryText,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                  child: Semantics(
+                    label: Strings.listOfCoursesSemanticsLabel,
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: enrollmentsList.length,
+                      itemBuilder: (context, enrollmentsListIndex) {
+                        final enrollmentsListItem =
+                            enrollmentsList[enrollmentsListIndex];
+                        return InkWell(
+                          onTap: () async {
+                            if (!checkConnection()) return;
+                            context.pushRoute(AssignmentsRouteWidget(
+                                id: enrollmentsListItem['id'].toString()));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                24, 24, 24, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  enrollmentsListItem['course_section_name'],
+                                  style: AppTheme.of(context).bodyText1.override(
+                                        fontFamily: 'Open Sans',
+                                        color: CColors.primaryColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                 ),
-                              ),
-                              const Divider(
-                                height: 1,
-                                thickness: 1,
-                              ),
-                            ],
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 8, 0, 24),
+                                  child: Text(
+                                    enrollmentsListItem['instructor'],
+                                    style:
+                                        AppTheme.of(context).bodyText1.override(
+                                              fontFamily: 'Open Sans',
+                                              color: CColors.secondaryText,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                  ),
+                                ),
+                                const Divider(
+                                  height: 1,
+                                  thickness: 1,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 );
               },

@@ -11,11 +11,13 @@ class FilterSheet extends ConsumerStatefulWidget {
   const FilterSheet({
     Key? key,
     required this.filterOptions,
+    required this.listSemanticsLabel,
     required this.onItemSelectedCallback,
   }) : super(key: key);
 
   /// The list of filter options to display.
   final List<String> filterOptions;
+  final String listSemanticsLabel;
 
   /// Callback function that is called when an item is selected. It takes the selected item as a parameter.
   final Function(String) onItemSelectedCallback;
@@ -30,34 +32,41 @@ class _FilterSheet extends ConsumerState<FilterSheet>
   Widget build(BuildContext context) {
     var theme = AppTheme.of(context);
     return BlurredBottomSheet(
-      child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(32, 16, 32, 16),
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: widget.filterOptions.length,
-          itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () {
-                widget.onItemSelectedCallback(widget.filterOptions[index]);
-                setState(() {});
-                context.popRoute();
-              },
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: Text(widget.filterOptions[index],
-                        style: theme.bodyText2),
+      child: BlockSemantics(
+        child: Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(32, 16, 32, 16),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: widget.filterOptions.length,
+            itemBuilder: (context, index) {
+              return Semantics(
+                    label: '${widget.listSemanticsLabel}: ${widget.filterOptions[index]}',
+                child: InkWell(
+                  onTap: () {
+                    widget.onItemSelectedCallback(widget.filterOptions[index]);
+                    setState(() {});
+                    context.popRoute();
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: ExcludeSemantics(
+                          child: Text(widget.filterOptions[index],
+                              style: theme.bodyText2),
+                        ),
+                      ),
+                      const Divider(
+                        thickness: 1,
+                      ),
+                    ],
                   ),
-                  const Divider(
-                    thickness: 1,
-                  ),
-                ],
-              ),
-            );
-          },
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
