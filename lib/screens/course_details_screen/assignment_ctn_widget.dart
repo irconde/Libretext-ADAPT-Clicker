@@ -37,6 +37,18 @@ String formatDate(String date) {
   return formattedDate;
 }
 
+String semanticDate(String date) {
+  if (date == 'N/A') {
+    return '';
+  }
+  // Parse the date string using the given format
+  DateTime parsedDate = DateFormat('yyyy-MM-dd HH:mm:ss').parse(date);
+  // Format the date using the desired format
+  String formattedDate = DateFormat("MMM d yy 'at' HH a").format(parsedDate);
+  // Return the formatted date
+  return formattedDate;
+}
+
 class AssignmentCtnWidgetState extends ConsumerState<AssignmentCtnWidget>
     with ConnectionStateMixin {
   late String submittedCount;
@@ -209,13 +221,19 @@ class AssignmentCtnWidgetState extends ConsumerState<AssignmentCtnWidget>
                                         size: 20,
                                       ),
                                     ),
-                                    Text(
-                                      formatDate(widget.assignmentsItem['due']
-                                          ['due_date']),
-                                      textAlign: TextAlign.start,
-                                      style: theme.bodyText1.override(
-                                        fontFamily: 'Open Sans',
-                                        color: CColors.tertiaryText,
+                                    Semantics(
+                                      label: semanticDate(widget.assignmentsItem['due']
+                                      ['due_date']),
+                                      child: ExcludeSemantics(
+                                        child: Text(
+                                          formatDate(widget.assignmentsItem['due']
+                                              ['due_date']),
+                                          textAlign: TextAlign.start,
+                                          style: theme.bodyText1.override(
+                                            fontFamily: 'Open Sans',
+                                            color: CColors.tertiaryText,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ],

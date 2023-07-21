@@ -20,19 +20,25 @@ class Strings {
   static const String emailFieldMandatory = 'Email*';
   static const String emailFieldHint = 'john.appleseed@school.edu';
   static const String description = 'Description:  ';
+
   // Assignment screen
   static const String latePolicy = 'Late Policy: ';
   static const String noDescription = 'There is no description';
-  static const String points = 'points';
+  static const String points = 'points'; //These three are also used for semantics
   static const String allowedAttempts = 'allowed attempts';
+  static const String allowedAttempt = 'allowed attempt';
+
   // Assignment grid
   static const String uppercasePoints = 'Points';
   static const String awaitingScore = 'Awaiting Score';
+
   // Connection state mixin
   static const String connected = 'Connected to Internet';
   static const String notConnected = 'No Internet connection';
+
   // Poll widget
   static const String remainingTime = 'REMAINING TIME: ';
+
   // Add course widget
   static const String joinedCourse = 'You have successfully joined the course.';
   static const String courseRegistration = 'Course Registration';
@@ -41,6 +47,7 @@ class Strings {
       'Please enter the course code used given by your instructor.';
   static const String joinCourseBtnLabel = 'JOIN COURSE';
   static const String joinCourseBtnProcessingLabel = 'JOINING COURSE';
+
   // Reset password widget
   static const String pwdRequestedMsg =
       'Password reset requested. Check your inbox.';
@@ -49,8 +56,10 @@ class Strings {
       'Please enter the email address used for \nregistration.';
   static const String resetPwdBtnLabel = 'RESET PASSWORD';
   static const String resetPwdBtnProcessingLabel = 'RESETTING PASSWORD';
+
   // Course list screen
   static const String signedInAs = 'Signed in as ';
+
   // No courses widget
   static const String noCoursesMsg =
       'Oops. it seems you haven\'t registered for a course yet';
@@ -58,8 +67,10 @@ class Strings {
   static const String instructor = 'INSTRUCTOR';
   static const String forA = 'FOR A ';
   static const String codeToJoin = 'CODE TO JOIN';
+
   // Navigation drawer
   static const String logoutBtnLabel = 'LOGOUT';
+
   // Contact dropdown widget
   static const String generalInquiry = 'General Inquiry';
   static const String technicalIssue = 'Technical Issue';
@@ -69,8 +80,10 @@ class Strings {
   static const String requestTesterAccessCode = 'Request Tester Access Code';
   static const String integratingADAPT = 'Integrating ADAPT with LMS';
   static const String other = 'Other';
+
   // Poll widget
   static const String poll = 'Poll';
+
   // Update profile screen
   static const String firstNameFieldMandatory = 'First Name*';
   static const String lastNameFieldMandatory = 'Last Name*';
@@ -78,6 +91,7 @@ class Strings {
   static const String updateProfileBtnLabel = 'UPDATE PROFILE';
   static const String updateProfileBtnProcessingLabel = 'UPDATING';
   static const String updateProfileBtnSuccessLabel = 'PROFILE UPDATED';
+
   // Reset password screen
   static const String changePwdBtnLabel = 'CHANGE PASSWORD';
   static const String changePwdBtnProcessingLabel = 'CHANGING PASSWORD';
@@ -85,6 +99,7 @@ class Strings {
   static const String currentPasswordField = 'Current Password';
   static const String newPasswordFieldMandatory = 'New Password*';
   static const String confirmPasswordFieldMandatory = 'Confirm New Password*';
+
   // Contact us screen
   static const String contactInfoMsg =
       'Please use this form to contact us regarding general questions or issues.';
@@ -95,6 +110,7 @@ class Strings {
   static const String contactBtnLabel = 'SEND MESSAGE';
   static const String contactBtnProcessingLabel = 'SENDING MESSAGE';
   static const String contactBtnSuccessLabel = 'MESSAGE SENT';
+
   // Login screen
   static const String welcomeBack = 'Welcome Back';
   static const String rememberMe = 'Remember Me ';
@@ -104,9 +120,11 @@ class Strings {
   static const String signInBtnProcessingLabel = 'SIGNING IN';
   static const String dontHaveAccount = 'Don\'t have an account? ';
   static const String signUp = 'Sign up';
+
   // Home screen
   static const String loginBtnLabel = 'LOGIN';
   static const String createAccountBtnLabel = 'CREATE ACCOUNT';
+
   // Create account screen
   static const String accountFor = 'An account for ';
   static const String successfullyCreated = ' has been successfully created.';
@@ -119,22 +137,28 @@ class Strings {
   static const String signUpBtnLabel = 'REGISTER';
   static const String campusSignUpBtnLabel = 'CAMPUS REGISTRATION';
   static const String signUpBtnProcessingLabel = 'CREATING ACCOUNT';
+
   // No notifications widget
   static const String noNotifications = 'NO NOTIFICATIONS';
   static const String forNow = 'FOR NOW';
+
   // Notification single
   static const String notification = 'Notification';
   static const String details = 'Details';
+
   // Notifications screen
   static const String notifications = 'Notifications';
   static const String clearAllBtnLabel = 'Clear All ';
+
   // Assignment ctn widget
   static const String outOf = 'out of';
   static const String noRecords = 'No records';
+
   // Assignment stat ctn widget
   static const String activityDescription = 'Activity Description';
   static const String dueDate = 'Due Date: ';
   static const String datePlaceholder = '8/18/2022 at 1:43 pm';
+
   // Course details screen
   static const String homeTab = 'HOME';
   static const String assignmentsTab = 'ASSIGNMENTS';
@@ -164,23 +188,42 @@ class Strings {
   static const String displayOrderDueDate = 'Due';
 
   ///Semantics
+  //Global
+  static const String passwordToggleShowingSemanticsLabel =
+      'Toggle Password Visibility; Visible';
+  static const String passwordToggleNotShowingSemanticsLabel =
+      'Toggle Password Visibility; Not Visible';
 
-  static const String rememberMeSemanticsLabel = 'Remember Me';
-  static const String mainMenuSemanticsLabel = 'Main Menu';
-  static const String notificationSemanticsLabel = 'Notifications';
+  //AppBars
   static const String backButtonSemanticsLabel = 'Back';
   static const String closeButtonSemanticsLabel = 'Close';
-  static const String assignmentInfoClosedSemanticsLabel = 'Assignment Info Closed';
-  static const String assignmentInfoOpenSemanticsLabel = 'Assignment Info Opened';
+  static const String notificationSemanticsLabel = 'Notifications';
+  static const String mainMenuSemanticsLabel = 'Main Menu';
+
+  //Login
+  static const String rememberMeSemanticsLabel = 'Remember Me';
+
+  //Courses
+  static const String listOfCoursesSemanticsLabel = 'List of Courses';
   static const String addCourseSemanticsLabel = 'Add Course';
-  static const String passwordToggleShowingSemanticsLabel = 'Toggle Password Visibility; Visible';
-  static const String passwordToggleNotShowingSemanticsLabel = 'Toggle Password Visibility; Not Visible';
+
+  //Assignment List
+  static const String assignmentFilterSemanticsLabel = 'Show type';
+  static const String assignmentOrderSemanticsLabel = 'Order by';
+  static const String listOfStatsSemanticsLabel =
+      'List of Statistic containers';
+
+  //Assignment Details
+  static const String assignmentInfoClosedSemanticsLabel =
+      'Assignment Info Closed';
+  static const String assignmentInfoOpenSemanticsLabel =
+      'Assignment Info Opened';
+  static const String totalPointsSemanticsLabel = 'Total Points';
   static const String questionNumberSemanticsLabel = 'Question: ';
 
-    /// Paginator
+  //Paginator
   static const String firstPageSemanticsLabel = 'First Page';
   static const String nextPageSemanticsLabel = 'Next Page';
   static const String previousPageSemanticsLabel = 'Previous Page';
   static const String lastPageSemanticsLabel = 'Last Page';
-  static const String totalPointsSemanticsLabel = 'Total Points';
 }

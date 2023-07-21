@@ -16,11 +16,13 @@ class AssignmentDropdown extends StatefulWidget {
   const AssignmentDropdown({
     Key? key,
     required String? dropDownValue,
+    required this.semanticsLabel,
     required this.itemList,
     required this.onItemSelectedCallback,
   })  : selectedItem = dropDownValue,
         super(key: key);
 
+  final String semanticsLabel;
   final String? selectedItem;
   final List<String>? itemList;
   final Function(String) onItemSelectedCallback;
@@ -56,6 +58,7 @@ class AssignmentDropdownState extends State<AssignmentDropdown> {
         return Padding(
             padding: MediaQuery.of(context).viewInsets,
             child: FilterSheet(
+                listSemanticsLabel: widget.semanticsLabel,
                 filterOptions: widget.itemList!,
                 onItemSelectedCallback: onFilterOptionSelected));
       },
@@ -65,44 +68,47 @@ class AssignmentDropdownState extends State<AssignmentDropdown> {
   @override
   Widget build(BuildContext context) {
     var theme = AppTheme.of(context);
-    return GestureDetector(
-      onTap: showFilterOptions,
-      child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-        child: Container(
-          height: 36,
-          width: 172,
-          decoration: BoxDecoration(
-            border: Border.all(
-              width: 1,
-              color: CColors.textFieldBorder,
+    return Semantics(
+      label: widget.semanticsLabel,
+      child: GestureDetector(
+        onTap: showFilterOptions,
+        child: Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+          child: Container(
+            height: 36,
+            width: 172,
+            decoration: BoxDecoration(
+              border: Border.all(
+                width: 1,
+                color: CColors.textFieldBorder,
+              ),
+              borderRadius:
+                  const BorderRadius.all(Radius.circular(Dimens.xxsMargin)),
+              color: Colors.transparent,
             ),
-            borderRadius:
-                const BorderRadius.all(Radius.circular(Dimens.xxsMargin)),
-            color: Colors.transparent,
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    (_value ?? widget.itemList?.first ?? '').toUpperCase(),
-                    style: theme.bodyText1.override(
-                      fontFamily: 'Open Sans',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14,
-                      color: CColors.tertiaryText,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                      (_value ?? widget.itemList?.first ?? '').toUpperCase(),
+                      style: theme.bodyText1.override(
+                        fontFamily: 'Open Sans',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14,
+                        color: CColors.tertiaryText,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const Icon(
-                Icons.arrow_drop_down,
-                color: CColors.tertiaryColor,
-                size: 24,
-              ),
-            ],
+                const Icon(
+                  Icons.arrow_drop_down,
+                  color: CColors.tertiaryColor,
+                  size: 24,
+                ),
+              ],
+            ),
           ),
         ),
       ),

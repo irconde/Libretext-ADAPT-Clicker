@@ -6,6 +6,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
+import 'package:logger/logger.dart';
 import '../../backend/api_requests/api_calls.dart';
 import '../../constants/strings.dart';
 import '../../utils/Logger.dart';
@@ -37,6 +38,8 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
   late Map<String, dynamic> assignmentSummary;
   bool isLoading = true;
   late Future<ApiCallResponse> viewCall;
+  String allowedAttempts = "";
+
   final animationsMap = {
     'textOnActionTriggerAnimation': AnimationInfo(
       trigger: AnimationTrigger.onActionTrigger,
@@ -72,8 +75,25 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
   void initState() {
     super.initState();
     viewCall = getViewCall();
+    setPluralAttempts();
   }
 
+  void setPluralAttempts() {
+
+    int b = int.parse(assignmentSummary['number_of_allowed_attempts']);
+    if(b == 1) {
+      allowedAttempts = Strings.allowedAttempt;
+      logger.log(Level.wtf, 'Rawr');
+      return;
+    }
+
+    allowedAttempts = Strings.allowedAttempts;
+
+
+    logger.log(Level.warning, assignmentSummary['number_of_allowed_attempts'] + allowedAttempts);
+
+
+  }
   /// Retrieves the assignment summary from the widget and initializes the [assignmentSummary] variable.
   ///
   /// If the [assignmentSum] is of type [String], it is decoded and parsed as JSON.
@@ -229,13 +249,13 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                                           Dimens.xsMargin,
                                                           0),
                                                   child: Semantics(
-                                                    label: " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} ${Strings.allowedAttempts}",
+                                                    label: " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} $allowedAttempts",
                                                     child: ExcludeSemantics(
                                                       child: Chip(
                                                         backgroundColor:
                                                             CColors.secondaryColor,
                                                         label: Text(
-                                                          " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} ${Strings.allowedAttempts}",
+                                                          " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} $allowedAttempts",
                                                           style: theme.bodyText1
                                                               .override(
                                                             fontFamily: 'Open Sans',
