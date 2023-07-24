@@ -50,17 +50,17 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       key: scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        leading:IconButton(
+        leading: IconButton(
           tooltip: Strings.backButtonSemanticsLabel,
-            icon: const Icon(
-              Icons.arrow_back,
-              color: CColors.primaryBackground,
-              size: 24,
-            ),
-            onPressed: () async {
-              Navigator.pop(context, '/');
-            },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: CColors.primaryBackground,
+            size: 24,
           ),
+          onPressed: () async {
+            Navigator.pop(context, '/');
+          },
+        ),
         title: const Text(Strings.notifications),
         actions: [
           Align(

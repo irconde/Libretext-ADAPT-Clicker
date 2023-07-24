@@ -86,7 +86,7 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                                 icon: Icon(
                                   Icons.menu_book,
                                   color: widget.currentSelected ==
-                                      DrawerItems.courses
+                                          DrawerItems.courses
                                       ? CColors.primaryColor
                                       : CColors.secondaryColor,
                                   size: Dimens.drawerIconSize,
@@ -97,24 +97,23 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                                     padding: const EdgeInsets.only(left: 12),
                                     alignment: Alignment.centerLeft,
                                     foregroundColor: widget.currentSelected ==
-                                        DrawerItems.courses
+                                            DrawerItems.courses
                                         ? CColors.primaryColor
                                         : CColors.secondaryColor,
                                     backgroundColor: widget.currentSelected ==
-                                        DrawerItems.courses
+                                            DrawerItems.courses
                                         ? CColors.lightPrimaryColor
                                         : Colors.white,
                                     textStyle: AppTheme.of(context)
                                         .bodyText1
                                         .override(
-                                      fontFamily: 'Open Sans',
-                                      fontSize: 14,
-                                      fontWeight:
-                                      widget.currentSelected ==
-                                          DrawerItems.courses
-                                          ? FontWeight.w700
-                                          : FontWeight.normal,
-                                    )),
+                                          fontFamily: 'Open Sans',
+                                          fontSize: 14,
+                                          fontWeight: widget.currentSelected ==
+                                                  DrawerItems.courses
+                                              ? FontWeight.w700
+                                              : FontWeight.normal,
+                                        )),
                                 onPressed: () async {
                                   Navigator.pop(context);
                                   if (widget.currentSelected ==
@@ -131,7 +130,7 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                               icon: Icon(
                                 Icons.person_sharp,
                                 color: widget.currentSelected ==
-                                    DrawerItems.profile
+                                        DrawerItems.profile
                                     ? CColors.primaryColor
                                     : CColors.secondaryColor,
                                 size: Dimens.drawerIconSize,
@@ -142,27 +141,27 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                                   padding: const EdgeInsets.only(left: 12),
                                   alignment: Alignment.centerLeft,
                                   backgroundColor: widget.currentSelected ==
-                                      DrawerItems.profile
+                                          DrawerItems.profile
                                       ? CColors.lightPrimaryColor
                                       : Colors.white,
                                   foregroundColor: widget.currentSelected ==
-                                      DrawerItems.profile
+                                          DrawerItems.profile
                                       ? CColors.primaryColor
                                       : CColors.secondaryColor,
                                   textStyle: AppTheme.of(context)
                                       .bodyText1
                                       .override(
-                                    fontFamily: 'Open Sans',
-                                    fontSize: 14,
-                                    fontWeight: widget.currentSelected ==
-                                        DrawerItems.profile
-                                        ? FontWeight.w700
-                                        : FontWeight.normal,
-                                  )),
+                                        fontFamily: 'Open Sans',
+                                        fontSize: 14,
+                                        fontWeight: widget.currentSelected ==
+                                                DrawerItems.profile
+                                            ? FontWeight.w700
+                                            : FontWeight.normal,
+                                      )),
                               onPressed: () async {
                                 Navigator.pop(context);
                                 if (widget.currentSelected ==
-                                    DrawerItems.profile ||
+                                        DrawerItems.profile ||
                                     !checkConnection()) {
                                   return;
                                 }
@@ -176,7 +175,7 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                                 icon: Icon(
                                   Icons.lock_rounded,
                                   color: widget.currentSelected ==
-                                      DrawerItems.password
+                                          DrawerItems.password
                                       ? CColors.primaryColor
                                       : CColors.secondaryColor,
                                   size: Dimens.drawerIconSize,
@@ -187,28 +186,27 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                                     padding: const EdgeInsets.only(left: 12),
                                     alignment: Alignment.centerLeft,
                                     backgroundColor: widget.currentSelected ==
-                                        DrawerItems.password
+                                            DrawerItems.password
                                         ? CColors.lightPrimaryColor
                                         : Colors.white,
                                     foregroundColor: widget.currentSelected ==
-                                        DrawerItems.password
+                                            DrawerItems.password
                                         ? CColors.primaryColor
                                         : CColors.secondaryColor,
                                     textStyle: AppTheme.of(context)
                                         .bodyText1
                                         .override(
-                                      fontFamily: 'Open Sans',
-                                      fontSize: 14,
-                                      fontWeight:
-                                      widget.currentSelected ==
-                                          DrawerItems.password
-                                          ? FontWeight.w700
-                                          : FontWeight.normal,
-                                    )),
+                                          fontFamily: 'Open Sans',
+                                          fontSize: 14,
+                                          fontWeight: widget.currentSelected ==
+                                                  DrawerItems.password
+                                              ? FontWeight.w700
+                                              : FontWeight.normal,
+                                        )),
                                 onPressed: () async {
                                   Navigator.pop(context);
                                   if (widget.currentSelected ==
-                                      DrawerItems.password ||
+                                          DrawerItems.password ||
                                       !checkConnection()) {
                                     return;
                                   }
@@ -225,7 +223,7 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                               icon: Icon(
                                 Icons.send_sharp,
                                 color: widget.currentSelected ==
-                                    DrawerItems.contact
+                                        DrawerItems.contact
                                     ? CColors.primaryColor
                                     : CColors.secondaryColor,
                                 size: Dimens.drawerIconSize,
@@ -236,27 +234,27 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                                   padding: const EdgeInsets.only(left: 12),
                                   alignment: Alignment.centerLeft,
                                   backgroundColor: widget.currentSelected ==
-                                      DrawerItems.contact
+                                          DrawerItems.contact
                                       ? CColors.lightPrimaryColor
                                       : Colors.white,
                                   foregroundColor: widget.currentSelected ==
-                                      DrawerItems.contact
+                                          DrawerItems.contact
                                       ? CColors.primaryColor
                                       : CColors.secondaryColor,
                                   textStyle: AppTheme.of(context)
                                       .bodyText1
                                       .override(
-                                    fontFamily: 'Open Sans',
-                                    fontSize: 14,
-                                    fontWeight: widget.currentSelected ==
-                                        DrawerItems.contact
-                                        ? FontWeight.w700
-                                        : FontWeight.normal,
-                                  )),
+                                        fontFamily: 'Open Sans',
+                                        fontSize: 14,
+                                        fontWeight: widget.currentSelected ==
+                                                DrawerItems.contact
+                                            ? FontWeight.w700
+                                            : FontWeight.normal,
+                                      )),
                               onPressed: () async {
                                 Navigator.pop(context);
                                 if (widget.currentSelected ==
-                                    DrawerItems.contact ||
+                                        DrawerItems.contact ||
                                     !checkConnection()) {
                                   return;
                                 }

@@ -79,9 +79,8 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
   }
 
   void setPluralAttempts() {
-
     int b = int.parse(assignmentSummary['number_of_allowed_attempts']);
-    if(b == 1) {
+    if (b == 1) {
       allowedAttempts = Strings.allowedAttempt;
       logger.log(Level.wtf, 'Rawr');
       return;
@@ -89,11 +88,10 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
 
     allowedAttempts = Strings.allowedAttempts;
 
-
-    logger.log(Level.warning, assignmentSummary['number_of_allowed_attempts'] + allowedAttempts);
-
-
+    logger.log(Level.warning,
+        assignmentSummary['number_of_allowed_attempts'] + allowedAttempts);
   }
+
   /// Retrieves the assignment summary from the widget and initializes the [assignmentSummary] variable.
   ///
   /// If the [assignmentSum] is of type [String], it is decoded and parsed as JSON.
@@ -163,7 +161,9 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                   ),
                   actions: [
                     IconButton(
-                      tooltip:  expansionController.value ? Strings.assignmentInfoOpenSemanticsLabel : Strings.assignmentInfoClosedSemanticsLabel,
+                        tooltip: expansionController.value
+                            ? Strings.assignmentInfoOpenSemanticsLabel
+                            : Strings.assignmentInfoClosedSemanticsLabel,
                         onPressed: () {
                           setState(() {
                             expansionController.expanded =
@@ -223,16 +223,18 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                             child: Row(
                                               children: [
                                                 Semantics(
-                                                  label: "${assignmentSummary['total_points']} ${Strings.totalPointsSemanticsLabel}",
+                                                  label:
+                                                      "${assignmentSummary['total_points']} ${Strings.totalPointsSemanticsLabel}",
                                                   child: ExcludeSemantics(
                                                     child: Chip(
-                                                      backgroundColor:
-                                                          CColors.secondaryColor,
+                                                      backgroundColor: CColors
+                                                          .secondaryColor,
                                                       label: Text(
                                                         "${assignmentSummary['total_points']} ${Strings.points}",
                                                         style: theme.bodyText1
                                                             .override(
-                                                          fontFamily: 'Open Sans',
+                                                          fontFamily:
+                                                              'Open Sans',
                                                           color: CColors
                                                               .primaryBackground,
                                                         ),
@@ -249,16 +251,18 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                                           Dimens.xsMargin,
                                                           0),
                                                   child: Semantics(
-                                                    label: " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} $allowedAttempts",
+                                                    label:
+                                                        " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} $allowedAttempts",
                                                     child: ExcludeSemantics(
                                                       child: Chip(
-                                                        backgroundColor:
-                                                            CColors.secondaryColor,
+                                                        backgroundColor: CColors
+                                                            .secondaryColor,
                                                         label: Text(
                                                           " ${assignmentSummary['number_of_allowed_attempts'] ?? 0} $allowedAttempts",
                                                           style: theme.bodyText1
                                                               .override(
-                                                            fontFamily: 'Open Sans',
+                                                            fontFamily:
+                                                                'Open Sans',
                                                             color: CColors
                                                                 .primaryBackground,
                                                           ),
@@ -268,17 +272,24 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                                   ),
                                                 ),
                                                 Semantics(
-                                                  label: formatDate(assignmentSummary['formatted_due'] ?? assignmentSummary['due']['due_date']),
+                                                  label: formatDate(
+                                                      assignmentSummary[
+                                                              'formatted_due'] ??
+                                                          assignmentSummary[
+                                                                  'due']
+                                                              ['due_date']),
                                                   child: ExcludeSemantics(
                                                     child: Chip(
-                                                      backgroundColor:
-                                                          CColors.secondaryColor,
+                                                      backgroundColor: CColors
+                                                          .secondaryColor,
                                                       padding:
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(8, 0, 8, 0),
+                                                                  .fromSTEB(
+                                                              8, 0, 8, 0),
                                                       labelPadding:
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(0, 0, 4, 0),
+                                                                  .fromSTEB(
+                                                              0, 0, 4, 0),
                                                       avatar: const Icon(
                                                         Icons.date_range,
                                                         color: CColors
@@ -288,7 +299,8 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                                         " ${formatDate(assignmentSummary['formatted_due'] ?? assignmentSummary['due']['due_date'])}",
                                                         style: theme.bodyText1
                                                             .override(
-                                                          fontFamily: 'Open Sans',
+                                                          fontFamily:
+                                                              'Open Sans',
                                                           color: CColors
                                                               .primaryBackground,
                                                         ),

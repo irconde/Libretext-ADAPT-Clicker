@@ -199,14 +199,18 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                                       Icons.lock_outline,
                                     ),
                                     suffixIcon: Semantics(
-                                      label:  passwordVisibility
-                                          ? Strings.passwordToggleShowingSemanticsLabel : Strings.passwordToggleNotShowingSemanticsLabel,
+                                      label: passwordVisibility
+                                          ? Strings
+                                              .passwordToggleShowingSemanticsLabel
+                                          : Strings
+                                              .passwordToggleNotShowingSemanticsLabel,
                                       child: InkWell(
                                         onTap: () => setState(
                                           () => passwordVisibility =
                                               !passwordVisibility,
                                         ),
-                                        focusNode: FocusNode(skipTraversal: true),
+                                        focusNode:
+                                            FocusNode(skipTraversal: true),
                                         child: Icon(
                                           passwordVisibility
                                               ? Icons.visibility_outlined
@@ -257,9 +261,10 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                                       label: Strings.rememberMeSemanticsLabel,
                                       child: Checkbox(
                                         onChanged: (bool? value) {
-                                          setState(() => UserStoredPreferences
-                                                  .rememberMe =
-                                              !UserStoredPreferences.rememberMe);
+                                          setState(() =>
+                                              UserStoredPreferences.rememberMe =
+                                                  !UserStoredPreferences
+                                                      .rememberMe);
                                         },
                                         value: UserStoredPreferences.rememberMe,
                                         activeColor: CColors.primaryColor,

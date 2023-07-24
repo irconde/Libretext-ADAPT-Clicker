@@ -340,32 +340,34 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 indent: 16,
                 endIndent: 16,
               ),
-              SafeArea(
-                bottom: true,
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: navBarBottomPadding),
-                  child: CustomPager(
-                    itemsPerPageTextStyle: AppTheme.of(context).bodyText3,
-                    currentPage: _currentPage,
-                    totalPages: numPages,
-                    onPageChanged: (index) async {
-                      final questionsListItem = questionsList[index];
-                      setState(() {
-                        //logger.i('Changing question');
-                        AppState().question = questionsListItem;
-                        AppState().isBasic =
-                            isBasic(questionsListItem['technology_iframe']);
-                        AppState().hasSubmission =
-                            questionsListItem['has_at_least_one_submission'];
-                        webViewController?.loadUrl(
-                            urlRequest: URLRequest(
-                                url: Uri.parse(
-                                    questionsListItem['technology_iframe'])));
-                        UserStoredPreferences.selectedIndex = index;
-                        //.i("Index: $index");
-                        _currentPage = index;
-                      });
-                    },
+              Semantics(
+                child: SafeArea(
+                  bottom: true,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 40.0),
+                    child: CustomPager(
+                      itemsPerPageTextStyle: AppTheme.of(context).bodyText3,
+                      currentPage: _currentPage,
+                      totalPages: numPages,
+                      onPageChanged: (index) async {
+                        final questionsListItem = questionsList[index];
+                        setState(() {
+                          //logger.i('Changing question');
+                          AppState().question = questionsListItem;
+                          AppState().isBasic =
+                              isBasic(questionsListItem['technology_iframe']);
+                          AppState().hasSubmission =
+                              questionsListItem['has_at_least_one_submission'];
+                          webViewController?.loadUrl(
+                              urlRequest: URLRequest(
+                                  url: Uri.parse(
+                                      questionsListItem['technology_iframe'])));
+                          UserStoredPreferences.selectedIndex = index;
+                          //.i("Index: $index");
+                          _currentPage = index;
+                        });
+                      },
+                    ),
                   ),
                 ),
               ),

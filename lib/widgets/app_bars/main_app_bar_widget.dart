@@ -34,17 +34,17 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       automaticallyImplyLeading: false,
       leading: IconButton(
-          tooltip: Strings.mainMenuSemanticsLabel,
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            scaffoldKey.currentState!.openDrawer();
-          },
+        tooltip: Strings.mainMenuSemanticsLabel,
+        icon: const Icon(Icons.menu),
+        onPressed: () {
+          scaffoldKey.currentState!.openDrawer();
+        },
       ),
       title: Text(title),
       actions: [
-          NotificationIcon(
-            setState: setState,
-          ),
+        NotificationIcon(
+          setState: setState,
+        ),
       ],
     );
   }

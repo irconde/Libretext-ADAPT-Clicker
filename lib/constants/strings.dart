@@ -24,7 +24,8 @@ class Strings {
   // Assignment screen
   static const String latePolicy = 'Late Policy: ';
   static const String noDescription = 'There is no description';
-  static const String points = 'points'; //These three are also used for semantics
+  static const String points =
+      'points'; //These three are also used for semantics
   static const String allowedAttempts = 'allowed attempts';
   static const String allowedAttempt = 'allowed attempt';
 

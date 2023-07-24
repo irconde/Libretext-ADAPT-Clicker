@@ -40,7 +40,8 @@ class _FilterSheet extends ConsumerState<FilterSheet>
             itemCount: widget.filterOptions.length,
             itemBuilder: (context, index) {
               return Semantics(
-                    label: '${widget.listSemanticsLabel}: ${widget.filterOptions[index]}',
+                label:
+                    '${widget.listSemanticsLabel}: ${widget.filterOptions[index]}',
                 child: InkWell(
                   onTap: () {
                     widget.onItemSelectedCallback(widget.filterOptions[index]);

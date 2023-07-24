@@ -222,12 +222,13 @@ class AssignmentCtnWidgetState extends ConsumerState<AssignmentCtnWidget>
                                       ),
                                     ),
                                     Semantics(
-                                      label: semanticDate(widget.assignmentsItem['due']
-                                      ['due_date']),
+                                      label: semanticDate(widget
+                                          .assignmentsItem['due']['due_date']),
                                       child: ExcludeSemantics(
                                         child: Text(
-                                          formatDate(widget.assignmentsItem['due']
-                                              ['due_date']),
+                                          formatDate(
+                                              widget.assignmentsItem['due']
+                                                  ['due_date']),
                                           textAlign: TextAlign.start,
                                           style: theme.bodyText1.override(
                                             fontFamily: 'Open Sans',

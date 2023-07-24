@@ -92,7 +92,8 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
             setState(fn);
           }),
       backgroundColor: CColors.primaryBackground,
-      drawer: const NavigationDrawerWidget(currentSelected: DrawerItems.password),
+      drawer:
+          const NavigationDrawerWidget(currentSelected: DrawerItems.password),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -126,7 +127,10 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
                                 ),
                                 suffixIcon: Semantics(
                                   label: _fieldsVisibility[currentPassword]!
-                                      ? Strings.passwordToggleShowingSemanticsLabel : Strings.passwordToggleNotShowingSemanticsLabel,
+                                      ? Strings
+                                          .passwordToggleShowingSemanticsLabel
+                                      : Strings
+                                          .passwordToggleNotShowingSemanticsLabel,
                                   child: InkWell(
                                     onTap: () => setState(
                                       () => _fieldsVisibility[currentPassword] =
@@ -178,7 +182,10 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
                                 ),
                                 suffixIcon: Semantics(
                                   label: _fieldsVisibility[password]!
-                                      ? Strings.passwordToggleShowingSemanticsLabel : Strings.passwordToggleNotShowingSemanticsLabel,
+                                      ? Strings
+                                          .passwordToggleShowingSemanticsLabel
+                                      : Strings
+                                          .passwordToggleNotShowingSemanticsLabel,
                                   child: InkWell(
                                     onTap: () => setState(
                                       () => _fieldsVisibility[password] =
@@ -230,8 +237,12 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
                                   Icons.lock_outline,
                                 ),
                                 suffixIcon: Semantics(
-                                  label: _fieldsVisibility[passwordConfirmation]!
-                                      ? Strings.passwordToggleShowingSemanticsLabel : Strings.passwordToggleNotShowingSemanticsLabel,
+                                  label: _fieldsVisibility[
+                                          passwordConfirmation]!
+                                      ? Strings
+                                          .passwordToggleShowingSemanticsLabel
+                                      : Strings
+                                          .passwordToggleNotShowingSemanticsLabel,
                                   child: InkWell(
                                     onTap: () => setState(
                                       () => _fieldsVisibility[
