@@ -16,7 +16,6 @@ import '../constants/dimens.dart';
 import '../backend/user_stored_preferences.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-
 /// Screen that displays information of a particular question
 @RoutePage()
 class QuestionScreen extends StatefulWidget {
@@ -51,8 +50,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
     pageController = PageController(initialPage: _currentPage);
     textController = TextEditingController();
 
-    if(Platform.isIOS)
-    {
+    if (Platform.isIOS) {
       navBarBottomPadding = 8;
     }
   }
@@ -332,7 +330,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 indent: 16,
                 endIndent: 16,
               ),
-
               SafeArea(
                 bottom: true,
                 child: Padding(
