@@ -18,7 +18,7 @@ class NotificationIcon extends StatelessWidget {
     int val = PushNotificationManager().notificationCount();
     if (val == 0) {
       return IconButton(
-        tooltip:  Strings.notificationSemanticsLabel,
+        tooltip: Strings.notificationSemanticsLabel,
         icon: const Icon(
           Icons.notifications,
         ),

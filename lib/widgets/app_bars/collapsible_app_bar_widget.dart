@@ -111,14 +111,15 @@ class _CollapsibleAppBarState extends State<CollapsibleAppBar> {
       shadowColor: CColors.tertiaryColor,
       actions: [
         widget.showNotificationIcon
-            ? NotificationIcon(setState: (VoidCallback fn) {
+            ? NotificationIcon(
+                setState: (VoidCallback fn) {
                   setState(fn);
                 },
-            )
+              )
             : Container(),
       ],
       leading: Semantics(
-        label:  Strings.backButtonSemanticsLabel,
+        label: Strings.backButtonSemanticsLabel,
         child: IconButton(
           icon: const Icon(Icons.arrow_back, size: 24),
           onPressed: () async {
@@ -140,7 +141,7 @@ class _CollapsibleAppBarState extends State<CollapsibleAppBar> {
               style: getTitleStyle()),
           background: widget.iconPath != null
               ? ExcludeSemantics(
-                child: Align(
+                  child: Align(
                     alignment: const Alignment(0, .5),
                     child: SvgPicture.asset(
                       widget.iconPath!,
@@ -148,7 +149,7 @@ class _CollapsibleAppBarState extends State<CollapsibleAppBar> {
                       color: iconColor,
                     ),
                   ),
-              )
+                )
               : null,
         );
       }));
@@ -212,8 +213,7 @@ class _CollapsibleAppBarState extends State<CollapsibleAppBar> {
   }
 
   double getDiff() {
-    if(top < 84)
-      top = 84;
+    if (top < 84) top = 84;
 
     return (top - Dimens.appBarTransitionMin) / Dimens.appBarTitleSpeed +
         Dimens.appBarTitleOffset;

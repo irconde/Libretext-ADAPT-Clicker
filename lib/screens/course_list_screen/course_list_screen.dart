@@ -323,12 +323,13 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
                               children: [
                                 Text(
                                   enrollmentsListItem['course_section_name'],
-                                  style: AppTheme.of(context).bodyText1.override(
-                                        fontFamily: 'Open Sans',
-                                        color: CColors.primaryColor,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                  style:
+                                      AppTheme.of(context).bodyText1.override(
+                                            fontFamily: 'Open Sans',
+                                            color: CColors.primaryColor,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(

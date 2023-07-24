@@ -80,155 +80,41 @@ class _PagerState extends State<CustomPager> {
   @override
   Widget build(BuildContext context) {
     return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            width: Dimens.paginatorButtonSize,
-            height: Dimens.paginatorButtonSize,
-            child: Ink(
-              decoration: const ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(1))),
-                  color: CColors.arrowBackgroundColor),
-              child: Semantics(
-                label: Strings.firstPageSemanticsLabel,
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  tooltip: 'First Page',
-                  onPressed: () {
-                    setState(() {
-                      widget.currentPage = 0; //index starts at 0
-                      _scrollToIndex(widget.currentPage);
-                      widget.onPageChanged(widget.currentPage);
-                    });
-                  },
-                  splashRadius: 25,
-                  icon: Icon(
-                    Icons.first_page,
-                    color: widget.pageChangeIconColor,
-                    size: 25,
-                  ),
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          width: Dimens.paginatorButtonSize,
+          height: Dimens.paginatorButtonSize,
+          child: Ink(
+            decoration: const ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(1))),
+                color: CColors.arrowBackgroundColor),
+            child: Semantics(
+              label: Strings.firstPageSemanticsLabel,
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                tooltip: 'First Page',
+                onPressed: () {
+                  setState(() {
+                    widget.currentPage = 0; //index starts at 0
+                    _scrollToIndex(widget.currentPage);
+                    widget.onPageChanged(widget.currentPage);
+                  });
+                },
+                splashRadius: 25,
+                icon: Icon(
+                  Icons.first_page,
+                  color: widget.pageChangeIconColor,
+                  size: 25,
                 ),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: SizedBox(
-              width: Dimens.paginatorButtonSize,
-              height: Dimens.paginatorButtonSize,
-              child: Ink(
-                decoration: const ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(1))),
-                    color: CColors.arrowBackgroundColor),
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  tooltip: 'Previous',
-                  style: ElevatedButton.styleFrom(
-                      shape: const RoundedRectangleBorder(
-                          side: BorderSide(
-                              color: CColors.secondaryColor, width: .5),
-                          borderRadius: BorderRadius.all(Radius.circular(2))),
-                      backgroundColor: CColors.tertiaryShimmerBackground),
-                  onPressed: () {
-                    setState(() {
-                      widget.currentPage =
-                          widget.currentPage > 1 ? widget.currentPage - 1 : 1;
-                      _scrollToIndex(widget.currentPage);
-                      widget.onPageChanged(widget.currentPage);
-                    });
-                  },
-                  splashRadius: 25,
-                  icon: Icon(
-                    Icons.chevron_left,
-                    color: widget.pageChangeIconColor,
-                    size: 25,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: Dimens.paginatorButtonSize,
-            width: Dimens.paginatorButtonSize * 5 + 16,
-            child: ListView.builder(
-              controller: _scrollController,
-              scrollDirection: Axis.horizontal,
-              itemCount: widget.totalPages,
-              itemBuilder: (context, i) {
-                return Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
-                  child: SizedBox(
-                    width: Dimens.paginatorButtonSize,
-                    height: Dimens.paginatorButtonSize,
-                    child: TextButton(
-                      onPressed: () {
-                        setState(() {
-                          _scrollToIndex(i);
-                          widget.currentPage = i;
-                          widget.onPageChanged(widget.currentPage);
-                        });
-                      },
-                      style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              side: const BorderSide(
-                                  color: CColors.arrowBackgroundColor),
-                              borderRadius: widget.currentPage == i
-                                  ? const BorderRadius.all(Radius.circular(1))
-                                  : const BorderRadius.all(Radius.circular(0))),
-                          backgroundColor: widget.currentPage == i
-                              ? widget.numberButtonSelectedColor
-                              : null),
-                      child: Text(
-                        '${i + 1}',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w900,
-                          color: widget.currentPage == i
-                              ? widget.numberTextSelectedColor
-                              : widget.numberTextUnselectedColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 4, 0),
-            child: SizedBox(
-              width: Dimens.paginatorButtonSize,
-              height: Dimens.paginatorButtonSize,
-              child: Ink(
-                decoration: const ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(1))),
-                    color: CColors.arrowBackgroundColor),
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  tooltip: 'Next Page',
-                  onPressed: () {
-                    setState(() {
-                      widget.currentPage = widget.currentPage < widget.totalPages
-                          ? widget.currentPage + 1
-                          : widget.totalPages;
-                      _scrollToIndex(widget.currentPage);
-                      widget.onPageChanged(widget.currentPage);
-                    });
-                  },
-                  splashRadius: 25,
-                  icon: Icon(
-                    Icons.chevron_right,
-                    color: widget.pageChangeIconColor,
-                    size: 25,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
+        ),
+        Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: SizedBox(
             width: Dimens.paginatorButtonSize,
             height: Dimens.paginatorButtonSize,
             child: Ink(
@@ -238,26 +124,140 @@ class _PagerState extends State<CustomPager> {
                   color: CColors.arrowBackgroundColor),
               child: IconButton(
                 padding: EdgeInsets.zero,
-                tooltip: 'Last Page',
+                tooltip: 'Previous',
+                style: ElevatedButton.styleFrom(
+                    shape: const RoundedRectangleBorder(
+                        side: BorderSide(
+                            color: CColors.secondaryColor, width: .5),
+                        borderRadius: BorderRadius.all(Radius.circular(2))),
+                    backgroundColor: CColors.tertiaryShimmerBackground),
                 onPressed: () {
                   setState(() {
-                    widget.currentPage = widget.totalPages -
-                        1; //index starts at 0 but total pages is counting from 1
+                    widget.currentPage =
+                        widget.currentPage > 1 ? widget.currentPage - 1 : 1;
                     _scrollToIndex(widget.currentPage);
                     widget.onPageChanged(widget.currentPage);
-                    logger.i('current page: ${widget.currentPage}');
                   });
                 },
                 splashRadius: 25,
                 icon: Icon(
-                  Icons.last_page,
+                  Icons.chevron_left,
                   color: widget.pageChangeIconColor,
                   size: 25,
                 ),
               ),
             ),
           ),
-        ],
+        ),
+        SizedBox(
+          height: Dimens.paginatorButtonSize,
+          width: Dimens.paginatorButtonSize * 5 + 16,
+          child: ListView.builder(
+            controller: _scrollController,
+            scrollDirection: Axis.horizontal,
+            itemCount: widget.totalPages,
+            itemBuilder: (context, i) {
+              return Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
+                child: SizedBox(
+                  width: Dimens.paginatorButtonSize,
+                  height: Dimens.paginatorButtonSize,
+                  child: TextButton(
+                    onPressed: () {
+                      setState(() {
+                        _scrollToIndex(i);
+                        widget.currentPage = i;
+                        widget.onPageChanged(widget.currentPage);
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                                color: CColors.arrowBackgroundColor),
+                            borderRadius: widget.currentPage == i
+                                ? const BorderRadius.all(Radius.circular(1))
+                                : const BorderRadius.all(Radius.circular(0))),
+                        backgroundColor: widget.currentPage == i
+                            ? widget.numberButtonSelectedColor
+                            : null),
+                    child: Text(
+                      '${i + 1}',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w900,
+                        color: widget.currentPage == i
+                            ? widget.numberTextSelectedColor
+                            : widget.numberTextUnselectedColor,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 4, 0),
+          child: SizedBox(
+            width: Dimens.paginatorButtonSize,
+            height: Dimens.paginatorButtonSize,
+            child: Ink(
+              decoration: const ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(1))),
+                  color: CColors.arrowBackgroundColor),
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                tooltip: 'Next Page',
+                onPressed: () {
+                  setState(() {
+                    widget.currentPage = widget.currentPage < widget.totalPages
+                        ? widget.currentPage + 1
+                        : widget.totalPages;
+                    _scrollToIndex(widget.currentPage);
+                    widget.onPageChanged(widget.currentPage);
+                  });
+                },
+                splashRadius: 25,
+                icon: Icon(
+                  Icons.chevron_right,
+                  color: widget.pageChangeIconColor,
+                  size: 25,
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          width: Dimens.paginatorButtonSize,
+          height: Dimens.paginatorButtonSize,
+          child: Ink(
+            decoration: const ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(1))),
+                color: CColors.arrowBackgroundColor),
+            child: IconButton(
+              padding: EdgeInsets.zero,
+              tooltip: 'Last Page',
+              onPressed: () {
+                setState(() {
+                  widget.currentPage = widget.totalPages -
+                      1; //index starts at 0 but total pages is counting from 1
+                  _scrollToIndex(widget.currentPage);
+                  widget.onPageChanged(widget.currentPage);
+                  logger.i('current page: ${widget.currentPage}');
+                });
+              },
+              splashRadius: 25,
+              icon: Icon(
+                Icons.last_page,
+                color: widget.pageChangeIconColor,
+                size: 25,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
