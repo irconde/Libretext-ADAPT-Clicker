@@ -344,7 +344,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 child: SafeArea(
                   bottom: true,
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 40.0),
+                    padding: EdgeInsets.only(bottom: navBarBottomPadding),
                     child: CustomPager(
                       itemsPerPageTextStyle: AppTheme.of(context).bodyText3,
                       currentPage: _currentPage,
