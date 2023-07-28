@@ -64,10 +64,10 @@ class Strings {
   // No courses widget
   static const String noCoursesMsg =
       'Oops. it seems you haven\'t registered for a course yet';
-  static const String askYour = 'ASK YOUR ';
-  static const String instructor = 'INSTRUCTOR';
-  static const String forA = 'FOR A ';
-  static const String codeToJoin = 'CODE TO JOIN';
+  static const String askYour = 'Ask your ';
+  static const String instructor = 'Instructor';
+  static const String forA = 'for a ';
+  static const String codeToJoin = 'Code to join';
 
   // Navigation drawer
   static const String logoutBtnLabel = 'LOGOUT';
@@ -140,8 +140,8 @@ class Strings {
   static const String signUpBtnProcessingLabel = 'CREATING ACCOUNT';
 
   // No notifications widget
-  static const String noNotifications = 'NO NOTIFICATIONS';
-  static const String forNow = 'FOR NOW';
+  static const String noNotifications = 'No Notifications';
+  static const String forNow = 'For Now';
 
   // Notification single
   static const String notification = 'Notification';
@@ -171,11 +171,11 @@ class Strings {
   static const String learningProcess = 'Learning Process';
   static const String noItemsMessage =
       'Oops. it seems you haven\'t registered for a course yet';
-  static const String no = 'NO ';
-  static const String assessment = 'ASSESSMENT';
-  static const String records = 'RECORDS';
-  static const String currently = 'CURRENTLY';
-  static const String assignments = 'ASSIGNMENTS';
+  static const String no = 'No ';
+  static const String assessment = 'Assessment';
+  static const String records = 'Records';
+  static const String currently = 'Currently';
+  static const String assignments = 'Assignments';
   static const String filterAllAssignments = 'All Assignments';
   static const String filterExam = 'Exam';
   static const String filterExtraCredit = 'Extra Credit';
