@@ -120,7 +120,7 @@ Future<void> mLaunchUrl(String url) async {
   var uri = Uri.parse(url);
   try {
     await canLaunchUrl(uri);
-    await launchUrl(uri);
+    await launchUrl(uri, mode: LaunchMode.externalNonBrowserApplication);
   } catch (e) {
     logger.e('Could not launch $uri: $e');
   }
