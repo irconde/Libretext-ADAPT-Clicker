@@ -100,7 +100,7 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
         UserStoredPreferences.userPassword = formValues[password][dataIndex];
       });
       FocusScope.of(context).unfocus();
-      await context.pushRoute(CoursesRouteWidget());
+      await context.pushRoute(CourseListScreen());
     } else {
       final errors =
           getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
@@ -387,7 +387,7 @@ class _LoginScreenState extends ConsumerState<LoginScreenWidget>
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () async {
                                     context.pushRoute(
-                                      const CreateAccountWidget(),
+                                      const CreateAccountScreen(),
                                     );
                                   }),
                           ]),

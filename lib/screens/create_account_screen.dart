@@ -167,7 +167,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
         });
 
         FocusScope.of(context).unfocus();
-        await context.pushRoute(CoursesRouteWidget());
+        await context.pushRoute(CourseListScreen());
       } else {
         final errors =
             getJsonField((loginRequest.jsonBody ?? ''), r'''$.errors''');
@@ -520,7 +520,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen>
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () async {
                                         context.pushRoute(
-                                          ContactUsWidget(),
+                                          ContactUsScreen(),
                                         );
                                       }),
                               ]),

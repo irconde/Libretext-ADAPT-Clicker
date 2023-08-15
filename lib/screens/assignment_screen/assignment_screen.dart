@@ -79,7 +79,9 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
   }
 
   void setPluralAttempts() {
-    int b = int.parse(assignmentSummary['number_of_allowed_attempts']);
+    int b = 0;
+    if(assignmentSummary["number_of_allowed_attempts"] != null){
+      b = int.parse(assignmentSummary['number_of_allowed_attempts']);}
     if (b == 1) {
       allowedAttempts = Strings.allowedAttempt;
       logger.log(Level.wtf, 'Rawr');
@@ -88,8 +90,7 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
 
     allowedAttempts = Strings.allowedAttempts;
 
-    logger.log(Level.warning,
-        assignmentSummary['number_of_allowed_attempts'] + allowedAttempts);
+    logger.log(Level.warning, '$b $allowedAttempts');
   }
 
   /// Retrieves the assignment summary from the widget and initializes the [assignmentSummary] variable.

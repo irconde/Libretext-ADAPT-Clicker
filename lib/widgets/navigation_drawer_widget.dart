@@ -118,7 +118,7 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                                   Navigator.pop(context);
                                   if (widget.currentSelected ==
                                       DrawerItems.courses) return;
-                                  context.pushRoute(CoursesRouteWidget());
+                                  context.pushRoute(CourseListScreen());
                                 }),
                           ),
                           const Divider(
@@ -166,7 +166,7 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                                   return;
                                 }
                                 context.pushRoute(
-                                    const UpdateProfileRouteWidget());
+                                    const UpdateProfileScreen());
                               }),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
@@ -211,7 +211,7 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                                     return;
                                   }
                                   context.pushRoute(
-                                      const ResetPasswordRouteWidget());
+                                      const ResetPasswordScreen());
                                 }),
                           ),
                           const Divider(
@@ -259,7 +259,7 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                                   return;
                                 }
                                 context.pushRoute(
-                                  ContactUsWidget(
+                                  ContactUsScreen(
                                     openFromDrawer: true,
                                   ),
                                 );
@@ -299,7 +299,7 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                             UserStoredPreferences.userPassword = '';
                           });
                           if (context.mounted) {
-                            await context.pushRoute(WelcomeRouteWidget());
+                            await context.pushRoute(HomeScreen());
                           }
                           setState(() {});
                         },

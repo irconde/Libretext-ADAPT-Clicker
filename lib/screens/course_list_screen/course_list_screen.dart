@@ -1,4 +1,5 @@
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
+import 'package:adapt_clicker/utils/app_state.dart';
 import 'package:adapt_clicker/widgets/app_bars/main_app_bar_widget.dart';
 import 'package:adapt_clicker/widgets/shimmer/shim_pages.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -27,9 +28,10 @@ class CourseListScreen extends ConsumerStatefulWidget {
   /// Constructs a [CourseListScreen] widget.
   ///
   /// [isFirstScreen] specifies whether this is the first screen.
-  const CourseListScreen({Key? key, this.isFirstScreen = false})
+  CourseListScreen({Key? key, this.isFirstScreen = false, @PathParam('token')token})
       : super(key: key);
 
+  String? token;
   @override
   ConsumerState<CourseListScreen> createState() => _CourseListScreenState();
 }
@@ -71,6 +73,10 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
   @override
   void initState() {
     super.initState();
+
+    if(widget.token != null) {
+      UserStoredPreferences.authToken = widget.token!;
+    }
     initFirebase();
     requestPermission(); //gets push notification permission
     getToken();
@@ -311,7 +317,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
                         return InkWell(
                           onTap: () async {
                             if (!checkConnection()) return;
-                            context.pushRoute(AssignmentsRouteWidget(
+                            context.pushRoute(CourseDetailsScreen(
                                 id: enrollmentsListItem['id'].toString()));
                           },
                           child: Padding(

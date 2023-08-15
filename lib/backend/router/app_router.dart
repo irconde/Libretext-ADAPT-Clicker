@@ -13,17 +13,17 @@ class AppRouter extends $AppRouter {
   RouteType get defaultRouteType => const RouteType.adaptive();
   @override
   final List<AutoRoute> routes = [
-    AutoRoute(page: WelcomeRouteWidget.page),
-    AutoRoute(page: ContactUsWidget.page),
-    AutoRoute(page: CreateAccountWidget.page),
-    AutoRoute(page: LoginRouteWidget.page),
-    AutoRoute(page: CoursesRouteWidget.page),
-    AutoRoute(page: AssignmentsRouteWidget.page, path: '/Course/:course'),
-    AutoRoute(page: AssignmentDetailsWidget.page, path: '/Assignment/:summary'),
-    AutoRoute(page: UpdateProfileRouteWidget.page),
-    AutoRoute(page: ResetPasswordRouteWidget.page),
-    AutoRoute(page: NotificationsRouteWidget.page, path: '/Notifications/'),
-    AutoRoute(page: QuestionCTNWidget.page, path: '/Question/:name/:view')
+    AutoRoute(page: HomeScreen.page),
+    AutoRoute(page: ContactUsScreen.page),
+    AutoRoute(page: CreateAccountScreen.page),
+    AutoRoute(page: LoginScreenWidget.page),
+    AutoRoute(page: CourseListScreen.page, path: '/Course/:token'),
+    AutoRoute(page: CourseDetailsScreen.page, path: '/Course/:course'),
+    AutoRoute(page: AssignmentScreen.page, path: '/Assignment/:summary'),
+    AutoRoute(page: UpdateProfileScreen.page),
+    AutoRoute(page: ResetPasswordScreen.page),
+    AutoRoute(page: NotificationsScreen.page, path: '/Notifications/'),
+    AutoRoute(page: QuestionScreen.page, path: '/Question/:name/:view')
   ];
 }
 

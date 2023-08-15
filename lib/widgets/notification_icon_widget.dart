@@ -24,7 +24,7 @@ class NotificationIcon extends StatelessWidget {
         ),
         onPressed: () async {
           context
-              .pushRoute(const NotificationsRouteWidget())
+              .pushRoute(const NotificationsScreen())
               .then((_) => setState(() {}));
         },
       );
@@ -46,7 +46,7 @@ class NotificationIcon extends StatelessWidget {
             ),
             onPressed: () async {
               context
-                  .pushRoute(const NotificationsRouteWidget())
+                  .pushRoute(const NotificationsScreen())
                   .then((_) => setState(() {}));
             },
           ),
