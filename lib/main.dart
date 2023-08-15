@@ -112,8 +112,8 @@ class MyApp extends StatelessWidget {
       routeInformationProvider: _appRouter.routeInfoProvider(),
       routerDelegate: _appRouter.delegate(
           initialRoutes: authenticated
-              ? [CoursesRouteWidget(isFirstScreen: true)]
-              : [WelcomeRouteWidget(isFirstScreen: true)]),
+              ? [CourseListScreen(isFirstScreen: true)]
+              : [HomeScreen(isFirstScreen: true)]),
       routeInformationParser: _appRouter.defaultRouteParser(),
     );
   }

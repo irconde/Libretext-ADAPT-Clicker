@@ -64,7 +64,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                         normalText: Strings.loginBtnLabel,
                         onPressed: () async {
                           context.pushRoute(
-                            const LoginRouteWidget(),
+                            const LoginScreenWidget(),
                           );
                         },
                       ),
@@ -77,7 +77,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                         normalText: Strings.createAccountBtnLabel,
                         onPressed: () async {
                           context.pushRoute(
-                            const CreateAccountWidget(),
+                            const CreateAccountScreen(),
                           );
                         },
                       ),
@@ -103,7 +103,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () async {
                                       context.pushRoute(
-                                        ContactUsWidget(),
+                                        ContactUsScreen(),
                                       );
                                     }),
                             ]),
