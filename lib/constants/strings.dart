@@ -21,6 +21,9 @@ class Strings {
   static const String emailFieldHint = 'john.appleseed@school.edu';
   static const String description = 'Description:  ';
 
+  //Login and Course
+  static const String ssoLink = 'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=oaq1jkujPejJBNfDnOaguii9uOmuz4W5SEJH&redirect_uri=https%3A%2F%2Fadapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue';
+
   // Assignment screen
   static const String latePolicy = 'Late Policy: ';
   static const String noDescription = 'There is no description';

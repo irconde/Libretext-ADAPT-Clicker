@@ -17,7 +17,7 @@ class AppRouter extends $AppRouter {
     AutoRoute(page: ContactUsScreen.page),
     AutoRoute(page: CreateAccountScreen.page),
     AutoRoute(page: LoginScreenWidget.page),
-    AutoRoute(page: CourseListScreen.page, path: '/Course/:token'),
+    AutoRoute(page: CourseListScreen.page, path: '/courses/', ), //takes in token through query
     AutoRoute(page: CourseDetailsScreen.page, path: '/Course/:course'),
     AutoRoute(page: AssignmentScreen.page, path: '/Assignment/:summary'),
     AutoRoute(page: UpdateProfileScreen.page),
@@ -26,7 +26,6 @@ class AppRouter extends $AppRouter {
     AutoRoute(page: QuestionScreen.page, path: '/Question/:name/:view')
   ];
 }
-
 /// RouteHandler class for handling navigation and data retrieval.
 class RouteHandler {
   /// Navigates to a specified route with optional arguments.
