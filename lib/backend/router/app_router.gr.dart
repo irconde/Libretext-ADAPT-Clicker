@@ -71,9 +71,13 @@ abstract class $AppRouter extends _i13.RootStackRouter {
       );
     },
     CourseListScreen.name: (routeData) {
-      final pathParams = routeData.inheritedPathParams;
+      final queryParams = routeData.queryParams;
       final args = routeData.argsAs<CourseListScreenArgs>(
-          orElse: () => CourseListScreenArgs(token: pathParams.get('token')));
+          orElse: () => CourseListScreenArgs(
+                  token: queryParams.get(
+                'token',
+                '',
+              )));
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i4.CourseListScreen(
@@ -282,7 +286,7 @@ class CourseListScreen extends _i13.PageRouteInfo<CourseListScreenArgs> {
   CourseListScreen({
     _i14.Key? key,
     bool? isFirstScreen = false,
-    dynamic token,
+    dynamic token = '',
     List<_i13.PageRouteInfo>? children,
   }) : super(
           CourseListScreen.name,
@@ -291,7 +295,7 @@ class CourseListScreen extends _i13.PageRouteInfo<CourseListScreenArgs> {
             isFirstScreen: isFirstScreen,
             token: token,
           ),
-          rawPathParams: {'token': token},
+          rawQueryParams: {'token': token},
           initialChildren: children,
         );
 
@@ -305,7 +309,7 @@ class CourseListScreenArgs {
   const CourseListScreenArgs({
     this.key,
     this.isFirstScreen = false,
-    this.token,
+    this.token = '',
   });
 
   final _i14.Key? key;
