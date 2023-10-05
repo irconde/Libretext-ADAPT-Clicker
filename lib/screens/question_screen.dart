@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:adapt_clicker/main.dart';
+import 'package:adapt_clicker/utils/QuestionManager.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -7,6 +9,7 @@ import 'package:number_paginator/number_paginator.dart';
 import '../backend/api_requests/api_calls.dart';
 import '../constants/colors.dart';
 import '../constants/strings.dart';
+import '../utils/Logger.dart';
 import '../utils/app_theme.dart';
 import '../widgets/buttons/custom_button_widget.dart';
 import '../utils/utils.dart';
@@ -22,8 +25,8 @@ class QuestionScreen extends StatefulWidget {
   const QuestionScreen({
     Key? key,
     @PathParam('name') this.assignmentName,
-    @PathParam('view') this.view,
-    this.index = 0,
+    this.view,
+    @QueryParam('index') this.index = 0,
   }) : super(key: key);
 
   final String? assignmentName;
@@ -31,15 +34,16 @@ class QuestionScreen extends StatefulWidget {
   final int index;
 
   @override
-  State<QuestionScreen> createState() => _QuestionScreenState(index);
+  State<QuestionScreen> createState() => _QuestionScreenState(index, view);
 }
 
 /// The state class for the QuestionScreen widget.
 class _QuestionScreenState extends State<QuestionScreen> {
-  _QuestionScreenState(this._currentPage);
+  _QuestionScreenState(this._currentPage, this.view);
   TextEditingController? textController;
 
   int _currentPage;
+  dynamic view;
   NumberPaginatorController paginatorController = NumberPaginatorController();
   PageController pageController = PageController();
   bool isLoading = true;
@@ -68,6 +72,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
   @override
   void initState() {
     super.initState();
+
+    view ??= AppState().view;
+
     paginatorController.currentPage = _currentPage;
     pageController = PageController(initialPage: _currentPage);
     textController = TextEditingController();
@@ -75,11 +82,16 @@ class _QuestionScreenState extends State<QuestionScreen> {
   }
 
   Future<void> setupHttpCredentials() async {
-    String redirectString = base64Url.encode(utf8.encode(AppState().urls[widget.index]));
-
+    String redirectString = '';
+    try {
+      redirectString = base64Url.encode(
+          utf8.encode(AppState().urls.elementAt(widget.index)));
+    }catch (e)
+    {
+      logger.w(e);
+    }
     request = URLRequest(
       url: Uri.parse('https://adapt.libretexts.org/user-jwt-test/$redirectString'),
-
         headers: { 'authorization': UserStoredPreferences.authToken},
     );
   }
@@ -87,7 +99,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final questionsList = widget.view['questions'];
+    final questionsList = view['questions'];
     final int numPages = questionsList.length;
     var pages = List.generate(
       numPages,

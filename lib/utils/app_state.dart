@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/backend/Router/app_router.dart';
 import 'package:adapt_clicker/utils/timezone.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
@@ -17,6 +18,8 @@ class AppState {
   Future initializePersistedState() async {}
 
   Cookie cookie = Cookie(name: '', value: null);
+
+  final router = AppRouter();
 
   /// Holds the view.
   dynamic view;

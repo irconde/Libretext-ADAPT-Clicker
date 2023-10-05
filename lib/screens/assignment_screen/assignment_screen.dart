@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import '../../backend/api_requests/api_calls.dart';
 import '../../constants/strings.dart';
+import '../../utils/Logger.dart';
 import '../../utils/animations.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/utils.dart';
@@ -72,10 +73,10 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
   void initState() {
     super.initState();
     viewCall = getViewCall();
-    setPluralAttempts();
+    //setPluralAttempts();
   }
 
-  void setPluralAttempts() {
+  /*void setPluralAttempts() {
     int b = 0;
     if(assignmentSummary["number_of_allowed_attempts"] != null){
       b = int.parse(assignmentSummary['number_of_allowed_attempts']);}
@@ -83,6 +84,8 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
       allowedAttempts = Strings.allowedAttempt;
       logger.log(Level.wtf, 'Rawr');
       return;
+    }
+  }*/
   void createQuestionUrls(List<dynamic> questions) {
     // create an empty list of strings to store the urls
     List<String> urls = [];
@@ -102,7 +105,6 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
 
     AppState().urls = urls;
   }
-
 
   /// Retrieves the assignment summary from the widget and initializes the [assignmentSummary] variable.
   ///
@@ -370,7 +372,8 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                   final builderResponse = snapshot.data!;
                                   return Builder(builder: (context) {
                                     int gridViewCrossAxisCount = 3;
-                                    final List<dynamic> questions = ViewCall.questions(
+                                    final List<dynamic> questions =
+                                        ViewCall.questions(
                                       builderResponse.jsonBody,
                                     )?.toList();
                                     createQuestionUrls(questions);

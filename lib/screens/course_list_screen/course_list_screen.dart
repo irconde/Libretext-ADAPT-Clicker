@@ -1,21 +1,17 @@
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/widgets/app_bars/main_app_bar_widget.dart';
-import 'package:adapt_clicker/main.dart';
 import 'package:adapt_clicker/widgets/shimmer/shim_pages.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:move_to_background/move_to_background.dart';
 import 'package:adapt_clicker/backend/user_stored_preferences.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../backend/Router/app_router.dart';
 import '../../backend/api_requests/api_calls.dart';
 import '../../constants/strings.dart';
-import '../../utils/app_state.dart';
-import '../../widgets/bottom_sheets/add_course_widget.dart';
+import '../../utils/Logger.dart';
+import '../../utils/utils.dart';
 import '../../mixins/connection_state_mixin.dart';
 import 'no_courses_widget.dart';
 import '../../widgets/navigation_drawer_widget.dart';
@@ -31,9 +27,9 @@ class CourseListScreen extends ConsumerStatefulWidget {
   /// Constructs a [CourseListScreen] widget.
   ///
   /// [isFirstScreen] specifies whether this is the first screen.
-  const CourseListScreen({Key? key, this.isFirstScreen = false})
+  CourseListScreen({Key? key, this.isFirstScreen = false, @QueryParam('token') token = ''})
       : super(key: key);
-
+  String? token;
   @override
   ConsumerState<CourseListScreen> createState() => _CourseListScreenState();
 }
@@ -43,8 +39,29 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
   ApiCallResponse? logout;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   Future<ApiCallResponse>? _apiRequestCompleter;
-  ApiCallResponse? sendTokenResponse;
+
   bool isLoading = true;
+
+  InAppWebViewController? webViewController;
+  final CookieManager _cookieManager = CookieManager.instance();
+  InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
+      crossPlatform: InAppWebViewOptions(
+        useShouldOverrideUrlLoading: true,
+        mediaPlaybackRequiresUserGesture: false,
+        supportZoom: true,
+        javaScriptEnabled: true,
+        javaScriptCanOpenWindowsAutomatically: true,
+        cacheEnabled: true,
+      ),
+      android: AndroidInAppWebViewOptions(
+        useHybridComposition: true,
+      ),
+      ios: IOSInAppWebViewOptions(
+        allowsInlineMediaPlayback: true,
+      )
+  );
+
+
 
   /// Refreshes the page by calling [updateAndGetResponse].
   Future<bool> refreshPage() async {
@@ -75,35 +92,18 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
   @override
   void initState() {
     super.initState();
-    initFirebase();
-    requestPermission(); //gets push notification permission
-    getToken();
-    sendToken();
-    handleRoutes();
+    init();
+
+  }
+
+  void init() async {
+    await createTokenFromPath();
     initJWT();
     _apiRequestCompleter = updateAndGetResponse();
     if (widget.isFirstScreen!) {
       _showSignInSnackbar();
     }
   }
-
-  InAppWebViewController? webViewController;
-  final CookieManager _cookieManager = CookieManager.instance();
-  InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
-      crossPlatform: InAppWebViewOptions(
-        useShouldOverrideUrlLoading: true,
-        mediaPlaybackRequiresUserGesture: false,
-        supportZoom: true,
-        javaScriptEnabled: true,
-        javaScriptCanOpenWindowsAutomatically: true,
-        cacheEnabled: true,
-      ),
-      android: AndroidInAppWebViewOptions(
-        useHybridComposition: true,
-      ),
-      ios: IOSInAppWebViewOptions(
-        allowsInlineMediaPlayback: true,
-      ));
   late URLRequest request;
   Future<void> initJWT() async {
     request = URLRequest(
@@ -111,10 +111,23 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
           'https://adapt.libretexts.org/api/users/set-cookie-user-jwt'),
       headers: {'authorization': UserStoredPreferences.authToken},
     );
-
-    AppState().cookie =
-        (await _cookieManager.getCookie(url: request.url!, name: 'user_jwt'))!;
   }
+
+  Future<void> createTokenFromPath() async {
+    //Gets token from query parameter
+    widget.token = context.routeData.queryParams.getString('token');
+    if (widget.token == null || widget.token == '') {
+      return;
+    }
+    String token = createToken(widget.token!);
+    await UserStoredPreferences.setString('ff_authToken', token);
+    if (UserStoredPreferences.authToken == null) {
+      await context.pushRoute(const LoginScreenWidget());
+    }
+  }
+
+
+
 
   /// Shows a snackbar indicating the signed-in user.
   void _showSignInSnackbar() {
@@ -143,90 +156,10 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
     });
   }
 
-  /// Initializes Firebase services.
-  Future<void> initFirebase() async {
-    FirebaseMessaging.instance.setDeliveryMetricsExportToBigQuery(true);
-    //FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-    //String id = await FirebaseInstallations.instance.getId();
-  }
 
-  /// Requests push notification permission.
-  void requestPermission() async {
-    // TODO. To be deleted? This is not being used.
-    // FirebaseMessaging messaging = FirebaseMessaging.instance;
-    // TODO. To be deleted? This is not being used.
-    /*
-    NotificationSettings settings = await messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-     */
-    if (await Permission.notification.request().isGranted) {
-      logger.d('User granted permission');
-    } else if (await Permission.notification.status.isLimited) {
-      logger.d('User granted provisional permission');
-    } else {
-      logger.d('User declined or has not accepted permission');
-    }
-  }
 
-  /// Handles incoming push notification routes.
-  void handleRoutes() {
-    RouteHandler rh = RouteHandler();
-    // Handle incoming push notifications when the app is in the foreground
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      logger.d('Got a message whilst in the foreground!');
-      logger.d('Message data: ${message.data}');
-      // Extract the route parameter from the message
-      String path = message.data['path'];
-      String id = message.data['id'];
-      List<String> data = [id];
-      String args = await rh.getArgs(path, data);
-      // If the message contains a route parameter, navigate to the corresponding route
-      rh.navigateTo(context, path, args);
-    });
-    // Handle push notification when opening it
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-      logger.d('A new onMessageOpenedApp event was published!');
-      logger.d('Message data: ${message.data}');
-      // Extract the route parameter from the message
-      String path = message.data['path'];
-      List<String> data = [message.data['id']];
-      String args = await rh.getArgs(path, data);
-      // If the message contains a route parameter, navigate to the corresponding route
-      rh.navigateTo(context, path, args);
-    });
-  }
 
-  /// Saves the Firebase token.
-  void saveToken(var token) async {
-    UserStoredPreferences.setString('ff_deviceIDToken', token);
-    logger.d('My token is $token');
-  }
 
-  /// Retrieves the Firebase token.
-  void getToken() async {
-    await FirebaseMessaging.instance.getToken().then((token) {
-      setState(() {
-        var mToken = token;
-        saveToken(mToken);
-      });
-    });
-  }
-
-  /// Sends the Firebase token to the server.
-  Future<void> sendToken() async {
-    sendTokenResponse = await SendTokenCall.call(
-      token: UserStoredPreferences.authToken,
-      fcmToken: UserStoredPreferences.deviceIDToken,
-    );
-    logger.d(sendTokenResponse?.jsonBody.toString());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -256,7 +189,9 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
               )
             : FloatingActionButton(
                 onPressed: () async {
-                  if (!checkConnection()) return;
+
+
+                  /*if (!checkConnection()) return;
                   showModalBottomSheet(
                     useSafeArea: true,
                     isScrollControlled: true,
@@ -268,7 +203,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
                         child: const AddCourseWidget(),
                       );
                     },
-                  ).then((value) => {refreshPage()});
+                  ).then((value) => {refreshPage()});*/
                 },
                 backgroundColor: CColors.primaryColor,
                 elevation: 8,
@@ -341,7 +276,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
                       return InkWell(
                         onTap: () async {
                           if (!checkConnection()) return;
-                          context.pushRoute(AssignmentsRouteWidget(
+                          context.pushRoute(CourseDetailsScreen(
                               id: enrollmentsListItem['id'].toString()));
                         },
                         child: Padding(
@@ -378,6 +313,36 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
                                 height: 1,
                                 thickness: 1,
                               ),
+                              Visibility(
+                                visible: false,
+                                maintainState: true,
+                                child: SizedBox(
+                                  height: 20,
+                                  child: InAppWebView(
+                                    initialUrlRequest: request,
+                                    onWebViewCreated: (controller) {
+                                      webViewController = controller;
+                                      //controller.loadUrl(urlRequest: requestJWT);
+                                      //logger.i(UserStoredPreferences.authToken );
+                                    },
+                                    onLoadStop: (controller, uri) async {
+                                      List<Cookie> cookies =
+                                      await _cookieManager.getCookies(url: request.url!);
+                                      cookies.forEach((cookie) {
+                                        if (cookie.name == 'user_jwt') {
+                                          AppState().cookie = cookie;
+                                          //logger.i(cookie.name + " " + cookie.value);
+                                        }
+                                      });
+                                    },
+                                    initialOptions: options,
+                                    gestureRecognizers: Set()
+                                      ..add(Factory(() => EagerGestureRecognizer()))
+                                      ..add(Factory<VerticalDragGestureRecognizer>(
+                                              () => VerticalDragGestureRecognizer())),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -388,36 +353,6 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
               },
             );
           },
-        ),
-        Visibility(
-          visible: false,
-          maintainState: true,
-          child: SizedBox(
-            height: 20,
-            child: InAppWebView(
-              initialUrlRequest: request,
-              onWebViewCreated: (controller) {
-                webViewController = controller;
-                //controller.loadUrl(urlRequest: requestJWT);
-                //logger.i(UserStoredPreferences.authToken );
-              },
-              onLoadStop: (controller, uri) async {
-                List<Cookie> cookies =
-                    await _cookieManager.getCookies(url: request.url!);
-                cookies.forEach((cookie) {
-                  if (cookie.name == 'user_jwt') {
-                    AppState().cookie = cookie;
-                    //logger.i(cookie.name + " " + cookie.value);
-                  }
-                });
-              },
-              initialOptions: options,
-              gestureRecognizers: Set()
-                ..add(Factory(() => EagerGestureRecognizer()))
-                ..add(Factory<VerticalDragGestureRecognizer>(
-                    () => VerticalDragGestureRecognizer())),
-            ),
-          ),
         ),
       ],
     );
