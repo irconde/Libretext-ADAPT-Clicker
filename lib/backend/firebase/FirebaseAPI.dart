@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -19,21 +20,22 @@ class FirebaseAPI {
   Future<void> initNotifications() async {
 
     await _firebaseMessaging.requestPermission();
+    permissionLog();
+    //final fCMToken = await _firebaseMessaging.getToken();
 
-    final fCMToken = await _firebaseMessaging.getToken();
-    requestPermission();
     _firebaseInAppMessaging.setMessagesSuppressed(false);
+
     _firebaseMessaging.setDeliveryMetricsExportToBigQuery(true);
 
     initPushNotifications();
 
-    print('Token: $fCMToken');
+    //print('Token: $fCMToken');
 
 
   }
 
   /// Requests push notification permission.
-  void requestPermission() async {
+  void permissionLog() async {
     if (await Permission.notification.request().isGranted) {
       logger.d('User granted permission');
     } else if (await Permission.notification.status.isLimited) {
@@ -84,8 +86,6 @@ class FirebaseAPI {
       return null; // Invalid link format
     }
   }
-
-  //Function for foreground and background settings
 
 
   //routes

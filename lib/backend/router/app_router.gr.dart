@@ -71,13 +71,19 @@ abstract class $AppRouter extends _i13.RootStackRouter {
       );
     },
     CourseListScreen.name: (routeData) {
+      final queryParams = routeData.queryParams;
       final args = routeData.argsAs<CourseListScreenArgs>(
-          orElse: () => const CourseListScreenArgs());
+          orElse: () => CourseListScreenArgs(
+                  token: queryParams.get(
+                'token',
+                '',
+              )));
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i4.CourseListScreen(
           key: args.key,
           isFirstScreen: args.isFirstScreen,
+          token: args.token,
         ),
       );
     },
@@ -112,11 +118,10 @@ abstract class $AppRouter extends _i13.RootStackRouter {
     },
     QuestionScreen.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
-      final queryParams = routeData.queryParams;
       final args = routeData.argsAs<QuestionScreenArgs>(
           orElse: () => QuestionScreenArgs(
                 assignmentName: pathParams.optString('name'),
-                index: queryParams.getInt(
+                index: pathParams.getInt(
                   'index',
                   0,
                 ),
@@ -284,13 +289,16 @@ class CourseListScreen extends _i13.PageRouteInfo<CourseListScreenArgs> {
   CourseListScreen({
     _i15.Key? key,
     bool? isFirstScreen = false,
+    dynamic token = '',
     List<_i13.PageRouteInfo>? children,
   }) : super(
           CourseListScreen.name,
           args: CourseListScreenArgs(
             key: key,
             isFirstScreen: isFirstScreen,
+            token: token,
           ),
+          rawQueryParams: {'token': token},
           initialChildren: children,
         );
 
@@ -304,15 +312,18 @@ class CourseListScreenArgs {
   const CourseListScreenArgs({
     this.key,
     this.isFirstScreen = false,
+    this.token = '',
   });
 
   final _i15.Key? key;
 
   final bool? isFirstScreen;
 
+  final dynamic token;
+
   @override
   String toString() {
-    return 'CourseListScreenArgs{key: $key, isFirstScreen: $isFirstScreen}';
+    return 'CourseListScreenArgs{key: $key, isFirstScreen: $isFirstScreen, token: $token}';
   }
 }
 
@@ -413,8 +424,10 @@ class QuestionScreen extends _i13.PageRouteInfo<QuestionScreenArgs> {
             view: view,
             index: index,
           ),
-          rawPathParams: {'name': assignmentName},
-          rawQueryParams: {'index': index},
+          rawPathParams: {
+            'name': assignmentName,
+            'index': index,
+          },
           initialChildren: children,
         );
 

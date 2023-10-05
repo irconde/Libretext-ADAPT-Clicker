@@ -64,15 +64,38 @@ class RouteHandler {
 
     if (courseCall.succeeded) {
       AppState().view = courseCall.jsonBody;
-      final List<dynamic> questions =
-      ViewCall.questions(
-        courseCall.jsonBody,
-      )?.toList();
-      QuestionManager.createQuestionUrls(questions);
-      return '${args[0]}/${args[2]}';
+      createQuestions(courseCall);
+      if (args.length > 2) {
+        return '${args[0]}/${args[2]}';
+      }
+      else {
+        return args[0];
+      }
+    }
+    return '';
+  }
+
+  Future<dynamic> getView(String id) async {
+    ApiCallResponse courseCall = await ViewCall.call(
+        token: UserStoredPreferences.authToken,
+        assignmentID: int.parse(id));
+
+    if (courseCall.succeeded) {
+      AppState().view = courseCall.jsonBody;
+      createQuestions(courseCall);
+      return courseCall.jsonBody;
     }
 
-    return '';
+    return null;
+  }
+
+  void createQuestions(ApiCallResponse courseCall)
+  {
+    final List<dynamic> questions =
+    ViewCall.questions(
+      courseCall.jsonBody,
+    )?.toList();
+    QuestionManager.createQuestionUrls(questions);
   }
 
   /// Retrieves the arguments based on the provided path and arguments list.
