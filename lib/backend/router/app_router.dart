@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
+import '../../utils/Logger.dart';
+import '../../utils/QuestionManager.dart';
+import '../../utils/app_state.dart';
 import '../user_stored_preferences.dart';
 import '../api_requests/api_calls.dart';
 
@@ -17,25 +19,28 @@ class AppRouter extends $AppRouter {
     AutoRoute(page: ContactUsScreen.page),
     AutoRoute(page: CreateAccountScreen.page),
     AutoRoute(page: LoginScreenWidget.page),
-    AutoRoute(page: CourseListScreen.page, path: '/courses/', ), //takes in token through query
-    AutoRoute(page: CourseDetailsScreen.page, path: '/Course/:course'),
-    AutoRoute(page: AssignmentScreen.page, path: '/Assignment/:summary'),
+    AutoRoute(page: CourseListScreen.page, path: '/courses/', ), //
+    AutoRoute(page: AssignmentScreen.page, path: '/Course/:course'),
+    AutoRoute(page: CourseDetailsScreen.page, path: '/Assignment/:summary'),
     AutoRoute(page: UpdateProfileScreen.page),
     AutoRoute(page: ResetPasswordScreen.page),
     AutoRoute(page: NotificationsScreen.page, path: '/Notifications/'),
-    AutoRoute(page: QuestionScreen.page, path: '/Question/:name/:view')
+    AutoRoute(page: QuestionScreen.page, path: '/Question/:name/:index')
   ];
 }
+
 /// RouteHandler class for handling navigation and data retrieval.
 class RouteHandler {
   /// Navigates to a specified route with optional arguments.
-  void navigateTo(BuildContext context, String route, String args) {
+  void navigateTo(String route, String args) {
+    logger.w("Navigatiing to " + args);
     if (route.isNotEmpty) {
       try {
         if (args.isNotEmpty) {
           route = '$route/$args';
         }
-        context.navigateNamedTo(route);
+        AppState().router.pushNamed(route);
+
       } catch (e) {
         if (kDebugMode) {
           print(e);
@@ -53,11 +58,21 @@ class RouteHandler {
 
   /// Retrieves the question for a specific assignment.
   Future<String> getQuestion(List<String> args) async {
-    dynamic courseCall = await ViewCall.call(
+    ApiCallResponse courseCall = await ViewCall.call(
         token: UserStoredPreferences.authToken,
         assignmentID: int.parse(args[1]));
-    courseCall.jsonBody['course'].remove('textbook_url');
-    return jsonEncode(courseCall.jsonBody['course']);
+
+    if (courseCall.succeeded) {
+      AppState().view = courseCall.jsonBody;
+      final List<dynamic> questions =
+      ViewCall.questions(
+        courseCall.jsonBody,
+      )?.toList();
+      QuestionManager.createQuestionUrls(questions);
+      return '${args[0]}/${args[2]}';
+    }
+
+    return '';
   }
 
   /// Retrieves the arguments based on the provided path and arguments list.
