@@ -20,12 +20,12 @@ class AppRouter extends $AppRouter {
     AutoRoute(page: CreateAccountScreen.page),
     AutoRoute(page: LoginScreenWidget.page),
     AutoRoute(page: CourseListScreen.page, path: '/courses/', ), //
-    AutoRoute(page: AssignmentScreen.page, path: '/Course/:course'),
-    AutoRoute(page: CourseDetailsScreen.page, path: '/Assignment/:summary'),
+    AutoRoute(page: CourseDetailsScreen.page, path: '/Course/:course'),
+    AutoRoute(page: AssignmentScreen.page, path: '/Assignment/:summary'),
     AutoRoute(page: UpdateProfileScreen.page),
     AutoRoute(page: ResetPasswordScreen.page),
     AutoRoute(page: NotificationsScreen.page, path: '/Notifications/'),
-    AutoRoute(page: QuestionScreen.page, path: '/Question/:name/:index')
+    AutoRoute(page: QuestionScreen.page, path: '/Assignment/:name/Question/:index')
   ];
 }
 
@@ -33,12 +33,13 @@ class AppRouter extends $AppRouter {
 class RouteHandler {
   /// Navigates to a specified route with optional arguments.
   void navigateTo(String route, String args) {
-    logger.w("Navigatiing to " + args);
+
     if (route.isNotEmpty) {
       try {
         if (args.isNotEmpty) {
           route = '$route/$args';
         }
+        logger.w("Navigatiing to " + route);
         AppState().router.pushNamed(route);
 
       } catch (e) {
@@ -60,13 +61,13 @@ class RouteHandler {
   Future<String> getQuestion(List<String> args) async {
     ApiCallResponse courseCall = await ViewCall.call(
         token: UserStoredPreferences.authToken,
-        assignmentID: int.parse(args[1]));
+        assignmentID: int.parse(args[0]));
 
     if (courseCall.succeeded) {
       AppState().view = courseCall.jsonBody;
       createQuestions(courseCall);
       if (args.length > 2) {
-        return '${args[0]}/${args[2]}';
+        return '${args[0]}/${args[1]}/${args[2]}';
       }
       else {
         return args[0];
@@ -102,11 +103,13 @@ class RouteHandler {
   Future<String> getArgs(String path, List<String> args) async {
     switch (path) {
       case '/Assignment':
-        return getSummary(args[0]);
+          if(args.length > 1) {
+            return getQuestion(args);
+          } else {
+            return getSummary(args[0]);
+          }
       case '/Course':
         return args[0];
-      case '/Question':
-        return getQuestion(args);
       default:
         return '';
     }
