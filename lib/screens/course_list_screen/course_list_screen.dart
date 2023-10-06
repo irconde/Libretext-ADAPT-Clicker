@@ -1,3 +1,5 @@
+import 'package:adapt_clicker/backend/Router/app_router.dart';
+import 'package:adapt_clicker/backend/firebase/FirebaseAPI.dart';
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/widgets/app_bars/main_app_bar_widget.dart';
 import 'package:adapt_clicker/widgets/shimmer/shim_pages.dart';
@@ -99,11 +101,20 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
   void init() async {
     await createTokenFromPath();
     initJWT();
+    initMessages();
     _apiRequestCompleter = updateAndGetResponse();
     if (widget.isFirstScreen!) {
       _showSignInSnackbar();
     }
   }
+
+  void initMessages()
+  {
+    FirebaseAPI firebase = FirebaseAPI();
+    firebase.getToken(setState);
+    firebase.sendToken();
+  }
+
   late URLRequest request;
   Future<void> initJWT() async {
     request = URLRequest(

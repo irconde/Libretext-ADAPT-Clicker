@@ -21,7 +21,6 @@ class FirebaseAPI {
 
     await _firebaseMessaging.requestPermission();
     permissionLog();
-    //final fCMToken = await _firebaseMessaging.getToken();
 
     _firebaseInAppMessaging.setMessagesSuppressed(false);
 
@@ -33,6 +32,9 @@ class FirebaseAPI {
 
 
   }
+
+
+
 
   /// Requests push notification permission.
   void permissionLog() async {
@@ -62,6 +64,7 @@ class FirebaseAPI {
         logger.d('Path: $path');
         logger.d('Args: $data');
 
+
         String args = await rh.getArgs(path, data);
         // If the message contains a route parameter, navigate to the corresponding route
         rh.navigateTo(path, args);
@@ -78,8 +81,11 @@ class FirebaseAPI {
 
     // Check if the number of parts is at least 2 (path and one argument)
     if (parts.isNotEmpty) {
-      String path = '/' + parts[1]; // The path is the second part
-      List<String> args = parts.sublist(2); // The remaining parts are arguments
+      String path = '/${parts[0]}'; // The path is the second part
+      List<String> args = [];
+      for(int i = 1; i < parts.length; i++){
+        args.add(parts[i]);
+      } // The remaining parts are arguments
 
       return {'path': path, 'args': args};
     } else {
@@ -93,7 +99,9 @@ class FirebaseAPI {
   Future initPushNotifications() async{
     _firebaseMessaging.getInitialMessage().then(handleMessage);
     FirebaseMessaging.onMessage.listen(handleMessage);
-    FirebaseMessaging.onMessageOpenedApp.listen(handleMessage);
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      handleMessage(message);
+    });
   }
 
 

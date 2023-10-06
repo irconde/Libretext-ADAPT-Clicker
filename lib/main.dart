@@ -42,9 +42,12 @@ void main() async {
   AppState();
   preloadSVGs();
   // Firebase initialization
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseAPI firebase = FirebaseAPI();
+  await firebase.initNotifications();
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
   };
@@ -89,7 +92,6 @@ Future<bool> userIsAuthenticated() async {
 
 class MyApp extends StatelessWidget {
   final ThemeMode _themeMode = ThemeMode.system;
-  final _appRouter = AppRouter();
   final bool authenticated;
 
   MyApp({Key? key, required this.authenticated}) : super(key: key);
@@ -111,8 +113,8 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppTheme.of(context).appBarTheme(),
       ),
       themeMode: _themeMode,
-      routeInformationProvider: _appRouter.routeInfoProvider(),
-      routerDelegate: _appRouter.delegate(
+      routeInformationProvider: AppState().router.routeInfoProvider(),
+      routerDelegate: AppState().router.delegate(
           initialRoutes: authenticated
               ? [CourseListScreen(isFirstScreen: true)]
               : [HomeScreen(isFirstScreen: true)]),
