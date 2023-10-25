@@ -2,6 +2,7 @@ import 'package:adapt_clicker/backend/Router/app_router.dart';
 import 'package:adapt_clicker/backend/firebase/FirebaseAPI.dart';
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/widgets/app_bars/main_app_bar_widget.dart';
+import 'package:adapt_clicker/widgets/bottom_sheets/Notification%20Popup.dart';
 import 'package:adapt_clicker/widgets/shimmer/shim_pages.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -15,6 +16,7 @@ import '../../constants/strings.dart';
 import '../../utils/Logger.dart';
 import '../../utils/utils.dart';
 import '../../mixins/connection_state_mixin.dart';
+import '../../widgets/bottom_sheets/add_course_widget.dart';
 import 'no_courses_widget.dart';
 import '../../widgets/navigation_drawer_widget.dart';
 import '../../utils/app_theme.dart';
@@ -101,16 +103,17 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
   void init() async {
     await createTokenFromPath();
     initJWT();
-    initMessages();
+    await initMessages();
     _apiRequestCompleter = updateAndGetResponse();
     if (widget.isFirstScreen!) {
       _showSignInSnackbar();
     }
   }
 
-  void initMessages()
+  Future<void> initMessages() async
   {
     FirebaseAPI firebase = FirebaseAPI();
+    await firebase.initNotifications();
     firebase.getToken(setState);
     firebase.sendToken();
   }
@@ -136,8 +139,6 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
       await context.pushRoute(const LoginScreenWidget());
     }
   }
-
-
 
 
   /// Shows a snackbar indicating the signed-in user.
@@ -167,11 +168,6 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
     });
   }
 
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
     if (widget.isFirstScreen!) {
@@ -200,9 +196,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
               )
             : FloatingActionButton(
                 onPressed: () async {
-
-
-                  /*if (!checkConnection()) return;
+                  if (!checkConnection()) return;
                   showModalBottomSheet(
                     useSafeArea: true,
                     isScrollControlled: true,
@@ -211,10 +205,10 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
                     builder: (context) {
                       return Padding(
                         padding: MediaQuery.of(context).viewInsets,
-                        child: const AddCourseWidget(),
+                        child: const NotificationPopup('Testing', 'Lort, Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet', '/Assignment/5683/Question/1'),
                       );
                     },
-                  ).then((value) => {refreshPage()});*/
+                  ).then((value) => {refreshPage()});
                 },
                 backgroundColor: CColors.primaryColor,
                 elevation: 8,

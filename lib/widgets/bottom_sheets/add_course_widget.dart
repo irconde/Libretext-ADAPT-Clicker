@@ -94,6 +94,7 @@ class _AddCourseWidgetState extends ConsumerState<AddCourseWidget>
   Widget build(BuildContext context) {
     var theme = AppTheme.of(context);
     return BlurredBottomSheet(
+      centered: true,
       child: Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 32),
         child: SingleChildScrollView(

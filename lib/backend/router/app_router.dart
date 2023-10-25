@@ -19,46 +19,42 @@ class AppRouter extends $AppRouter {
     AutoRoute(page: ContactUsScreen.page),
     AutoRoute(page: CreateAccountScreen.page),
     AutoRoute(page: LoginScreenWidget.page),
-    AutoRoute(page: CourseListScreen.page, path: '/courses/', ), //
+    AutoRoute(
+      page: CourseListScreen.page,
+      path: '/courses/',
+    ), //
     AutoRoute(page: CourseDetailsScreen.page, path: '/Course/:course'),
     AutoRoute(page: AssignmentScreen.page, path: '/Assignment/:summary'),
     AutoRoute(page: UpdateProfileScreen.page),
     AutoRoute(page: ResetPasswordScreen.page),
     AutoRoute(page: NotificationsScreen.page, path: '/Notifications/'),
-    AutoRoute(page: QuestionScreen.page, path: '/Assignment/:name/Question/:index')
+    AutoRoute(
+        page: QuestionScreen.page, path: '/Assignment/:name/Question/:index')
   ];
 }
 
 /// RouteHandler class for handling navigation and data retrieval.
 class RouteHandler {
-  /// Navigates to a specified route with optional arguments.
-  void navigateTo(String route, String args) {
 
-    if (route.isNotEmpty) {
-      try {
-        if (args.isNotEmpty) {
-          route = '$route/$args';
-        }
-        logger.w("Navigatiing to " + route);
-        AppState().router.pushNamed(route);
+  static void navTo(String route) {
+    try {
+      logger.i('Navigating to $route');
+      AppState().router.pushNamed(route);
 
-      } catch (e) {
-        if (kDebugMode) {
-          print(e);
-        }
-      }
+    } catch (e) {
+      logger.e('Routing Error: $e');
     }
   }
 
   /// Retrieves the summary of an assignment.
-  Future<String> getSummary(String id) async {
+  static Future<String> getSummary(String id) async {
     dynamic assignmentSummary = await GetAssignmentSummaryCall.call(
         token: UserStoredPreferences.authToken, assignmentNum: int.parse(id));
     return jsonEncode(assignmentSummary.jsonBody['assignment']);
   }
 
   /// Retrieves the question for a specific assignment.
-  Future<String> getQuestion(List<String> args) async {
+  static Future<String> getQuestion(List<String> args) async {
     ApiCallResponse courseCall = await ViewCall.call(
         token: UserStoredPreferences.authToken,
         assignmentID: int.parse(args[0]));
@@ -68,18 +64,16 @@ class RouteHandler {
       createQuestions(courseCall);
       if (args.length > 2) {
         return '${args[0]}/${args[1]}/${args[2]}';
-      }
-      else {
+      } else {
         return args[0];
       }
     }
     return '';
   }
 
-  Future<dynamic> getView(String id) async {
+  static Future<dynamic> getView(String id) async {
     ApiCallResponse courseCall = await ViewCall.call(
-        token: UserStoredPreferences.authToken,
-        assignmentID: int.parse(id));
+        token: UserStoredPreferences.authToken, assignmentID: int.parse(id));
 
     if (courseCall.succeeded) {
       AppState().view = courseCall.jsonBody;
@@ -90,24 +84,22 @@ class RouteHandler {
     return null;
   }
 
-  void createQuestions(ApiCallResponse courseCall)
-  {
-    final List<dynamic> questions =
-    ViewCall.questions(
+  static void createQuestions(ApiCallResponse courseCall) {
+    final List<dynamic> questions = ViewCall.questions(
       courseCall.jsonBody,
     )?.toList();
     QuestionManager.createQuestionUrls(questions);
   }
 
   /// Retrieves the arguments based on the provided path and arguments list.
-  Future<String> getArgs(String path, List<String> args) async {
+  static Future<String> getArgs(String path, List<String> args) async {
     switch (path) {
       case '/Assignment':
-          if(args.length > 1) {
-            return getQuestion(args);
-          } else {
-            return getSummary(args[0]);
-          }
+        if (args.length > 1) {
+          return getQuestion(args);
+        } else {
+          return getSummary(args[0]);
+        }
       case '/Course':
         return args[0];
       default:

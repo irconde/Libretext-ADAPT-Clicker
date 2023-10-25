@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../constants/colors.dart';
+import '../../constants/dimens.dart';
 import '../../mixins/form_state_mixin.dart';
 
 /// Enumeration representing the type of a custom elevated button.
@@ -19,6 +20,8 @@ class CustomElevatedButton extends StatelessWidget {
   String? successText;
   String? processingText;
   final Function onPressed;
+  double? width;
+  double? height;
 
   /// Constructs a [CustomElevatedButton].
   ///
@@ -38,7 +41,11 @@ class CustomElevatedButton extends StatelessWidget {
     this.successText,
     this.processingText,
     required this.onPressed,
+    this.width,
+    this.height,
   }) : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +53,8 @@ class CustomElevatedButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
         surfaceTintColor: CColors.pureWhite,
-        minimumSize: const Size.fromHeight(44),
+        minimumSize: Size.fromHeight(height ?? Dimens.buttonHeight),
+        maximumSize: Size.fromHeight(height?? 44),
         backgroundColor: _backgroundColorButton(context),
         foregroundColor: _foregroundColorButton(context),
         shape: _borderSideButton(context),

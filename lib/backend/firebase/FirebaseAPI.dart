@@ -1,10 +1,11 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-import '../../main.dart';
+import '../../constants/colors.dart';
 import '../../utils/Logger.dart';
+import '../../utils/app_state.dart';
+import '../../widgets/bottom_sheets/Notification Popup.dart';
 import '../Router/app_router.dart';
 import '../api_requests/api_calls.dart';
 import '../api_requests/api_manager.dart';
@@ -20,17 +21,15 @@ class FirebaseAPI {
   Future<void> initNotifications() async {
 
     await _firebaseMessaging.requestPermission();
-    permissionLog();
+    //permissionLog();
 
     _firebaseInAppMessaging.setMessagesSuppressed(false);
 
     _firebaseMessaging.setDeliveryMetricsExportToBigQuery(true);
 
     initPushNotifications();
-
-    //print('Token: $fCMToken');
-
-
+    final fCMToken = await _firebaseMessaging.getToken();
+    print('Token: $fCMToken');
   }
 
 
@@ -51,9 +50,10 @@ class FirebaseAPI {
   void handleMessage(RemoteMessage? message) async
   {
       if(message == null) return;
-      RouteHandler rh = RouteHandler();
+
       logger.w('Got a message whilst in the foreground!');
       logger.d('Message data: ${message.data}');
+
 
       Map<String, dynamic>? parsedData = parseLink(message.data['path']);
       // Extract the route parameter from the message
@@ -61,13 +61,14 @@ class FirebaseAPI {
         String path = parsedData['path'];
         List<String> data = parsedData['args'];
 
-        logger.d('Path: $path');
-        logger.d('Args: $data');
+        logger.i('Path: $path');
+        logger.i('Args: $data');
+
+        String args = await RouteHandler.getArgs(path, data); //makes sense of args depending on page
 
 
-        String args = await rh.getArgs(path, data);
-        // If the message contains a route parameter, navigate to the corresponding route
-        rh.navigateTo(path, args);
+        showPopup(message.notification?.title ?? 'Notification', message.notification?.body ?? '' , '$path/$args');
+
       } else {
         logger.w('Invalid link format');
       }
@@ -75,7 +76,24 @@ class FirebaseAPI {
       _messageStreamController.sink.add(message);
   }
 
-  Map<String, dynamic>? parseLink(String link) {
+  void showPopup(String title, String description, String route)
+  {
+    showModalBottomSheet(
+      useSafeArea: true,
+      isScrollControlled: true,
+      backgroundColor: CColors.blurColor,
+      context: AppState().router.navigatorKey.currentContext!,
+      builder: (context) {
+        return Padding(
+          padding: MediaQuery.of(context).viewInsets,
+          child: NotificationPopup(title, description, route),
+        );
+      },
+    );
+
+  }
+
+   Map<String, dynamic>? parseLink(String link) {
     // Split the link using '/' as the delimiter
     List<String> parts = link.split('/');
 

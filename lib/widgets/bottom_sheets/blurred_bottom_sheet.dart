@@ -6,9 +6,9 @@ import '../../constants/colors.dart';
 /// Widget that displays a blurred bottom sheet with a given child widget.
 class BlurredBottomSheet extends StatelessWidget {
   final Widget child;
-
+  final bool centered;
   /// Constructs a [BlurredBottomSheet] with the given [child].
-  const BlurredBottomSheet({Key? key, required this.child}) : super(key: key);
+  const BlurredBottomSheet({Key? key, required this.child, this.centered = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,19 +25,26 @@ class BlurredBottomSheet extends StatelessWidget {
             color: CColors.blurColor,
           ),
           alignment: const AlignmentDirectional(0, 1),
-          child: InkWell(
-            onTap: () async {}, // keeps actual background from being clickable
-            child: Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
+          child: Column(
+              mainAxisAlignment: centered ? MainAxisAlignment.center: MainAxisAlignment.end,
+              children: [
+              InkWell(
+                onTap: () async {}, // keeps actual background from being clickable
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: const Radius.circular(16),
+                      topRight: const Radius.circular(16),
+                      bottomLeft: centered ? const Radius.circular(16): Radius.zero,
+                      bottomRight: centered ? const Radius.circular(16): Radius.zero,
+                    ),
+                    color: CColors.primaryBackground,
+                  ),
+                  child: child,
                 ),
-                color: CColors.primaryBackground,
               ),
-              child: child,
-            ),
+            ],
           ),
         ),
       ),

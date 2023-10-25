@@ -84,9 +84,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
         logger.w('Question page recieved no info');
       }else
       {
-        RouteHandler rh = RouteHandler();
-
-        view = await rh.getView(widget.assignmentName!);
+        view = await RouteHandler.getView(widget.assignmentName!);
 
         if(view == null) {
           context.popRoute();
