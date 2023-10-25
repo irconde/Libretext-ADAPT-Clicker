@@ -1,8 +1,12 @@
 class Dimens {
   //FontSizes
-  static const double drawerIconSize = 28;
+
   static const double defaultTextSize = 14;
   static const double requiredTextSize = 12;
+
+  //Icons
+  static const double drawerIconSize = 28;
+  static const double notificationPopupIconSize = 32;
 
   //Widgets
   static const double buttonHeight = 36;

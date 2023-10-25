@@ -43,6 +43,11 @@ class Strings {
   // Poll widget
   static const String remainingTime = 'REMAINING TIME: ';
 
+  // Notification Popup
+  static const String ignoreButton = 'IGNORE';
+  static const String participateButton = 'PARTICIPATE';
+
+
   // Add course widget
   static const String joinedCourse = 'You have successfully joined the course.';
   static const String courseRegistration = 'Course Registration';
