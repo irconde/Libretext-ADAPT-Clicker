@@ -1,8 +1,6 @@
-import 'package:adapt_clicker/backend/Router/app_router.dart';
 import 'package:adapt_clicker/backend/firebase/FirebaseAPI.dart';
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/widgets/app_bars/main_app_bar_widget.dart';
-import 'package:adapt_clicker/widgets/bottom_sheets/Notification%20Popup.dart';
 import 'package:adapt_clicker/widgets/shimmer/shim_pages.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -205,7 +203,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
                     builder: (context) {
                       return Padding(
                         padding: MediaQuery.of(context).viewInsets,
-                        child: const NotificationPopup('Testing', 'Lort, Lorem ipsum dolor sit amet,Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet', '/Assignment/5683/Question/1'),
+                        child: const AddCourseWidget(),
                       );
                     },
                   ).then((value) => {refreshPage()});

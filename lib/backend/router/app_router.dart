@@ -88,7 +88,7 @@ class RouteHandler {
     final List<dynamic> questions = ViewCall.questions(
       courseCall.jsonBody,
     )?.toList();
-    QuestionManager.createQuestionUrls(questions);
+    QuestionManager.storeQuestionData(questions);
   }
 
   /// Retrieves the arguments based on the provided path and arguments list.

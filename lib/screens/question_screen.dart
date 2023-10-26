@@ -21,11 +21,13 @@ class QuestionScreen extends StatefulWidget {
     @PathParam('name') this.assignmentName,
     this.view,
     @PathParam('index') this.index = 0,
+    this.isIndex = false,
   }) : super(key: key);
 
   final String? assignmentName;
   final dynamic view;
   final int index;
+  final bool isIndex;
 
   @override
   State<QuestionScreen> createState() => _QuestionScreenState(index, view);
@@ -33,10 +35,11 @@ class QuestionScreen extends StatefulWidget {
 
 /// The state class for the QuestionScreen widget.
 class _QuestionScreenState extends State<QuestionScreen> {
-  _QuestionScreenState(this._currentPage, this.view);
+  _QuestionScreenState(this.currentID, this.view);
   TextEditingController? textController;
 
-  int _currentPage;
+  final int currentID;
+  int _currentPage = 0;
   late dynamic view;
   NumberPaginatorController paginatorController = NumberPaginatorController();
   PageController pageController = PageController();
@@ -66,10 +69,23 @@ class _QuestionScreenState extends State<QuestionScreen> {
   @override
   void initState() {
     super.initState();
-    paginatorController.currentPage = _currentPage;
-    pageController = PageController(initialPage: _currentPage);
+    setPageFromID();
+
     textController = TextEditingController();
 
+  }
+
+  void setPageFromID()
+  {
+    if(!widget.isIndex) { //Means it is an ID
+      _currentPage = AppState().questionIDs.indexOf(currentID);
+    }
+    else {
+      _currentPage = currentID; //Index passed directly in
+    }
+
+    paginatorController.currentPage = _currentPage;
+    pageController = PageController(initialPage: _currentPage);
   }
 
   Future<void> initView() async {
@@ -79,7 +95,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
     //In app message for poll
     if (view == null) {
-      if ((widget.assignmentName == '' || widget.assignmentName == null) && widget.index == 0) {
+      if ((widget.assignmentName == '' || widget.assignmentName == null) && currentID == 0) {
         context.popRoute();
         logger.w('Question page recieved no info');
       }else
@@ -99,7 +115,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
     String redirectString = '';
     try {
       redirectString = base64Url.encode(
-          utf8.encode(AppState().urls.elementAt(widget.index)));
+          utf8.encode(AppState().urls.elementAt(_currentPage)));
     }catch (e)
     {
       logger.w(e);
