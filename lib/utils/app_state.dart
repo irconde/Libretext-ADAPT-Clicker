@@ -24,13 +24,19 @@ class AppState {
   /// Holds the view.
   dynamic view;
 
+  ///Holds Question IDs from View Call
+  List<int> questionIDs = [];
+
+  ///Holds Question urls from View Call
+  List<String> urls = [];
+
+
   /// Indicates if an assignment is up.
   bool assignmentUp = false;
 
   /// Indicates if the app is in basic mode.
   int assignmentId = 0;
 
-  List<String> urls = [];
 
   /// Container for storing timezones.
   static TimezonesContainer timezoneContainer = TimezonesContainer();

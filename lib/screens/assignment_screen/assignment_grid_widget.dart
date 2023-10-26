@@ -96,6 +96,7 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
                         assignmentName: assignmentSummary['name'],
                         index: questionsIndex,
                         view: builderResponse.jsonBody,
+                        isIndex: true,
                       ),
                     ),
                   );
