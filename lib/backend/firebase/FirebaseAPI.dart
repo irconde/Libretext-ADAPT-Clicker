@@ -13,13 +13,12 @@ import 'package:rxdart/rxdart.dart';
 import '../user_stored_preferences.dart';
 
 class FirebaseAPI {
-  final _firebaseMessaging  = FirebaseMessaging.instance;
+  final _firebaseMessaging = FirebaseMessaging.instance;
   final _firebaseInAppMessaging = FirebaseInAppMessaging.instance;
   final _messageStreamController = BehaviorSubject<RemoteMessage>();
   ApiCallResponse? sendTokenResponse;
 
   Future<void> initNotifications() async {
-
     await _firebaseMessaging.requestPermission();
     //permissionLog();
 
@@ -29,11 +28,8 @@ class FirebaseAPI {
 
     initPushNotifications();
     final fCMToken = await _firebaseMessaging.getToken();
-    print('Token: $fCMToken');
+    logger.i('Token: $fCMToken');
   }
-
-
-
 
   /// Requests push notification permission.
   void permissionLog() async {
@@ -46,38 +42,43 @@ class FirebaseAPI {
     }
   }
 
+  bool isOutside = false;
+
   //Function for messages
-  void handleMessage(RemoteMessage? message) async
-  {
-      if(message == null) return;
+  void handleMessage(RemoteMessage? message) async {
+    if (message == null) return;
 
-      logger.w('Got a message whilst in the foreground!');
-      logger.d('Message data: ${message.data}');
+    logger.w(
+        'Got a message whilst in the foreground! ${message.from.toString()}');
+    logger.d('Message data: ${message.data}');
 
+    Map<String, dynamic>? parsedData = parseLink(message.data['path']);
+    // Extract the route parameter from the message
+    if (parsedData != null) {
+      String path = parsedData['path'];
+      List<String> data = parsedData['args'];
 
-      Map<String, dynamic>? parsedData = parseLink(message.data['path']);
-      // Extract the route parameter from the message
-      if (parsedData != null) {
-        String path = parsedData['path'];
-        List<String> data = parsedData['args'];
+      logger.i('Path: $path');
+      logger.i('Args: $data');
 
-        logger.i('Path: $path');
-        logger.i('Args: $data');
+      String args = await RouteHandler.getArgs(
+          path, data); //makes sense of args depending on page
 
-        String args = await RouteHandler.getArgs(path, data); //makes sense of args depending on page
-
-
-        showPopup(message.notification?.title ?? 'Notification', message.notification?.body ?? '' , '$path/$args');
-
+      if (!isOutside) {
+        showPopup(message.notification?.title ?? 'Notification',
+            message.notification?.body ?? '', '$path/$args');
       } else {
-        logger.w('Invalid link format');
+        isOutside = false;
+        RouteHandler.navTo('$path/$args');
       }
+    } else {
+      logger.w('Invalid link format');
+    }
 
-      _messageStreamController.sink.add(message);
+    _messageStreamController.sink.add(message);
   }
 
-  void showPopup(String title, String description, String route)
-  {
+  void showPopup(String title, String description, String route) {
     showModalBottomSheet(
       useSafeArea: true,
       isScrollControlled: true,
@@ -90,10 +91,9 @@ class FirebaseAPI {
         );
       },
     );
-
   }
 
-   Map<String, dynamic>? parseLink(String link) {
+  Map<String, dynamic>? parseLink(String link) {
     // Split the link using '/' as the delimiter
     List<String> parts = link.split('/');
 
@@ -101,7 +101,7 @@ class FirebaseAPI {
     if (parts.isNotEmpty) {
       String path = '/${parts[0]}'; // The path is the second part
       List<String> args = [];
-      for(int i = 1; i < parts.length; i++){
+      for (int i = 1; i < parts.length; i++) {
         args.add(parts[i]);
       } // The remaining parts are arguments
 
@@ -111,17 +111,16 @@ class FirebaseAPI {
     }
   }
 
-
   //routes
   /// Handles incoming push notification routes.
-  Future initPushNotifications() async{
+  Future initPushNotifications() async {
     _firebaseMessaging.getInitialMessage().then(handleMessage);
     FirebaseMessaging.onMessage.listen(handleMessage);
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      isOutside = true;
       handleMessage(message);
     });
   }
-
 
   /// Saves the Firebase token.
   void saveToken(var token) async {

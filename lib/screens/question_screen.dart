@@ -77,15 +77,23 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
   void setPageFromID()
   {
-    if(!widget.isIndex) { //Means it is an ID
-      _currentPage = AppState().questionIDs.indexOf(currentID);
-    }
-    else {
-      _currentPage = currentID; //Index passed directly in
-    }
+    try {
+      if (!widget.isIndex) { //Means it is an ID
+        _currentPage = AppState().questionIDs.indexOf(currentID);
+      }
+      else {
+        _currentPage = currentID; //Index passed directly in
+      }
 
-    paginatorController.currentPage = _currentPage;
-    pageController = PageController(initialPage: _currentPage);
+      paginatorController.currentPage = _currentPage;
+      pageController = PageController(initialPage: _currentPage);
+    }
+    catch(e)
+    {
+        logger.e('Question page failed to open: $e');
+        context.router.pop;
+
+    }
   }
 
   Future<void> initView() async {
@@ -131,143 +139,165 @@ class _QuestionScreenState extends State<QuestionScreen> {
   Widget build(BuildContext context) {
 
 
-    /*-----------------Building Page-----------------------*/
-    return FutureBuilder(
-      future: initView(),
-      builder: (BuildContext context, snapshot) {
-        if(view !=null){
-        final questionsList = view['questions'];
-        final int numPages = questionsList.length;
-        var pages = List.generate(
-          numPages,
-              (index) => Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Card(
-                      child: SizedBox(
-                        height: 400,
-                        child: InAppWebView(
-                          initialUrlRequest: request,
-                          onWebViewCreated: (controller) async {
-                            Cookie cookie =  AppState().cookie;
+      /*-----------------Building Page-----------------------*/
+      return FutureBuilder(
+          future: initView(),
+          builder: (BuildContext context, snapshot) {
+            try {
+              if (view != null) {
+                final questionsList = view['questions'];
+                final int numPages = questionsList.length;
+                var pages = List.generate(
+                  numPages,
+                      (index) =>
+                      Center(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Card(
+                                  child: SizedBox(
+                                    height: 400,
+                                    child: InAppWebView(
+                                      initialUrlRequest: request,
+                                      onWebViewCreated: (controller) async {
+                                        Cookie cookie = AppState().cookie;
 
-                            webViewController = controller;
-                            _cookieManager.setCookie(url: request.url!, name: cookie.name, value:cookie.value, iosBelow11WebViewController: controller);
-                            injectViewport(controller);
-                          },
-                          onLoadStart: (controller, uri) {
-                            injectViewport(controller);
+                                        webViewController = controller;
+                                        _cookieManager.setCookie(
+                                            url: request.url!,
+                                            name: cookie.name,
+                                            value: cookie.value,
+                                            iosBelow11WebViewController: controller);
+                                        injectViewport(controller);
+                                      },
+                                      onLoadStart: (controller, uri) {
+                                        injectViewport(controller);
+                                      },
+                                      initialOptions: options,
+                                      gestureRecognizers: Set()
+                                        ..add(Factory(() =>
+                                            EagerGestureRecognizer()))..add(
+                                            Factory<
+                                                VerticalDragGestureRecognizer>(
+                                                    () =>
+                                                    VerticalDragGestureRecognizer())),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )),
+                );
 
-                          },
-                          initialOptions: options,
-                          gestureRecognizers: Set()
-                            ..add(Factory(() => EagerGestureRecognizer()))
-                            ..add(Factory<VerticalDragGestureRecognizer>(
-                                    () => VerticalDragGestureRecognizer())),
+                return Scaffold(
+                    resizeToAvoidBottomInset: false,
+                    backgroundColor: CColors.primaryBackground,
+                    appBar: AppBar(
+                      backgroundColor: CColors.primaryColor,
+                      leading: IconButton(
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: CColors.primaryBackground,
                         ),
-                      ),
-                    )
-                  ],
-                ),
-              )),
-        );
-
-        return Scaffold(
-            resizeToAvoidBottomInset: false,
-            backgroundColor: CColors.primaryBackground,
-            appBar: AppBar(
-              backgroundColor: CColors.primaryColor,
-              leading: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: CColors.primaryBackground,
-                ),
-                onPressed: () {
-                  context.popRoute();
-                },
-              ),
-              title: Text(
-                widget.assignmentName!,
-                maxLines: 1,
-                overflow: TextOverflow.fade,
-                style: AppTheme.of(context).bodyText1.override(
-                    fontFamily: 'Open Sans',
-                    color: CColors.primaryBackground,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700),
-              ),
-            ),
-            body: PageView(
-                physics: const BouncingScrollPhysics(),
-                controller: pageController,
-                onPageChanged: (index) {
-                  final questionsListItem = questionsList[index];
-                  setState(() {
-                    String url = AppState().urls[index];
-                    setState(() {
-                      // Load the URL in your web view controller
-                      webViewController?.loadUrl(
-                        urlRequest: URLRequest(url: Uri.tryParse(url)),
-                      );
-                    });
-                    UserStoredPreferences.selectedIndex = index;
-                    paginatorController.currentPage = index;
-                  });
-                },
-                children: pages),
-            bottomNavigationBar: Card(
-                elevation: 0,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Divider(
-                      thickness: Dimens.dividerThickness,
-                      indent: 16,
-                      endIndent: 16,
-                    ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(24, 16, 24, 0),
-                      child: NumberPaginator(
-                        controller: paginatorController,
-                        config: const NumberPaginatorUIConfig(
-                          buttonShape: ContinuousRectangleBorder(
-                            side: BorderSide(color: CColors.outlineColor, width: 1),
-                          ),
-                          buttonSelectedForegroundColor: CColors.primaryBackground,
-                          buttonUnselectedForegroundColor: CColors.primaryColor,
-                          buttonUnselectedBackgroundColor:
-                              CColors.primaryBackground,
-                          buttonSelectedBackgroundColor: CColors.primaryColor,
-                        ),
-
-                        initialPage: _currentPage,
-                        // by default, the paginator shows numbers as center content
-                        numberPages: numPages,
-                        onPageChange: (index) async {
-                          String url = AppState().urls[index];
-                          setState(() {
-                            // Load the URL in your web view controller
-                            webViewController?.loadUrl(
-                              urlRequest: URLRequest(url: Uri.tryParse(url)),
-                            );
-
-                          });
-                          UserStoredPreferences.selectedIndex = index;
+                        onPressed: () {
+                          context.popRoute();
                         },
                       ),
+                      title: Text(
+                        widget.assignmentName!,
+                        maxLines: 1,
+                        overflow: TextOverflow.fade,
+                        style: AppTheme
+                            .of(context)
+                            .bodyText1
+                            .override(
+                            fontFamily: 'Open Sans',
+                            color: CColors.primaryBackground,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700),
+                      ),
                     ),
-                  ],
-                )));
+                    body: PageView(
+                        physics: const BouncingScrollPhysics(),
+                        controller: pageController,
+                        onPageChanged: (index) {
+                          final questionsListItem = questionsList[index];
+                          setState(() {
+                            String url = AppState().urls[index];
+                            setState(() {
+                              // Load the URL in your web view controller
+                              webViewController?.loadUrl(
+                                urlRequest: URLRequest(url: Uri.tryParse(url)),
+                              );
+                            });
+                            UserStoredPreferences.selectedIndex = index;
+                            paginatorController.currentPage = index;
+                          });
+                        },
+                        children: pages),
+                    bottomNavigationBar: Card(
+                        elevation: 0,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Divider(
+                              thickness: Dimens.dividerThickness,
+                              indent: 16,
+                              endIndent: 16,
+                            ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  24, 16, 24, 0),
+                              child: NumberPaginator(
+                                controller: paginatorController,
+                                config: const NumberPaginatorUIConfig(
+                                  buttonShape: ContinuousRectangleBorder(
+                                    side: BorderSide(
+                                        color: CColors.outlineColor, width: 1),
+                                  ),
+                                  buttonSelectedForegroundColor: CColors
+                                      .primaryBackground,
+                                  buttonUnselectedForegroundColor: CColors
+                                      .primaryColor,
+                                  buttonUnselectedBackgroundColor:
+                                  CColors.primaryBackground,
+                                  buttonSelectedBackgroundColor: CColors
+                                      .primaryColor,
+                                ),
 
-        }else {
-          return Container();
-        }
-      }
-    );
+                                initialPage: _currentPage,
+                                // by default, the paginator shows numbers as center content
+                                numberPages: numPages,
+                                onPageChange: (index) async {
+                                  String url = AppState().urls[index];
+                                  setState(() {
+                                    // Load the URL in your web view controller
+                                    webViewController?.loadUrl(
+                                      urlRequest: URLRequest(
+                                          url: Uri.tryParse(url)),
+                                    );
+                                  });
+                                  UserStoredPreferences.selectedIndex = index;
+                                },
+                              ),
+                            ),
+                          ],
+                        )));
+              } else {
+                return Container();
+              }
 
+            }
+            catch(e)
+            {
+              logger.e('Question page failed $e');
+              context.router.pop();
+              return Container();
 
+            }
+          }
+      );
   }
   @override
   void dispose() {
