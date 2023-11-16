@@ -1,8 +1,9 @@
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../constants/strings.dart';
-import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
-import '../../constants/colors.dart';
+import '../../../utils/app_theme.dart';
+import '../../../constants/colors.dart';
+import '../../../constants/dimens.dart';
+import '../../../constants/strings.dart';
 
 class NoCoursesWidget extends StatefulWidget {
   const NoCoursesWidget({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
     return Align(
       alignment: const AlignmentDirectional(0, 0),
       child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(48, 112, 48, 96),
+        padding: const EdgeInsetsDirectional.fromSTEB(Dimens.llMargin, 112, Dimens.llMargin, Dimens.xxMargin),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -40,7 +41,7 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
             Align(
               alignment: const AlignmentDirectional(0, 0),
               child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 64, 0, 32),
+                padding: const EdgeInsetsDirectional.fromSTEB(0, Dimens.xlMargin, 0, Dimens.mmMargin),
                 child: ExcludeSemantics(
                   child: SvgPicture.asset(
                     'assets/images/no_courses.svg',
@@ -85,20 +86,17 @@ class _NoCoursesWidgetState extends State<NoCoursesWidget> {
                 children: [
                   Text(
                     Strings.forA,
-                    style: AppTheme.of(context).bodyText1.override(
+                    style: AppTheme.of(context).title1.override(
                           fontFamily: 'Open Sans',
                           color: CColors.primaryColor,
-                          fontSize: 24,
                           fontWeight: FontWeight.normal,
                         ),
                   ),
                   Text(
                     Strings.codeToJoin,
-                    style: AppTheme.of(context).bodyText1.override(
+                    style: AppTheme.of(context).title2.override(
                           fontFamily: 'Open Sans',
                           color: CColors.primaryColor,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
                         ),
                   ),
                 ],

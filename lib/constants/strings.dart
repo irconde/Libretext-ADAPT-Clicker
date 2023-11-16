@@ -21,6 +21,19 @@ class Strings {
   static const String emailFieldHint = 'john.appleseed@school.edu';
   static const String description = 'Description:  ';
 
+  //Forms
+  static const String dollarPeriod = r'''$.'''; //Used for api calls and such
+  static const String formError = 'errors'; //.errors
+  static const String formToken = 'token'; //.token
+
+  //Forms - These are all constant values
+  //used for the students that aren't currently customizable in app
+  static const String schoolVal = 'unknown';
+  static const String toUserIdVal = '0';
+  static const String typeVal = 'contact_us';
+
+  static const String registrationType = '3';
+
   //Login and Course
   static const String ssoLink = 'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=oaq1jkujPejJBNfDnOaguii9uOmuz4W5SEJH&redirect_uri=https%3A%2F%2Fadapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue';
 
@@ -172,6 +185,7 @@ class Strings {
   static const String homeTab = 'HOME';
   static const String assignmentsTab = 'ASSIGNMENTS';
   static const String noCourseName = 'No name available';
+  static const String instructorLabel = 'Instructor: ';
   static const String noCourseInstructor = 'No instructor assigned';
   static const String startDate = 'Start Date: ';
   static const String noDate = 'undefined';

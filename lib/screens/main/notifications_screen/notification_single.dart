@@ -1,9 +1,10 @@
 import 'package:flutter_svg/svg.dart';
-import '../../constants/colors.dart';
-import '../../constants/strings.dart';
-import '../../utils/app_theme.dart';
+import '../../../constants/colors.dart';
+import '../../../constants/strings.dart';
+import '../../../utils/app_theme.dart';
+import '../../../constants/dimens.dart';
 import 'package:flutter/material.dart';
-import '../../constants/dimens.dart';
+
 
 class NotificationSingle extends StatefulWidget {
   const NotificationSingle({Key? key, required this.index}) : super(key: key);
@@ -69,7 +70,7 @@ class _NotificationSingleWidgetState extends State<NotificationSingle> {
             ),
           ),
           const Divider(
-            height: 1,
+            height: Dimens.dividerHeight,
             thickness: Dimens.dividerThickness,
             endIndent: 30,
           ),

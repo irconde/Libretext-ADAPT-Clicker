@@ -11,19 +11,19 @@ import 'package:equatable/equatable.dart';
 
 /// Enumeration of API call types.
 enum ApiCallType {
-  GET,
-  POST,
-  DELETE,
-  PUT,
-  PATCH,
+  get,
+  post,
+  delete,
+  put,
+  patch,
 }
 
 /// Enumeration of body types for API requests.
 enum BodyType {
-  NONE,
-  JSON,
-  TEXT,
-  X_WWW_FORM_URL_ENCODED,
+  none,
+  json,
+  text,
+  xwwwFormURLEncoded,
 }
 
 /// Represents a record of an API call.
@@ -178,7 +178,7 @@ class ApiManager {
       apiUrl =
           '$apiUrl${needsParamSpecifier ? '?' : ''}${asQueryParams(params)}';
     }
-    final makeRequest = callType == ApiCallType.GET ? http.get : http.delete;
+    final makeRequest = callType == ApiCallType.get ? http.get : http.delete;
     final response =
         await makeRequest(Uri.parse(apiUrl), headers: toStringMap(headers));
     return ApiCallResponse.fromHttpResponse(response, returnBody, html);
@@ -196,14 +196,14 @@ class ApiManager {
     bool returnBody,
   ) async {
     assert(
-      {ApiCallType.POST, ApiCallType.PUT, ApiCallType.PATCH}.contains(type),
+      {ApiCallType.post, ApiCallType.put, ApiCallType.patch}.contains(type),
       'Invalid ApiCallType $type for request with body',
     );
     final postBody = createBody(headers, params, body, bodyType);
     final requestFn = {
-      ApiCallType.POST: http.post,
-      ApiCallType.PUT: http.put,
-      ApiCallType.PATCH: http.patch,
+      ApiCallType.post: http.post,
+      ApiCallType.put: http.put,
+      ApiCallType.patch: http.patch,
     }[type]!;
     final response = await requestFn(Uri.parse(apiUrl),
         headers: toStringMap(headers), body: postBody);
@@ -220,19 +220,19 @@ class ApiManager {
     String? contentType;
     dynamic postBody;
     switch (bodyType) {
-      case BodyType.JSON:
+      case BodyType.json:
         contentType = 'application/json';
         postBody = body ?? json.encode(params ?? {});
         break;
-      case BodyType.TEXT:
+      case BodyType.text:
         contentType = 'text/plain';
         postBody = body ?? json.encode(params ?? {});
         break;
-      case BodyType.X_WWW_FORM_URL_ENCODED:
+      case BodyType.xwwwFormURLEncoded:
         contentType = 'application/x-www-form-urlencoded';
         postBody = toStringMap(params ?? {});
         break;
-      case BodyType.NONE:
+      case BodyType.none:
       case null:
         break;
     }
@@ -272,14 +272,14 @@ class ApiManager {
     }
     ApiCallResponse result;
     switch (callType) {
-      case ApiCallType.GET:
-      case ApiCallType.DELETE:
+      case ApiCallType.get:
+      case ApiCallType.delete:
         result = await urlRequest(
             callType, apiUrl, headers, params, html, returnBody);
         break;
-      case ApiCallType.POST:
-      case ApiCallType.PUT:
-      case ApiCallType.PATCH:
+      case ApiCallType.post:
+      case ApiCallType.put:
+      case ApiCallType.patch:
         result = await requestWithBody(callType, apiUrl, headers, params, body,
             bodyType, html, returnBody);
         break;

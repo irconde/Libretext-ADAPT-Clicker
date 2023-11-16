@@ -3,7 +3,7 @@ import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/backend/user_stored_preferences.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'utils/Logger.dart';
+import 'utils/logger.dart';
 import 'utils/utils.dart';
 import '../backend/api_requests/api_calls.dart';
 import 'package:flutter/material.dart';
@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
   final ThemeMode _themeMode = ThemeMode.system;
   final bool authenticated;
 
-  MyApp({Key? key, required this.authenticated}) : super(key: key);
+  const MyApp({Key? key, required this.authenticated}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,23 +1,23 @@
 import 'package:adapt_clicker/backend/user_stored_preferences.dart';
-import 'package:adapt_clicker/screens/course_details_screen/no_assignments_widget.dart';
+import 'package:adapt_clicker/screens/content/course_details_screen/no_assignments_widget.dart';
 import 'package:adapt_clicker/widgets/dropdowns/assignment_dropdown_widget.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../backend/api_requests/api_calls.dart';
-import '../../constants/strings.dart';
-import '../../widgets/shimmer/shim_pages.dart';
 import 'assignment_ctn_widget.dart';
 import 'assignment_stat_ctn_widget.dart';
-import '../../widgets/app_bars/collapsible_app_bar_widget.dart';
-import '../../utils/app_theme.dart';
-import '../../utils/utils.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import '../../constants/dimens.dart';
-import '../../constants/colors.dart';
 import 'no_learning_path_widget.dart';
+import '../../../widgets/app_bars/collapsible_app_bar_widget.dart';
+import '../../../widgets/shimmer/shim_pages.dart';
+import '../../../backend/api_requests/api_calls.dart';
+import '../../../utils/app_theme.dart';
+import '../../../constants/colors.dart';
+import '../../../constants/dimens.dart';
+import '../../../constants/strings.dart';
+import '../../../utils/utils.dart';
 
 /// Represents a screen that displays details of a course.
 @RoutePage()
@@ -40,15 +40,43 @@ class CourseDetailsScreen extends ConsumerStatefulWidget {
 
 /// State class for the `CourseDetailsScreen` widget.
 class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
+
+  //Scroll
   final ScrollController _mainController = ScrollController();
   final ScrollController _learningTabController = ScrollController();
   final ScrollController _assignmentsTabController = ScrollController();
 
+  //Options
+  String? _currentFilterOption;
+  String? _currentOrderOption;
+  final List<String> _filterOptions = [
+    Strings.filterAllAssignments,
+    Strings.filterExam,
+    Strings.filterExtraCredit,
+    Strings.filterHomework,
+    Strings.filterLab
+  ];
+
+  final _orderOptions = {
+    Strings.orderName: 'name',
+    Strings.orderStartDate: 'available_from',
+    Strings.orderDueDate: 'due',
+  };
+
+  final displayOrderOptions = {
+    Strings.displayOrderName: Strings.orderStartDate,
+    Strings.displayOrderStartDate: Strings.orderStartDate,
+    Strings.displayOrderDueDate: Strings.orderDueDate,
+  };
+
+  //local
   late int id;
-  late Map<String, dynamic> scores;
-  Map<String, dynamic>? course;
   List<dynamic> assignmentsList = [];
+
+  //API
   late ApiCallResponse scoreResponse;
+  Map<String, dynamic>? course;
+  late Map<String, dynamic> scores;
 
   @override
   void initState() {
@@ -166,63 +194,35 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                           child: ExpandablePanel(
                                             header: Container(
                                               alignment: Alignment.centerLeft,
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              height: 116,
+                                              width: MediaQuery.of(context).size.width,
+                                              height: Dimens.closedDropdownSize,
                                               decoration: const BoxDecoration(
-                                                  color: CColors
-                                                      .coursePagePullDown),
+                                                  color: CColors.coursePagePullDown),
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                        Dimens.mmMargin,
-                                                        Dimens.msMargin,
-                                                        0,
-                                                        Dimens.msMargin),
+                                                            .fromSTEB(Dimens.mmMargin, Dimens.msMargin, 0, Dimens.msMargin),
                                                 child: Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Padding(
                                                       padding:
-                                                          const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                              0,
-                                                              0,
-                                                              0,
-                                                              Dimens.msMargin),
+                                                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Dimens.msMargin),
                                                       child: RichText(
                                                         text: TextSpan(
-                                                            style: theme.bodyText1.override(
-                                                                fontFamily:
-                                                                    'Open Sans',
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                color: CColors
-                                                                    .tertiaryText),
+                                                            style: theme.bodyText3.override(
+                                                                fontFamily: 'Open Sans',
+                                                                fontWeight: FontWeight.w600,
+                                                            ),
                                                             children: [
-                                                              const TextSpan(
-                                                                  text:
-                                                                      'Instructor: '),
+                                                              const TextSpan(text: Strings.instructorLabel),
                                                               TextSpan(
-                                                                text: course?[
-                                                                        'instructor'] ??
+                                                                text: course?['instructor'] ??
                                                                     Strings
                                                                         .noCourseInstructor,
                                                                 style: theme
-                                                                    .bodyText1
-                                                                    .override(
-                                                                  color: CColors
-                                                                      .tertiaryText,
-                                                                  fontFamily:
-                                                                      'Open Sans',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
-                                                                ),
+                                                                    .bodyText3
                                                               ),
                                                             ]),
                                                       ),
@@ -236,37 +236,18 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                         child: RichText(
                                                           text: TextSpan(
                                                             style: theme
-                                                                .bodyText1
-                                                                .override(
-                                                              fontFamily:
-                                                                  'Open Sans',
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              color: CColors
-                                                                  .tertiaryText,
+                                                                .bodyText3.override(
+                                                              fontFamily: 'Open Sans',
+                                                              fontWeight: FontWeight.w600,
                                                             ),
                                                             children: <TextSpan>[
                                                               const TextSpan(
-                                                                text: Strings
-                                                                    .startDate,
+                                                                text: Strings.startDate,
                                                               ),
                                                               TextSpan(
-                                                                text: formatDate(
-                                                                    course?['start_date'] ??
-                                                                        Strings
-                                                                            .noDate),
-                                                                style: theme
-                                                                    .bodyText1
-                                                                    .override(
-                                                                  fontFamily:
-                                                                      'Open Sans',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
-                                                                  color: CColors
-                                                                      .tertiaryText,
-                                                                ),
+                                                                text: formatDate(course?['start_date'] ??
+                                                                        Strings.noDate),
+                                                                style: theme.bodyText3
                                                               ),
                                                             ],
                                                           ),
@@ -278,69 +259,37 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                               ),
                                             ),
                                             collapsed: Container(
-                                                color:
-                                                    CColors.coursePagePullDown),
+                                                color: CColors.coursePagePullDown),
                                             expanded: Container(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
+                                              width: MediaQuery.of(context).size.width,
                                               decoration: const BoxDecoration(
-                                                color:
-                                                    CColors.coursePagePullDown,
+                                                color: CColors.coursePagePullDown,
                                               ),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                            Dimens.mmMargin,
-                                                            0,
-                                                            0,
-                                                            Dimens.msMargin),
+                                                        const EdgeInsetsDirectional.fromSTEB(Dimens.mmMargin, 0, 0, Dimens.msMargin),
                                                     child: Semantics(
                                                       label: Strings.endDate +
-                                                          semanticDate(course?[
-                                                                  'end_date'] ??
+                                                          semanticDate(course?['end_date'] ??
                                                               Strings.noDate),
                                                       child: ExcludeSemantics(
                                                         child: RichText(
                                                           text: TextSpan(
-                                                            style: theme
-                                                                .bodyText1
-                                                                .override(
-                                                              fontFamily:
-                                                                  'Open Sans',
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              color: CColors
-                                                                  .tertiaryText,
+                                                            style: theme.bodyText3.override(
+                                                              fontFamily: 'Open Sans',
+                                                              fontWeight: FontWeight.w600,
                                                             ),
                                                             children: <TextSpan>[
                                                               const TextSpan(
-                                                                text: Strings
-                                                                    .endDate,
+                                                                text: Strings.endDate,
                                                               ),
                                                               TextSpan(
-                                                                text: formatDate(
-                                                                    course?['end_date'] ??
-                                                                        Strings
-                                                                            .noDate),
-                                                                style: theme
-                                                                    .bodyText1
-                                                                    .override(
-                                                                  fontFamily:
-                                                                      'Open Sans',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
-                                                                  color: CColors
-                                                                      .tertiaryText,
-                                                                ),
+                                                                text: formatDate(course?['end_date'] ?? Strings.noDate),
+                                                                style: theme.bodyText3
                                                               ),
                                                             ],
                                                           ),
@@ -349,47 +298,24 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                     ),
                                                   ),
                                                   Visibility(
-                                                    visible: course?[
-                                                            'description'] !=
+                                                    visible: course?['description'] !=
                                                         null,
                                                     child: Padding(
                                                       padding:
-                                                          const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                              Dimens.mmMargin,
-                                                              0,
-                                                              0,
-                                                              Dimens.msMargin),
+                                                          const EdgeInsetsDirectional.fromSTEB(Dimens.mmMargin, 0, 0, Dimens.msMargin),
                                                       child: RichText(
                                                         text: TextSpan(
-                                                          style: theme.bodyText1
-                                                              .override(
-                                                            fontFamily:
-                                                                'Open Sans',
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color: CColors
-                                                                .tertiaryText,
+                                                          style: theme.bodyText3.override(
+                                                            fontFamily: 'Open Sans',
+                                                            fontWeight: FontWeight.w600,
                                                           ),
                                                           children: <TextSpan>[
                                                             const TextSpan(
-                                                              text: Strings
-                                                                  .description,
+                                                              text: Strings.description,
                                                             ),
                                                             TextSpan(
-                                                              text: course?[
-                                                                  'description'],
-                                                              style: theme
-                                                                  .bodyText1
-                                                                  .override(
-                                                                fontFamily:
-                                                                    'Open Sans',
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
-                                                                color: CColors
-                                                                    .tertiaryText,
-                                                              ),
+                                                              text: course?['description'],
+                                                              style: theme.bodyText3
                                                             ),
                                                           ],
                                                         ),
@@ -403,17 +329,12 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                               tapHeaderToExpand: true,
                                               tapBodyToExpand: true,
                                               tapBodyToCollapse: false,
-                                              headerAlignment:
-                                                  ExpandablePanelHeaderAlignment
-                                                      .center,
+                                              headerAlignment: ExpandablePanelHeaderAlignment.center,
                                               hasIcon: true,
-                                              expandIcon:
-                                                  Icons.keyboard_arrow_down,
-                                              collapseIcon:
-                                                  Icons.keyboard_arrow_up,
+                                              expandIcon: Icons.keyboard_arrow_down,
+                                              collapseIcon: Icons.keyboard_arrow_up,
                                               iconSize: Dimens.llMargin,
-                                              iconPadding: EdgeInsets.fromLTRB(
-                                                  0, 0, 20, 0),
+                                              iconPadding: EdgeInsets.fromLTRB(0, 0, Dimens.msMargin, 0),
                                               iconColor: CColors.tertiaryText,
                                             ),
                                           ),
@@ -429,8 +350,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                             color: CColors.secondaryBackground,
                                           ),
                                           child: Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(32, 24, 24, 24),
+                                            padding: const EdgeInsetsDirectional.fromSTEB(Dimens.mmMargin, Dimens.msMargin, Dimens.msMargin, Dimens.msMargin),
                                             child: ExcludeSemantics(
                                               child: Text(
                                                 Strings.learningProcess,
@@ -455,14 +375,10 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                               label: Strings
                                                   .listOfStatsSemanticsLabel,
                                               child: ListView.builder(
-                                                  padding:
-                                                      const EdgeInsets.all(0),
-                                                  controller:
-                                                      _learningTabController,
-                                                  itemCount:
-                                                      assignmentsList.length,
-                                                  itemBuilder:
-                                                      (context, index) {
+                                                  padding: const EdgeInsets.all(0),
+                                                  controller: _learningTabController,
+                                                  itemCount: assignmentsList.length,
+                                                  itemBuilder: (context, index) {
                                                     dynamic assignment =
                                                         assignmentsList[index];
                                                     if (validStatAssignment(
@@ -471,6 +387,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                                         assignment: assignment,
                                                       );
                                                     }
+                                                    return Container();
                                                   }),
                                             )),
                                       ),
@@ -497,7 +414,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                   children: [
                                     Container(
                                       width: double.infinity,
-                                      height: 100,
+                                      height: Dimens.closedDropdownSize,
                                       decoration: const BoxDecoration(
                                         color: CColors.coursePagePullDown,
                                       ),
@@ -507,21 +424,17 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
                                           AssignmentDropdown(
-                                            semanticsLabel: Strings
-                                                .assignmentFilterSemanticsLabel,
+                                            semanticsLabel: Strings.assignmentFilterSemanticsLabel,
                                             dropDownValue: _currentFilterOption,
                                             itemList: _filterOptions,
                                             onItemSelectedCallback:
                                                 onFilterOptionSelected,
                                           ),
                                           AssignmentDropdown(
-                                            semanticsLabel: Strings
-                                                .assignmentOrderSemanticsLabel,
+                                            semanticsLabel: Strings.assignmentOrderSemanticsLabel,
                                             dropDownValue: _currentOrderOption,
-                                            itemList: displayOrderOptions.keys
-                                                .toList(),
-                                            onItemSelectedCallback:
-                                                onOrderOptionSelected,
+                                            itemList: displayOrderOptions.keys.toList(),
+                                            onItemSelectedCallback: onOrderOptionSelected,
                                           ),
                                         ],
                                       ),
@@ -592,27 +505,7 @@ class _CourseDetailsScreenState extends ConsumerState<CourseDetailsScreen> {
     );
   }
 
-  String? _currentFilterOption;
-  String? _currentOrderOption;
-  final List<String> _filterOptions = [
-    Strings.filterAllAssignments,
-    Strings.filterExam,
-    Strings.filterExtraCredit,
-    Strings.filterHomework,
-    Strings.filterLab
-  ];
 
-  final _orderOptions = {
-    Strings.orderName: 'name',
-    Strings.orderStartDate: 'available_from',
-    Strings.orderDueDate: 'due',
-  };
-
-  final displayOrderOptions = {
-    Strings.displayOrderName: Strings.orderStartDate,
-    Strings.displayOrderStartDate: Strings.orderStartDate,
-    Strings.displayOrderDueDate: Strings.orderDueDate,
-  };
 
   String formatDate(String date) {
     // Parse the date string using the given format

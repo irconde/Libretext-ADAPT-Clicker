@@ -1,16 +1,17 @@
 import 'dart:convert';
 import 'package:adapt_clicker/backend/Router/app_router.dart';
+import 'package:adapt_clicker/constants/icons.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:number_paginator/number_paginator.dart';
-import '../constants/colors.dart';
-import '../utils/Logger.dart';
-import '../utils/app_theme.dart';
-import '../utils/utils.dart';
+import '../../constants/colors.dart';
+import '../../utils/logger.dart';
+import '../../utils/app_theme.dart';
+import '../../utils/utils.dart';
 import 'package:flutter/material.dart';
-import '../constants/dimens.dart';
-import '../backend/user_stored_preferences.dart';
+import '../../constants/dimens.dart';
+import '../../backend/user_stored_preferences.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 /// Screen that displays information of a particular question
@@ -75,64 +76,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
   }
 
-  void setPageFromID()
-  {
-    try {
-      if (!widget.isIndex) { //Means it is an ID
-        _currentPage = AppState().questionIDs.indexOf(currentID);
-      }
-      else {
-        _currentPage = currentID; //Index passed directly in
-      }
-
-      paginatorController.currentPage = _currentPage;
-      pageController = PageController(initialPage: _currentPage);
-    }
-    catch(e)
-    {
-        logger.e('Question page failed to open: $e');
-        context.router.pop;
-
-    }
-  }
-
-  Future<void> initView() async {
-
-    //Push Notification Check
-    view ??= AppState().view;
-
-    //In app message for poll
-    if (view == null) {
-      if ((widget.assignmentName == '' || widget.assignmentName == null) && currentID == 0) {
-        context.popRoute();
-        logger.w('Question page recieved no info');
-      }else
-      {
-        view = await RouteHandler.getView(widget.assignmentName!);
-
-        if(view == null) {
-          context.popRoute();
-          logger.e('Invalid Assignment ID');
-        }
-      }
-    }
-    setupHttpCredentials();
-  }
-
-  Future<void> setupHttpCredentials() async {
-    String redirectString = '';
-    try {
-      redirectString = base64Url.encode(
-          utf8.encode(AppState().urls.elementAt(_currentPage)));
-    }catch (e)
-    {
-      logger.w(e);
-    }
-    request = URLRequest(
-      url: Uri.parse('https://adapt.libretexts.org/user-jwt-test/$redirectString'),
-        headers: { 'authorization': UserStoredPreferences.authToken},
-    );
-  }
 
 
   @override
@@ -161,7 +104,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
                                       initialUrlRequest: request,
                                       onWebViewCreated: (controller) async {
                                         Cookie cookie = AppState().cookie;
-
                                         webViewController = controller;
                                         _cookieManager.setCookie(
                                             url: request.url!,
@@ -195,10 +137,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                     appBar: AppBar(
                       backgroundColor: CColors.primaryColor,
                       leading: IconButton(
-                        icon: const Icon(
-                          Icons.arrow_back,
-                          color: CColors.primaryBackground,
-                        ),
+                        icon: IIcons.back,
                         onPressed: () {
                           context.popRoute();
                         },
@@ -207,21 +146,13 @@ class _QuestionScreenState extends State<QuestionScreen> {
                         widget.assignmentName!,
                         maxLines: 1,
                         overflow: TextOverflow.fade,
-                        style: AppTheme
-                            .of(context)
-                            .bodyText1
-                            .override(
-                            fontFamily: 'Open Sans',
-                            color: CColors.primaryBackground,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700),
+                        style: AppTheme.of(context).title3
                       ),
                     ),
                     body: PageView(
                         physics: const BouncingScrollPhysics(),
                         controller: pageController,
                         onPageChanged: (index) {
-                          final questionsListItem = questionsList[index];
                           setState(() {
                             String url = AppState().urls[index];
                             setState(() {
@@ -248,22 +179,17 @@ class _QuestionScreenState extends State<QuestionScreen> {
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
-                                  24, 16, 24, 0),
+                                  Dimens.msMargin, Dimens.sMargin, Dimens.msMargin, 0),
                               child: NumberPaginator(
                                 controller: paginatorController,
                                 config: const NumberPaginatorUIConfig(
                                   buttonShape: ContinuousRectangleBorder(
-                                    side: BorderSide(
-                                        color: CColors.outlineColor, width: 1),
+                                    side: BorderSide(color: CColors.outlineColor, width: 1),
                                   ),
-                                  buttonSelectedForegroundColor: CColors
-                                      .primaryBackground,
-                                  buttonUnselectedForegroundColor: CColors
-                                      .primaryColor,
-                                  buttonUnselectedBackgroundColor:
-                                  CColors.primaryBackground,
-                                  buttonSelectedBackgroundColor: CColors
-                                      .primaryColor,
+                                  buttonSelectedForegroundColor: CColors.primaryBackground,
+                                  buttonUnselectedForegroundColor: CColors.primaryColor,
+                                  buttonUnselectedBackgroundColor: CColors.primaryBackground,
+                                  buttonSelectedBackgroundColor: CColors.primaryColor,
                                 ),
 
                                 initialPage: _currentPage,
@@ -299,6 +225,67 @@ class _QuestionScreenState extends State<QuestionScreen> {
           }
       );
   }
+
+
+  void setPageFromID()
+  {
+    try {
+      if (!widget.isIndex) { //Means it is an ID
+        _currentPage = AppState().questionIDs.indexOf(currentID);
+      }
+      else {
+        _currentPage = currentID; //Index passed directly in
+      }
+
+      paginatorController.currentPage = _currentPage;
+      pageController = PageController(initialPage: _currentPage);
+    }
+    catch(e)
+    {
+      logger.e('Question page failed to open: $e');
+      context.router.pop;
+
+    }
+  }
+
+  Future<void> initView() async {
+
+    //Push Notification Check
+    view ??= AppState().view;
+
+    //In app message for poll
+    if (view == null) {
+      if ((widget.assignmentName == '' || widget.assignmentName == null) && currentID == 0) {
+        AppState().router.pop();
+        logger.w('Question page recieved no info');
+      }else
+      {
+        view = await RouteHandler.getView(widget.assignmentName!);
+
+        if(view == null) {
+          AppState().router.pop();
+          logger.e('Invalid Assignment ID');
+        }
+      }
+    }
+    setupHttpCredentials();
+  }
+
+  Future<void> setupHttpCredentials() async {
+    String redirectString = '';
+    try {
+      redirectString = base64Url.encode(
+          utf8.encode(AppState().urls.elementAt(_currentPage)));
+    }catch (e)
+    {
+      logger.w(e);
+    }
+    request = URLRequest(
+      url: Uri.parse('https://adapt.libretexts.org/user-jwt-test/$redirectString'),
+      headers: { 'authorization': UserStoredPreferences.authToken},
+    );
+  }
+
   @override
   void dispose() {
     super.dispose();

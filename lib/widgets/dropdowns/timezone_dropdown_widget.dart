@@ -12,7 +12,7 @@ import '../../utils/app_state.dart';
 /// The [onItemSelectedCallback] parameter is a callback function triggered when an item is selected.
 /// The [focusNode] parameter is an optional [FocusNode] used to manage the focus of the dropdown.
 class TimezoneDropdown extends StatefulWidget {
-  TimezoneDropdown({
+  const TimezoneDropdown({
     Key? key,
     required this.timezoneDropDownValue,
     this.onItemSelectedCallback,

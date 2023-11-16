@@ -2,12 +2,12 @@ import 'package:adapt_clicker/mixins/connection_state_mixin.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../constants/strings.dart';
-import '../../utils/app_theme.dart';
-import '../../utils/utils.dart';
 import '../assignment_screen/assignment_screen.dart';
-import '../../constants/dimens.dart';
-import '../../constants/colors.dart';
+import '../../../utils/app_theme.dart';
+import '../../../constants/colors.dart';
+import '../../../constants/dimens.dart';
+import '../../../constants/strings.dart';
+import '../../../utils/utils.dart';
 
 class AssignmentCtnWidget extends ConsumerStatefulWidget {
   /// A widget for displaying assignment information.

@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/constants/dimens.dart';
 import 'package:adapt_clicker/widgets/bottom_sheets/blurred_bottom_sheet.dart';
 import 'package:adapt_clicker/mixins/connection_state_mixin.dart';
 import 'package:adapt_clicker/utils/app_theme.dart';
@@ -34,7 +35,7 @@ class _FilterSheet extends ConsumerState<FilterSheet>
     return BlurredBottomSheet(
       child: BlockSemantics(
         child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(32, 16, 32, 16),
+          padding: const EdgeInsetsDirectional.fromSTEB(Dimens.mmMargin, Dimens.sMargin, Dimens.mmMargin, Dimens.sMargin),
           child: ListView.builder(
             shrinkWrap: true,
             itemCount: widget.filterOptions.length,
@@ -53,15 +54,13 @@ class _FilterSheet extends ConsumerState<FilterSheet>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        padding: const EdgeInsets.symmetric(vertical: Dimens.xsMargin),
                         child: ExcludeSemantics(
                           child: Text(widget.filterOptions[index],
                               style: theme.bodyText2),
                         ),
                       ),
-                      const Divider(
-                        thickness: 1,
-                      ),
+                      const Divider(),
                     ],
                   ),
                 ),

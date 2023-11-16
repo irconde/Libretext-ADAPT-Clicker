@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/constants/icons.dart';
 import 'package:adapt_clicker/mixins/connection_state_mixin.dart';
 import '../backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/backend/user_stored_preferences.dart';
@@ -38,9 +39,10 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
 
   @override
   Widget build(BuildContext context) {
+    var theme = AppTheme.of(context);
     return BlockSemantics(
       child: SizedBox(
-        width: 273,
+        width: Dimens.drawerWidth,
         child: Container(
           width: double.infinity,
           height: double.maxFinite,
@@ -56,7 +58,7 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                   children: [
                     Container(
                       width: double.infinity,
-                      height: 160,
+                      height: Dimens.drawerTopImageHeight,
                       decoration: const BoxDecoration(
                         color: CColors.primaryColor,
                       ),
@@ -83,18 +85,12 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                           Padding(
                             padding: const EdgeInsets.all(0),
                             child: TextButton.icon(
-                                icon: Icon(
-                                  Icons.menu_book,
-                                  color: widget.currentSelected ==
-                                          DrawerItems.courses
-                                      ? CColors.primaryColor
-                                      : CColors.secondaryColor,
-                                  size: Dimens.drawerIconSize,
-                                ),
+                                icon: IIcons.drawerCourse(selected: widget.currentSelected ==
+                                    DrawerItems.courses),
                                 label: const Text(Strings.courses),
                                 style: TextButton.styleFrom(
-                                    fixedSize: const Size(224, 48),
-                                    padding: const EdgeInsets.only(left: 12),
+                                    fixedSize: const Size(Dimens.drawerButtonPageWidth, Dimens.drawerButtonPageHeight),
+                                    padding: const EdgeInsets.only(left: Dimens.smMargin),
                                     alignment: Alignment.centerLeft,
                                     foregroundColor: widget.currentSelected ==
                                             DrawerItems.courses
@@ -104,11 +100,10 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                                             DrawerItems.courses
                                         ? CColors.lightPrimaryColor
                                         : Colors.white,
-                                    textStyle: AppTheme.of(context)
+                                    textStyle: theme
                                         .bodyText1
                                         .override(
                                           fontFamily: 'Open Sans',
-                                          fontSize: 14,
                                           fontWeight: widget.currentSelected ==
                                                   DrawerItems.courses
                                               ? FontWeight.w700
@@ -127,18 +122,12 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                             color: CColors.lineColor,
                           ),
                           TextButton.icon(
-                              icon: Icon(
-                                Icons.person_sharp,
-                                color: widget.currentSelected ==
-                                        DrawerItems.profile
-                                    ? CColors.primaryColor
-                                    : CColors.secondaryColor,
-                                size: Dimens.drawerIconSize,
-                              ),
+                              icon: IIcons.drawerProfile(selected: widget.currentSelected ==
+                                  DrawerItems.profile),
                               label: const Text(Strings.myProfile),
                               style: TextButton.styleFrom(
-                                  fixedSize: const Size(224, 48),
-                                  padding: const EdgeInsets.only(left: 12),
+                                  fixedSize: const Size(Dimens.drawerButtonPageWidth, Dimens.drawerButtonPageHeight),
+                                  padding: const EdgeInsets.only(left: Dimens.smMargin),
                                   alignment: Alignment.centerLeft,
                                   backgroundColor: widget.currentSelected ==
                                           DrawerItems.profile
@@ -148,11 +137,10 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                                           DrawerItems.profile
                                       ? CColors.primaryColor
                                       : CColors.secondaryColor,
-                                  textStyle: AppTheme.of(context)
+                                  textStyle: theme
                                       .bodyText1
                                       .override(
                                         fontFamily: 'Open Sans',
-                                        fontSize: 14,
                                         fontWeight: widget.currentSelected ==
                                                 DrawerItems.profile
                                             ? FontWeight.w700
@@ -172,18 +160,12 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, Dimens.xsMargin, 0, 0),
                             child: TextButton.icon(
-                                icon: Icon(
-                                  Icons.lock_rounded,
-                                  color: widget.currentSelected ==
-                                          DrawerItems.password
-                                      ? CColors.primaryColor
-                                      : CColors.secondaryColor,
-                                  size: Dimens.drawerIconSize,
-                                ),
+                                icon: IIcons.drawerPassword(selected: widget.currentSelected ==
+                                    DrawerItems.password),
                                 label: const Text(Strings.myPassword),
                                 style: TextButton.styleFrom(
-                                    fixedSize: const Size(224, 48),
-                                    padding: const EdgeInsets.only(left: 12),
+                                    fixedSize: const Size(Dimens.drawerButtonPageWidth, Dimens.drawerButtonPageHeight),
+                                    padding: const EdgeInsets.only(left: Dimens.smMargin),
                                     alignment: Alignment.centerLeft,
                                     backgroundColor: widget.currentSelected ==
                                             DrawerItems.password
@@ -193,11 +175,10 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                                             DrawerItems.password
                                         ? CColors.primaryColor
                                         : CColors.secondaryColor,
-                                    textStyle: AppTheme.of(context)
+                                    textStyle: theme
                                         .bodyText1
                                         .override(
                                           fontFamily: 'Open Sans',
-                                          fontSize: 14,
                                           fontWeight: widget.currentSelected ==
                                                   DrawerItems.password
                                               ? FontWeight.w700
@@ -220,18 +201,12 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                             color: CColors.lineColor,
                           ),
                           TextButton.icon(
-                              icon: Icon(
-                                Icons.send_sharp,
-                                color: widget.currentSelected ==
-                                        DrawerItems.contact
-                                    ? CColors.primaryColor
-                                    : CColors.secondaryColor,
-                                size: Dimens.drawerIconSize,
-                              ),
+                              icon: IIcons.drawerContact(selected: widget.currentSelected ==
+                                  DrawerItems.contact),
                               label: const Text(Strings.contactUs),
                               style: TextButton.styleFrom(
-                                  fixedSize: const Size(224, 48),
-                                  padding: const EdgeInsets.only(left: 12),
+                                  fixedSize: const Size(Dimens.drawerButtonPageWidth, Dimens.drawerButtonPageHeight),
+                                  padding: const EdgeInsets.only(left: Dimens.smMargin),
                                   alignment: Alignment.centerLeft,
                                   backgroundColor: widget.currentSelected ==
                                           DrawerItems.contact
@@ -241,11 +216,10 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                                           DrawerItems.contact
                                       ? CColors.primaryColor
                                       : CColors.secondaryColor,
-                                  textStyle: AppTheme.of(context)
+                                  textStyle: theme
                                       .bodyText1
                                       .override(
                                         fontFamily: 'Open Sans',
-                                        fontSize: 14,
                                         fontWeight: widget.currentSelected ==
                                                 DrawerItems.contact
                                             ? FontWeight.w700
@@ -276,13 +250,12 @@ class _NavigationDrawerWidgetState extends ConsumerState<NavigationDrawerWidget>
                     padding: const EdgeInsets.all(Dimens.msMargin),
                     child: OutlinedButton(
                         style: ElevatedButton.styleFrom(
-                          textStyle: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w700),
+                          textStyle: theme.title3,
                           foregroundColor: CColors.secondaryColor,
-                          fixedSize: const Size(330, 36),
+                          fixedSize: const Size(Dimens.buttonWidth, Dimens.buttonHeight),
                           backgroundColor: CColors.primaryBackground,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4),
+                            borderRadius: BorderRadius.circular(Dimens.buttonRoundedValue),
                           ),
                         ),
                         onPressed: () async {

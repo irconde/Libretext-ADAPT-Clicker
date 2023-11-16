@@ -1,16 +1,18 @@
+import 'package:adapt_clicker/constants/dimens.dart';
+import 'package:adapt_clicker/constants/icons.dart';
 import 'package:adapt_clicker/widgets/bottom_sheets/blurred_bottom_sheet.dart';
 import 'package:adapt_clicker/mixins/connection_state_mixin.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import '../buttons/custom_elevated_button_widget.dart';
+import '../../mixins/form_state_mixin.dart';
 import '../../backend/api_requests/api_calls.dart';
 import '../../constants/colors.dart';
 import '../../constants/strings.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/utils.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import '../buttons/custom_elevated_button_widget.dart';
-import '../../mixins/form_state_mixin.dart';
 
 /// A widget for resetting the user's password.
 class ResetPasswordWidget extends ConsumerStatefulWidget {
@@ -24,39 +26,11 @@ class ResetPasswordWidget extends ConsumerStatefulWidget {
 /// The state class for the [ResetPasswordWidget].
 class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
     with TickerProviderStateMixin, FormStateMixin, ConnectionStateMixin {
+
+  //Form
   static const String email = 'email';
 
-  /// Handles the form submission when the user clicks the submit button.
-  void _submit() async {
-    if (!checkConnection()) return;
-    setState(() {
-      formState = FormStateValue.processing;
-    });
-    serverRequest = await ForgotPasswordCall.call(
-      email: formValues[email][dataIndex],
-    );
-    if ((serverRequest?.succeeded ?? true) && context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            Strings.pwdRequestedMsg,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-            ),
-          ),
-          backgroundColor: CColors.secondaryText,
-        ),
-      );
-      context.popRoute();
-      setState(() {});
-    } else {
-      final errors =
-          getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
-      onReceivedErrorsFromServer(errors);
-    }
-  }
-
+  //Init
   @override
   void initState() {
     super.initState();
@@ -65,26 +39,13 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
     initFormFieldsInfo();
   }
 
-  @override
-  void dispose() {
-    disposeFocusNodes();
-    super.dispose();
-  }
-
-  /// Callback for handling text changes in the email field.
-  void _onTextChanged(String text) {
-    setState(() {
-      formValues[email] = [text, null, formValues[email][focusNodeIndex]];
-    });
-    checkFormIsReadyToSubmit();
-  }
-
+  //Build
   @override
   Widget build(BuildContext context) {
     var theme = AppTheme.of(context);
     return BlurredBottomSheet(
       child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 32),
+        padding: const EdgeInsetsDirectional.fromSTEB(Dimens.mmMargin, Dimens.mmMargin, Dimens.mmMargin, Dimens.mmMargin),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -102,15 +63,13 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                     fit: BoxFit.fill,
                   ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(Dimens.xsMargin, 0, 0, 0),
                     child: Text(
                       Strings.passwordRecovery,
                       textAlign: TextAlign.center,
-                      style: theme.bodyText1.override(
+                      style: theme.title2.override(
                         fontFamily: 'Open Sans',
                         color: CColors.primaryColor,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -135,7 +94,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+                padding: const EdgeInsetsDirectional.fromSTEB(0, Dimens.msMargin, 0, Dimens.msMargin),
                 child: SizedBox(
                   width: double.infinity,
                   child: TextFormField(
@@ -144,9 +103,7 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
                     enabled: formState != FormStateValue.processing,
                     decoration: InputDecoration(
                       labelText: Strings.emailFieldMandatory,
-                      prefixIcon: const Icon(
-                        Icons.email_outlined,
-                      ),
+                      prefixIcon: IIcons.email,
                       floatingLabelStyle:
                           const TextStyle(color: CColors.primaryColor),
                       errorText:
@@ -179,5 +136,48 @@ class _ResetPasswordWidgetState extends ConsumerState<ResetPasswordWidget>
         ),
       ),
     );
+  }
+
+  /// Callback for handling text changes in the email field.
+  void _onTextChanged(String text) {
+    setState(() {
+      formValues[email] = [text, null, formValues[email][focusNodeIndex]];
+    });
+    checkFormIsReadyToSubmit();
+  }
+
+  /// Handles the form submission when the user clicks the submit button.
+  void _submit() async {
+    if (!checkConnection()) return;
+    setState(() {
+      formState = FormStateValue.processing;
+    });
+    serverRequest = await ForgotPasswordCall.call(
+      email: formValues[email][dataIndex],
+    );
+    if ((serverRequest?.succeeded ?? true) && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            Strings.pwdRequestedMsg,
+            style: AppTheme.of(context).reverseBodyText,
+          ),
+          backgroundColor: CColors.secondaryText,
+        ),
+      );
+      context.popRoute();
+      setState(() {});
+    } else {
+      final errors =
+      getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
+      onReceivedErrorsFromServer(errors);
+    }
+  }
+
+  //Dispose
+  @override
+  void dispose() {
+    disposeFocusNodes();
+    super.dispose();
   }
 }

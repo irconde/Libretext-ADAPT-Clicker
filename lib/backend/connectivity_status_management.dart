@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../utils/logger.dart';
+
 /// Represents the possible connectivity statuses.
 enum ConnectivityStatus {
   initializing,
@@ -32,6 +34,9 @@ class ConnectivityStatusNotifier extends AsyncNotifier<ConnectivityStatus> {
         break;
       case ConnectivityResult.none:
         newState = ConnectivityStatus.isDisconnected;
+        break;
+      default:
+        logger.e('Unknown Connectivity Status found');
         break;
     }
     return newState;

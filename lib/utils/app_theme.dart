@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/constants/dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../constants/colors.dart';
@@ -9,21 +10,15 @@ abstract class AppTheme {
     return LightModeTheme();
   }
 
-  String get title1Family => typography.title1Family;
+  String get fontFamily => typography.fontFamily;
   TextStyle get title1 => typography.title1;
-  String get title2Family => typography.title2Family;
   TextStyle get title2 => typography.title2;
-  String get title3Family => typography.title3Family;
   TextStyle get title3 => typography.title3;
-  String get subtitle1Family => typography.subtitle1Family;
   TextStyle get subtitle1 => typography.subtitle1;
-  String get subtitle2Family => typography.subtitle2Family;
   TextStyle get subtitle2 => typography.subtitle2;
-  String get bodyText1Family => typography.bodyText1Family;
   TextStyle get bodyText1 => typography.bodyText1;
-  String get bodyText2Family => typography.bodyText2Family;
+  TextStyle get reverseBodyText => typography.reverseBodyText;
   TextStyle get bodyText2 => typography.bodyText2;
-  String get bodyText3Family => typography.bodyText2Family;
   TextStyle get bodyText3 => typography.bodyText2;
 
   /// Returns the typography for the app theme.
@@ -38,7 +33,7 @@ abstract class AppTheme {
 
   /// Returns the input decoration theme for text fields.
   InputDecorationTheme inputTheme() => InputDecorationTheme(
-        contentPadding: const EdgeInsets.all(16),
+        contentPadding: const EdgeInsets.all(Dimens.sMargin),
         floatingLabelStyle: const TextStyle(color: CColors.primaryColor),
         alignLabelWithHint: true,
         labelStyle: bodyText2,
@@ -62,7 +57,7 @@ abstract class AppTheme {
 
   /// Returns the icon theme data for the app bar icons.
   IconThemeData appBarIconThemes() => const IconThemeData(
-        size: 24,
+        size: Dimens.basicIconSize,
         color: CColors.primaryBackground,
       );
 
@@ -76,6 +71,15 @@ abstract class AppTheme {
         titleSpacing: 14, //This is because the built in padding
         elevation: 0,
       );
+
+  /// Returns Divider Theme
+  DividerTheme dividerTheme() => const DividerTheme(
+      data: DividerThemeData(
+        color: CColors.primaryColor,
+        thickness: Dimens.dividerThickness,
+        space: Dimens.dividerHeight,
+      ),
+      child: Divider());
 }
 
 /// Concrete implementation of the app theme for light mode.
@@ -83,21 +87,15 @@ class LightModeTheme extends AppTheme {}
 
 /// Abstract class that defines the typography configuration for an app.
 abstract class Typography {
-  String get title1Family;
+  String get fontFamily;
   TextStyle get title1;
-  String get title2Family;
   TextStyle get title2;
-  String get title3Family;
   TextStyle get title3;
-  String get subtitle1Family;
   TextStyle get subtitle1;
-  String get subtitle2Family;
   TextStyle get subtitle2;
-  String get bodyText1Family;
   TextStyle get bodyText1;
-  String get bodyText2Family;
+  TextStyle get reverseBodyText;
   TextStyle get bodyText2;
-  String get bodyText3Family;
   TextStyle get bodyText3;
 }
 
@@ -111,77 +109,72 @@ class ThemeTypography extends Typography {
   final AppTheme theme;
 
   @override
-  String get title1Family => 'Open Sans';
+  String get fontFamily => 'Open Sans';
   @override
   TextStyle get title1 => GoogleFonts.getFont(
-        'Open Sans',
+        fontFamily,
         color: CColors.primaryText,
         fontWeight: FontWeight.w600,
-        fontSize: 24,
+        fontSize: Dimens.titleTextSize,
       );
   @override
-  String get title2Family => 'Open Sans';
-  @override
   TextStyle get title2 => GoogleFonts.getFont(
-        'Open Sans',
+      fontFamily,
         color: CColors.primaryBackground,
-        fontSize: 24,
+        fontSize: Dimens.titleTextSize,
         fontWeight: FontWeight.bold,
       );
   @override
-  String get title3Family => 'Open Sans';
-  @override
   TextStyle get title3 => GoogleFonts.getFont(
-        'Open Sans',
+        fontFamily,
         color: CColors.primaryBackground,
         fontWeight: FontWeight.w600,
-        fontSize: 20,
+        fontSize: Dimens.titleTwoTextSize,
       );
-  @override
-  String get subtitle1Family => 'Open Sans';
   @override
   TextStyle get subtitle1 => GoogleFonts.getFont(
-        'Open Sans',
+    fontFamily,
         color: CColors.primaryText,
         fontWeight: FontWeight.w600,
-        fontSize: 18,
+        fontSize: Dimens.subtitleOneTextSize,
       );
-  @override
-  String get subtitle2Family => 'Open Sans';
   @override
   TextStyle get subtitle2 => GoogleFonts.getFont(
-        'Open Sans',
+        fontFamily,
         color: CColors.secondaryText,
         fontWeight: FontWeight.w600,
-        fontSize: 16,
+        fontSize: Dimens.subtitleTwoTextSize,
       );
-  @override
-  String get bodyText1Family => 'Open Sans';
   @override
   TextStyle get bodyText1 => GoogleFonts.getFont(
-        'Open Sans',
+    fontFamily,
         color: CColors.primaryText,
         fontWeight: FontWeight.normal,
-        fontSize: 14,
+        fontSize: Dimens.defaultTextSize,
       );
   @override
-  String get bodyText2Family => 'Open Sans';
+  TextStyle get reverseBodyText => GoogleFonts.getFont(
+    fontFamily,
+    color: CColors.primaryBackground,
+    fontWeight: FontWeight.normal,
+    fontSize: Dimens.defaultTextSize,
+  );
   @override
   TextStyle get bodyText2 => GoogleFonts.getFont(
-        'Open Sans',
+    fontFamily,
         color: CColors.secondaryText,
         fontWeight: FontWeight.normal,
-        fontSize: 14,
+        fontSize: Dimens.defaultTextSize,
       );
-  @override
-  String get bodyText3Family => 'Open Sans';
   @override
   TextStyle get bodyText3 => GoogleFonts.getFont(
-        'Open Sans',
+    fontFamily,
         color: CColors.tertiaryText,
         fontWeight: FontWeight.normal,
-        fontSize: 14,
+        fontSize: Dimens.defaultTextSize,
       );
+
+
 }
 
 /// Extension on the [TextStyle] class that provides helper methods for
