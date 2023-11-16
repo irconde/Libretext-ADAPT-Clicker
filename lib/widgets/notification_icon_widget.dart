@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/constants/icons.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
@@ -5,7 +6,6 @@ import '../backend/push_notification_manager.dart';
 import '../backend/router/app_router.gr.dart';
 import '../constants/colors.dart';
 import '../constants/strings.dart';
-
 /// A widget that displays a notification icon.
 class NotificationIcon extends StatelessWidget {
   const NotificationIcon({Key? key, required this.setState}) : super(key: key);
@@ -19,9 +19,7 @@ class NotificationIcon extends StatelessWidget {
     if (val == 0) {
       return IconButton(
         tooltip: Strings.notificationSemanticsLabel,
-        icon: const Icon(
-          Icons.notifications,
-        ),
+        icon: IIcons.notification,
         onPressed: () async {
           context
               .pushRoute(const NotificationsScreen())
@@ -41,9 +39,7 @@ class NotificationIcon extends StatelessWidget {
           ),
           child: IconButton(
             tooltip: Strings.notificationSemanticsLabel,
-            icon: const Icon(
-              Icons.notifications,
-            ),
+            icon: IIcons.notification,
             onPressed: () async {
               context
                   .pushRoute(const NotificationsScreen())

@@ -1,7 +1,8 @@
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../constants/colors.dart';
-import '../../constants/strings.dart';
-import '../../utils/app_theme.dart';
+import '../../../constants/colors.dart';
+import '../../../constants/strings.dart';
+import '../../../constants/dimens.dart';
+import '../../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class NoNotificationsWidget extends StatefulWidget {
@@ -16,7 +17,7 @@ class _NoNotificationsWidgetState extends State<NoNotificationsWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 64),
+      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Dimens.xlMargin),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -35,11 +36,10 @@ class _NoNotificationsWidgetState extends State<NoNotificationsWidget> {
             children: [
               Text(
                 Strings.noNotifications,
-                style: AppTheme.of(context).bodyText1.override(
+                style: AppTheme.of(context).title2.override(
                       fontFamily: 'Open Sans',
                       color: CColors.primaryColor,
                       fontSize: 28,
-                      fontWeight: FontWeight.bold,
                     ),
               ),
             ],
@@ -54,7 +54,6 @@ class _NoNotificationsWidgetState extends State<NoNotificationsWidget> {
                       fontFamily: 'Open Sans',
                       color: CColors.primaryColor,
                       fontSize: 28,
-                      fontWeight: FontWeight.normal,
                     ),
               ),
             ],

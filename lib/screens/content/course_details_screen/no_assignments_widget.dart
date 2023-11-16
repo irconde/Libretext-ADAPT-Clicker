@@ -1,7 +1,8 @@
-import '../../constants/strings.dart';
-import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
-import '../../constants/colors.dart';
+import '../../../constants/Dimens.dart';
+import '../../../utils/app_theme.dart';
+import '../../../constants/colors.dart';
+import '../../../constants/strings.dart';
 
 /// A widget displayed when there are no assignments available.
 class NoAssignmentsWidget extends StatefulWidget {
@@ -16,7 +17,7 @@ class _NoAssignmentsWidgetState extends State<NoAssignmentsWidget> {
   Widget build(BuildContext context) {
     var theme = AppTheme.of(context);
     return Padding(
-      padding: const EdgeInsets.all(32),
+      padding: const EdgeInsets.all(Dimens.mmMargin),
       child: Stack(
         children: [
           Column(children: List.generate(6, (index) => emptyAssignment())),
@@ -27,7 +28,7 @@ class _NoAssignmentsWidgetState extends State<NoAssignmentsWidget> {
               child: Container(
                 color: CColors.noAssignmentEmptyListTitleBackground,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(Dimens.xsMargin),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,17 +37,15 @@ class _NoAssignmentsWidgetState extends State<NoAssignmentsWidget> {
                         text: TextSpan(
                             style: theme.bodyText1.override(
                                 fontFamily: 'Open Sans',
-                                fontSize: 24,
+                                fontSize: Dimens.titleTextSize,
                                 color: CColors.primaryColor),
                             children: [
                               const TextSpan(text: Strings.no),
                               TextSpan(
                                 text: Strings.assignments,
-                                style: theme.bodyText1.override(
+                                style: theme.title2.override(
                                   color: CColors.primaryColor,
                                   fontFamily: 'Open Sans',
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ]),
@@ -55,7 +54,7 @@ class _NoAssignmentsWidgetState extends State<NoAssignmentsWidget> {
                         Strings.currently,
                         style: theme.bodyText1.override(
                             fontFamily: 'Open Sans',
-                            fontSize: 24,
+                            fontSize: Dimens.titleTextSize,
                             color: CColors.primaryColor),
                       ),
                     ],
@@ -82,7 +81,7 @@ Widget emptyAssignment() {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Dimens.sMargin),
                 child: Container(
                   decoration: const ShapeDecoration(
                     color: CColors.noAssignmentLeftText,
@@ -108,12 +107,12 @@ Widget emptyAssignment() {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, Dimens.sMargin),
                 child: Row(
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                          const EdgeInsetsDirectional.fromSTEB(0, 0, Dimens.smMargin, 0),
                       child: Container(
                         decoration: const ShapeDecoration(
                           color: CColors.noAssignmentRightLeading,
@@ -121,8 +120,8 @@ Widget emptyAssignment() {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(1))),
                         ),
-                        height: 16,
-                        width: 16,
+                        height: Dimens.sMargin,
+                        width: Dimens.sMargin,
                       ),
                     ),
                     Container(
@@ -140,14 +139,14 @@ Widget emptyAssignment() {
               Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, Dimens.smMargin, 0),
                     child: Container(
                       decoration: const ShapeDecoration(
                         color: CColors.noAssignmentRightLeading,
                         shape: CircleBorder(),
                       ),
-                      height: 16,
-                      width: 16,
+                      height: Dimens.sMargin,
+                      width: Dimens.sMargin,
                     ),
                   ),
                   Container(
@@ -166,8 +165,8 @@ Widget emptyAssignment() {
         ],
       ),
       const Divider(
-        height: 32,
-        thickness: 1,
+        height: Dimens.mmMargin,
+        thickness: Dimens.dividerThickness,
       )
     ],
   );

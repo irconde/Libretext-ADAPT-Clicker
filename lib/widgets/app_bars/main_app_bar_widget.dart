@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/constants/icons.dart';
 import 'package:flutter/material.dart';
 import '../../constants/strings.dart';
 import '../notification_icon_widget.dart';
@@ -35,7 +36,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: false,
       leading: IconButton(
         tooltip: Strings.mainMenuSemanticsLabel,
-        icon: const Icon(Icons.menu),
+        icon: IIcons.menu,
         onPressed: () {
           scaffoldKey.currentState!.openDrawer();
         },

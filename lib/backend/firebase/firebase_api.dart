@@ -3,12 +3,11 @@ import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../constants/colors.dart';
-import '../../utils/Logger.dart';
+import '../../utils/logger.dart';
 import '../../utils/app_state.dart';
-import '../../widgets/bottom_sheets/Notification Popup.dart';
+import '../../widgets/bottom_sheets/notification_popup.dart';
 import '../Router/app_router.dart';
 import '../api_requests/api_calls.dart';
-import '../api_requests/api_manager.dart';
 import 'package:rxdart/rxdart.dart';
 import '../user_stored_preferences.dart';
 

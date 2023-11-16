@@ -72,4 +72,7 @@ class CColors {
   static const Color activityGood = Color(0xFF008C3D);
   static const Color activityMedium = Color(0xFFFF9D00);
   static const Color activityBad = Color(0xFFEF0C12);
+
+  //Notifications
+  static const Color delete = Color(0xFFEF0C12);
 }

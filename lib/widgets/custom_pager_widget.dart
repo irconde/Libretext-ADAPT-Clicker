@@ -2,7 +2,7 @@ import 'package:adapt_clicker/constants/dimens.dart';
 import 'package:adapt_clicker/constants/strings.dart';
 import 'package:flutter/material.dart';
 import '../constants/colors.dart';
-import '../utils/Logger.dart';
+import '../utils/logger.dart';
 
 /// A widget that enables page-based navigation.
 class CustomPager extends StatefulWidget {

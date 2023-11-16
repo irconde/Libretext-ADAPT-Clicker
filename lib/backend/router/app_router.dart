@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/foundation.dart';
-import '../../utils/Logger.dart';
-import '../../utils/QuestionManager.dart';
+import '../../utils/logger.dart';
+import '../../utils/question_manager.dart';
 import '../../utils/app_state.dart';
 import '../user_stored_preferences.dart';
 import '../api_requests/api_calls.dart';

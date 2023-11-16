@@ -1,13 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:adapt_clicker/backend/push_notification_manager.dart';
-import 'package:adapt_clicker/screens/notifications_screen/no_notifications_widget.dart';
-import 'package:adapt_clicker/screens/notifications_screen/notification_single.dart';
+import 'package:adapt_clicker/constants/icons.dart';
+import 'package:adapt_clicker/screens/main/notifications_screen/no_notifications_widget.dart';
+import 'package:adapt_clicker/screens/main/notifications_screen/notification_single.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
-import '../../constants/colors.dart';
-import '../../constants/strings.dart';
-import '../../utils/app_theme.dart';
-import 'package:flutter/material.dart';
-import '../../constants/dimens.dart';
+import '../../../constants/colors.dart';
+import '../../../constants/strings.dart';
+import '../../../utils/app_theme.dart';
+import '../../../constants/dimens.dart';
+
 
 @RoutePage()
 class NotificationsScreen extends StatefulWidget {
@@ -28,21 +30,15 @@ void addNotification(String details) {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
+  //Local
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
     //createList();
     //addNotification('details');
   }
-
-  /// Clears all notifications from the list.
-  void clearNotifications() {
-    setState(() {
-      PushNotificationManager().clearNotifications();
-    });
-  }
-
-  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -52,11 +48,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         automaticallyImplyLeading: false,
         leading: IconButton(
           tooltip: Strings.backButtonSemanticsLabel,
-          icon: const Icon(
-            Icons.arrow_back,
-            color: CColors.primaryBackground,
-            size: 24,
-          ),
+          icon: IIcons.back,
           onPressed: () async {
             Navigator.pop(context, '/');
           },
@@ -95,11 +87,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                           return Dismissible(
                             key: UniqueKey(),
                             background: Container(
-                              color: Colors.red,
+                              color: CColors.delete,
                               child: const Align(
                                 alignment: Alignment.centerLeft,
                                 child: Padding(
-                                  padding: EdgeInsets.only(left: 16),
+                                  padding: EdgeInsets.only(left: Dimens.sMargin),
                                   child: Icon(
                                     Icons.delete,
                                     color: Colors.white,
@@ -108,11 +100,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                               ),
                             ),
                             secondaryBackground: Container(
-                              color: Colors.red,
+                              color: CColors.delete,
                               child: const Align(
                                 alignment: Alignment.centerRight,
                                 child: Padding(
-                                  padding: EdgeInsets.only(right: 16),
+                                  padding: EdgeInsets.only(right: Dimens.sMargin),
                                   child: Icon(Icons.delete),
                                 ),
                               ),
@@ -134,6 +126,13 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         ),
       ),
     );
+  }
+
+  /// Clears all notifications from the list.
+  void clearNotifications() {
+    setState(() {
+      PushNotificationManager().clearNotifications();
+    });
   }
 
   /// Checks if the notification list is empty.
@@ -179,7 +178,6 @@ class ClearAllWidget extends StatelessWidget {
             style: AppTheme.of(context).bodyText1.override(
                   fontFamily: 'Open Sans',
                   color: color,
-                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
           ),

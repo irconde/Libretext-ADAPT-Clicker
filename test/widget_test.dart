@@ -15,6 +15,6 @@ import 'package:adapt_clicker/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(authenticated: false));
+    await tester.pumpWidget(const MyApp(authenticated: false));
   });
 }

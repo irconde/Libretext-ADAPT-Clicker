@@ -22,14 +22,14 @@ class LoginCall {
     return ApiManager.instance.makeApiCall(
       callName: 'login',
       apiUrl: 'https://adapt.libretexts.org/api/login',
-      callType: ApiCallType.POST,
+      callType: ApiCallType.post,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       params: {},
       body: body,
-      bodyType: BodyType.JSON,
+      bodyType: BodyType.json,
       returnBody: true,
     );
   }
@@ -74,14 +74,14 @@ class CreateUserCall {
     return ApiManager.instance.makeApiCall(
       callName: 'createUser',
       apiUrl: 'https://adapt.libretexts.org/api/register',
-      callType: ApiCallType.POST,
+      callType: ApiCallType.post,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       params: {},
       body: body,
-      bodyType: BodyType.JSON,
+      bodyType: BodyType.json,
       returnBody: true,
     );
   }
@@ -114,13 +114,13 @@ class ForgotPasswordCall {
     return ApiManager.instance.makeApiCall(
       callName: 'forgotPassword',
       apiUrl: 'https://adapt.libretexts.org/api/password/email',
-      callType: ApiCallType.POST,
+      callType: ApiCallType.post,
       headers: {
         'accept': 'application/json',
       },
       params: {},
       body: body,
-      bodyType: BodyType.JSON,
+      bodyType: BodyType.json,
       returnBody: true,
     );
   }
@@ -140,13 +140,13 @@ class RefreshTokenCall {
     return ApiManager.instance.makeApiCall(
       callName: 'refreshToken',
       apiUrl: 'https://adapt.libretexts.org/api/refresh-token',
-      callType: ApiCallType.POST,
+      callType: ApiCallType.post,
       headers: {
         'Accept': 'application/json',
         'authorization': '$token',
       },
       params: {},
-      bodyType: BodyType.JSON,
+      bodyType: BodyType.json,
       returnBody: true,
     );
   }
@@ -159,7 +159,7 @@ class SetJWT {
     return ApiManager.instance.makeApiCall(
       callName: 'setJWT',
       apiUrl: 'https://dev.adapt.libretexts.org/api/users/set-cookie-user-jwt',
-      callType: ApiCallType.GET,
+      callType: ApiCallType.get,
       headers: {
         'Accept': 'application/json',
         'authorization': '$token',
@@ -184,7 +184,7 @@ class GetUserCall {
     return ApiManager.instance.makeApiCall(
       callName: 'getUser',
       apiUrl: 'https://adapt.libretexts.org/api/user',
-      callType: ApiCallType.GET,
+      callType: ApiCallType.get,
       headers: {
         'Accept': 'application/json',
         'authorization': '$token',
@@ -206,7 +206,7 @@ class GetEnrollmentsCall {
     return ApiManager.instance.makeApiCall(
       callName: 'getEnrollments',
       apiUrl: 'https://adapt.libretexts.org/api/enrollments',
-      callType: ApiCallType.GET,
+      callType: ApiCallType.get,
       headers: {
         'Accept': 'application/json',
         'authorization': '$token',
@@ -251,14 +251,14 @@ class UpdateProfileCall {
     return ApiManager.instance.makeApiCall(
       callName: 'updateProfile',
       apiUrl: 'https://adapt.libretexts.org/api/settings/profile',
-      callType: ApiCallType.PATCH,
+      callType: ApiCallType.patch,
       headers: {
         'accept': 'application/json',
         'authorization': '$token',
       },
       params: {},
       body: body,
-      bodyType: BodyType.JSON,
+      bodyType: BodyType.json,
       returnBody: true,
     );
   }
@@ -284,14 +284,14 @@ class UpdatePasswordCall {
     return ApiManager.instance.makeApiCall(
       callName: 'updatePassword',
       apiUrl: 'https://adapt.libretexts.org/api/settings/password',
-      callType: ApiCallType.PATCH,
+      callType: ApiCallType.patch,
       headers: {
         'accept': 'application/json',
         'authorization': '$token',
       },
       params: {},
       body: body,
-      bodyType: BodyType.JSON,
+      bodyType: BodyType.json,
       returnBody: true,
     );
   }
@@ -323,14 +323,14 @@ class AddCourseCall {
     return ApiManager.instance.makeApiCall(
       callName: 'addCourse',
       apiUrl: 'https://adapt.libretexts.org/api/enrollments',
-      callType: ApiCallType.POST,
+      callType: ApiCallType.post,
       headers: {
         'Accept': 'application/json',
         'authorization': '$token',
       },
       params: {},
       body: body,
-      bodyType: BodyType.JSON,
+      bodyType: BodyType.json,
       returnBody: true,
     );
   }
@@ -369,14 +369,14 @@ class ContactUsCall {
     return ApiManager.instance.makeApiCall(
       callName: 'contactUs',
       apiUrl: 'https://adapt.libretexts.org/api/email/send',
-      callType: ApiCallType.POST,
+      callType: ApiCallType.post,
       headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json',
       },
       params: {},
       body: body,
-      bodyType: BodyType.JSON,
+      bodyType: BodyType.json,
       returnBody: true,
     );
   }
@@ -396,7 +396,7 @@ class GetScoresByUserCall {
       callName: 'getScoresByUser',
       apiUrl:
           'https://adapt.libretexts.org/api/scores/$course/get-course-scores-by-user',
-      callType: ApiCallType.GET,
+      callType: ApiCallType.get,
       headers: {
         'accept': 'application/json',
         'authorization': '$token',
@@ -426,7 +426,7 @@ class GetCourse {
     return ApiManager.instance.makeApiCall(
       callName: 'getScoresByUser',
       apiUrl: 'https://adapt.libretexts.org/api/courses/$course/',
-      callType: ApiCallType.GET,
+      callType: ApiCallType.get,
       headers: {
         'accept': 'application/json',
         'authorization': '$token',
@@ -451,7 +451,7 @@ class ViewCall {
       callName: 'view',
       apiUrl:
           'https://adapt.libretexts.org/api/assignments/$assignmentID/questions/view',
-      callType: ApiCallType.GET,
+      callType: ApiCallType.get,
       headers: {
         'accept': 'application/json',
         'authorization': '$token',
@@ -485,7 +485,7 @@ class GetQuestionPageCall {
       callName: 'getAssignmentSummary',
       apiUrl:
           'https://adapt.libretexts.org/assignments/$assignmentID/questions/view/$questionID',
-      callType: ApiCallType.GET,
+      callType: ApiCallType.get,
       headers: {
         'accept': 'application/json',
         'authorization': '$token',
@@ -511,7 +511,7 @@ class GetAssignmentSummaryCall {
       callName: 'getAssignmentSummary',
       apiUrl:
           'https://adapt.libretexts.org/api/assignments/$assignmentNum/summary',
-      callType: ApiCallType.GET,
+      callType: ApiCallType.get,
       headers: {
         'accept': 'application/json',
         'authorization': '$token',
@@ -581,14 +581,14 @@ class LogoutCall {
     return ApiManager.instance.makeApiCall(
       callName: 'logout',
       apiUrl: 'https://adapt.libretexts.org/api/logout',
-      callType: ApiCallType.POST,
+      callType: ApiCallType.post,
       headers: {
         'accept': 'application/json',
         'authorization': '$token',
         'authority': 'adapt.libretexts.org',
       },
       params: {},
-      bodyType: BodyType.JSON,
+      bodyType: BodyType.json,
       returnBody: true,
     );
   }
@@ -608,7 +608,7 @@ class GetNonTechnologyIframeCall {
       callName: 'getNonTechnologyIframe',
       apiUrl:
           'https://adapt.libretexts.org/api/get-locally-saved-page-contents/phys/$pageId',
-      callType: ApiCallType.GET,
+      callType: ApiCallType.get,
       html: true,
       headers: {
         'accept': 'text/html',
@@ -627,7 +627,7 @@ class GetTimezonesCall {
     return ApiManager.instance.makeApiCall(
       callName: 'getTimezones',
       apiUrl: 'https://adapt.libretexts.org/api/time-zones',
-      callType: ApiCallType.GET,
+      callType: ApiCallType.get,
       headers: {
         'Accept': 'application/json',
       },
@@ -663,7 +663,7 @@ class SendTokenCall {
     return ApiManager.instance.makeApiCall(
       callName: 'sendToken',
       apiUrl: 'https://adapt.libretexts.org/api/fcm-tokens',
-      callType: ApiCallType.POST,
+      callType: ApiCallType.post,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -671,7 +671,7 @@ class SendTokenCall {
       },
       params: {},
       body: body,
-      bodyType: BodyType.JSON,
+      bodyType: BodyType.json,
       returnBody: true,
       cache: false,
     );

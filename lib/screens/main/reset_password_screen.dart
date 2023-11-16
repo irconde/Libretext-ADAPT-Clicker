@@ -1,18 +1,20 @@
+import 'package:adapt_clicker/constants/icons.dart';
 import 'package:adapt_clicker/mixins/connection_state_mixin.dart';
 import 'package:adapt_clicker/widgets/app_bars/main_app_bar_widget.dart';
 import 'package:adapt_clicker/widgets/navigation_drawer_widget.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../backend/api_requests/api_calls.dart';
-import '../constants/colors.dart';
-import '../constants/strings.dart';
-import '../widgets/buttons/custom_elevated_button_widget.dart';
-import '../mixins/form_state_mixin.dart';
-import '../utils/app_theme.dart';
-import '../constants/dimens.dart';
 import 'package:flutter/material.dart';
-import '../backend/user_stored_preferences.dart';
-import '../utils/utils.dart';
+
+import '../../backend/api_requests/api_calls.dart';
+import '../../constants/colors.dart';
+import '../../constants/strings.dart';
+import '../../widgets/buttons/custom_elevated_button_widget.dart';
+import '../../mixins/form_state_mixin.dart';
+import '../../utils/app_theme.dart';
+import '../../constants/dimens.dart';
+import '../../backend/user_stored_preferences.dart';
+import '../../utils/utils.dart';
 
 /// Screen for setting a new password.
 @RoutePage()
@@ -27,6 +29,12 @@ class ResetPasswordScreen extends ConsumerStatefulWidget {
 /// The state class for the ResetPasswordScreen widget.
 class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
     with FormStateMixin, ConnectionStateMixin {
+
+  //Local
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  //Forms
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   static const String currentPassword = 'current_password';
   static const String password = 'password';
   static const String passwordConfirmation = 'password_confirmation';
@@ -35,8 +43,8 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
     password: false,
     passwordConfirmation: false
   };
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+
 
   @override
   void initState() {
@@ -47,42 +55,8 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
   }
 
   @override
-  void dispose() {
-    disposeFocusNodes();
-    super.dispose();
-  }
-
-  /// Handles the form submission.
-  void _submit() async {
-    if (!checkConnection()) return;
-    setState(() {
-      formState = FormStateValue.processing;
-    });
-    serverRequest = await UpdatePasswordCall.call(
-      token: UserStoredPreferences.authToken,
-      password: formValues[password][dataIndex],
-      passwordConfirmation: formValues[passwordConfirmation][dataIndex],
-    );
-    if ((serverRequest?.succeeded ?? true) && context.mounted) {
-      setState(() {});
-      setState(() {
-        formState = FormStateValue.success;
-      });
-      Future.delayed(const Duration(seconds: 1), () {
-        setState(() {
-          formState = FormStateValue.unfilled;
-        });
-        _formKey.currentState!.reset();
-      });
-    } else {
-      final errors =
-          getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
-      onReceivedErrorsFromServer(errors);
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    var theme = AppTheme.of(context);
     return Scaffold(
       key: scaffoldKey,
       appBar: MainAppBar(
@@ -122,32 +96,16 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
                                 errorText: submitted
                                     ? formValues[currentPassword][errorIndex]
                                     : null,
-                                prefixIcon: const Icon(
-                                  Icons.lock_outline,
-                                ),
-                                suffixIcon: Semantics(
-                                  label: _fieldsVisibility[currentPassword]!
-                                      ? Strings
-                                          .passwordToggleShowingSemanticsLabel
-                                      : Strings
-                                          .passwordToggleNotShowingSemanticsLabel,
-                                  child: InkWell(
-                                    onTap: () => setState(
+                                prefixIcon: IIcons.password,
+                                suffixIcon: IIcons.toggleVisIcon(
+                                  visible: _fieldsVisibility[currentPassword]!,
+                                  onTap: () =>  setState(
                                       () => _fieldsVisibility[currentPassword] =
-                                          !_fieldsVisibility[currentPassword]!,
-                                    ),
-                                    focusNode: FocusNode(skipTraversal: true),
-                                    child: Icon(
-                                      _fieldsVisibility[currentPassword]!
-                                          ? Icons.visibility_outlined
-                                          : Icons.visibility_off_outlined,
-                                      color: CColors.tertiaryColor,
-                                      size: Dimens.tfIconSize,
-                                    ),
+                                  !_fieldsVisibility[currentPassword]!,
                                   ),
                                 ),
                               ),
-                              style: AppTheme.of(context).bodyText1,
+                              style: theme.bodyText1,
                               onChanged: (value) {
                                 setState(() {
                                   formValues[currentPassword] = [
@@ -177,31 +135,16 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
                                 errorText: submitted
                                     ? formValues[password][errorIndex]
                                     : null,
-                                prefixIcon: const Icon(
-                                  Icons.lock_outline,
-                                ),
-                                suffixIcon: Semantics(
-                                  label: _fieldsVisibility[password]!
-                                      ? Strings
-                                          .passwordToggleShowingSemanticsLabel
-                                      : Strings
-                                          .passwordToggleNotShowingSemanticsLabel,
-                                  child: InkWell(
-                                    onTap: () => setState(
-                                      () => _fieldsVisibility[password] =
-                                          !_fieldsVisibility[password]!,
-                                    ),
-                                    focusNode: FocusNode(skipTraversal: true),
-                                    child: Icon(
-                                      _fieldsVisibility[password]!
-                                          ? Icons.visibility_outlined
-                                          : Icons.visibility_off_outlined,
-                                      size: Dimens.tfIconSize,
-                                    ),
+                                prefixIcon: IIcons.password,
+                                suffixIcon: IIcons.toggleVisIcon(
+                                  visible: _fieldsVisibility[password]!,
+                                  onTap: () =>  setState(
+                                        () => _fieldsVisibility[password] =
+                                    !_fieldsVisibility[password]!,
                                   ),
                                 ),
                               ),
-                              style: AppTheme.of(context).bodyText1,
+                              style: theme.bodyText1,
                               onChanged: (value) {
                                 setState(() {
                                   formValues[password] = [
@@ -233,34 +176,16 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
                                     ? formValues[passwordConfirmation]
                                         [errorIndex]
                                     : null,
-                                prefixIcon: const Icon(
-                                  Icons.lock_outline,
-                                ),
-                                suffixIcon: Semantics(
-                                  label: _fieldsVisibility[
-                                          passwordConfirmation]!
-                                      ? Strings
-                                          .passwordToggleShowingSemanticsLabel
-                                      : Strings
-                                          .passwordToggleNotShowingSemanticsLabel,
-                                  child: InkWell(
-                                    onTap: () => setState(
-                                      () => _fieldsVisibility[
-                                              passwordConfirmation] =
-                                          !_fieldsVisibility[
-                                              passwordConfirmation]!,
-                                    ),
-                                    focusNode: FocusNode(skipTraversal: true),
-                                    child: Icon(
-                                      _fieldsVisibility[passwordConfirmation]!
-                                          ? Icons.visibility_outlined
-                                          : Icons.visibility_off_outlined,
-                                      size: Dimens.tfIconSize,
-                                    ),
+                                prefixIcon: IIcons.password,
+                                suffixIcon: IIcons.toggleVisIcon(
+                                  visible: _fieldsVisibility[passwordConfirmation]!,
+                                  onTap: () =>  setState(
+                                        () => _fieldsVisibility[passwordConfirmation] =
+                                    !_fieldsVisibility[passwordConfirmation]!,
                                   ),
                                 ),
                               ),
-                              style: AppTheme.of(context).bodyText1,
+                              style: theme.bodyText1,
                               onChanged: (value) {
                                 setState(() {
                                   formValues[passwordConfirmation] = [
@@ -292,7 +217,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
                             alignment: const Alignment(1, 0),
                             child: Text(
                               Strings.requiredFields,
-                              style: AppTheme.of(context).bodyText1.override(
+                              style: theme.bodyText1.override(
                                     fontFamily: 'Open Sans',
                                     color: CColors.primaryColor,
                                     fontSize: Dimens.requiredTextSize,
@@ -323,4 +248,41 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen>
       ),
     );
   }
+
+
+  /// Handles the form submission.
+  void _submit() async {
+    if (!checkConnection()) return;
+    setState(() {
+      formState = FormStateValue.processing;
+    });
+    serverRequest = await UpdatePasswordCall.call(
+      token: UserStoredPreferences.authToken,
+      password: formValues[password][dataIndex],
+      passwordConfirmation: formValues[passwordConfirmation][dataIndex],
+    );
+    if ((serverRequest?.succeeded ?? true) && context.mounted) {
+      setState(() {});
+      setState(() {
+        formState = FormStateValue.success;
+      });
+      Future.delayed(const Duration(seconds: 1), () {
+        setState(() {
+          formState = FormStateValue.unfilled;
+        });
+        _formKey.currentState!.reset();
+      });
+    } else {
+      final errors =
+      getJsonField((serverRequest?.jsonBody ?? ''), r'''$.errors''');
+      onReceivedErrorsFromServer(errors);
+    }
+  }
+
+  @override
+  void dispose() {
+    disposeFocusNodes();
+    super.dispose();
+  }
+
 }

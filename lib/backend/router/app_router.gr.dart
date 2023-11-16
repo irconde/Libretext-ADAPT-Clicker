@@ -8,52 +8,64 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:adapt_clicker/screens/assignment_screen/assignment_screen.dart'
+import 'package:adapt_clicker/screens/authentication/create_account_screen.dart'
     as _i1;
-import 'package:adapt_clicker/screens/contact_us_screen.dart' as _i2;
-import 'package:adapt_clicker/screens/course_details_screen/course_details_screen.dart'
-    as _i3;
-import 'package:adapt_clicker/screens/course_list_screen/course_list_screen.dart'
+import 'package:adapt_clicker/screens/authentication/home_screen.dart' as _i2;
+import 'package:adapt_clicker/screens/authentication/login_screen.dart' as _i3;
+import 'package:adapt_clicker/screens/content/assignment_screen/assignment_screen.dart'
     as _i4;
-import 'package:adapt_clicker/screens/create_account_screen.dart' as _i5;
-import 'package:adapt_clicker/screens/home_screen.dart' as _i6;
-import 'package:adapt_clicker/screens/login_screen.dart' as _i7;
-import 'package:adapt_clicker/screens/notifications_screen/notifications_screen.dart'
+import 'package:adapt_clicker/screens/content/course_details_screen/course_details_screen.dart'
+    as _i5;
+import 'package:adapt_clicker/screens/content/question_screen.dart' as _i6;
+import 'package:adapt_clicker/screens/main/contact_us_screen.dart' as _i7;
+import 'package:adapt_clicker/screens/main/course_list_screen/course_list_screen.dart'
     as _i8;
-import 'package:adapt_clicker/screens/question_screen.dart' as _i9;
-import 'package:adapt_clicker/screens/reset_password_screen.dart' as _i10;
-import 'package:adapt_clicker/screens/update_profile_screen.dart' as _i11;
-import 'package:adapt_clicker/widgets/bottom_sheets/poll_widget.dart' as _i12;
-import 'package:auto_route/auto_route.dart' as _i13;
-import 'package:flutter/foundation.dart' as _i15;
-import 'package:flutter/material.dart' as _i14;
+import 'package:adapt_clicker/screens/main/notifications_screen/notifications_screen.dart'
+    as _i9;
+import 'package:adapt_clicker/screens/main/reset_password_screen.dart' as _i10;
+import 'package:adapt_clicker/screens/main/update_profile_screen.dart' as _i11;
+import 'package:auto_route/auto_route.dart' as _i12;
+import 'package:flutter/foundation.dart' as _i14;
+import 'package:flutter/material.dart' as _i13;
 
-abstract class $AppRouter extends _i13.RootStackRouter {
+abstract class $AppRouter extends _i12.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i13.PageFactory> pagesMap = {
+  final Map<String, _i12.PageFactory> pagesMap = {
+    CreateAccountScreen.name: (routeData) {
+      return _i12.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i1.CreateAccountScreen(),
+      );
+    },
+    HomeScreen.name: (routeData) {
+      final args = routeData.argsAs<HomeScreenArgs>(
+          orElse: () => const HomeScreenArgs());
+      return _i12.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i2.HomeScreen(
+          key: args.key,
+          isFirstScreen: args.isFirstScreen,
+        ),
+      );
+    },
+    LoginScreenWidget.name: (routeData) {
+      return _i12.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i3.LoginScreenWidget(),
+      );
+    },
     AssignmentScreen.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<AssignmentScreenArgs>(
           orElse: () =>
               AssignmentScreenArgs(assignmentSum: pathParams.get('summary')));
-      return _i13.AutoRoutePage<dynamic>(
+      return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i1.AssignmentScreen(
+        child: _i4.AssignmentScreen(
           key: args.key,
           assignmentSum: args.assignmentSum,
-        ),
-      );
-    },
-    ContactUsScreen.name: (routeData) {
-      final args = routeData.argsAs<ContactUsScreenArgs>(
-          orElse: () => const ContactUsScreenArgs());
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i2.ContactUsScreen(
-          key: args.key,
-          openFromDrawer: args.openFromDrawer,
         ),
       );
     },
@@ -62,58 +74,12 @@ abstract class $AppRouter extends _i13.RootStackRouter {
       final args = routeData.argsAs<CourseDetailsScreenArgs>(
           orElse: () =>
               CourseDetailsScreenArgs(id: pathParams.getString('course')));
-      return _i13.AutoRoutePage<dynamic>(
+      return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i3.CourseDetailsScreen(
+        child: _i5.CourseDetailsScreen(
           key: args.key,
           id: args.id,
         ),
-      );
-    },
-    CourseListScreen.name: (routeData) {
-      final queryParams = routeData.queryParams;
-      final args = routeData.argsAs<CourseListScreenArgs>(
-          orElse: () => CourseListScreenArgs(
-                  token: queryParams.get(
-                'token',
-                '',
-              )));
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i4.CourseListScreen(
-          key: args.key,
-          isFirstScreen: args.isFirstScreen,
-          token: args.token,
-        ),
-      );
-    },
-    CreateAccountScreen.name: (routeData) {
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i5.CreateAccountScreen(),
-      );
-    },
-    HomeScreen.name: (routeData) {
-      final args = routeData.argsAs<HomeScreenArgs>(
-          orElse: () => const HomeScreenArgs());
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i6.HomeScreen(
-          key: args.key,
-          isFirstScreen: args.isFirstScreen,
-        ),
-      );
-    },
-    LoginScreenWidget.name: (routeData) {
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i7.LoginScreenWidget(),
-      );
-    },
-    NotificationsScreen.name: (routeData) {
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i8.NotificationsScreen(),
       );
     },
     QuestionScreen.name: (routeData) {
@@ -126,54 +92,139 @@ abstract class $AppRouter extends _i13.RootStackRouter {
                   0,
                 ),
               ));
-      return _i13.AutoRoutePage<dynamic>(
+      return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i9.QuestionScreen(
+        child: _i6.QuestionScreen(
           key: args.key,
           assignmentName: args.assignmentName,
           view: args.view,
           index: args.index,
+          isIndex: args.isIndex,
         ),
       );
     },
+    ContactUsScreen.name: (routeData) {
+      final args = routeData.argsAs<ContactUsScreenArgs>(
+          orElse: () => const ContactUsScreenArgs());
+      return _i12.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i7.ContactUsScreen(
+          key: args.key,
+          openFromDrawer: args.openFromDrawer,
+        ),
+      );
+    },
+    CourseListScreen.name: (routeData) {
+      final queryParams = routeData.queryParams;
+      final args = routeData.argsAs<CourseListScreenArgs>(
+          orElse: () => CourseListScreenArgs(
+                  token: queryParams.get(
+                'token',
+                '',
+              )));
+      return _i12.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i8.CourseListScreen(
+          key: args.key,
+          isFirstScreen: args.isFirstScreen,
+          token: args.token,
+        ),
+      );
+    },
+    NotificationsScreen.name: (routeData) {
+      return _i12.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i9.NotificationsScreen(),
+      );
+    },
     ResetPasswordScreen.name: (routeData) {
-      return _i13.AutoRoutePage<dynamic>(
+      return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i10.ResetPasswordScreen(),
       );
     },
     UpdateProfileScreen.name: (routeData) {
-      return _i13.AutoRoutePage<dynamic>(
+      return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i11.UpdateProfileScreen(),
-      );
-    },
-    PollWidget.name: (routeData) {
-      final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<PollWidgetArgs>(
-          orElse: () => PollWidgetArgs(
-                assignmentName: pathParams.optString('name'),
-                poll: pathParams.get('poll'),
-              ));
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i12.PollWidget(
-          key: args.key,
-          assignmentName: args.assignmentName,
-          poll: args.poll,
-        ),
       );
     },
   };
 }
 
 /// generated route for
-/// [_i1.AssignmentScreen]
-class AssignmentScreen extends _i13.PageRouteInfo<AssignmentScreenArgs> {
+/// [_i1.CreateAccountScreen]
+class CreateAccountScreen extends _i12.PageRouteInfo<void> {
+  const CreateAccountScreen({List<_i12.PageRouteInfo>? children})
+      : super(
+          CreateAccountScreen.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CreateAccountScreen';
+
+  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i2.HomeScreen]
+class HomeScreen extends _i12.PageRouteInfo<HomeScreenArgs> {
+  HomeScreen({
+    _i13.Key? key,
+    bool? isFirstScreen = false,
+    List<_i12.PageRouteInfo>? children,
+  }) : super(
+          HomeScreen.name,
+          args: HomeScreenArgs(
+            key: key,
+            isFirstScreen: isFirstScreen,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'HomeScreen';
+
+  static const _i12.PageInfo<HomeScreenArgs> page =
+      _i12.PageInfo<HomeScreenArgs>(name);
+}
+
+class HomeScreenArgs {
+  const HomeScreenArgs({
+    this.key,
+    this.isFirstScreen = false,
+  });
+
+  final _i13.Key? key;
+
+  final bool? isFirstScreen;
+
+  @override
+  String toString() {
+    return 'HomeScreenArgs{key: $key, isFirstScreen: $isFirstScreen}';
+  }
+}
+
+/// generated route for
+/// [_i3.LoginScreenWidget]
+class LoginScreenWidget extends _i12.PageRouteInfo<void> {
+  const LoginScreenWidget({List<_i12.PageRouteInfo>? children})
+      : super(
+          LoginScreenWidget.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LoginScreenWidget';
+
+  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i4.AssignmentScreen]
+class AssignmentScreen extends _i12.PageRouteInfo<AssignmentScreenArgs> {
   AssignmentScreen({
-    _i14.Key? key,
+    _i13.Key? key,
     required dynamic assignmentSum,
-    List<_i13.PageRouteInfo>? children,
+    List<_i12.PageRouteInfo>? children,
   }) : super(
           AssignmentScreen.name,
           args: AssignmentScreenArgs(
@@ -186,8 +237,8 @@ class AssignmentScreen extends _i13.PageRouteInfo<AssignmentScreenArgs> {
 
   static const String name = 'AssignmentScreen';
 
-  static const _i13.PageInfo<AssignmentScreenArgs> page =
-      _i13.PageInfo<AssignmentScreenArgs>(name);
+  static const _i12.PageInfo<AssignmentScreenArgs> page =
+      _i12.PageInfo<AssignmentScreenArgs>(name);
 }
 
 class AssignmentScreenArgs {
@@ -196,7 +247,7 @@ class AssignmentScreenArgs {
     required this.assignmentSum,
   });
 
-  final _i14.Key? key;
+  final _i13.Key? key;
 
   final dynamic assignmentSum;
 
@@ -207,50 +258,12 @@ class AssignmentScreenArgs {
 }
 
 /// generated route for
-/// [_i2.ContactUsScreen]
-class ContactUsScreen extends _i13.PageRouteInfo<ContactUsScreenArgs> {
-  ContactUsScreen({
-    _i14.Key? key,
-    bool? openFromDrawer = false,
-    List<_i13.PageRouteInfo>? children,
-  }) : super(
-          ContactUsScreen.name,
-          args: ContactUsScreenArgs(
-            key: key,
-            openFromDrawer: openFromDrawer,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'ContactUsScreen';
-
-  static const _i13.PageInfo<ContactUsScreenArgs> page =
-      _i13.PageInfo<ContactUsScreenArgs>(name);
-}
-
-class ContactUsScreenArgs {
-  const ContactUsScreenArgs({
-    this.key,
-    this.openFromDrawer = false,
-  });
-
-  final _i14.Key? key;
-
-  final bool? openFromDrawer;
-
-  @override
-  String toString() {
-    return 'ContactUsScreenArgs{key: $key, openFromDrawer: $openFromDrawer}';
-  }
-}
-
-/// generated route for
-/// [_i3.CourseDetailsScreen]
-class CourseDetailsScreen extends _i13.PageRouteInfo<CourseDetailsScreenArgs> {
+/// [_i5.CourseDetailsScreen]
+class CourseDetailsScreen extends _i12.PageRouteInfo<CourseDetailsScreenArgs> {
   CourseDetailsScreen({
-    _i14.Key? key,
+    _i13.Key? key,
     required String id,
-    List<_i13.PageRouteInfo>? children,
+    List<_i12.PageRouteInfo>? children,
   }) : super(
           CourseDetailsScreen.name,
           args: CourseDetailsScreenArgs(
@@ -263,8 +276,8 @@ class CourseDetailsScreen extends _i13.PageRouteInfo<CourseDetailsScreenArgs> {
 
   static const String name = 'CourseDetailsScreen';
 
-  static const _i13.PageInfo<CourseDetailsScreenArgs> page =
-      _i13.PageInfo<CourseDetailsScreenArgs>(name);
+  static const _i12.PageInfo<CourseDetailsScreenArgs> page =
+      _i12.PageInfo<CourseDetailsScreenArgs>(name);
 }
 
 class CourseDetailsScreenArgs {
@@ -273,7 +286,7 @@ class CourseDetailsScreenArgs {
     required this.id,
   });
 
-  final _i14.Key? key;
+  final _i13.Key? key;
 
   final String id;
 
@@ -284,13 +297,108 @@ class CourseDetailsScreenArgs {
 }
 
 /// generated route for
-/// [_i4.CourseListScreen]
-class CourseListScreen extends _i13.PageRouteInfo<CourseListScreenArgs> {
+/// [_i6.QuestionScreen]
+class QuestionScreen extends _i12.PageRouteInfo<QuestionScreenArgs> {
+  QuestionScreen({
+    _i14.Key? key,
+    String? assignmentName,
+    dynamic view,
+    int index = 0,
+    bool isIndex = false,
+    List<_i12.PageRouteInfo>? children,
+  }) : super(
+          QuestionScreen.name,
+          args: QuestionScreenArgs(
+            key: key,
+            assignmentName: assignmentName,
+            view: view,
+            index: index,
+            isIndex: isIndex,
+          ),
+          rawPathParams: {
+            'name': assignmentName,
+            'index': index,
+          },
+          initialChildren: children,
+        );
+
+  static const String name = 'QuestionScreen';
+
+  static const _i12.PageInfo<QuestionScreenArgs> page =
+      _i12.PageInfo<QuestionScreenArgs>(name);
+}
+
+class QuestionScreenArgs {
+  const QuestionScreenArgs({
+    this.key,
+    this.assignmentName,
+    this.view,
+    this.index = 0,
+    this.isIndex = false,
+  });
+
+  final _i14.Key? key;
+
+  final String? assignmentName;
+
+  final dynamic view;
+
+  final int index;
+
+  final bool isIndex;
+
+  @override
+  String toString() {
+    return 'QuestionScreenArgs{key: $key, assignmentName: $assignmentName, view: $view, index: $index, isIndex: $isIndex}';
+  }
+}
+
+/// generated route for
+/// [_i7.ContactUsScreen]
+class ContactUsScreen extends _i12.PageRouteInfo<ContactUsScreenArgs> {
+  ContactUsScreen({
+    _i13.Key? key,
+    bool? openFromDrawer = false,
+    List<_i12.PageRouteInfo>? children,
+  }) : super(
+          ContactUsScreen.name,
+          args: ContactUsScreenArgs(
+            key: key,
+            openFromDrawer: openFromDrawer,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ContactUsScreen';
+
+  static const _i12.PageInfo<ContactUsScreenArgs> page =
+      _i12.PageInfo<ContactUsScreenArgs>(name);
+}
+
+class ContactUsScreenArgs {
+  const ContactUsScreenArgs({
+    this.key,
+    this.openFromDrawer = false,
+  });
+
+  final _i13.Key? key;
+
+  final bool? openFromDrawer;
+
+  @override
+  String toString() {
+    return 'ContactUsScreenArgs{key: $key, openFromDrawer: $openFromDrawer}';
+  }
+}
+
+/// generated route for
+/// [_i8.CourseListScreen]
+class CourseListScreen extends _i12.PageRouteInfo<CourseListScreenArgs> {
   CourseListScreen({
-    _i15.Key? key,
+    _i14.Key? key,
     bool? isFirstScreen = false,
     dynamic token = '',
-    List<_i13.PageRouteInfo>? children,
+    List<_i12.PageRouteInfo>? children,
   }) : super(
           CourseListScreen.name,
           args: CourseListScreenArgs(
@@ -304,8 +412,8 @@ class CourseListScreen extends _i13.PageRouteInfo<CourseListScreenArgs> {
 
   static const String name = 'CourseListScreen';
 
-  static const _i13.PageInfo<CourseListScreenArgs> page =
-      _i13.PageInfo<CourseListScreenArgs>(name);
+  static const _i12.PageInfo<CourseListScreenArgs> page =
+      _i12.PageInfo<CourseListScreenArgs>(name);
 }
 
 class CourseListScreenArgs {
@@ -315,7 +423,7 @@ class CourseListScreenArgs {
     this.token = '',
   });
 
-  final _i15.Key? key;
+  final _i14.Key? key;
 
   final bool? isFirstScreen;
 
@@ -328,75 +436,9 @@ class CourseListScreenArgs {
 }
 
 /// generated route for
-/// [_i5.CreateAccountScreen]
-class CreateAccountScreen extends _i13.PageRouteInfo<void> {
-  const CreateAccountScreen({List<_i13.PageRouteInfo>? children})
-      : super(
-          CreateAccountScreen.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'CreateAccountScreen';
-
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i6.HomeScreen]
-class HomeScreen extends _i13.PageRouteInfo<HomeScreenArgs> {
-  HomeScreen({
-    _i14.Key? key,
-    bool? isFirstScreen = false,
-    List<_i13.PageRouteInfo>? children,
-  }) : super(
-          HomeScreen.name,
-          args: HomeScreenArgs(
-            key: key,
-            isFirstScreen: isFirstScreen,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'HomeScreen';
-
-  static const _i13.PageInfo<HomeScreenArgs> page =
-      _i13.PageInfo<HomeScreenArgs>(name);
-}
-
-class HomeScreenArgs {
-  const HomeScreenArgs({
-    this.key,
-    this.isFirstScreen = false,
-  });
-
-  final _i14.Key? key;
-
-  final bool? isFirstScreen;
-
-  @override
-  String toString() {
-    return 'HomeScreenArgs{key: $key, isFirstScreen: $isFirstScreen}';
-  }
-}
-
-/// generated route for
-/// [_i7.LoginScreenWidget]
-class LoginScreenWidget extends _i13.PageRouteInfo<void> {
-  const LoginScreenWidget({List<_i13.PageRouteInfo>? children})
-      : super(
-          LoginScreenWidget.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'LoginScreenWidget';
-
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i8.NotificationsScreen]
-class NotificationsScreen extends _i13.PageRouteInfo<void> {
-  const NotificationsScreen({List<_i13.PageRouteInfo>? children})
+/// [_i9.NotificationsScreen]
+class NotificationsScreen extends _i12.PageRouteInfo<void> {
+  const NotificationsScreen({List<_i12.PageRouteInfo>? children})
       : super(
           NotificationsScreen.name,
           initialChildren: children,
@@ -404,65 +446,13 @@ class NotificationsScreen extends _i13.PageRouteInfo<void> {
 
   static const String name = 'NotificationsScreen';
 
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i9.QuestionScreen]
-class QuestionScreen extends _i13.PageRouteInfo<QuestionScreenArgs> {
-  QuestionScreen({
-    _i15.Key? key,
-    String? assignmentName,
-    dynamic view,
-    int index = 0,
-    List<_i13.PageRouteInfo>? children,
-  }) : super(
-          QuestionScreen.name,
-          args: QuestionScreenArgs(
-            key: key,
-            assignmentName: assignmentName,
-            view: view,
-            index: index,
-          ),
-          rawPathParams: {
-            'name': assignmentName,
-            'index': index,
-          },
-          initialChildren: children,
-        );
-
-  static const String name = 'QuestionScreen';
-
-  static const _i13.PageInfo<QuestionScreenArgs> page =
-      _i13.PageInfo<QuestionScreenArgs>(name);
-}
-
-class QuestionScreenArgs {
-  const QuestionScreenArgs({
-    this.key,
-    this.assignmentName,
-    this.view,
-    this.index = 0,
-  });
-
-  final _i15.Key? key;
-
-  final String? assignmentName;
-
-  final dynamic view;
-
-  final int index;
-
-  @override
-  String toString() {
-    return 'QuestionScreenArgs{key: $key, assignmentName: $assignmentName, view: $view, index: $index}';
-  }
+  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i10.ResetPasswordScreen]
-class ResetPasswordScreen extends _i13.PageRouteInfo<void> {
-  const ResetPasswordScreen({List<_i13.PageRouteInfo>? children})
+class ResetPasswordScreen extends _i12.PageRouteInfo<void> {
+  const ResetPasswordScreen({List<_i12.PageRouteInfo>? children})
       : super(
           ResetPasswordScreen.name,
           initialChildren: children,
@@ -470,13 +460,13 @@ class ResetPasswordScreen extends _i13.PageRouteInfo<void> {
 
   static const String name = 'ResetPasswordScreen';
 
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
+  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i11.UpdateProfileScreen]
-class UpdateProfileScreen extends _i13.PageRouteInfo<void> {
-  const UpdateProfileScreen({List<_i13.PageRouteInfo>? children})
+class UpdateProfileScreen extends _i12.PageRouteInfo<void> {
+  const UpdateProfileScreen({List<_i12.PageRouteInfo>? children})
       : super(
           UpdateProfileScreen.name,
           initialChildren: children,
@@ -484,52 +474,5 @@ class UpdateProfileScreen extends _i13.PageRouteInfo<void> {
 
   static const String name = 'UpdateProfileScreen';
 
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i12.PollWidget]
-class PollWidget extends _i13.PageRouteInfo<PollWidgetArgs> {
-  PollWidget({
-    _i15.Key? key,
-    String? assignmentName,
-    dynamic poll,
-    List<_i13.PageRouteInfo>? children,
-  }) : super(
-          PollWidget.name,
-          args: PollWidgetArgs(
-            key: key,
-            assignmentName: assignmentName,
-            poll: poll,
-          ),
-          rawPathParams: {
-            'name': assignmentName,
-            'poll': poll,
-          },
-          initialChildren: children,
-        );
-
-  static const String name = 'PollWidget';
-
-  static const _i13.PageInfo<PollWidgetArgs> page =
-      _i13.PageInfo<PollWidgetArgs>(name);
-}
-
-class PollWidgetArgs {
-  const PollWidgetArgs({
-    this.key,
-    this.assignmentName,
-    this.poll,
-  });
-
-  final _i15.Key? key;
-
-  final String? assignmentName;
-
-  final dynamic poll;
-
-  @override
-  String toString() {
-    return 'PollWidgetArgs{key: $key, assignmentName: $assignmentName, poll: $poll}';
-  }
+  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
 }

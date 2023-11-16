@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'dart:ui';
-
 import '../../backend/api_requests/api_calls.dart';
 import '../../constants/strings.dart';
 import '../../utils/app_theme.dart';
@@ -195,9 +192,9 @@ class _CollapsibleAppBarState extends State<CollapsibleAppBar> {
   }
 
   double getTransition(double diff) {
-    double result = 32 + Dimens.xlMargin - diff;
+    double result = 32 + Dimens.appBarScrollVal - diff;
     if (result < 32) return 32;
-    if (result > Dimens.xlMargin) return Dimens.xlMargin;
+    if (result > Dimens.appBarScrollVal) return Dimens.appBarScrollVal;
     return result;
   }
 
@@ -205,7 +202,7 @@ class _CollapsibleAppBarState extends State<CollapsibleAppBar> {
     if (checkTop()) {
       double diff = getDiff();
       return EdgeInsetsDirectional.fromSTEB(getTransition(diff), 0, 0,
-          Dimens.smMargin + 1); // +1 made text align better with arrow.
+          Dimens.sMargin - 1); // +1 made text align better with arrow.
     } else {
       return const EdgeInsetsDirectional.fromSTEB(
           Dimens.mmMargin, 0, 0, Dimens.mmMargin);

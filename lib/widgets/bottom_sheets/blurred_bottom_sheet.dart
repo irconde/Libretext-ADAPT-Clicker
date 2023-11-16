@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:adapt_clicker/constants/dimens.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import '../../constants/colors.dart';
@@ -17,7 +18,7 @@ class BlurredBottomSheet extends StatelessWidget {
         context.popRoute();
       },
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+        filter: ImageFilter.blur(sigmaX: Dimens.blurPercent, sigmaY: Dimens.blurPercent),
         child: Container(
           width: double.infinity,
           height: double.infinity,
@@ -34,10 +35,10 @@ class BlurredBottomSheet extends StatelessWidget {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
-                      topLeft: const Radius.circular(16),
-                      topRight: const Radius.circular(16),
-                      bottomLeft: centered ? const Radius.circular(16): Radius.zero,
-                      bottomRight: centered ? const Radius.circular(16): Radius.zero,
+                      topLeft: const Radius.circular(Dimens.sMargin),
+                      topRight: const Radius.circular(Dimens.sMargin),
+                      bottomLeft: centered ? const Radius.circular(Dimens.sMargin): Radius.zero,
+                      bottomRight: centered ? const Radius.circular(Dimens.sMargin): Radius.zero,
                     ),
                     color: CColors.primaryBackground,
                   ),

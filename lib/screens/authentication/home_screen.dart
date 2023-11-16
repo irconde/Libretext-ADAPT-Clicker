@@ -3,21 +3,22 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:move_to_background/move_to_background.dart';
-import '../constants/colors.dart';
-import '../constants/strings.dart';
-import '../mixins/connection_state_mixin.dart';
-import '../widgets/buttons/custom_elevated_button_widget.dart';
-import '../utils/app_theme.dart';
+import '../../constants/colors.dart';
+import '../../constants/dimens.dart';
+import '../../constants/strings.dart';
+import '../../mixins/connection_state_mixin.dart';
+import '../../widgets/buttons/custom_elevated_button_widget.dart';
+import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 /// Screen displayed when the app is launched
 @RoutePage()
 class HomeScreen extends ConsumerStatefulWidget {
-  /// Specifies if the home screen is the first screen of the app.
-  final bool? isFirstScreen;
-
   const HomeScreen({Key? key, this.isFirstScreen = false}) : super(key: key);
+
+
+  final bool? isFirstScreen;
 
   @override
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
@@ -25,14 +26,17 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen>
     with ConnectionStateMixin {
+
+  //local
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    if (widget.isFirstScreen!) {
-      startWatchingConnection();
-    }
-    return WillPopScope(
+    var theme = AppTheme.of(context);
+    if (widget.isFirstScreen!)  startWatchingConnection();
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (dummy) { MoveToBackground.moveTaskToBack();},
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         key: scaffoldKey,
@@ -49,7 +53,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                     ExcludeSemantics(
                       child: Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            42, 42, 42, 24),
+                            Dimens.lmMargin,  Dimens.lmMargin,  Dimens.lmMargin,  Dimens.lmMargin),
                         child: SvgPicture.asset(
                           'assets/images/libretexts_adapt_logo.svg',
                           width: 270,
@@ -59,7 +63,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(32, 0, 32, 8),
+                          const EdgeInsetsDirectional.fromSTEB(Dimens.mmMargin, 0, Dimens.mmMargin, Dimens.xsMargin),
                       child: CustomElevatedButton(
                         normalText: Strings.loginBtnLabel,
                         onPressed: () async {
@@ -71,7 +75,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(32, 8, 32, 0),
+                          const EdgeInsetsDirectional.fromSTEB(Dimens.mmMargin, Dimens.xsMargin, Dimens.mmMargin, 0),
                       child: CustomElevatedButton(
                         type: ButtonType.secondary,
                         normalText: Strings.createAccountBtnLabel,
@@ -84,21 +88,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0, 92, 0, 0),
+                          const EdgeInsetsDirectional.fromSTEB(0, Dimens.xxMargin, 0, 0),
                       child: RichText(
                         text: TextSpan(
-                            style: AppTheme.of(context).bodyText1,
+                            style: theme.bodyText1,
                             children: [
                               const TextSpan(text: Strings.havingProblems),
                               TextSpan(
                                   text: Strings.contactus,
-                                  style: AppTheme.of(context)
+                                  style: theme
                                       .bodyText1
                                       .override(
                                         color: CColors.primaryColor,
                                         decoration: TextDecoration.underline,
                                         fontFamily: 'Open Sans',
-                                        fontWeight: FontWeight.normal,
                                       ),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () async {
@@ -114,10 +117,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           ),
         ),
       ),
-      onWillPop: () async {
-        MoveToBackground.moveTaskToBack();
-        return false;
-      },
     );
   }
 }

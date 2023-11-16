@@ -1,13 +1,11 @@
 import 'package:adapt_clicker/backend/Router/app_router.dart';
 import 'package:adapt_clicker/widgets/buttons/custom_button_widget.dart';
 import 'package:auto_route/auto_route.dart';
-
 import '../../constants/colors.dart';
 import '../../constants/dimens.dart';
 import '../../constants/strings.dart';
 import '../../utils/app_theme.dart';
 import 'package:flutter/material.dart';
-import '../buttons/custom_elevated_button_widget.dart';
 import 'blurred_bottom_sheet.dart';
 
 /// Widget for adding a course.
@@ -43,7 +41,7 @@ class NotificationPopup extends StatelessWidget {
                       size: Dimens.notificationPopupIconSize,
                     ),
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(Dimens.xsMargin, 0, 0, 0),
                       child: Text(
                         title,
                         textAlign: TextAlign.center,
@@ -102,10 +100,9 @@ class NotificationPopup extends StatelessWidget {
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               Dimens.sMargin, 0, Dimens.sMargin, 0),
                           height: Dimens.buttonHeight,
-                          textStyle: theme.bodyText1.override(
+                          textStyle: theme.title2.override(
                             fontFamily: 'Open Sans',
-                            fontWeight: FontWeight.bold,
-                            color: CColors.primaryBackground,
+                            fontSize: Dimens.defaultTextSize,
                           ),
                           color: CColors.primaryColor,
                           elevation: 0,

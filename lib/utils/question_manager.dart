@@ -1,5 +1,3 @@
-
-import '../main.dart';
 import 'app_state.dart';
 
 class QuestionManager {

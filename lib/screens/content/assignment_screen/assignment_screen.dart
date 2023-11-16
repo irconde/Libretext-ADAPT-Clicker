@@ -1,26 +1,25 @@
+import 'package:adapt_clicker/constants/icons.dart';
 import 'package:adapt_clicker/mixins/connection_state_mixin.dart';
-import 'package:adapt_clicker/screens/assignment_screen/assignment_grid_widget.dart';
-import 'package:adapt_clicker/main.dart';
+import 'package:adapt_clicker/screens/content/assignment_screen/assignment_grid_widget.dart';
 import 'package:adapt_clicker/backend/user_stored_preferences.dart';
 import 'package:adapt_clicker/widgets/shimmer/shim_pages.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
-import '../../backend/api_requests/api_calls.dart';
-import '../../constants/strings.dart';
-import '../../utils/Logger.dart';
-import '../../utils/animations.dart';
-import '../../utils/app_theme.dart';
-import '../../utils/utils.dart';
-import '../../constants/dimens.dart';
-import '../../constants/colors.dart';
+import '../../../backend/api_requests/api_calls.dart';
+import '../../../constants/strings.dart';
+import '../../../utils/logger.dart';
+import '../../../utils/animations.dart';
+import '../../../utils/app_theme.dart';
+import '../../../utils/utils.dart';
+import '../../../constants/Dimens.dart';
+import '../../../constants/colors.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
 class AssignmentScreen extends ConsumerStatefulWidget {
   /// A widget representing the assignment screen.
-  ///
   /// The [assignmentSum] represents the assignment summary.
   const AssignmentScreen({
     Key? key,
@@ -57,7 +56,6 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
   };
 
   /// Formats the given [date] string into a formatted date string.
-  ///
   /// The [date] string is parsed using the format 'yyyy-MM-dd HH:mm:ss',
   /// and the formatted date string is returned using the format 'MMMM d'.
   String formatDate(String date) {
@@ -76,67 +74,6 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
     //setPluralAttempts();
   }
 
-  /*void setPluralAttempts() {
-    int b = 0;
-    if(assignmentSummary["number_of_allowed_attempts"] != null){
-      b = int.parse(assignmentSummary['number_of_allowed_attempts']);}
-    if (b == 1) {
-      allowedAttempts = Strings.allowedAttempt;
-      logger.log(Level.wtf, 'Rawr');
-      return;
-    }
-  }*/
-  void createQuestionUrls(List<dynamic> questions) {
-    // create an empty list of strings to store the urls
-    List<String> urls = [];
-
-    // loop through each question in the list
-    for (var question in questions) {
-      // get the question id from the json
-      var questionID = question['id'];
-
-      // construct the url using string interpolation
-      var url =
-          'https://adapt.libretexts.org/assignments/${AppState().assignmentId}/questions/view/$questionID';
-
-      // add the url to the list
-      urls.add(url);
-    }
-
-    AppState().urls = urls;
-  }
-
-  /// Retrieves the assignment summary from the widget and initializes the [assignmentSummary] variable.
-  ///
-  /// If the [assignmentSum] is of type [String], it is decoded and parsed as JSON.
-  Future<void> getSummary() async {
-    if (widget.assignmentSum.runtimeType == String) {
-      String decodedString = Uri.decodeComponent(widget.assignmentSum);
-      assignmentSummary = jsonDecode(decodedString);
-      logger.d('Assignment Summary : $assignmentSummary');
-    } else {
-      assignmentSummary = widget.assignmentSum;
-    }
-  }
-
-  /// Retrieves the view call for the assignment.
-  ///
-  /// It calls the [ViewCall.call] method with the assignment ID and authentication token,
-  /// and sets the [isLoading] flag to false once the response is received.
-  Future<ApiCallResponse> getViewCall() async {
-    await getSummary();
-    var response = await ViewCall.call(
-      assignmentID: assignmentSummary['id'],
-      token: UserStoredPreferences.authToken,
-    );
-    setState(() {
-      logger.d('IsLoading set');
-      isLoading = false;
-    });
-    return response;
-  }
-
-  ExpandableController expansionController = ExpandableController();
 
   @override
   Widget build(BuildContext context) {
@@ -151,12 +88,8 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                 appBar: AppBar(
                   centerTitle: true,
                   backgroundColor: CColors.primaryBackground,
-                  elevation: 0.0,
                   leading: IconButton(
-                    icon: const Icon(
-                      Icons.close,
-                      color: CColors.tertiaryColor,
-                    ),
+                    icon: IIcons.close,
                     onPressed: () {
                       context.popRoute();
                     },
@@ -179,12 +112,8 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                 !expansionController.value;
                           });
                         },
-                        icon: Icon(
-                          expansionController.value
-                              ? Icons.info
-                              : Icons.info_outline,
-                          color: CColors.primaryColor,
-                        )),
+                        icon: IIcons.info(expansionController.value),
+                    ),
                   ],
                 ),
                 body: ScrollShadow(
@@ -251,14 +180,11 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                           backgroundColor:
                                               CColors.secondaryColor,
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(8, 0, 8, 0),
+                                              .fromSTEB(Dimens.xsMargin, 0, Dimens.xsMargin, 0),
                                           labelPadding:
                                               const EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 4, 0),
-                                          avatar: const Icon(
-                                            Icons.date_range,
-                                            color: CColors.primaryBackground,
-                                          ),
+                                                  .fromSTEB(0, 0, Dimens.xxsMargin, 0),
+                                          avatar: IIcons.dateRange,
                                           label: Text(
                                             " ${formatDate(assignmentSummary['formatted_due'] ?? assignmentSummary['due']['due_date'])}",
                                             style: theme.bodyText1.override(
@@ -277,7 +203,7 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                             decoration: const BoxDecoration(
                                 color: CColors.coursePagePullDown),
                             child: Padding(
-                              padding: const EdgeInsets.all(24),
+                              padding: const EdgeInsets.all(Dimens.msMargin),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -361,8 +287,8 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                   if (!snapshot.hasData) {
                                     return const Center(
                                       child: SizedBox(
-                                        width: 48,
-                                        height: 48,
+                                        width: Dimens.llMargin,
+                                        height: Dimens.llMargin,
                                         child: CircularProgressIndicator(
                                           color: CColors.primaryColor,
                                         ),
@@ -378,7 +304,7 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                     )?.toList();
                                     createQuestionUrls(questions);
 
-                                    if (questions.length != 0) {
+                                    if (questions.isNotEmpty) {
                                       bool spacing = true;
                                       if (questions.length == 1) {
                                         spacing = false;
@@ -417,7 +343,6 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
                                                         questionsIndex],
                                                     assignmentSummary:
                                                         assignmentSummary,
-                                                    ref: ref,
                                                     builderResponse:
                                                         builderResponse,
                                                     questionsIndex:
@@ -443,13 +368,67 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
             });
   }
 
-  /// Calculates the item count for the GridView based on the length of the list of questions and the grid view's cross-axis count.
-  ///
-  /// The [length] represents the length of the list of questions.
-  /// The [gridViewCrossAxisCount] represents the cross-axis count of the GridView.
-  ///
-  /// If the length is divisible by the cross-axis count, the length is returned as the item count.
-  /// Otherwise, the item count is calculated by adding the difference between the cross-axis count and the modulo of length and cross-axis count to the length.
+  //TODO: Fix this
+  /*void setPluralAttempts() {
+    int b = 0;
+    if(assignmentSummary["number_of_allowed_attempts"] != null){
+      b = int.parse(assignmentSummary['number_of_allowed_attempts']);}
+    if (b == 1) {
+      allowedAttempts = Strings.allowedAttempt;
+      logger.log(Level.wtf, 'Rawr');
+      return;
+    }
+  }*/
+  void createQuestionUrls(List<dynamic> questions) {
+    // create an empty list of strings to store the urls
+    List<String> urls = [];
+
+    // loop through each question in the list
+    for (var question in questions) {
+      // get the question id from the json
+      var questionID = question['id'];
+
+      // construct the url using string interpolation
+      var url =
+          'https://adapt.libretexts.org/assignments/${AppState().assignmentId}/questions/view/$questionID';
+
+      // add the url to the list
+      urls.add(url);
+    }
+
+    AppState().urls = urls;
+  }
+
+  /// Retrieves the assignment summary from the widget and initializes the [assignmentSummary] variable.
+  /// If the [assignmentSum] is of type [String], it is decoded and parsed as JSON.
+  Future<void> getSummary() async {
+    if (widget.assignmentSum.runtimeType == String) {
+      String decodedString = Uri.decodeComponent(widget.assignmentSum);
+      assignmentSummary = jsonDecode(decodedString);
+      logger.d('Assignment Summary : $assignmentSummary');
+    } else {
+      assignmentSummary = widget.assignmentSum;
+    }
+  }
+
+  /// Retrieves the view call for the assignment.
+  /// It calls the [ViewCall.call] method with the assignment ID and authentication token,
+  /// and sets the [isLoading] flag to false once the response is received.
+  Future<ApiCallResponse> getViewCall() async {
+    await getSummary();
+    var response = await ViewCall.call(
+      assignmentID: assignmentSummary['id'],
+      token: UserStoredPreferences.authToken,
+    );
+    setState(() {
+      logger.d('IsLoading set');
+      isLoading = false;
+    });
+    return response;
+  }
+
+  ExpandableController expansionController = ExpandableController();
+
   itemCount(length, int gridViewCrossAxisCount) {
     if (length % gridViewCrossAxisCount == 0) {
       return length;
