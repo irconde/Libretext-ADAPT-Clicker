@@ -1,3 +1,4 @@
+import '../../constants/strings.dart';
 import '../../utils/utils.dart';
 import 'api_manager.dart';
 export 'api_manager.dart' show ApiCallResponse;
@@ -21,7 +22,7 @@ class LoginCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'login',
-      apiUrl: 'https://adapt.libretexts.org/api/login',
+      apiUrl: '${Strings.adaptLink}/api/login',
       callType: ApiCallType.post,
       headers: {
         'Accept': 'application/json',
@@ -73,7 +74,7 @@ class CreateUserCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'createUser',
-      apiUrl: 'https://adapt.libretexts.org/api/register',
+      apiUrl: '${Strings.adaptLink}/api/register',
       callType: ApiCallType.post,
       headers: {
         'Accept': 'application/json',
@@ -113,7 +114,7 @@ class ForgotPasswordCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'forgotPassword',
-      apiUrl: 'https://adapt.libretexts.org/api/password/email',
+      apiUrl: '${Strings.adaptLink}/api/password/email',
       callType: ApiCallType.post,
       headers: {
         'accept': 'application/json',
@@ -139,7 +140,7 @@ class RefreshTokenCall {
   }) {
     return ApiManager.instance.makeApiCall(
       callName: 'refreshToken',
-      apiUrl: 'https://adapt.libretexts.org/api/refresh-token',
+      apiUrl: '${Strings.adaptLink}/api/refresh-token',
       callType: ApiCallType.post,
       headers: {
         'Accept': 'application/json',
@@ -183,7 +184,7 @@ class GetUserCall {
   }) {
     return ApiManager.instance.makeApiCall(
       callName: 'getUser',
-      apiUrl: 'https://adapt.libretexts.org/api/user',
+      apiUrl: '${Strings.adaptLink}/api/user',
       callType: ApiCallType.get,
       headers: {
         'Accept': 'application/json',
@@ -205,7 +206,7 @@ class GetEnrollmentsCall {
   }) {
     return ApiManager.instance.makeApiCall(
       callName: 'getEnrollments',
-      apiUrl: 'https://adapt.libretexts.org/api/enrollments',
+      apiUrl: '${Strings.adaptLink}/api/enrollments',
       callType: ApiCallType.get,
       headers: {
         'Accept': 'application/json',
@@ -250,7 +251,7 @@ class UpdateProfileCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'updateProfile',
-      apiUrl: 'https://adapt.libretexts.org/api/settings/profile',
+      apiUrl: '${Strings.adaptLink}/api/settings/profile',
       callType: ApiCallType.patch,
       headers: {
         'accept': 'application/json',
@@ -283,7 +284,7 @@ class UpdatePasswordCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'updatePassword',
-      apiUrl: 'https://adapt.libretexts.org/api/settings/password',
+      apiUrl: '${Strings.adaptLink}/api/settings/password',
       callType: ApiCallType.patch,
       headers: {
         'accept': 'application/json',
@@ -322,7 +323,7 @@ class AddCourseCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'addCourse',
-      apiUrl: 'https://adapt.libretexts.org/api/enrollments',
+      apiUrl: '${Strings.adaptLink}/api/enrollments',
       callType: ApiCallType.post,
       headers: {
         'Accept': 'application/json',
@@ -368,7 +369,7 @@ class ContactUsCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'contactUs',
-      apiUrl: 'https://adapt.libretexts.org/api/email/send',
+      apiUrl: '${Strings.adaptLink}/api/email/send',
       callType: ApiCallType.post,
       headers: {
         'accept': 'application/json',
@@ -395,7 +396,7 @@ class GetScoresByUserCall {
     return ApiManager.instance.makeApiCall(
       callName: 'getScoresByUser',
       apiUrl:
-          'https://adapt.libretexts.org/api/scores/$course/get-course-scores-by-user',
+          '${Strings.adaptLink}/api/scores/$course/get-course-scores-by-user',
       callType: ApiCallType.get,
       headers: {
         'accept': 'application/json',
@@ -425,7 +426,7 @@ class GetCourse {
   }) {
     return ApiManager.instance.makeApiCall(
       callName: 'getScoresByUser',
-      apiUrl: 'https://adapt.libretexts.org/api/courses/$course/',
+      apiUrl: '${Strings.adaptLink}/api/courses/$course/',
       callType: ApiCallType.get,
       headers: {
         'accept': 'application/json',
@@ -450,7 +451,7 @@ class ViewCall {
     return ApiManager.instance.makeApiCall(
       callName: 'view',
       apiUrl:
-          'https://adapt.libretexts.org/api/assignments/$assignmentID/questions/view',
+          '${Strings.adaptLink}/api/assignments/$assignmentID/questions/view',
       callType: ApiCallType.get,
       headers: {
         'accept': 'application/json',
@@ -484,7 +485,7 @@ class GetQuestionPageCall {
     return ApiManager.instance.makeApiCall(
       callName: 'getAssignmentSummary',
       apiUrl:
-          'https://adapt.libretexts.org/assignments/$assignmentID/questions/view/$questionID',
+          '${Strings.adaptLink}/assignments/$assignmentID/questions/view/$questionID',
       callType: ApiCallType.get,
       headers: {
         'accept': 'application/json',
@@ -510,7 +511,7 @@ class GetAssignmentSummaryCall {
     return ApiManager.instance.makeApiCall(
       callName: 'getAssignmentSummary',
       apiUrl:
-          'https://adapt.libretexts.org/api/assignments/$assignmentNum/summary',
+          '${Strings.adaptLink}/api/assignments/$assignmentNum/summary',
       callType: ApiCallType.get,
       headers: {
         'accept': 'application/json',
@@ -580,7 +581,7 @@ class LogoutCall {
   }) {
     return ApiManager.instance.makeApiCall(
       callName: 'logout',
-      apiUrl: 'https://adapt.libretexts.org/api/logout',
+      apiUrl: '${Strings.adaptLink}/api/logout',
       callType: ApiCallType.post,
       headers: {
         'accept': 'application/json',
@@ -607,7 +608,7 @@ class GetNonTechnologyIframeCall {
     return ApiManager.instance.makeApiCall(
       callName: 'getNonTechnologyIframe',
       apiUrl:
-          'https://adapt.libretexts.org/api/get-locally-saved-page-contents/phys/$pageId',
+          '${Strings.adaptLink}/api/get-locally-saved-page-contents/phys/$pageId',
       callType: ApiCallType.get,
       html: true,
       headers: {
@@ -626,7 +627,7 @@ class GetTimezonesCall {
   static Future<ApiCallResponse> call() {
     return ApiManager.instance.makeApiCall(
       callName: 'getTimezones',
-      apiUrl: 'https://adapt.libretexts.org/api/time-zones',
+      apiUrl: '${Strings.adaptLink}/api/time-zones',
       callType: ApiCallType.get,
       headers: {
         'Accept': 'application/json',
@@ -662,7 +663,7 @@ class SendTokenCall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'sendToken',
-      apiUrl: 'https://adapt.libretexts.org/api/fcm-tokens',
+      apiUrl: '${Strings.adaptLink}/api/fcm-tokens',
       callType: ApiCallType.post,
       headers: {
         'Accept': 'application/json',

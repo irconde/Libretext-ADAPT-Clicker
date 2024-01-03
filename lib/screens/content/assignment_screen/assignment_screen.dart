@@ -390,7 +390,7 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
 
       // construct the url using string interpolation
       var url =
-          'https://adapt.libretexts.org/assignments/${AppState().assignmentId}/questions/view/$questionID';
+          '${Strings.adaptLink}/assignments/${AppState().assignmentId}/questions/view/$questionID';
 
       // add the url to the list
       urls.add(url);

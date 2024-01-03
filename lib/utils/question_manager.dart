@@ -1,3 +1,4 @@
+import '../constants/strings.dart';
 import 'app_state.dart';
 
 class QuestionManager {
@@ -24,7 +25,7 @@ class QuestionManager {
 
       // construct the url using string interpolation
       var url =
-          'https://adapt.libretexts.org/assignments/$id/questions/view/$questionID';
+          '${Strings.adaptLink}/assignments/$id/questions/view/$questionID';
 
       // add the url to the list
       urls.add(url);
