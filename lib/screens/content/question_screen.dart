@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:number_paginator/number_paginator.dart';
 import '../../constants/colors.dart';
+import '../../constants/strings.dart';
 import '../../utils/logger.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/utils.dart';
@@ -281,7 +282,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
       logger.w(e);
     }
     request = URLRequest(
-      url: Uri.parse('https://adapt.libretexts.org/user-jwt-test/$redirectString'),
+      url: Uri.parse('${Strings.adaptLink}/user-jwt-test/$redirectString'),
       headers: { 'authorization': UserStoredPreferences.authToken},
     );
   }

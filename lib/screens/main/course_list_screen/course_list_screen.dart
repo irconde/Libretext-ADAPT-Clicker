@@ -319,7 +319,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
   Future<void> initJWT() async {
     request = URLRequest(
       url: Uri.parse(
-          'https://adapt.libretexts.org/api/users/set-cookie-user-jwt'),
+          '${Strings.adaptLink}/api/users/set-cookie-user-jwt'),
       headers: {'authorization': UserStoredPreferences.authToken},
     );
   }
