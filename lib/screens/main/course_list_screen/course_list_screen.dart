@@ -214,25 +214,28 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
                               Visibility(
                                 visible: false,
                                 maintainState: true,
-                                child: InAppWebView(
-                                  initialUrlRequest: request,
-                                  onWebViewCreated: (controller) {
-                                    webViewController = controller;
-                                  },
-                                  onLoadStop: (controller, uri) async {
-                                    List<Cookie> cookies =
-                                    await _cookieManager.getCookies(url: request.url!);
-                                    for (var cookie in cookies) {
-                                      if (cookie.name == 'user_jwt') {
-                                        AppState().cookie = cookie;
+                                child: SizedBox(
+                                  height: 1,
+                                  child: InAppWebView(
+                                    initialUrlRequest: request,
+                                    onWebViewCreated: (controller) {
+                                      webViewController = controller;
+                                    },
+                                    onLoadStop: (controller, uri) async {
+                                      List<Cookie> cookies =
+                                      await _cookieManager.getCookies(url: request.url!);
+                                      for (var cookie in cookies) {
+                                        if (cookie.name == 'user_jwt') {
+                                          AppState().cookie = cookie;
+                                        }
                                       }
-                                    }
-                                  },
-                                  initialOptions: options,
-                                  gestureRecognizers: Set()
-                                    ..add(Factory(() => EagerGestureRecognizer()))
-                                    ..add(Factory<VerticalDragGestureRecognizer>(
-                                            () => VerticalDragGestureRecognizer())),
+                                    },
+                                    initialOptions: options,
+                                    gestureRecognizers: Set()
+                                      ..add(Factory(() => EagerGestureRecognizer()))
+                                      ..add(Factory<VerticalDragGestureRecognizer>(
+                                              () => VerticalDragGestureRecognizer())),
+                                  ),
                                 ),
                               ),
                             ],
