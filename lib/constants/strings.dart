@@ -41,6 +41,7 @@ class Strings {
 
   // Assignment screen
   static const String latePolicy = 'Late Policy: ';
+  static const String emptyNotificationString = 'view_and_submit';
   static const String noDescription = 'There is no description';
   static const String points =
       'points'; //These three are also used for semantics

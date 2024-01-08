@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:adapt_clicker/backend/firebase/firebase_api.dart';
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/backend/user_stored_preferences.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -87,10 +88,53 @@ Future<bool> userIsAuthenticated() async {
 }
 
 class MyApp extends StatelessWidget {
+
+  const MyApp({Key? key, required this.authenticated}) : super(key: key);  @override
+
+  final bool authenticated;
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: MyStatefulWidget(authenticated: authenticated),
+    );
+  }
+}
+
+class MyStatefulWidget extends StatefulWidget {
+
+
+
+  const MyStatefulWidget({required this.authenticated});
+  final bool authenticated;
+  @override
+  _MyStatefulWidgetState createState() => _MyStatefulWidgetState(authenticated: authenticated);
+}
+
+class _MyStatefulWidgetState extends State<MyStatefulWidget> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      // App has come to the foreground, check for pending notifications
+      FirebaseAPI api = FirebaseAPI();
+      api.handlePendingMessages();
+    }
+  }
+
   final ThemeMode _themeMode = ThemeMode.system;
   final bool authenticated;
 
-  const MyApp({Key? key, required this.authenticated}) : super(key: key);
+  _MyStatefulWidgetState({required this.authenticated});
 
   @override
   Widget build(BuildContext context) {
