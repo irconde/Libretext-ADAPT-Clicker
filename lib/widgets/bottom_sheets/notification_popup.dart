@@ -18,6 +18,12 @@ class NotificationPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    if(body == Strings.emptyNotificationString)
+    {
+      context.router.pop();
+      RouteHandler.navTo(route);
+    }
     var theme = AppTheme.of(context);
     return Padding(
       padding: const EdgeInsets.all(32.0),
@@ -54,10 +60,13 @@ class NotificationPopup extends StatelessWidget {
                     )
                   ],
                 ),
-                const Divider(
-                  height: 48,
-                  thickness: 1,
-                  color: CColors.lineColor,
+                Visibility(
+                  visible: body!.isNotEmpty,
+                  child: const Divider(
+                    height: 48,
+                    thickness: 1,
+                    color: CColors.lineColor,
+                  ),
                 ),
                 SizedBox(
                   width: double.infinity,

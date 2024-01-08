@@ -95,41 +95,37 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   numPages,
                       (index) =>
                       Center(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                Card(
-                                  child: SizedBox(
-                                    height: 400,
-                                    child: InAppWebView(
-                                      initialUrlRequest: request,
-                                      onWebViewCreated: (controller) async {
-                                        Cookie cookie = AppState().cookie;
-                                        webViewController = controller;
-                                        _cookieManager.setCookie(
-                                            url: request.url!,
-                                            name: cookie.name,
-                                            value: cookie.value,
-                                            iosBelow11WebViewController: controller);
-                                        injectViewport(controller);
-                                      },
-                                      onLoadStart: (controller, uri) {
-                                        injectViewport(controller);
-                                      },
-                                      initialOptions: options,
-                                      gestureRecognizers: Set()
-                                        ..add(Factory(() =>
-                                            EagerGestureRecognizer()))..add(
-                                            Factory<
-                                                VerticalDragGestureRecognizer>(
-                                                    () =>
-                                                    VerticalDragGestureRecognizer())),
-                                    ),
-                                  ),
-                                )
-                              ],
+                          child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  8, 8, 8, 8),
+                              child: InAppWebView(
+                                  initialUrlRequest: request,
+                                  onWebViewCreated: (controller) async {
+                                    Cookie cookie = AppState().cookie;
+                                    webViewController = controller;
+                                    _cookieManager.setCookie(
+                                        url: request.url!,
+                                        name: cookie.name,
+                                        value: cookie.value,
+                                        iosBelow11WebViewController: controller);
+                                    injectViewport(controller);
+
+                                  },
+                                  onLoadStart: (controller, uri) {
+                                    injectViewport(controller);
+                                    postMessageHandlerInit(controller, context);
+                                  },
+                                  initialOptions: options,
+                                  gestureRecognizers: Set()
+                                    ..add(Factory(() =>
+                                        EagerGestureRecognizer()))..add(
+                                        Factory<
+                                            VerticalDragGestureRecognizer>(
+                                                () =>
+                                                VerticalDragGestureRecognizer())),
+                                ),
                             ),
-                          )),
+                          ),
                 );
 
                 return Scaffold(
@@ -297,5 +293,85 @@ class _QuestionScreenState extends State<QuestionScreen> {
 void injectViewport(InAppWebViewController controller) async {
   await controller.evaluateJavascript(
       source:
-          '''var flutterViewPort=document.createElement("meta"); flutterViewPort.name = "viewport"; flutterViewPort.content = "width=400, initial-scale=1.0, maximum-scale=2.0, user-scalable=1"; document.getElementsByTagName("head")[0].appendChild(flutterViewPort);''');
+          '''var flutterViewPort=document.createElement("meta"); flutterViewPort.name = "viewport"; initial-scale=1.0, maximum-scale=2.0, user-scalable=1"; document.getElementsByTagName("head")[0].appendChild(flutterViewPort);''');
 }
+
+/// Creates a Post Message Listener given [controller].
+void postMessageHandlerInit(InAppWebViewController controller, BuildContext context) async {
+  // Add postMessage handler
+  controller.addJavaScriptHandler(
+    handlerName: 'flutterPostMessageHandler',
+    callback: (args) {
+      String receivedMessage = args[0];
+      handlePostMessage(receivedMessage, context);
+    },
+  );
+
+  // Evaluate JavaScript code to listen for postMessage events
+  await controller.evaluateJavascript(
+    source: '''
+      window.addEventListener('message', function(event) {
+        window.flutter_inappwebview.callHandler('flutterPostMessageHandler', event.data);
+      });
+    ''',
+  );
+}
+
+void handlePostMessage(String data, BuildContext context)
+{
+  try {
+    // Parse the JSON data
+    Map<String, dynamic> messageData = jsonDecode(data);
+
+    logger.i(messageData);
+    // Extract type and message from the parsed data
+    String source = messageData['source'];
+    String type = messageData['type'];
+    String message = messageData['message'];
+
+    if(source == null || source != 'app_clicker') {
+      return;
+    }
+
+    logger.i("Type: " + type);
+    logger.i("Message: " + message);
+
+    // Call createNotification() based on the message type
+    switch (type) {
+      case 'success':
+        createNotification(CColors.success, message, context);
+        break;
+      case 'info':
+        createNotification(CColors.tertiaryColor, message, context);
+        break;
+      case 'error':
+        createNotification(CColors.failure, message, context);
+        break;
+      default:
+      // Handle other types or unknown types if needed
+        break;
+    }
+  } catch (e) {
+    // Handle JSON parsing errors
+    logger.w('Error parsing postMessage data: $e');
+  }
+}
+
+// Function to create a notification (you can replace this with your actual implementation)
+void createNotification(Color type, String message, BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+        content: RichText(
+          text: TextSpan(
+            text: message,
+            style: AppTheme.of(context).bodyText3.override(
+              fontFamily: 'Open Sans',
+              color: CColors.primaryBackground,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        backgroundColor: type),
+  );
+}
+

@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/utils/utils.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'package:flutter/material.dart';
@@ -43,12 +44,33 @@ class FirebaseAPI {
 
   bool isOutside = false;
 
-  //Function for messages
-  void handleMessage(RemoteMessage? message) async {
+  List<RemoteMessage> pendingMessages = [];
+
+  void handleMessage(RemoteMessage? message) {
+
+    logger.w("Heard Something?");
     if (message == null) return;
 
-    logger.w(
-        'Got a message whilst in the foreground! ${message.from.toString()}');
+    // Add the message to the list of pending messages
+    pendingMessages.add(message);
+
+    logger.i('Current Messages Handled ${pendingMessages.length}');
+
+    // If there are multiple pending messages, handle the most recent one immediately
+    if (pendingMessages.length > 1) {
+      RemoteMessage mostRecentMessage = pendingMessages.reduce((a, b) =>
+      a.sentTime! > b.sentTime! ? a : b);
+
+      // Handle the most recent message
+      handleMostRecentMessage(mostRecentMessage);
+    }
+    // Notify listeners or perform additional actions as needed
+    _messageStreamController.sink.add(message);
+  }
+
+  void handleMostRecentMessage(RemoteMessage message) async
+  {
+    logger.w('Got a message whilst in the foreground! ${message.from.toString()}');
     logger.d('Message data: ${message.data}');
 
     Map<String, dynamic>? parsedData = parseLink(message.data['path']);
@@ -60,12 +82,14 @@ class FirebaseAPI {
       logger.i('Path: $path');
       logger.i('Args: $data');
 
-      String args = await RouteHandler.getArgs(
-          path, data); //makes sense of args depending on page
+      String args = await RouteHandler.getArgs(path, data); //makes sense of args depending on page
 
       if (!isOutside) {
-        showPopup(message.notification?.title ?? 'Notification',
-            message.notification?.body ?? '', '$path/$args');
+        showPopup(
+          message.notification?.title ?? 'Notification',
+          message.notification?.body ?? '',
+          '$path/$args',
+        );
       } else {
         isOutside = false;
         RouteHandler.navTo('$path/$args');
@@ -73,8 +97,12 @@ class FirebaseAPI {
     } else {
       logger.w('Invalid link format');
     }
+    pendingMessages.removeLast();
+  }
 
-    _messageStreamController.sink.add(message);
+  void handlePendingMessages()
+  {
+    logger.w("Handling Messages");
   }
 
   void showPopup(String title, String description, String route) {
