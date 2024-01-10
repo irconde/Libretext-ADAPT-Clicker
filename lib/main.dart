@@ -1,9 +1,13 @@
 import 'dart:ui';
-import 'package:adapt_clicker/backend/firebase/firebase_api.dart';
+import 'package:adapt_clicker/backend/push_notification_manager.dart';
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/backend/user_stored_preferences.dart';
+import 'package:adapt_clicker/utils/firebase_message.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
+import 'backend/firebase/firebase_api.dart';
 import 'utils/logger.dart';
 import 'utils/utils.dart';
 import '../backend/api_requests/api_calls.dart';
@@ -15,6 +19,25 @@ import 'utils/internationalization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'backend/firebase/firebase_options.dart';
 
+late FirebaseAPI firebaseAPI;
+
+///Firebase Methods that can't stay in a class
+@pragma('vm:entry-point')
+Future<void> handleBackground(RemoteMessage message) async {
+  if(Firebase == null) {
+    await Firebase.initializeApp();
+  }
+
+  FirebaseMessage msg =  FirebaseMessage(title: message.notification?.title, body: message.notification?.body, route: message.data['path']);
+  await PushNotificationManager().initializePersistedState();
+  PushNotificationManager().addNotification(msg);
+  logger.i('adding message');
+}
+
+void handlePendingMessages() async
+{
+  logger.i('current value: ${PushNotificationManager().notificationCount()}');
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,16 +57,12 @@ void main() async {
     logger.e(e.toString());
     isAuthenticated = false;
   }
-  //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  //FirebaseMessaging.onMessage.listen(_firebaseMessagingBackgroundHandler);
+
+  await initFirebase();
   await UserStoredPreferences.init();
   AppState();
   preloadSVGs();
-  // Firebase initialization
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
 
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
@@ -87,6 +106,19 @@ Future<bool> userIsAuthenticated() async {
   return Future(() => isSignedIn);
 }
 
+Future<void> initFirebase() async
+{
+  // Firebase initialization
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  firebaseAPI = FirebaseAPI();
+  await firebaseAPI.initNotifications();
+  FirebaseMessaging.onBackgroundMessage(handleBackground);
+}
+
 class MyApp extends StatelessWidget {
 
   const MyApp({Key? key, required this.authenticated}) : super(key: key);  @override
@@ -109,25 +141,33 @@ class MyStatefulWidget extends StatefulWidget {
   _MyStatefulWidgetState createState() => _MyStatefulWidgetState(authenticated: authenticated);
 }
 
+late Box<FirebaseMessage> _notificationBox;
 class _MyStatefulWidgetState extends State<MyStatefulWidget> with WidgetsBindingObserver {
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addObserver(this);
+    tokenHandling();
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance?.removeObserver(this);
     super.dispose();
+    _notificationBox.close();
+  }
+
+  Future<void> tokenHandling() async
+  {
+    firebaseAPI.getToken(setState);
+    firebaseAPI.sendToken();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      // App has come to the foreground, check for pending notifications
-      FirebaseAPI api = FirebaseAPI();
-      api.handlePendingMessages();
+      handlePendingMessages();
     }
   }
 
@@ -162,3 +202,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> with WidgetsBinding
     );
   }
 }
+
+
+

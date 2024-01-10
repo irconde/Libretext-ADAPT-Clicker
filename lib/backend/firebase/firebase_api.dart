@@ -1,7 +1,9 @@
+import 'package:adapt_clicker/utils/firebase_message.dart';
 import 'package:adapt_clicker/utils/utils.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../constants/colors.dart';
 import '../../utils/logger.dart';
@@ -28,7 +30,7 @@ class FirebaseAPI {
 
     initPushNotifications();
     final fCMToken = await _firebaseMessaging.getToken();
-    logger.i('Token: $fCMToken');
+    logger.d('Token: $fCMToken');
   }
 
   /// Requests push notification permission.
@@ -48,22 +50,10 @@ class FirebaseAPI {
 
   void handleMessage(RemoteMessage? message) {
 
-    logger.w("Heard Something?");
     if (message == null) return;
 
-    // Add the message to the list of pending messages
-    pendingMessages.add(message);
+    handleMostRecentMessage(message);
 
-    logger.i('Current Messages Handled ${pendingMessages.length}');
-
-    // If there are multiple pending messages, handle the most recent one immediately
-    if (pendingMessages.length > 1) {
-      RemoteMessage mostRecentMessage = pendingMessages.reduce((a, b) =>
-      a.sentTime! > b.sentTime! ? a : b);
-
-      // Handle the most recent message
-      handleMostRecentMessage(mostRecentMessage);
-    }
     // Notify listeners or perform additional actions as needed
     _messageStreamController.sink.add(message);
   }
@@ -73,8 +63,11 @@ class FirebaseAPI {
     logger.w('Got a message whilst in the foreground! ${message.from.toString()}');
     logger.d('Message data: ${message.data}');
 
-    Map<String, dynamic>? parsedData = parseLink(message.data['path']);
+    handleParsed(parseLink(message.data['path']), message);
     // Extract the route parameter from the message
+  }
+
+  Future<void> handleParsed(Map<String, dynamic>? parsedData, RemoteMessage? message) async {
     if (parsedData != null) {
       String path = parsedData['path'];
       List<String> data = parsedData['args'];
@@ -86,8 +79,8 @@ class FirebaseAPI {
 
       if (!isOutside) {
         showPopup(
-          message.notification?.title ?? 'Notification',
-          message.notification?.body ?? '',
+          message?.notification?.title ?? 'Notification',
+          message?.notification?.body ?? '',
           '$path/$args',
         );
       } else {
@@ -97,12 +90,6 @@ class FirebaseAPI {
     } else {
       logger.w('Invalid link format');
     }
-    pendingMessages.removeLast();
-  }
-
-  void handlePendingMessages()
-  {
-    logger.w("Handling Messages");
   }
 
   void showPopup(String title, String description, String route) {
@@ -141,13 +128,16 @@ class FirebaseAPI {
   //routes
   /// Handles incoming push notification routes.
   Future initPushNotifications() async {
-    _firebaseMessaging.getInitialMessage().then(handleMessage);
+    await _firebaseMessaging.getInitialMessage().then(handleMessage);
     FirebaseMessaging.onMessage.listen(handleMessage);
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       isOutside = true;
       handleMessage(message);
     });
+
   }
+
+
 
   /// Saves the Firebase token.
   void saveToken(var token) async {

@@ -1,4 +1,3 @@
-import 'package:adapt_clicker/backend/firebase/firebase_api.dart';
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/constants/dimens.dart';
 import 'package:adapt_clicker/constants/icons.dart';
@@ -263,7 +262,6 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
   void init() async {
 
     await createTokenFromPath();
-    await initFirebase();
     await refreshPage();
     initJWT();
     if (!widget.isFirstScreen!) return;
@@ -284,13 +282,6 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
     }
   }
 
-  Future<void> initFirebase() async
-  {
-    FirebaseAPI firebase = FirebaseAPI();
-    await firebase.initNotifications();
-    firebase.getToken(setState);
-    firebase.sendToken();
-  }
 
   /// Refreshes the page by calling [updateAndGetResponse].
   Future<bool> refreshPage() async {
