@@ -60,7 +60,7 @@ class RouteHandler {
 
     if (courseCall.succeeded) {
       AppState().view = courseCall.jsonBody;
-      createQuestions(courseCall);
+      await createQuestions(courseCall);
       if (args.length > 2) {
         return '${args[0]}/${args[1]}/${args[2]}';
       } else {
@@ -76,18 +76,18 @@ class RouteHandler {
 
     if (courseCall.succeeded) {
       AppState().view = courseCall.jsonBody;
-      createQuestions(courseCall);
+      await createQuestions(courseCall);
       return courseCall.jsonBody;
     }
 
     return null;
   }
 
-  static void createQuestions(ApiCallResponse courseCall) {
-    final List<dynamic> questions = ViewCall.questions(
+  static Future<void> createQuestions(ApiCallResponse courseCall) async{
+    final List<dynamic> questions = await ViewCall.questions(
       courseCall.jsonBody,
     )?.toList();
-    QuestionManager.storeQuestionData(questions);
+    await QuestionManager.storeQuestionData(questions);
   }
 
   /// Retrieves the arguments based on the provided path and arguments list.
@@ -95,9 +95,9 @@ class RouteHandler {
     switch (path) {
       case '/Assignment':
         if (args.length > 1) {
-          return getQuestion(args);
+          return await getQuestion(args);
         } else {
-          return getSummary(args[0]);
+          return await getSummary(args[0]);
         }
       case '/Course':
         return args[0];

@@ -4,7 +4,7 @@ import 'app_state.dart';
 class QuestionManager {
 
   ///Stores Both Question Ids and URLs for use on question page
-  static void storeQuestionData(List<dynamic> questions) {
+  static Future<void> storeQuestionData(List<dynamic> questions) async {
     // create an empty list of strings to store the urls
     List<String> urls = [];
     List<int> ids = [];

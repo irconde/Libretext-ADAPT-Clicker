@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/utils/firebase_message.dart';
 import 'package:flutter/material.dart';
 import 'package:adapt_clicker/backend/push_notification_manager.dart';
 import 'package:adapt_clicker/constants/icons.dart';
@@ -5,10 +6,12 @@ import 'package:adapt_clicker/screens/main/notifications_screen/no_notifications
 import 'package:adapt_clicker/screens/main/notifications_screen/notification_single.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
+import '../../../backend/firebase/firebase_api.dart';
 import '../../../constants/colors.dart';
 import '../../../constants/strings.dart';
 import '../../../utils/app_theme.dart';
 import '../../../constants/dimens.dart';
+import 'package:flutter/widgets.dart';
 
 
 @RoutePage()
@@ -25,14 +28,13 @@ void createList() {
 }
 
 /// Adds a new notification to the list.
-void addNotification(String details) {
-  PushNotificationManager().addNotification(details);
+void addNotification(FirebaseMessage message) {
+  PushNotificationManager().addNotification(message);
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
   //Local
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   void initState() {
     super.initState();
@@ -84,39 +86,54 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         itemCount:
                             PushNotificationManager().notificationList.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return Dismissible(
-                            key: UniqueKey(),
-                            background: Container(
-                              color: CColors.delete,
-                              child: const Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: Dimens.sMargin),
-                                  child: Icon(
-                                    Icons.delete,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            secondaryBackground: Container(
-                              color: CColors.delete,
-                              child: const Align(
-                                alignment: Alignment.centerRight,
-                                child: Padding(
-                                  padding: EdgeInsets.only(right: Dimens.sMargin),
-                                  child: Icon(Icons.delete),
-                                ),
-                              ),
-                            ),
-                            onDismissed: (_) {
+                          final dismissibleKey = UniqueKey();
+                          return InkWell(
+                            onTap: () async
+                            {
+                              FirebaseAPI api = FirebaseAPI();
+                              Map<String, dynamic>? parsedData = api.parseLink('${PushNotificationManager().getNotification(index).route}');
+                              api.isOutside = true;
+                              await api.handleParsed(parsedData, null);
                               setState(() {
                                 PushNotificationManager()
                                     .removeNotification(index);
                               });
                             },
-                            child: NotificationSingle(
-                              index: index,
+                            child: Dismissible(
+                              key: dismissibleKey,
+                              background:  Container(
+                                    color: CColors.delete,
+                                    child: const Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(left: Dimens.sMargin),
+                                        child: Icon(
+                                          Icons.delete,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                ),
+                              secondaryBackground: Container(
+                                color: CColors.delete,
+                                child: const Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(right: Dimens.sMargin),
+                                    child: Icon(Icons.delete),
+                                  ),
+                                ),
+                              ),
+                              onDismissed: (_) {
+                                setState(() {
+                                  PushNotificationManager()
+                                      .removeNotification(index);
+                                });
+                              },
+                              child: NotificationSingle(
+                                index: index,
+                                message: PushNotificationManager().getNotification(index),
+                              ),
                             ),
                           );
                         }),

@@ -1,64 +1,90 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
+import 'package:adapt_clicker/utils/firebase_message.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
+import '../utils/firebase_message_adapter.dart';
 
 /// A class that manages push notifications and persists the notification list using SharedPreferences.
 class PushNotificationManager {
-  static final PushNotificationManager _instance = PushNotificationManager._internal();
-  late SharedPreferences prefs;
-  static bool _notificationSet = false;
-  static List<String> _notificationList = [];
 
+  static PushNotificationManager? _instance;
+  Box? notificationBox;
+  static List<FirebaseMessage> _notificationList = [];
+  bool _initialized = false;
+
+  // Declare a factory constructor that returns the singleton instance
   factory PushNotificationManager() {
-    return _instance;
+    // If the instance is null, create a new one
+    _instance ??= PushNotificationManager._();
+    // Return the instance
+    return _instance!;
   }
 
-  PushNotificationManager._internal() {
+  PushNotificationManager._()
+  {
     initializePersistedState();
   }
 
   /// Initializes the persisted state by retrieving the notification list from SharedPreferences.
   Future initializePersistedState() async {
-    prefs = await SharedPreferences.getInstance();
-    _notificationList =
-        prefs.getStringList('ff_notificationList') ?? _notificationList;
+    await initHive();
+    notificationBox = await Hive.openBox<FirebaseMessage>('notificationBox');
+    _notificationList =  notificationBox!.values.toList().cast<FirebaseMessage>();
   }
+
+  Future<void> initHive() async
+  {
+// Initialize Hive
+    final appDocumentsDirectory = await path_provider.getApplicationDocumentsDirectory();
+    Hive.init(appDocumentsDirectory.path);
+
+    if(!_initialized) {
+      Hive.registerAdapter(
+          FirebaseMessageAdapter()); // Make sure to register the adapter
+      _initialized = true;
+    }
+    await Hive.openBox<FirebaseMessage>('notificationBox');
+  }
+
 
   /// Retrieves the notification list.
-  List<String> get notificationList => _notificationList;
+  List<FirebaseMessage> get notificationList => _notificationList;
 
   /// Sets the notification list and persists it using SharedPreferences.
-  set notificationList(List<String> value) {
+  set notificationList(List<FirebaseMessage> value) {
     _notificationList = value;
-    prefs.setStringList('ff_notificationList', value);
-  }
-
-  //TODO: This is a temp solution, when adding from push notifications is implemented, get rid of this
-  /// Gets the status of the notification set.
-  bool get notificationSet => _notificationSet;
-
-  //TODO: This is a temp solution, when adding from push notifications is implemented, get rid of this
-  /// Sets the status of the notification set and persists it using SharedPreferences.
-  set notificationSet(bool value) {
-    _notificationSet = value;
-    prefs.setBool('ff_notificationSet', value);
+    notificationBox!.clear();
+    notificationBox!.addAll(value);
   }
 
   /// Adds a notification to the list and persists it using SharedPreferences.
-  void addNotification(String value) {
-    //TODO: This is a temp solution, when adding from push notifications is implemented, get rid of this
+  void addNotification(FirebaseMessage value) async {
     _notificationList.add(value);
-    prefs.setStringList('ff_notificationList', _notificationList);
+    notificationBox!.add(value);
+    await resetNotificationList();
+  }
+
+  FirebaseMessage getNotification(int index)
+  {
+      return notificationBox!.getAt(index);
   }
 
   /// Removes a notification from the list at the specified [index] and persists the updated list using SharedPreferences.
-  void removeNotification(int index) {
+  void removeNotification(int index) async {
     _notificationList.removeAt(index);
-    prefs.setStringList('ff_notificationList', _notificationList);
+    notificationBox!.deleteAt(index);
+    await resetNotificationList();
   }
 
   /// Clears all notifications from the list and persists the updated list using SharedPreferences.
   void clearNotifications() {
     _notificationList.clear();
-    prefs.setStringList('ff_notificationList', _notificationList);
+    notificationBox!.clear();
+  }
+
+  Future<void> resetNotificationList() async
+  {
+    notificationBox = await Hive.openBox<FirebaseMessage>('notificationBox');
+    _notificationList =  notificationBox!.values.toList().cast<FirebaseMessage>();
   }
 
   /// Returns the count of notifications in the list.
