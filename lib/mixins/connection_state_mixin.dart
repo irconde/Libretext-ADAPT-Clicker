@@ -7,6 +7,8 @@ import '../constants/strings.dart';
 /// A mixin that provides connectivity state management functionality to a [ConsumerStatefulWidget].
 mixin ConnectionStateMixin<T extends ConsumerStatefulWidget>
     on ConsumerState<T> {
+
+
   /// Displays a snackbar indicating the current connectivity status.
   ///
   /// The [status] parameter represents the current connectivity status.
@@ -48,17 +50,20 @@ mixin ConnectionStateMixin<T extends ConsumerStatefulWidget>
     final AsyncValue<ConnectivityStatus> connectivityStatusProvider =
         ref.watch(provider);
     ConnectivityStatus? status;
-    connectivityStatusProvider.whenData((value) => {status = value});
+    connectivityStatusProvider.whenData((value) => status = value);
     if (status != null) {
       if (status != ConnectivityStatus.isConnected) {
         ref.read(provider.notifier).startWatchingConnectivity();
       }
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (status == null || status == ConnectivityStatus.initializing) {
-          return;
-        }
+        if (status == null || status == ConnectivityStatus.initializing) return;
         _showSnackbar(context, status!);
       });
     }
+  }
+
+  void refreshConnection()
+  {
+    ref.invalidate(provider);
   }
 }

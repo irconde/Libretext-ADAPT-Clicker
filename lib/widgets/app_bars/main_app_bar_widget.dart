@@ -1,15 +1,14 @@
 import 'package:adapt_clicker/constants/icons.dart';
 import 'package:flutter/material.dart';
 import '../../constants/strings.dart';
+import '../../main.dart';
+import '../../utils/logger.dart';
 import '../notification_icon_widget.dart';
 
 /// The main app bar widget.
-class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
-  /// Creates a [MainAppBar] widget.
-  ///
-  /// The [title] is the text to display as the app bar title.
-  /// The [scaffoldKey] is the key of the scaffold widget used to open the drawer.
-  /// The [setState] is a callback to update the state of the parent widget.
+import 'package:flutter/material.dart';
+
+class MainAppBar extends StatefulWidget implements PreferredSizeWidget  {
   const MainAppBar({
     Key? key,
     required this.title,
@@ -19,34 +18,56 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
         super(key: key);
 
   @override
-  final Size preferredSize; // default is 56.0
+  final Size preferredSize;
 
-  /// The callback to update the state of the parent widget.
   final StateSetter setState;
-
-  /// The text to display as the app bar title.
   final String title;
-
-  /// The key of the scaffold widget used to open the drawer.
   final dynamic scaffoldKey;
 
+  @override
+  _MainAppBarState createState() => _MainAppBarState();
+}
+
+class _MainAppBarState extends State<MainAppBar> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
       leading: IconButton(
-        tooltip: Strings.mainMenuSemanticsLabel,
-        icon: IIcons.menu,
+        tooltip: 'Main Menu',
+        icon: Icon(Icons.menu),
         onPressed: () {
-          scaffoldKey.currentState!.openDrawer();
+          widget.scaffoldKey.currentState!.openDrawer();
         },
       ),
-      title: Text(title),
+      title: Text(widget.title),
       actions: [
         NotificationIcon(
-          setState: setState,
+          setState: widget.setState,
         ),
       ],
     );
   }
+
+  ///Functions
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.resumed) {
+      await Future.delayed(const Duration(milliseconds: 150));
+      setState((){});
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
+    super.dispose();
+  }
+
 }

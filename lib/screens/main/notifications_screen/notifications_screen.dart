@@ -11,7 +11,6 @@ import '../../../constants/colors.dart';
 import '../../../constants/strings.dart';
 import '../../../utils/app_theme.dart';
 import '../../../constants/dimens.dart';
-import 'package:flutter/widgets.dart';
 
 
 @RoutePage()
@@ -146,9 +145,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   /// Clears all notifications from the list.
-  void clearNotifications() {
+  void clearNotifications() async {
+    await PushNotificationManager().clearNotifications();
     setState(() {
-      PushNotificationManager().clearNotifications();
+
     });
   }
 

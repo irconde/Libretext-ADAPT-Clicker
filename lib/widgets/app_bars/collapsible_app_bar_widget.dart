@@ -49,7 +49,7 @@ class CollapsibleAppBar extends StatefulWidget {
   State<CollapsibleAppBar> createState() => _CollapsibleAppBarState();
 }
 
-class _CollapsibleAppBarState extends State<CollapsibleAppBar> {
+class _CollapsibleAppBarState extends State<CollapsibleAppBar> with WidgetsBindingObserver {
   ApiCallResponse? logout;
   double? a;
   Color? iconColor;
@@ -62,7 +62,25 @@ class _CollapsibleAppBarState extends State<CollapsibleAppBar> {
     iconColor = widget.svgIconColor ?? CColors.svgIconColor;
     top = widget.top;
     titleSpace = formatExpandedTitle(widget.title);
+    WidgetsBinding.instance?.addObserver(this);
   }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.resumed) {
+      if(!widget.showNotificationIcon) return;
+      await Future.delayed(const Duration(milliseconds: 150));
+      setState((){});
+
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
+    super.dispose();
+  }
+
 
   String formatExpandedTitle(String regularTitle) {
     String expandedTitle = '';

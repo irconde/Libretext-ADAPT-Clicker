@@ -259,6 +259,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
     init();
   }
 
+
   void init() async {
 
     await createTokenFromPath();
@@ -272,9 +273,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
   Future<void> createTokenFromPath() async {
     //Gets token from query parameter
     widget.token = context.routeData.queryParams.getString('token');
-    if (widget.token == null || widget.token == '') {
-      return;
-    }
+    if (widget.token == null || widget.token == '') return;
     String token = createToken(widget.token!);
     await UserStoredPreferences.setString('ff_authToken', token);
     if (UserStoredPreferences.authToken.isEmpty) {
