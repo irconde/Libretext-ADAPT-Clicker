@@ -321,17 +321,16 @@ void handlePostMessage(String data, BuildContext context)
 {
   try {
     // Parse the JSON data
+
     Map<String, dynamic> messageData = jsonDecode(data);
 
-    logger.i(messageData);
+
     // Extract type and message from the parsed data
     String source = messageData['source'];
     String type = messageData['type'];
     String message = messageData['message'];
 
-    if(source == null || source != 'app_clicker') {
-      return;
-    }
+    if(source == null || source != 'app_clicker') return;
 
     logger.i("Type: " + type);
     logger.i("Message: " + message);
@@ -353,7 +352,7 @@ void handlePostMessage(String data, BuildContext context)
     }
   } catch (e) {
     // Handle JSON parsing errors
-    logger.w('Error parsing postMessage data: $e');
+    logger.w('Error parsing postMessage data: $e + $data');
   }
 }
 

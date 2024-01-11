@@ -6,7 +6,6 @@ import 'package:adapt_clicker/utils/firebase_message.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive/hive.dart';
 import 'backend/firebase/firebase_api.dart';
 import 'utils/logger.dart';
 import 'utils/utils.dart';
@@ -18,8 +17,10 @@ import 'utils/app_theme.dart';
 import 'utils/internationalization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'backend/firebase/firebase_options.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 late FirebaseAPI firebaseAPI;
+final appBarKey = GlobalKey();
 
 ///Firebase Methods that can't stay in a class
 @pragma('vm:entry-point')
@@ -30,13 +31,14 @@ Future<void> handleBackground(RemoteMessage message) async {
 
   FirebaseMessage msg =  FirebaseMessage(title: message.notification?.title, body: message.notification?.body, route: message.data['path']);
   await PushNotificationManager().initializePersistedState();
-  PushNotificationManager().addNotification(msg);
+  await PushNotificationManager().addNotification(msg);
   logger.i('adding message');
 }
 
-void handlePendingMessages() async
+Future<void> handlePendingMessages() async
 {
-  logger.i('current value: ${PushNotificationManager().notificationCount()}');
+  await PushNotificationManager().resetNotificationList();
+  await FlutterLocalNotificationsPlugin().cancelAll();
 }
 
 void main() async {
@@ -141,7 +143,7 @@ class MyStatefulWidget extends StatefulWidget {
   _MyStatefulWidgetState createState() => _MyStatefulWidgetState(authenticated: authenticated);
 }
 
-late Box<FirebaseMessage> _notificationBox;
+
 class _MyStatefulWidgetState extends State<MyStatefulWidget> with WidgetsBindingObserver {
 
   @override
@@ -155,7 +157,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> with WidgetsBinding
   void dispose() {
     WidgetsBinding.instance?.removeObserver(this);
     super.dispose();
-    _notificationBox.close();
   }
 
   Future<void> tokenHandling() async
@@ -165,9 +166,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> with WidgetsBinding
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
-      handlePendingMessages();
+      await handlePendingMessages();
+
+      setState(() {
+
+        appBarKey.currentState?.setState(() {
+
+        });
+      });
     }
   }
 

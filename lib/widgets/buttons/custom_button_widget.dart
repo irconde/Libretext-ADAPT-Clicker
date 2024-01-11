@@ -87,9 +87,7 @@ class _CustomButtonWidgetState extends State<CustomButtonWidget> {
 
     final onPressed = widget.showLoadingIndicator
         ? () async {
-            if (loading) {
-              return;
-            }
+            if (loading) return;
             setState(() => loading = true);
             try {
               await widget.onPressed();

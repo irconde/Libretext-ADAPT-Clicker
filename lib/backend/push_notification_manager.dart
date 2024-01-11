@@ -2,6 +2,7 @@ import 'package:hive/hive.dart';
 import 'package:adapt_clicker/utils/firebase_message.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import '../utils/firebase_message_adapter.dart';
+import '../utils/logger.dart';
 
 /// A class that manages push notifications and persists the notification list using SharedPreferences.
 class PushNotificationManager {
@@ -33,7 +34,7 @@ class PushNotificationManager {
 
   Future<void> initHive() async
   {
-// Initialize Hive
+    // Initialize Hive
     final appDocumentsDirectory = await path_provider.getApplicationDocumentsDirectory();
     Hive.init(appDocumentsDirectory.path);
 
@@ -57,10 +58,9 @@ class PushNotificationManager {
   }
 
   /// Adds a notification to the list and persists it using SharedPreferences.
-  void addNotification(FirebaseMessage value) async {
+  Future<void> addNotification(FirebaseMessage value) async {
     _notificationList.add(value);
     notificationBox!.add(value);
-    await resetNotificationList();
   }
 
   FirebaseMessage getNotification(int index)
@@ -70,19 +70,23 @@ class PushNotificationManager {
 
   /// Removes a notification from the list at the specified [index] and persists the updated list using SharedPreferences.
   void removeNotification(int index) async {
+
     _notificationList.removeAt(index);
     notificationBox!.deleteAt(index);
-    await resetNotificationList();
   }
 
   /// Clears all notifications from the list and persists the updated list using SharedPreferences.
-  void clearNotifications() {
-    _notificationList.clear();
-    notificationBox!.clear();
+  Future<void> clearNotifications() async {
+    await notificationBox!.clear();
+    await initializePersistedState();
   }
 
   Future<void> resetNotificationList() async
   {
+    if(notificationBox!.isOpen) {
+      await notificationBox!.close();
+    }
+
     notificationBox = await Hive.openBox<FirebaseMessage>('notificationBox');
     _notificationList =  notificationBox!.values.toList().cast<FirebaseMessage>();
   }
