@@ -29,19 +29,16 @@ import '../../../utils/utils.dart';
 
 @RoutePage()
 class CourseListScreen extends ConsumerStatefulWidget {
-  CourseListScreen({Key? key, this.isFirstScreen = false, @QueryParam('token') token = ''})
+  CourseListScreen({Key? key, @QueryParam('token') token = ''})
       : super(key: key);
 
-
-  final bool? isFirstScreen;
   String? token;
 
   @override
   ConsumerState<CourseListScreen> createState() => _CourseListScreenState();
 }
 
-class _CourseListScreenState extends ConsumerState<CourseListScreen>
-    with ConnectionStateMixin {
+class _CourseListScreenState extends ConsumerState<CourseListScreen> with ConnectionStateMixin{
 
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -76,8 +73,6 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
   ///Build
   @override
   Widget build(BuildContext context) {
-    if (widget.isFirstScreen!)  startWatchingConnection();
-
     return PopScope(
       canPop: false,
       onPopInvoked: (isLoading) { MoveToBackground.moveTaskToBack();},
@@ -265,9 +260,6 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
     await createTokenFromPath();
     await refreshPage();
     initJWT();
-    if (!widget.isFirstScreen!) return;
-
-    _showSignInSnackbar();
   }
 
   Future<void> createTokenFromPath() async {
@@ -317,32 +309,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen>
     );
   }
 
-  /// Shows a snackbar indicating the signed-in user.
-  void _showSignInSnackbar() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: RichText(
-              text: TextSpan(
-                text: Strings.signedInAs,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                ),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: UserStoredPreferences.userAccount,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const TextSpan(text: '.'),
-                ],
-              ),
-            ),
-            backgroundColor: CColors.secondaryText),
-      );
-    });
-  }
+
 
 
 

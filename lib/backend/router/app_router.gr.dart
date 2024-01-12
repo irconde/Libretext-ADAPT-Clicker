@@ -40,14 +40,9 @@ abstract class $AppRouter extends _i12.RootStackRouter {
       );
     },
     HomeScreen.name: (routeData) {
-      final args = routeData.argsAs<HomeScreenArgs>(
-          orElse: () => const HomeScreenArgs());
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i2.HomeScreen(
-          key: args.key,
-          isFirstScreen: args.isFirstScreen,
-        ),
+        child: const _i2.HomeScreen(),
       );
     },
     LoginScreenWidget.name: (routeData) {
@@ -126,7 +121,6 @@ abstract class $AppRouter extends _i12.RootStackRouter {
         routeData: routeData,
         child: _i8.CourseListScreen(
           key: args.key,
-          isFirstScreen: args.isFirstScreen,
           token: args.token,
         ),
       );
@@ -168,40 +162,16 @@ class CreateAccountScreen extends _i12.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.HomeScreen]
-class HomeScreen extends _i12.PageRouteInfo<HomeScreenArgs> {
-  HomeScreen({
-    _i13.Key? key,
-    bool? isFirstScreen = false,
-    List<_i12.PageRouteInfo>? children,
-  }) : super(
+class HomeScreen extends _i12.PageRouteInfo<void> {
+  const HomeScreen({List<_i12.PageRouteInfo>? children})
+      : super(
           HomeScreen.name,
-          args: HomeScreenArgs(
-            key: key,
-            isFirstScreen: isFirstScreen,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'HomeScreen';
 
-  static const _i12.PageInfo<HomeScreenArgs> page =
-      _i12.PageInfo<HomeScreenArgs>(name);
-}
-
-class HomeScreenArgs {
-  const HomeScreenArgs({
-    this.key,
-    this.isFirstScreen = false,
-  });
-
-  final _i13.Key? key;
-
-  final bool? isFirstScreen;
-
-  @override
-  String toString() {
-    return 'HomeScreenArgs{key: $key, isFirstScreen: $isFirstScreen}';
-  }
+  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
 }
 
 /// generated route for
@@ -396,14 +366,12 @@ class ContactUsScreenArgs {
 class CourseListScreen extends _i12.PageRouteInfo<CourseListScreenArgs> {
   CourseListScreen({
     _i14.Key? key,
-    bool? isFirstScreen = false,
     dynamic token = '',
     List<_i12.PageRouteInfo>? children,
   }) : super(
           CourseListScreen.name,
           args: CourseListScreenArgs(
             key: key,
-            isFirstScreen: isFirstScreen,
             token: token,
           ),
           rawQueryParams: {'token': token},
@@ -419,19 +387,16 @@ class CourseListScreen extends _i12.PageRouteInfo<CourseListScreenArgs> {
 class CourseListScreenArgs {
   const CourseListScreenArgs({
     this.key,
-    this.isFirstScreen = false,
     this.token = '',
   });
 
   final _i14.Key? key;
 
-  final bool? isFirstScreen;
-
   final dynamic token;
 
   @override
   String toString() {
-    return 'CourseListScreenArgs{key: $key, isFirstScreen: $isFirstScreen, token: $token}';
+    return 'CourseListScreenArgs{key: $key, token: $token}';
   }
 }
 

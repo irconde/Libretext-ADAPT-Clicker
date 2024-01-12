@@ -7,6 +7,9 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'backend/firebase/firebase_api.dart';
+import 'constants/colors.dart';
+import 'constants/strings.dart';
+import 'mixins/connection_state_mixin.dart';
 import 'utils/logger.dart';
 import 'utils/utils.dart';
 import '../backend/api_requests/api_calls.dart';
@@ -133,7 +136,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyStatefulWidget extends StatefulWidget {
+class MyStatefulWidget extends ConsumerStatefulWidget {
 
 
 
@@ -144,13 +147,18 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> with WidgetsBindingObserver {
+class _MyStatefulWidgetState extends ConsumerState<MyStatefulWidget>
+    with ConnectionStateMixin, WidgetsBindingObserver  {
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addObserver(this);
     tokenHandling();
+
+    if(authenticated) {
+      _showSignInSnackbar();
+    }
   }
 
   @override
@@ -172,8 +180,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> with WidgetsBinding
 
       setState(() {
 
+        refreshConnection(); //resets internet connection
         appBarKey.currentState?.setState(() {
-
         });
       });
     }
@@ -186,6 +194,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> with WidgetsBinding
 
   @override
   Widget build(BuildContext context) {
+    startWatchingConnection();
+
     return MaterialApp.router(
       title: 'LibreTexts ADAPT',
       localizationsDelegates: const [
@@ -204,10 +214,37 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> with WidgetsBinding
       routeInformationProvider: AppState().router.routeInfoProvider(),
       routerDelegate: AppState().router.delegate(
           initialRoutes: authenticated
-              ? [CourseListScreen(isFirstScreen: true)]
-              : [HomeScreen(isFirstScreen: true)]),
+              ? [CourseListScreen()]
+              : [HomeScreen()]),
       routeInformationParser: AppState().router.defaultRouteParser(),
     );
+  }
+
+  /// Shows a snackbar indicating the signed-in user.
+  void _showSignInSnackbar() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: RichText(
+              text: TextSpan(
+                text: Strings.signedInAs,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: UserStoredPreferences.userAccount,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const TextSpan(text: '.'),
+                ],
+              ),
+            ),
+            backgroundColor: CColors.secondaryText),
+      );
+    });
   }
 }
 
