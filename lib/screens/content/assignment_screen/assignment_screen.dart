@@ -421,7 +421,7 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen>
       token: UserStoredPreferences.authToken,
     );
     setState(() {
-      logger.d('IsLoading set');
+      //logger.d('IsLoading set');
       isLoading = false;
     });
     return response;

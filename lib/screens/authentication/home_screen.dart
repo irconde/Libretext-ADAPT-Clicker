@@ -15,17 +15,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 /// Screen displayed when the app is launched
 @RoutePage()
 class HomeScreen extends ConsumerStatefulWidget {
-  const HomeScreen({Key? key, this.isFirstScreen = false}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
-
-  final bool? isFirstScreen;
 
   @override
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends ConsumerState<HomeScreen>
-    with ConnectionStateMixin {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   //local
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -33,7 +30,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   @override
   Widget build(BuildContext context) {
     var theme = AppTheme.of(context);
-    if (widget.isFirstScreen!)  startWatchingConnection();
     return PopScope(
       canPop: false,
       onPopInvoked: (dummy) { MoveToBackground.moveTaskToBack();},
