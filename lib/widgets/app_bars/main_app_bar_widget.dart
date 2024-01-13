@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/backend/push_notification_manager.dart';
 import 'package:flutter/material.dart';
 import '../notification_icon_widget.dart';
 
@@ -48,13 +49,15 @@ class _MainAppBarState extends State<MainAppBar> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addObserver(this);
+
+    PushNotificationManager().addListener(() { setState(() {});});
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
       await Future.delayed(const Duration(milliseconds: 150));
-      setState((){});
+      setState(() {});
     }
   }
 

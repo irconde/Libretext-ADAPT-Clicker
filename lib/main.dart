@@ -37,8 +37,6 @@ Future<void> handleBackground(RemoteMessage message) async {
   FirebaseMessage msg =  FirebaseMessage(title: message.notification?.title, body: message.notification?.body, route: message.data['path']);
   await PushNotificationManager().initializePersistedState();
   await PushNotificationManager().addNotification(msg);
-  logger.i('adding message');
-  exit(0); ///TODO find a better solution to bug than closing the app forcefully
 }
 
 Future<void> handlePendingMessages() async
@@ -164,7 +162,7 @@ class _MyStatefulWidgetState extends ConsumerState<MyStatefulWidget>
     super.initState();
     WidgetsBinding.instance?.addObserver(this);
     tokenHandling();
-
+    FlutterLocalNotificationsPlugin().cancelAll();
     PushNotificationManager().addListener(() {   setState((){});});
 
     if(authenticated) {
