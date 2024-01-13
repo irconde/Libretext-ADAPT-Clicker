@@ -31,15 +31,11 @@ void addNotification(FirebaseMessage message) {
   PushNotificationManager().addNotification(message);
 }
 
-class _NotificationsScreenState extends State<NotificationsScreen> {
+class _NotificationsScreenState extends State<NotificationsScreen> with WidgetsBindingObserver{
   //Local
   final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
-  void initState() {
-    super.initState();
-    //createList();
-    //addNotification('details');
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -93,10 +89,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                               Map<String, dynamic>? parsedData = api.parseLink('${PushNotificationManager().getNotification(index).route}');
                               api.isOutside = true;
                               await api.handleParsed(parsedData, null);
-                              setState(() {
-                                PushNotificationManager()
-                                    .removeNotification(index);
-                              });
+                              PushNotificationManager().removeNotification(index);
+                              await PushNotificationManager().resetNotificationList();
+                              setState(() {});
                             },
                             child: Dismissible(
                               key: dismissibleKey,
@@ -123,11 +118,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                   ),
                                 ),
                               ),
-                              onDismissed: (_) {
-                                setState(() {
-                                  PushNotificationManager()
-                                      .removeNotification(index);
-                                });
+                              onDismissed: (_) async {
+                                PushNotificationManager().removeNotification(index);
+                                await PushNotificationManager().resetNotificationList();
+                                setState(() {});
                               },
                               child: NotificationSingle(
                                 index: index,
@@ -144,12 +138,32 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     );
   }
 
+  ///Functions
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (state == AppLifecycleState.resumed) {
+      await Future.delayed(const Duration(milliseconds: 150));
+      setState((){});
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
+    super.dispose();
+  }
+
   /// Clears all notifications from the list.
   void clearNotifications() async {
     await PushNotificationManager().clearNotifications();
-    setState(() {
-
-    });
+    await PushNotificationManager().resetNotificationList();
+    setState(() {});
   }
 
   /// Checks if the notification list is empty.
