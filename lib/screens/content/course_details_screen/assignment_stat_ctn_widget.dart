@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:adapt_clicker/constants/icons.dart';
 import 'package:flutter/material.dart';
 import '../../../utils/app_theme.dart';
@@ -131,17 +133,23 @@ class _AssignmentStatCtnWidgetState extends State<AssignmentStatCtnWidget> {
   void calculateSeverity() {
     var score = widget.assignment['score'];
     var total = widget.assignment['total_points'];
-    if (total == 0) {
+    if (total == 0.0 || total == 0) {
       _severity = 0;
       return;
     }
     logger.d(widget.assignment['name']);
     logger.d('Score: $score');
     logger.d('Total: $total');
-    if (score == 'Not yet released') {
-      score = 0;
+    if (score == 'Not yet released' || score is String) {
+      // Convert the score to a double if it's a string
+      score = double.tryParse(score) ?? 0.0;
     }
+
+
+
     _severity = (score / total) * 100;
+
+    _severity = double.parse(_severity.toStringAsFixed(2));
   }
 
 

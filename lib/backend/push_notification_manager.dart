@@ -72,6 +72,7 @@ class PushNotificationManager extends ChangeNotifier{
   Future<void> addNotification(FirebaseMessage value) async {
     await notificationBox!.add(value);
     await resetNotificationList();
+    notifyListeners();
   }
 
   FirebaseMessage getNotification(int index)
@@ -86,12 +87,14 @@ class PushNotificationManager extends ChangeNotifier{
   void removeNotification(int index) async {
     _notificationList.removeAt(index);
     notificationBox!.deleteAt(index);
+    notifyListeners();
   }
 
   /// Clears all notifications from the list and persists the updated list using SharedPreferences.
   Future<void> clearNotifications() async {
     await notificationBox!.deleteAll(notificationBox!.keys);
     notificationList.clear();
+    notifyListeners();
   }
 
   Future<void> resetNotificationList() async

@@ -18,8 +18,6 @@ class NotificationIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    PushNotificationManager().addListener(() { setState;});
-
     if (PushNotificationManager().notificationCount() == 0) {
       return IconButton(
         tooltip: Strings.notificationSemanticsLabel,

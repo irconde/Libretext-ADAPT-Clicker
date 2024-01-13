@@ -37,7 +37,7 @@ class Strings {
   //Login and Course
   static const String ssoLink = 'https://sso.libretexts.org/cas/oauth2.0/authorize?response_type=code&client_id=oaq1jkujPejJBNfDnOaguii9uOmuz4W5SEJH&redirect_uri=https%3A%2F%2Fadapt.libretexts.org%2Fapi%2Foauth%2Flibretexts%2Fcallback%3Fclicker_app%3Dtrue';
 
-  static const String adaptLink = 'https://dev.adapt.libretexts.org';
+  static const String adaptLink = 'https://adapt.libretexts.org';
 
   // Assignment screen
   static const String latePolicy = 'Late Policy: ';
