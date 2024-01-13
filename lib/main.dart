@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 import 'package:adapt_clicker/backend/push_notification_manager.dart';
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
@@ -6,6 +7,7 @@ import 'package:adapt_clicker/utils/firebase_message.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 import 'backend/firebase/firebase_api.dart';
 import 'constants/colors.dart';
 import 'constants/strings.dart';
@@ -36,12 +38,19 @@ Future<void> handleBackground(RemoteMessage message) async {
   await PushNotificationManager().initializePersistedState();
   await PushNotificationManager().addNotification(msg);
   logger.i('adding message');
+  exit(0); ///TODO find a better solution to bug than closing the app forcefully
 }
 
 Future<void> handlePendingMessages() async
 {
-  await PushNotificationManager().resetNotificationList();
-  await FlutterLocalNotificationsPlugin().cancelAll();
+  try {
+    await PushNotificationManager().resetNotificationList();
+    await FlutterLocalNotificationsPlugin().cancelAll();
+  }
+  catch(e)
+  {
+    logger.e(e);
+  }
 }
 
 void main() async {
@@ -155,6 +164,8 @@ class _MyStatefulWidgetState extends ConsumerState<MyStatefulWidget>
     super.initState();
     WidgetsBinding.instance?.addObserver(this);
     tokenHandling();
+
+    PushNotificationManager().addListener(() {   setState((){});});
 
     if(authenticated) {
       _showSignInSnackbar();

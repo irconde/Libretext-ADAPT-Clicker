@@ -77,16 +77,7 @@ class FirebaseAPI {
 
       String args = await RouteHandler.getArgs(path, data); //makes sense of args depending on page
 
-      if (!isOutside) {
-        showPopup(
-          message?.notification?.title ?? 'Notification',
-          message?.notification?.body ?? '',
-          '$path/$args',
-        );
-      } else {
-        isOutside = false;
-        RouteHandler.navTo('$path/$args');
-      }
+      RouteHandler.navTo('$path/$args'); ///Never shows popup rn
     } else {
       logger.w('Invalid link format');
     }

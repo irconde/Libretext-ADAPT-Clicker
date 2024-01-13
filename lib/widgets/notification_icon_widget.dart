@@ -13,10 +13,14 @@ class NotificationIcon extends StatelessWidget {
   /// A callback function to update the state.
   final StateSetter setState;
 
+
+
   @override
   Widget build(BuildContext context) {
-    int val = PushNotificationManager().notificationCount();
-    if (val == 0) {
+
+    PushNotificationManager().addListener(() { setState;});
+
+    if (PushNotificationManager().notificationCount() == 0) {
       return IconButton(
         tooltip: Strings.notificationSemanticsLabel,
         icon: IIcons.notification,
@@ -32,7 +36,7 @@ class NotificationIcon extends StatelessWidget {
         child: badges.Badge(
           position: badges.BadgePosition.topEnd(top: 0, end: 6),
           badgeContent: Text(
-            '$val',
+            '${PushNotificationManager().notificationCount()}',
             style: const TextStyle(
               color: CColors.primaryBackground,
             ),

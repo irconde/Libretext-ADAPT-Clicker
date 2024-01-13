@@ -1,12 +1,6 @@
-import 'package:adapt_clicker/constants/icons.dart';
 import 'package:flutter/material.dart';
-import '../../constants/strings.dart';
-import '../../main.dart';
-import '../../utils/logger.dart';
 import '../notification_icon_widget.dart';
 
-/// The main app bar widget.
-import 'package:flutter/material.dart';
 
 class MainAppBar extends StatefulWidget implements PreferredSizeWidget  {
   const MainAppBar({
