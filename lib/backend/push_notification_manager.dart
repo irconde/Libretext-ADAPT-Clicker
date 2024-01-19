@@ -41,7 +41,7 @@ class PushNotificationManager extends ChangeNotifier{
   {
     // Initialize Hive
     final appDocumentsDirectory = await path_provider.getApplicationDocumentsDirectory();
-    await Hive.initFlutter(appDocumentsDirectory.path);
+    await Hive.initFlutter('${appDocumentsDirectory.path}/hive');
 
     if(!Hive.isAdapterRegistered(FirebaseMessageAdapter().typeId)) {
       Hive.registerAdapter(
@@ -53,6 +53,10 @@ class PushNotificationManager extends ChangeNotifier{
 
   Future<void> openBox() async
   {
+    if(notificationBox != null && notificationBox!.isOpen) {
+      notificationBox!.close();
+    }
+
     notificationBox = await Hive.openBox<FirebaseMessage>('notificationBox');
     _notificationList =  notificationBox!.values.toList().cast<FirebaseMessage>();
 
@@ -71,8 +75,6 @@ class PushNotificationManager extends ChangeNotifier{
   /// Adds a notification to the list and persists it using SharedPreferences.
   Future<void> addNotification(FirebaseMessage value) async {
     await notificationBox!.add(value);
-    await resetNotificationList();
-    notifyListeners();
   }
 
   FirebaseMessage getNotification(int index)
@@ -99,17 +101,25 @@ class PushNotificationManager extends ChangeNotifier{
 
   Future<void> resetNotificationList() async
   {
-    await Hive.close();
-    await initHive();
+    await close();
+    await openBox();
   }
 
-  Future<void> close() async
-  {
-    if (notificationBox!.isOpen) {
-      await notificationBox!.close();
+  Future<void> close() async {
+    try {
+      if (notificationBox != null && notificationBox!.isOpen) {
+        await notificationBox!.close();
+      }
+    } catch (e) {
+      // Log the error and any additional information
+      logger.w('Error closing notificationBox: $e');
+      // You may want to log more details about the state of the box or the environment
+    } finally {
+      // Regardless of success or failure, set notificationBox to null
+      notificationBox = null;
     }
-    notificationBox = null;
   }
+
 
   /// Returns the count of notifications in the list.
   ///
