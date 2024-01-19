@@ -4,10 +4,12 @@ import 'package:adapt_clicker/backend/push_notification_manager.dart';
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/backend/user_stored_preferences.dart';
 import 'package:adapt_clicker/utils/firebase_message.dart';
+import 'package:adapt_clicker/utils/firebase_message_adapter.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'backend/firebase/firebase_api.dart';
 import 'constants/colors.dart';
 import 'constants/strings.dart';
@@ -23,6 +25,7 @@ import 'utils/internationalization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'backend/firebase/firebase_options.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 
 late FirebaseAPI firebaseAPI;
 final appBarKey = GlobalKey();
@@ -30,18 +33,28 @@ final appBarKey = GlobalKey();
 ///Firebase Methods that can't stay in a class
 @pragma('vm:entry-point')
 Future<void> handleBackground(RemoteMessage message) async {
-  if(Firebase == null) {
-    await Firebase.initializeApp();
+  if (!Hive.isAdapterRegistered(0)) {
+    Hive.registerAdapter(FirebaseMessageAdapter());
   }
+  final appDocumentsDirectory = await path_provider.getApplicationDocumentsDirectory();
+  await Hive.initFlutter('${appDocumentsDirectory.path}/hive');
+  Box? box = null;
+  if (!Hive.isBoxOpen('notificationBox')) {
+     box = await Hive.openBox<FirebaseMessage>('notificationBox');
+  }
+  await Firebase.initializeApp();
+  FirebaseMessage msg = FirebaseMessage(title: message.notification!.title, body: message.notification!.body, route: message.data['path']);
 
-  FirebaseMessage msg =  FirebaseMessage(title: message.notification?.title, body: message.notification?.body, route: message.data['path']);
-  await PushNotificationManager().initializePersistedState();
-  await PushNotificationManager().addNotification(msg);
+  if(box != null) await box!.add(msg);
+  await Hive.close();
+
+  logger.i("Message maid it through");
 }
 
 Future<void> handlePendingMessages() async
 {
   try {
+    Future.delayed(Duration(milliseconds: 200));
     await PushNotificationManager().resetNotificationList();
     await FlutterLocalNotificationsPlugin().cancelAll();
   }
