@@ -39,6 +39,8 @@ class Strings {
 
   static const String adaptLink = 'https://dev.adapt.libretexts.org';
 
+  static const String accountError = 'Account could not be found';
+
   // Assignment screen
   static const String latePolicy = 'Late Policy: ';
   static const String emptyNotificationString = 'view_and_submit';

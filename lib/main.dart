@@ -144,30 +144,17 @@ Future<void> initFirebase() async
   FirebaseMessaging.onBackgroundMessage(handleBackground);
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerStatefulWidget  {
 
   const MyApp({Key? key, required this.authenticated}) : super(key: key);  @override
 
   final bool authenticated;
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MyStatefulWidget(authenticated: authenticated),
-    );
-  }
-}
 
-class MyStatefulWidget extends ConsumerStatefulWidget {
-
-
-
-  const MyStatefulWidget({required this.authenticated});
-  final bool authenticated;
   @override
-  _MyStatefulWidgetState createState() => _MyStatefulWidgetState(authenticated: authenticated);
+  _MyAppState createState() => _MyAppState();
 }
 
-
-class _MyStatefulWidgetState extends ConsumerState<MyStatefulWidget>
+class _MyAppState extends ConsumerState<MyApp>
     with ConnectionStateMixin, WidgetsBindingObserver  {
 
   @override
@@ -178,7 +165,7 @@ class _MyStatefulWidgetState extends ConsumerState<MyStatefulWidget>
     FlutterLocalNotificationsPlugin().cancelAll();
     PushNotificationManager().addListener(() {   setState((){});});
 
-    if(authenticated) {
+    if(widget.authenticated) {
       _showSignInSnackbar();
     }
   }
@@ -210,9 +197,6 @@ class _MyStatefulWidgetState extends ConsumerState<MyStatefulWidget>
   }
 
   final ThemeMode _themeMode = ThemeMode.system;
-  final bool authenticated;
-
-  _MyStatefulWidgetState({required this.authenticated});
 
   @override
   Widget build(BuildContext context) {
@@ -235,7 +219,7 @@ class _MyStatefulWidgetState extends ConsumerState<MyStatefulWidget>
       themeMode: _themeMode,
       routeInformationProvider: AppState().router.routeInfoProvider(),
       routerDelegate: AppState().router.delegate(
-          initialRoutes: authenticated
+          initialRoutes: widget.authenticated
               ? [CourseListScreen()]
               : [HomeScreen()]),
       routeInformationParser: AppState().router.defaultRouteParser(),
