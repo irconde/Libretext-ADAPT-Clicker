@@ -153,7 +153,13 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen> with Connec
                       listViewGetEnrollmentsResponse.jsonBody,
                     )?.toList() ??
                     '';
+
                 if (enrollmentsList.isEmpty) {
+                  if(listViewGetEnrollmentsResponse.jsonBody['message'] == 'Unauthenticated.')
+                    {
+                      Navigator.pop(context);
+                      showAccountErrorSnackBar();
+                    }
                   return const NoCoursesWidget();
                 }
                 return RefreshIndicator(
@@ -273,6 +279,23 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen> with Connec
     }
   }
 
+  ///Handles Account Error
+  void showAccountErrorSnackBar()
+  {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          Strings.accountError,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+          ),
+        ),
+        backgroundColor: CColors.failure,
+      ),
+    );
+  }
 
   /// Refreshes the page by calling [updateAndGetResponse].
   Future<bool> refreshPage() async {
@@ -286,6 +309,7 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen> with Connec
       return false;
     }
   }
+
 
   /// Calls the API to update the response and returns the updated response.
   Future<ApiCallResponse> updateAndGetResponse() async {
