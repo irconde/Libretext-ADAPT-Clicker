@@ -175,8 +175,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
                               endIndent: 16,
                             ),
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  Dimens.msMargin, Dimens.sMargin, Dimens.msMargin, 0),
+                              padding:  EdgeInsetsDirectional.fromSTEB(
+                                  Dimens.msMargin, Dimens.sMargin, Dimens.msMargin, MediaQueryData.fromView(View.of(context)).padding.bottom),
                               child: NumberPaginator(
                                 controller: paginatorController,
                                 config: const NumberPaginatorUIConfig(
