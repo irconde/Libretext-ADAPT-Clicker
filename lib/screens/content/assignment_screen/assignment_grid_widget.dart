@@ -100,61 +100,57 @@ class AssignmentGridWidgetState extends ConsumerState<AssignmentGridWidget>
                 });
               });
         },
-        child: Padding(
-          padding:
-              const EdgeInsetsDirectional.fromSTEB(0, Dimens.xxsMargin, 0, 0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                addOne(questionsIndex).toString(),
-                textAlign: TextAlign.center,
-                style: theme.title2.override(
-                      fontSize: Dimens.giantFontSize,
-                      fontFamily: 'Open Sans',
-                      color: CColors.primaryColor,
-                    ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              addOne(questionsIndex).toString(),
+              textAlign: TextAlign.center,
+              style: theme.title2.override(
+                fontSize: Dimens.giantFontSize,
+                fontFamily: 'Open Sans',
+                color: CColors.primaryColor,
               ),
-              Visibility(
-                visible: questionsItem['last_submitted'] != 'N/A',
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    IIcons.completedAssignmentCheck,
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          Dimens.xxsMargin, 0, 0, Dimens.xxsMargin),
-                      child: Text(
-                        formatDate(questionsItem['last_submitted']),
-                        textAlign: TextAlign.center,
-                        style: theme.bodyText1.override(
-                              fontFamily: 'Open Sans',
-                              color: CColors.success,
-                            ),
+            ),
+            Visibility(
+              visible: questionsItem['last_submitted'] != 'N/A',
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  IIcons.completedAssignmentCheck,
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        Dimens.xxsMargin, 0, 0, Dimens.xxsMargin),
+                    child: Text(
+                      formatDate(questionsItem['last_submitted']),
+                      textAlign: TextAlign.center,
+                      style: theme.bodyText1.override(
+                        fontFamily: 'Open Sans',
+                        color: CColors.success,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Visibility(
-                visible: questionsItem['last_submitted'] != 'N/A',
-                child: Text(
+            ),
+            Visibility(
+              visible: questionsItem['last_submitted'] != 'N/A',
+              child: Text(
                   '${questionsItem['total_score'] ?? 'Max'}/${questionsItem['points']} ${Strings.uppercasePoints}',
                   textAlign: TextAlign.center,
                   style: theme.bodyText3
-                ),
               ),
-              Visibility(
-                visible: questionsItem['last_submitted'] == 'N/A',
-                child: Text(
+            ),
+            Visibility(
+              visible: questionsItem['last_submitted'] == 'N/A',
+              child: Text(
                   'Max ${questionsItem['points']} ${Strings.uppercasePoints}',
                   textAlign: TextAlign.center,
                   style: theme.bodyText3
-                ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
