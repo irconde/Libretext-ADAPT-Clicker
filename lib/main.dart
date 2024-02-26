@@ -140,7 +140,7 @@ Future<void> initFirebase() async
   );
 
   firebaseAPI = FirebaseAPI();
-  await firebaseAPI.initNotifications();
+  await firebaseAPI.initFirebase();
   FirebaseMessaging.onBackgroundMessage(handleBackground);
 }
 

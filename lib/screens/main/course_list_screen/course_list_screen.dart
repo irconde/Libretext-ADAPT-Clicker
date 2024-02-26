@@ -1,3 +1,4 @@
+import 'package:adapt_clicker/backend/firebase/firebase_api.dart';
 import 'package:adapt_clicker/backend/router/app_router.gr.dart';
 import 'package:adapt_clicker/constants/dimens.dart';
 import 'package:adapt_clicker/constants/icons.dart';
@@ -263,9 +264,11 @@ class _CourseListScreenState extends ConsumerState<CourseListScreen> with Connec
 
   void init() async {
 
+    FirebaseAPI firebaseAPI = new FirebaseAPI();
+    await firebaseAPI.initNotifiactions();
     await createTokenFromPath();
     await refreshPage();
-    initJWT();
+    await initJWT();
   }
 
   Future<void> createTokenFromPath() async {

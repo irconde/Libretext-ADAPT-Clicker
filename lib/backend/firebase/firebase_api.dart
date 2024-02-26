@@ -20,17 +20,16 @@ class FirebaseAPI {
   final _messageStreamController = BehaviorSubject<RemoteMessage>();
   ApiCallResponse? sendTokenResponse;
 
-  Future<void> initNotifications() async {
-    await _firebaseMessaging.requestPermission();
-    //permissionLog();
+  Future<void> initFirebase() async {
 
-    _firebaseInAppMessaging.setMessagesSuppressed(false);
+    //permissionLog();
+    await _firebaseMessaging.getAPNSToken();
+    final fCMToken = await _firebaseMessaging.getToken();
+    logger.d('Token: $fCMToken');
 
     _firebaseMessaging.setDeliveryMetricsExportToBigQuery(true);
 
-    initPushNotifications();
-    final fCMToken = await _firebaseMessaging.getToken();
-    logger.d('Token: $fCMToken');
+
   }
 
   /// Requests push notification permission.
@@ -116,7 +115,17 @@ class FirebaseAPI {
     }
   }
 
-  //routes
+  //Notifications Init
+  ///Request Permission and inits notifications
+  Future initNotifiactions() async
+  {
+    var allowed = await _firebaseMessaging.requestPermission();
+
+    if(allowed.authorizationStatus == AuthorizationStatus.authorized){
+      _firebaseInAppMessaging.setMessagesSuppressed(false);
+      initPushNotifications();
+    }
+  }
   /// Handles incoming push notification routes.
   Future initPushNotifications() async {
     await _firebaseMessaging.getInitialMessage().then(handleMessage);
@@ -127,6 +136,7 @@ class FirebaseAPI {
     });
 
   }
+
 
 
 
