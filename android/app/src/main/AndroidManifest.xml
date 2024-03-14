@@ -49,6 +49,7 @@
                 <data android:scheme="https" />
                 <data android:host="adapt.libretexts.org" android:pathPrefix="/courses"/>
                 <data android:host="dev.adapt.libretexts.org" android:pathPrefix="/courses"/>
+                <data android:host="app.adapt.libretexts.org" android:pathPrefix="/courses"/>
             </intent-filter>
         </activity>
        <meta-data

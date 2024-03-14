@@ -8,6 +8,8 @@
 	<array>
 		<string>applinks:adapt.libretexts.org</string>
 		<string>applinks:dev.adapt.libretexts.org</string>
+		<string>applinks:app.adapt.libretexts.org</string>
+		<string>adaptclicker://adapt.libretexts.org</string>
 	</array>
 </dict>
 </plist>
